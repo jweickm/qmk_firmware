@@ -218,20 +218,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* _NAV
      * ,-----------------------------------------------------------------------------------.
-     * |A(TAB)| C(->)| !LANG|A(GRV)| C(<-)| >>|  | HOME |  ->  | PGUP | COPY | PASTE| DE_SW|
+     * |A(TAB)| C(->)| !LANG|A(GRV)| C(<-)| >>|  | HOME |  ->  | PGUP | COPY | PASTE| BSPC |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |C(TAB)|  TAB |  ESC |  ENT |VIM_GG| MPLY |  <-  |   ↓  |   ↑  |  ->  |  END | VIM_O|  
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | LSFT | XXXX |S(DEL)| CAPS | VIM_V| MUTE | HOME | PGDN | LSFT | RFST | C(F) | C(F) |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | XXXX | XXXX | ____ | BSPC | ____ |     ____    |  ENT |  DEL | ____ | ____ | DE_SW|
+     * | XXXX | XXXX | ____ | BSPC | CAPS |     ____    |  ENT |  DEL | DE_SW| ____ | DE_SW|
      * `-----------------------------------------------------------------------------------'
      */
     [_NAV] = LAYOUT_planck_grid(
-        ALT_TAB, LCTL(KC_RGHT), LANG_SWITCH, LALT(KC_GRV), LCTL(KC_LEFT), KC_MNXT, KC_HOME, KC_RIGHT, KC_PGUP, LCTL(KC_INS), LSFT(KC_INS), KC_DE_SWITCH, 
+        ALT_TAB, LCTL(KC_RGHT), LANG_SWITCH, LALT(KC_GRV), LCTL(KC_LEFT), KC_MNXT, KC_HOME, KC_RIGHT, KC_PGUP, LCTL(KC_INS), LSFT(KC_INS), KC_BSPC, 
         CTL_TAB, KC_TAB, KC_ESC, KC_ENT, TD(TD_VIM_GG), KC_MPLY, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, KC_END, VIM_O, 
         KC_LSFT, KC_NO, LSFT(KC_DEL), KC_CAPS, VIM_V, KC_MUTE, KC_HOME, KC_PGDN, KC_LSFT, KC_RSFT, LCTL(KC_F), LCTL(KC_F), 
-        KC_NO, KC_NO, KC_TRNS, KC_BSPC, KC_TRNS, LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), KC_ENT, KC_DEL, KC_TRNS, KC_TRNS, KC_DE_SWITCH
+        KC_NO, KC_NO, KC_TRNS, KC_BSPC, KC_CAPS, LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), KC_ENT, KC_DEL, KC_DE_SWITCH, KC_TRNS, KC_DE_SWITCH
     ),
 
     /* _VIM
@@ -1004,27 +1004,27 @@ bool dip_switch_update_user(uint8_t index, bool active) {
 LEADER_EXTERNS();
 
 void matrix_scan_user(void) {
-  LEADER_DICTIONARY() {
-    leading = false;
-    leader_end();
+    LEADER_DICTIONARY() {
+        leading = false;
+        leader_end();
 
-    SEQ_ONE_KEY(KC_F) {
-      // Anything you can do in a macro.
-      SEND_STRING("QMK is awesome.");
+        SEQ_ONE_KEY(KC_F) {
+            // Anything you can do in a macro.
+            SEND_STRING("QMK is awesome.");
+        }
+        SEQ_TWO_KEYS(KC_D, KC_D) {
+            SEND_STRING(SS_LCTL("a") SS_LCTL("c"));
+        }
+        SEQ_THREE_KEYS(KC_M, KC_F, KC_G) {
+            SEND_STRING("Mit freundlichen Grüßen\nJakob Weickmann\n");
+        }
+        SEQ_TWO_KEYS(KC_D, KC_D) {
+            tap_code(KC_END);
+            tap_code(KC_RIGHT);
+            tap_code16(LSFT(KC_UP));
+            tap_code16(LCTL(KC_DEL));
+        }
     }
-    SEQ_TWO_KEYS(KC_D, KC_D) {
-      SEND_STRING(SS_LCTL("a") SS_LCTL("c"));
-    }
-    SEQ_THREE_KEYS(KC_D, KC_D, KC_S) {
-      SEND_STRING("https://start.duckduckgo.com\n");
-    }
-    SEQ_TWO_KEYS(KC_A, KC_S) {
-      register_code(KC_LGUI);
-      register_code(KC_S);
-      unregister_code(KC_S);
-      unregister_code(KC_LGUI);
-    }
-  }
 #ifdef AUDIO_ENABLE
     if (muse_mode) {
         if (muse_counter == 0) {
