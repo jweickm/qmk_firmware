@@ -1012,17 +1012,14 @@ void matrix_scan_user(void) {
             // Anything you can do in a macro.
             SEND_STRING("QMK is awesome.");
         }
-        SEQ_TWO_KEYS(KC_D, KC_D) {
-            SEND_STRING(SS_LCTL("a") SS_LCTL("c"));
-        }
         SEQ_THREE_KEYS(KC_M, KC_F, KC_G) {
-            SEND_STRING("Mit freundlichen Grüßen\nJakob Weickmann\n");
+            SEND_STRING("Mit freundlichen Gr[-en\nJakob Weickmann\n");
         }
         SEQ_TWO_KEYS(KC_D, KC_D) {
             tap_code(KC_END);
             tap_code(KC_RIGHT);
             tap_code16(LSFT(KC_UP));
-            tap_code16(LCTL(KC_DEL));
+            tap_code16(LSFT(KC_DEL));
         }
     }
 #ifdef AUDIO_ENABLE
