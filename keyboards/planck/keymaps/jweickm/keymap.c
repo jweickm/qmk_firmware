@@ -451,7 +451,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 // alt tab function setup
 bool is_alt_tab_active = false;
 bool is_ctl_tab_active = false;
-bool de_layout_active  = false;
+bool de_layout_active = false;
 
 static uint16_t key_timer;
 
@@ -1021,6 +1021,13 @@ void matrix_scan_user(void) {
             tap_code16(LSFT(KC_UP));
             tap_code16(LSFT(KC_DEL));
         }
+        SEQ_TWO_KEYS(KC_D, KC_E) {
+            if (de_layout_active) {
+                SEND_STRING("de?lazout?active is set to true");
+            } else {
+                SEND_STRING("de_layout_active is set to false");
+            }
+        }
     }
 #ifdef AUDIO_ENABLE
     if (muse_mode) {
@@ -1085,21 +1092,21 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
 #define HSV_GRASS 57, 255, 255
 #define HSV_OCEAN 148, 255, 255
 
-// Light LEDs 1 to 9 in darkorange when HRCOLEMAK is active
+// Light LEDs 1 to 10 in darkorange when HRCOLEMAK is active
 const rgblight_segment_t PROGMEM my_layer0_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_DARKORANGE});
-// Light LEDs 1 to 9 in green when HRWIDECOLEMAK is active
+// Light LEDs 1 to 10 in green when HRWIDECOLEMAK is active
 const rgblight_segment_t PROGMEM my_layer1_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_OCEAN});
-// Light LEDs 1 to 9 in darkorange when de_layout_active is true
-const rgblight_segment_t PROGMEM my_layer2_layer[] = RGBLIGHT_LAYER_SEGMENTS({3, 4, HSV_DARKORANGE}, {0, 3, HSV_OCEAN}, {8, 3, HSV_OCEAN});
-// Light LEDs 1 to 9 in red when GAMING layer is active
+// Light LEDs 1 to 10 in green when de_layout_active is true
+const rgblight_segment_t PROGMEM my_layer2_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_GRASS});
+// Light LEDs 1 to 10 in red when GAMING layer is active
 const rgblight_segment_t PROGMEM my_layer3_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_RED});
-// Light LEDs 1 to 9 in white when WIDECOLEMAK is active
+// Light LEDs 1 to 10 in white when WIDECOLEMAK is active
 const rgblight_segment_t PROGMEM my_layer4_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_WHITE});
 // Light bottom LEDs in purple when ADJUST layer is active
 const rgblight_segment_t PROGMEM my_layer5_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 2, HSV_MAGENTA}, {7, 3, HSV_MAGENTA});
-// Light bottom LEDs in red when caps lock is active. Hard to ignore!
-const rgblight_segment_t PROGMEM my_capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 3, HSV_GRASS}, {7, 3, HSV_GRASS});
-// Light LEDs 1 to 9 in white when NAVIGATION is active
+// Light bottom LEDs in darkorange when caps lock is active. Hard to ignore!
+const rgblight_segment_t PROGMEM my_capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 3, HSV_DARKORANGE}, {7, 3, HSV_DARKORANGE});
+// Light LEDs 1 to 10 in white when NAVIGATION is active
 const rgblight_segment_t PROGMEM my_nav_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_WHITE});
 
 // Now define the array of layers. Later layers take precedence
@@ -1141,5 +1148,10 @@ layer_state_t default_layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(4, layer_state_cmp(state, _WIDECOLEMAK));
     rgblight_set_layer_state(1, layer_state_cmp(state, _HRWIDECOLEMAK));
     rgblight_set_layer_state(2, layer_state_cmp(state, _HRWIDECOLEMAK_DE));
+    if (layer_state_cmp(state, _HRWIDECOLEMAK_DE)) {
+        de_layout_active = true;
+    } else {
+        de_layout_active = false;
+    }
     return state;
 }
