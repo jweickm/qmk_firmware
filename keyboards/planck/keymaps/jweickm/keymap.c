@@ -134,7 +134,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ,-----------------------------------------------------------------------------------.
      * |   !  |   @  |   #  |   $  |   %  |   ~  |   ^  |   &  |   *  |   (  |   )  |   Ö  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |  F1  |  F2  |  ESC |  ENT |  F5  |  F6  |   ß  |   _  |   +  |   {  |   }  |   Ä  |
+     * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   ß  |   _  |   +  |   {  |   }  |   Ä  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 | MPLY |   /  |   \  |   |  |   \  |   è  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -465,7 +465,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 // alt tab function setup
 bool is_alt_tab_active = false;
 bool is_ctl_tab_active = false;
-bool de_layout_active = false;
+bool de_layout_active  = false;
 
 static uint16_t key_timer;
 
