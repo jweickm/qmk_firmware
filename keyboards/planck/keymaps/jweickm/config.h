@@ -29,6 +29,8 @@
                                   SONG(PREONIC_SOUND), \
                                   SONG(GOODBYE_SOUND), \
                                 }
+    #define AUDIO_DAC_SAMPLE_WAVEFORM_SQUARE
+    #define AUDIO_DAC_SAMPLE_MAX 1023U // define the volume: 65535U is standard
 #endif
 
 /*
@@ -64,7 +66,7 @@
 
 // settings for LEADER key
 #define LEADER_PER_KEY_TIMING
-#define LEADER_TIMEOUT 250
+#define LEADER_TIMEOUT 280
 #define LEADER_NO_TIMEOUT
 
 #define RGBLIGHT_SLEEP // RGB lighting will switch off when the host goes to sleep
