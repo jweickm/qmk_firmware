@@ -54,6 +54,10 @@ enum tap_dance_codes {
 #define RAISE_DE OSL(_RAISE_DE)
 #define ADJUST MO(_ADJUST)
 
+float macro_on_song[][2]  = SONG(SCROLL_LOCK_ON_SOUND);
+float macro_off_song[][2] = SONG(SCROLL_LOCK_OFF_SOUND);
+float tone_caps_on[][2]   = SONG(CAPS_LOCK_ON_SOUND);
+float tone_caps_off[][2]  = SONG(CAPS_LOCK_OFF_SOUND);
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* _HRWIDECOLEMAK
@@ -276,19 +280,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* _MOUSE
      * ,-----------------------------------------------------------------------------------.
-     * | XXXX | XXXX | MBTN4| MBTN5| XXXX | Bri+ | XXXX | MWHL↑|MAUS↑ | MWHL↑| XXXX | XXXX |
+     * | XXXX | XXXX | MBTN4| MBTN5| XXXX | Bri+ | XXXX | MWHL↑|MAUS↑ | MWHL↑| PLY2 | REC2 |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | XXXX | MBTN3| MBTN2| MBTN1| XXXX | MPLY | XXXX |MAUS<-|MAUS↓ |MAUS->| XXXX | XXXX |
+     * | XXXX | MBTN3| MBTN2| MBTN1| XXXX | MPLY | XXXX |MAUS<-|MAUS↓ |MAUS->| PLY1 | REC1 |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | XXXX | XXXX | XXXX | XXXX | Bri- | XXXX | MWHL↓| XXXX | XXXX | ____ | XXXX |
+     * | ____ | XXXX | XXXX | XXXX | XXXX | Bri- | XXXX | MWHL↓| XXXX | XXXX | ____ | STOP |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |!MOUSE| XXXX | XXXX | ____ | XXXX | MAUS_ACCEL2 | ____ | XXXX | XXXX |  <-  |  ->  |
      * `-----------------------------------------------------------------------------------'
      */
     [_MOUSE] = LAYOUT_planck_grid(
-        KC_NO, KC_NO, KC_BTN4, KC_BTN5, KC_NO, KC_BRIU, KC_NO, KC_WH_U, KC_MS_U, KC_WH_U, KC_NO, KC_NO, 
-        KC_NO, KC_BTN3, KC_BTN2, KC_BTN1, KC_NO, KC_MPLY, KC_NO, KC_MS_L, KC_MS_D, KC_MS_R, KC_NO, KC_NO, 
-        KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_BRID, KC_NO, KC_WH_D, KC_NO, KC_NO, KC_TRNS, KC_NO, 
+        KC_NO, KC_NO, KC_BTN4, KC_BTN5, KC_NO, KC_BRIU, KC_NO, KC_WH_U, KC_MS_U, KC_WH_U, DM_PLY2, DM_REC2, 
+        KC_NO, KC_BTN3, KC_BTN2, KC_BTN1, KC_NO, KC_MPLY, KC_NO, KC_MS_L, KC_MS_D, KC_MS_R, DM_PLY1, DM_REC1, 
+        KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_BRID, KC_NO, KC_WH_D, KC_NO, KC_NO, KC_TRNS, DM_RSTP, 
         TG(_MOUSE), KC_NO, KC_NO, KC_TRNS, KC_NO, KC_ACL2, KC_ACL2, KC_TRNS, KC_NO, KC_NO, KC_LEFT, KC_RIGHT
     )
 
@@ -1255,14 +1259,27 @@ void keyboard_post_init_user(void) {
     rgblight_layers = my_rgb_layers;
 }
 
-// void led_set_user(uint8_t usb_led) {
-//   if (!(usb_led & (1<<USB_LED_NUM_LOCK))) {
-//     tap_code(KC_NLCK);
-//   }
-// }
+#ifdef AUDIO_ENABLE
+
+    void led_set_user(uint8_t usb_led) {
+        static uint8_t old_usb_led = 0;
+
+        if (!is_playing_notes()) {
+            if ((usb_led & (1<<USB_LED_CAPS_LOCK)) && !(old_usb_led & (1<<USB_LED_CAPS_LOCK))) { 
+                    // If CAPS LK LED is turning on...
+                    PLAY_SONG(tone_caps_on);
+            } else if (!(usb_led & (1<<USB_LED_CAPS_LOCK)) && (old_usb_led & (1<<USB_LED_CAPS_LOCK))) {
+                    // If CAPS LK LED is turning off...
+                    PLAY_SONG(tone_caps_off);
+            }
+        }
+        old_usb_led = usb_led;
+    }
+#endif
 
 bool led_update_user(led_t led_state) {
     rgblight_set_layer_state(7, led_state.caps_lock);
+
     return true;
 }
 
@@ -1291,3 +1308,14 @@ layer_state_t default_layer_state_set_user(layer_state_t state) {
     }
     return state;
 }
+
+#ifdef DYNAMIC_MACRO_ENABLE
+    #ifdef AUDIO_ENABLE
+        void dynamic_macro_record_start_user(void) {
+            PLAY_SONG(macro_on_song);
+        }
+        void dynamic_macro_record_end_user(int8_t direction) {
+            PLAY_SONG(macro_off_song);
+        }
+    #endif
+#endif
