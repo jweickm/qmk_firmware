@@ -14,12 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#define RGBLIGHT_LAYERS
-
 #pragma once
 
 #ifdef AUDIO_ENABLE
-    #define STARTUP_SONG SONG(PLANCK_SOUND)
+    #define STARTUP_SONG SONG(STARTUP_SOUND)
     // #define STARTUP_SONG SONG(NO_SOUND)
 
     #define DEFAULT_LAYER_SONGS { SONG(QWERTY_SOUND), \
@@ -31,6 +29,8 @@
                                   SONG(PREONIC_SOUND), \
                                   SONG(GOODBYE_SOUND), \
                                 }
+    #define AUDIO_DAC_SAMPLE_WAVEFORM_SQUARE
+    #define AUDIO_DAC_SAMPLE_MAX 1023U // define the volume: 65535U is standard
 #endif
 
 /*
@@ -66,7 +66,8 @@
 
 // settings for LEADER key
 #define LEADER_PER_KEY_TIMING
-#define LEADER_TIMEOUT 250
+#define LEADER_TIMEOUT 280
 #define LEADER_NO_TIMEOUT
 
 #define RGBLIGHT_SLEEP // RGB lighting will switch off when the host goes to sleep
+#define RGBLIGHT_LAYERS
