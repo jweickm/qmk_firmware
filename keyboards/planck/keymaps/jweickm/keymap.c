@@ -28,9 +28,9 @@ enum planck_layers {
     _LOWER_DE,
     _RAISE_DE,
     _ADJUST,
+    _NUM,
     _NAV,
     _VIM,
-    _NUM,
     _MOUSE,
 };
 
@@ -165,7 +165,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_LOWER_DE] = LAYOUT_planck_grid(
         DE_EXLM, DE_AT, DE_HASH, DE_DLR, DE_PERC, RALT(KC_RBRC), DE_CIRC, DE_AMPR, DE_ASTR, TD(TD_PRN_DE), DE_RPRN, LSFT(DE_ODIA), 
-        KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, DE_SS, DE_UNDS, DE_RBRC, TD(TD_CBR_DE), DE_RCBR, LSFT(DE_ADIA), 
+        KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, DE_SS, DE_UNDS, DE_PLUS, TD(TD_CBR_DE), DE_RCBR, LSFT(DE_ADIA), 
         KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_MPLY, DE_SLSH, DE_BSLS, DE_PIPE, DE_BSLS, DE_GRV, 
         TG(_MOUSE), ADJUST, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_DEL, KC_TRNS, ADJUST, KC_DOWN, KC_UP
     ),
@@ -176,7 +176,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   ß  |   -  |   =  |   [  |   ]  |   ä  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 | MPLY |   /  |   ,  |   .  |   \  |   é  |
+     * |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |   <  |   /  |   ,  |   .  |   \  |   é  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |!MOUSE|ADJUST| ____ | BSPC | ____ |     ____    |  ENT | ____ |ADJUST|   ↓  |   ↑  |
      * `-----------------------------------------------------------------------------------'
@@ -184,7 +184,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_RAISE] = LAYOUT_planck_grid(
         KC_1, KC_2, KC_3, KC_4, KC_5, KC_GRV, KC_6, KC_7, KC_8, KC_9, KC_0, DE_oe, 
         KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, DE_SZ, KC_MINS, KC_EQL, TD(TD_BRC), KC_RBRC, DE_ae, 
-        KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_MPLY, KC_SLSH, KC_COMM, KC_DOT, KC_PIPE, DE_EAIGU, 
+        KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, S(KC_COMM), KC_SLSH, KC_COMM, KC_DOT, KC_PIPE, DE_EAIGU, 
         TG(_MOUSE), ADJUST, KC_TRNS, KC_BSPC, KC_TRNS, KC_TRNS, KC_TRNS, KC_ENT, KC_TRNS, ADJUST, KC_DOWN, KC_UP
     ),
 
@@ -194,7 +194,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   ß  |   -  |   =  |   [  |   ]  |   ä  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 | MPLY |   /  |   ,  |   .  |   \  |   ´  |
+     * |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |   <  |   /  |   ,  |   .  |   \  |   ´  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |!MOUSE|ADJUST| ____ | BSPC | ____ |     ____    |  ENT | ____ |ADJUST|   ↓  |   ↑  |
      * `-----------------------------------------------------------------------------------'
@@ -202,13 +202,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_RAISE_DE] = LAYOUT_planck_grid(
         KC_1, KC_2, KC_3, KC_4, KC_5, LSFT(KC_GRV), KC_6, KC_7, KC_8, KC_9, KC_0, DE_ODIA, 
         KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, DE_SS, DE_MINS, DE_EQL, TD(TD_BRC_DE), DE_RBRC, DE_ADIA, 
-        KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_MPLY, DE_SLSH, KC_COMM, KC_DOT, DE_BSLS, DE_ACUT, 
+        KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, DE_LABK, DE_SLSH, KC_COMM, KC_DOT, DE_BSLS, DE_ACUT, 
         TG(_MOUSE), ADJUST, KC_TRNS, KC_BSPC, KC_TRNS, KC_TRNS, KC_TRNS, KC_ENT, KC_TRNS, ADJUST, KC_DOWN, KC_UP
     ),
 
     /* _ADJUST
      * ,-----------------------------------------------------------------------------------.
-     * | A-SFT| RESET| DEBUG|RGBTOG|RGBMOD|RGBHUI|RGBHUD|RGBSAI|RGBSAD|RGBVAI|RGBVAD| DE_SW|
+     * | A-SFT| RESET| DEBUG|RGBTOG|RGBMOD|RGBHUI|RGBHUD|RGBSAI|RGBSAD|RGBVAI|RGBVAD| !NUM |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | A-GRV|EEPRST|MU_MOD| AU_ON|AU_OFF|AGNORM|AGSWAP|!HRWCM| !WCM | A-GRV| !LANG| !GAME|
      * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -218,15 +218,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_ADJUST] = LAYOUT_planck_grid(
-        LALT(KC_LSFT), RESET, DEBUG, RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, KC_DE_SWITCH, 
+        LALT(KC_LSFT), RESET, DEBUG, RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, TG(_NUM), 
         LALT(KC_GRV), EEP_RST, MU_MOD, AU_ON, AU_OFF, AG_NORM, AG_SWAP, HRWIDECOLEMAK, WIDECOLEMAK, LALT(KC_GRV), LANG_SWITCH, GAMING, 
         KC_TRNS, MUV_DE, MUV_IN, MU_ON, MU_OFF, MI_ON, MI_OFF, KC_SVD_BD, KC_MPLY, KC_SVU_BU, KC_TRNS, KC_TRNS,
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, EEPROM_RESET
     ),
 
+    /* _NUM
+     * ,-----------------------------------------------------------------------------------.
+     * |  Esc |  F2  |   ↑  |  Ent |  |<< |NUMLCK| >>|  |   7  |   8  |   9  |   -  | !NUM |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | HOME |  <-  |   ↓  |  ->  | END  | TAB  |   *  |   4  |   5  |   6  |   +  |   .  |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | MOUSE|  F10 |  F11 |  Ent | Vol- | MUTE |   =  |   1  |   2  |   3  |   /  |   ,  |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | ____ | ____ | ____ | ____ | ____ |     ____    |   0  |   .  |   ,  |   =  | ____ |
+     * `-----------------------------------------------------------------------------------'
+     */
+    [_NUM] = LAYOUT_planck_grid(
+        KC_ESC, KC_F2,  KC_UP,  KC_ENT, KC_MPRV, KC_NLCK, KC_MNXT, KC_P7, KC_P8, KC_P9, KC_MINS, TG(_NUM), 
+        KC_HOME, KC_LEFT,  KC_DOWN,  KC_RIGHT, KC_END, KC_TAB, KC_ASTR, KC_P4, KC_P5, KC_P6, KC_PLUS, KC_DOT, 
+        MO(_MOUSE), KC_F10, KC_F11, KC_ENT, KC_VOLD, KC_MUTE, KC_EQL, KC_P1, KC_P2, KC_P3, KC_SLSH, KC_COMM, 
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_P0, KC_DOT, KC_COMM, KC_EQL, KC_TRNS
+    ),
+
     /* _NAV
      * ,-----------------------------------------------------------------------------------.
-     * |A(TAB)| C(->)| !LANG|A(GRV)| C(<-)| >>|  | HOME |  ->  | PGUP | COPY | PASTE| BSPC |
+     * |A(TAB)| C(->)| !LANG|A(GRV)| C(<-)| MAIL | HOME |  ->  | PGUP | COPY | PASTE| BSPC |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |C(TAB)|  TAB |  ESC |  ENT |VIM_GG| MPLY |  <-  |   ↓  |   ↑  |  ->  |  END | VIM_O|  
      * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -236,7 +254,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_NAV] = LAYOUT_planck_grid(
-        ALT_TAB, LCTL(KC_RGHT), LANG_SWITCH, LALT(KC_GRV), LCTL(KC_LEFT), KC_MNXT, KC_HOME, KC_RIGHT, KC_PGUP, LCTL(KC_INS), LSFT(KC_INS), KC_BSPC, 
+        ALT_TAB, LCTL(KC_RGHT), LANG_SWITCH, LALT(KC_GRV), LCTL(KC_LEFT), KC_MAIL, KC_HOME, KC_RIGHT, KC_PGUP, LCTL(KC_INS), LSFT(KC_INS), KC_BSPC, 
         CTL_TAB, KC_TAB, KC_ESC, KC_ENT, TD(TD_VIM_GG), KC_MPLY, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, KC_END, VIM_O, 
         KC_LSFT, LSFT(KC_DEL), C(G(KC_LEFT)), C(G(KC_RGHT)), VIM_V, KC_MUTE, KC_HOME, KC_PGDN, KC_LSFT, KC_RSFT, LCTL(KC_F), KC_DE_SWITCH, 
         KC_NO, KC_NO, KC_TRNS, KC_ESC, KC_CAPS, LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), KC_ENT, KC_TRNS, KC_DE_SWITCH, KC_TRNS, KC_DE_SWITCH
@@ -258,24 +276,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         CTL_TAB, KC_TAB, KC_ESC, KC_ENT, TD(TD_VIM_GG), KC_MPLY, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, KC_END, VIM_O, 
         KC_LSFT, KC_NO, LSFT(KC_DEL), KC_CAPS, VIM_V, KC_MUTE, KC_HOME, KC_PGDN, KC_LSFT, KC_RSFT, LCTL(KC_F), LCTL(KC_F), 
         KC_NO, KC_NO, TG(_VIM), KC_BSPC, KC_TRNS, LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), KC_ENT, KC_TRNS, KC_TRNS, KC_DOWN, KC_UP
-    ),
-
-    /* _NUM
-     * ,-----------------------------------------------------------------------------------.
-     * |  F1  |  F2  |  F3  |  F4  |  |<< |NUMLCK| >>|  |   7  |   8  |   9  |   -  | ____ |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |  F5  |  F6  |  F7  |  F8  | Vol+ | MPLY |   *  |   4  |   5  |   6  |   +  |   .  |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |  F9  |  F10 |  F11 |  F12 | Vol- | MUTE |   =  |   1  |   2  |   3  |   /  |   ,  |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ | ____ | ____ | ____ |     ____    |   0  |   .  |   ,  |   =  | ____ |
-     * `-----------------------------------------------------------------------------------'
-     */
-    [_NUM] = LAYOUT_planck_grid(
-        KC_F1, KC_F2,  KC_F3,  KC_F4, KC_MPRV, KC_NLCK, KC_MNXT, KC_P7, KC_P8, KC_P9, KC_MINS, KC_TRNS, 
-        KC_F5, KC_F6,  KC_F7,  KC_F8, KC_VOLU, KC_MPLY, KC_ASTR, KC_P4, KC_P5, KC_P6, KC_PLUS, KC_DOT, 
-        KC_F9, KC_F10, KC_F11, KC_F12, KC_VOLD, KC_MUTE, KC_EQL, KC_P1, KC_P2, KC_P3, KC_SLSH, KC_COMM, 
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_P0, KC_DOT, KC_COMM, KC_EQL, KC_TRNS
     ),
 
     /* _MOUSE
@@ -401,7 +401,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case LT(_RAISE_DE, KC_ENT):
             return TAPPING_TERM * thumb_factor;
         case LT(_NAV, KC_SPC):
-            return TAPPING_TERM * 1.0;
+            return TAPPING_TERM * 1.1;
         case LALT_T(KC_ESC):
             return TAPPING_TERM * thumb_factor;
 
@@ -1105,6 +1105,15 @@ void matrix_scan_user(void) {
                 tap_code16(KC_AT);
             }
             SEND_STRING("univie.ac.at");
+        }
+        SEQ_FOUR_KEYS(KC_D, KC_J, KC_J, KC_G) {
+            SEND_STRING("jakob.weickmann");
+            if (de_layout_active) {
+                tap_code16(RALT(KC_Q));
+            } else {
+                tap_code16(KC_AT);
+            }
+            SEND_STRING("djjg.org");
         }
         SEQ_FOUR_KEYS(KC_A, KC_T, KC_N, KC_R) {
             if (de_layout_active) {
