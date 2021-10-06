@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
+#define RGBLIGHT_LAYERS
 
 #pragma once
 
@@ -57,8 +57,6 @@
 // Most tactile encoders have detents every 4 stages
 #define ENCODER_RESOLUTION 4
 
-#define RGBLIGHT_SLEEP // RGB lighting will switch off when the host goes to sleep
-
 // settings for HOME ROW MODS
 #define TAPPING_TERM 160 // 200 ms is the default value
 #define TAPPING_TERM_PER_KEY
@@ -66,6 +64,9 @@
 #define IGNORE_MOD_TAP_INTERRUPT
 #define TAPPING_FORCE_HOLD_PER_KEY
 
-// settings for the LEADER key
-#define LEADER_PER_KEY_TIMING 
+// settings for LEADER key
+#define LEADER_PER_KEY_TIMING
 #define LEADER_TIMEOUT 250
+#define LEADER_NO_TIMEOUT
+
+#define RGBLIGHT_SLEEP // RGB lighting will switch off when the host goes to sleep
