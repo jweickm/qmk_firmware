@@ -51,7 +51,7 @@ enum tap_dance_codes {
 #define LOWER_DE OSL(_LOWER_DE)
 #define RAISE OSL(_RAISE)
 #define RAISE_DE OSL(_RAISE_DE)
-#define ADJUST MO(_ADJUST)
+#define ADJUST OSL(_ADJUST)
 
 float macro_on_song[][2]  = SONG(SCROLL_LOCK_ON_SOUND);
 float macro_off_song[][2] = SONG(SCROLL_LOCK_OFF_SOUND);
