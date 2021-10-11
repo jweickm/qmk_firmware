@@ -30,7 +30,6 @@ enum planck_layers {
     _ADJUST,
     _NUM,
     _NAV,
-    _VIM,
     _MOUSE,
 };
 
@@ -260,24 +259,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO, KC_NO, KC_TRNS, KC_ESC, KC_CAPS, LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), KC_ENT, KC_TRNS, KC_DE_SWITCH, KC_TRNS, KC_DE_SWITCH
     ),
 
-    /* _VIM
-     * ,-----------------------------------------------------------------------------------.
-     * |A(TAB)| C(->)| !LANG|A(GRV)| C(<-)| >>|  | HOME |  ->  | PGUP | COPY | PASTE| DE_SW|
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |C(TAB)|  TAB |  ESC |  ENT |VIM_GG| MPLY |  <-  |   ↓  |   ↑  |  ->  |  END | VIM_O|  
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | LSFT | XXXX |S(DEL)| CAPS | VIM_V| MUTE | HOME | PGDN | LSFT | RFST | C(F) | C(F) |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | XXXX | XXXX | !VIM | BSPC | ____ |     ____    |  ENT | ____ | ____ |   ↓  |   ↑  |
-     * `-----------------------------------------------------------------------------------'
-     */
-    [_VIM] = LAYOUT_planck_grid(
-        ALT_TAB, LCTL(KC_RGHT), LANG_SWITCH, LALT(KC_GRV), LCTL(KC_LEFT), KC_MNXT, KC_HOME, KC_RIGHT, KC_PGUP, LCTL(KC_INS), LSFT(KC_INS), KC_DE_SWITCH, 
-        CTL_TAB, KC_TAB, KC_ESC, KC_ENT, TD(TD_VIM_GG), KC_MPLY, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, KC_END, VIM_O, 
-        KC_LSFT, KC_NO, LSFT(KC_DEL), KC_CAPS, VIM_V, KC_MUTE, KC_HOME, KC_PGDN, KC_LSFT, KC_RSFT, LCTL(KC_F), LCTL(KC_F), 
-        KC_NO, KC_NO, TG(_VIM), KC_BSPC, KC_TRNS, LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), KC_ENT, KC_TRNS, KC_TRNS, KC_DOWN, KC_UP
-    ),
-
     /* _MOUSE
      * ,-----------------------------------------------------------------------------------.
      * | XXXX | XXXX | MBTN4| MBTN5| XXXX | Bri+ | XXXX | MWHL↑|MAUS↑ | MWHL↑| PLY2 | REC2 |
@@ -374,7 +355,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 };
 
 float thumb_factor  = 0.95;
-float index_factor  = 1.1;
+float index_factor  = 1.15;
 float middle_factor = 1.2;
 float ring_factor   = 1.25;
 float pinky_factor  = 1.15;
