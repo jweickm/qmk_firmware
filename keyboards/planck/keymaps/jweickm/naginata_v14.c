@@ -363,9 +363,11 @@ const PROGMEM naginata_keymap_long ngmapl[] = {
   {.key = B_D|B_F|B_Y		, .kana = SS_TAP(X_HOME)}, // {Home}
   {.key = B_D|B_F|B_U		, .kana = SS_LSFT(SS_TAP(X_END))SS_TAP(X_BSPACE)}, // +{End}{BS}
   {.key = B_D|B_F|B_I		, .kana = SS_TAP(X_INT4)}, // {vk1Csc079}
-  {.key = B_D|B_F|B_O		, .kana = SS_TAP(X_DELETE)}, // {Del}
+//{.key = B_D|B_F|B_O		, .kana = SS_TAP(X_DELETE)}, // {Del}
+  {.key = B_D|B_F|B_O		, .kana = SS_TAP(NGUP)SS_TAP(NGUP)SS_TAP(NGUP)SS_TAP(NGUP)SS_TAP(NGUP)}, // {↑ 5}
   {.key = B_D|B_F|B_P		, .kana = SS_TAP(X_ESCAPE)SS_TAP(X_ESCAPE)SS_TAP(X_ESCAPE)}, // {Esc 3}
-  {.key = B_D|B_F|B_H		, .kana = SS_TAP(X_ENTER)SS_TAP(X_END)}, // {Enter}{End}
+//{.key = B_D|B_F|B_H		, .kana = SS_TAP(X_ENTER)SS_TAP(X_END)}, // {Enter}{End}
+  {.key = B_D|B_F|B_H		, .kana = SS_TAP(NGLT)}, // {<-}
 //{.key = B_D|B_F|B_J		, .kana = SS_TAP(NGUP)}, // {↑}
 //{.key = B_D|B_F|B_K		, .kana = SS_LSFT(SS_TAP(NGUP))}, // +{↑}
 //{.key = B_D|B_F|B_L		, .kana = SS_TAP(NGUP)SS_TAP(NGUP)SS_TAP(NGUP)SS_TAP(NGUP)SS_TAP(NGUP)}, // {↑ 5}
@@ -411,14 +413,16 @@ const PROGMEM naginata_keymap_long ngmapl_tate[] = {
   {.key = B_T           , .kana = SS_TAP(NGLT)},
   {.key = B_Y           , .kana = SS_TAP(NGRT)},
 // 編集モード 縦横
-  {.key = B_D|B_F|B_J		, .kana = SS_TAP(NGUP)}, // {↑}
-  {.key = B_D|B_F|B_K		, .kana = SS_LSFT(SS_TAP(NGUP))}, // +{↑}
-  {.key = B_D|B_F|B_L		, .kana = SS_TAP(NGUP)SS_TAP(NGUP)SS_TAP(NGUP)SS_TAP(NGUP)SS_TAP(NGUP)}, // {↑ 5}
+  {.key = B_D|B_F|B_J		, .kana = SS_TAP(NGDN)}, // {↓}
+  {.key = B_D|B_F|B_K		, .kana = SS_TAP(NGUP)}, // +{↑}
+// {.key = B_D|B_F|B_L		, .kana = SS_TAP(NGUP)SS_TAP(NGUP)SS_TAP(NGUP)SS_TAP(NGUP)SS_TAP(NGUP)}, // {↑ 5}
+  {.key = B_D|B_F|B_L		, .kana = SS_TAP(NGRT)}, // {->}
   {.key = B_D|B_F|B_SCLN		, .kana = SS_LSFT(SS_TAP(NGUP)SS_TAP(NGUP)SS_TAP(NGUP)SS_TAP(NGUP)SS_TAP(NGUP))}, // +{↑ 5}
-  {.key = B_D|B_F|B_M		, .kana = SS_TAP(NGDN)}, // {↓}
-  {.key = B_D|B_F|B_COMM		, .kana = SS_LSFT(SS_TAP(NGDN))}, // +{↓}
+  {.key = B_D|B_F|B_M		, .kana = SS_LSFT(SS_TAP(NGDN))}, // +{↓}
+  {.key = B_D|B_F|B_COMM		, .kana = SS_LSFT(SS_TAP(NGUP))}, // +{↑}
   {.key = B_D|B_F|B_DOT		, .kana = SS_TAP(NGDN)SS_TAP(NGDN)SS_TAP(NGDN)SS_TAP(NGDN)SS_TAP(NGDN)}, // {↓ 5}
   {.key = B_D|B_F|B_SLSH		, .kana = SS_LSFT(SS_TAP(NGDN)SS_TAP(NGDN)SS_TAP(NGDN)SS_TAP(NGDN)SS_TAP(NGDN))}, // +{↓ 5}
+  {.key = B_D|B_F|B_H		, .kana = SS_TAP(NGLT)}, // {<-}
   {.key = B_C|B_V|B_J		, .kana = SS_TAP(NGRT)}, // {→}
   {.key = B_C|B_V|B_K		, .kana = SS_LSFT(SS_TAP(NGRT))}, // +{→}
   {.key = B_C|B_V|B_L		, .kana = SS_TAP(NGRT)SS_TAP(NGRT)SS_TAP(NGRT)SS_TAP(NGRT)SS_TAP(NGRT)}, // {→ 5}
