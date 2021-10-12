@@ -186,7 +186,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |ろ　せ|け　め|と　に|か゛ま|っ　ち| ____ |く　や|あ゛の|い　も|う　わ|ー　つ| KOTI |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |  ほ　|  ひ　|は　を|こ゜、|そ　み| ____ |た　お|な゜。|ん　ね|ら　ふ|  れ　| ____ |
+     * |  ほ　|  ひ　|は　を|こ゜、|そ　み| ____ |た　お|な゜。|ん　ね|ら　ふ|  れ　| TATE |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | ____ | ____ | ____ |  NAV |   NGSHFT    | ____ | ____ | ____ | ____ | ____ |
      * `-----------------------------------------------------------------------------------'
@@ -194,7 +194,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_NAGINATA] = LAYOUT_planck_grid(
         NG_Q, NG_W, NG_E, NG_R, NG_T, KC_TRNS, NG_Y, NG_U, NG_I, NG_O, NG_P, EISU,
         NG_A, NG_S, NG_D, NG_F, NG_G, KC_TRNS, NG_H, NG_J, NG_K, NG_L, NG_SCLN, NG_KOTI, 
-        NG_Z, NG_X, NG_C, NG_V, NG_B, KC_TRNS, NG_N, NG_M, NG_COMM, NG_DOT, NG_SLSH, KC_TRNS, 
+        NG_Z, NG_X, NG_C, NG_V, NG_B, KC_TRNS, NG_N, NG_M, NG_COMM, NG_DOT, NG_SLSH, NG_TAYO, 
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LT(_NAV, KC_SPC), NG_SHFT, NG_SHFT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
     ),
     // 薙刀式
@@ -1017,23 +1017,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         // 薙刀式
         case EISU:
-            if (!de_layout_active) {
-                if (record->event.pressed) {
-                    naginata_off();
+            if (record->event.pressed) {
+                if (!de_layout_active) {
                     if (naginata_active) {
                         PLAY_SONG(naginata_off_sound);
                     }
+                    naginata_off();
                 }
             }
             return false;
             break;
         case KANA2:
-            if (!de_layout_active) {
-                if (record->event.pressed) {
-                    naginata_on();
+            if (record->event.pressed) {
+                if (!de_layout_active) {
                     if (!naginata_active) {
                         PLAY_SONG(naginata_on_sound);
                     }
+                    naginata_on();
                 }
             }
             return false;
