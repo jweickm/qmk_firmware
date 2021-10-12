@@ -186,14 +186,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |  ほ　|  ひ　|は　を|こ゜、|そ　み| ____ |た　お|な゜。|ん　ね|ら　ふ|  れ　| ____ |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ | ____ | ____ |NGSHFT|  NAV+SPC    | ____ | ____ | ____ | ____ | ____ |
+     * | ____ | ____ | KANA | ____ |  NAV |   NGSHFT    | ____ | EISU | ____ | ____ | ____ |
      * `-----------------------------------------------------------------------------------'
      */
     [_NAGINATA] = LAYOUT_planck_grid(
         NG_Q, NG_W, NG_E, NG_R, NG_T, KC_TRNS, NG_Y, NG_U, NG_I, NG_O, NG_P, KC_TRNS,
         NG_A, NG_S, NG_D, NG_F, NG_G, KC_TRNS, NG_H, NG_J, NG_K, NG_L, NG_SCLN, KC_TRNS, 
         NG_Z, NG_X, NG_C, NG_V, NG_B, KC_TRNS, NG_N, NG_M, NG_COMM, NG_DOT, NG_SLSH, KC_TRNS, 
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, NG_SHFT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
+        KC_TRNS, KC_TRNS, KANA2, KC_TRNS, LT(_NAV, KC_SPC), NG_SHFT, NG_SHFT, KC_TRNS, EISU, KC_TRNS, KC_TRNS, KC_TRNS
     ),
     // 薙刀式
 
@@ -1316,8 +1316,8 @@ const rgblight_segment_t PROGMEM my_layer1_layer[] = RGBLIGHT_LAYER_SEGMENTS({0,
 const rgblight_segment_t PROGMEM my_layer2_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_GRASS});
 // Light LEDs 1 to 10 in red when GAMING layer is active
 const rgblight_segment_t PROGMEM my_layer3_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_RED});
-// Light LEDs 1 to 10 in white when WIDECOLEMAK is active
-const rgblight_segment_t PROGMEM my_layer4_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_WHITE});
+// Light LEDs 1 to 10 in darkorange when WIDECOLEMAK is active
+const rgblight_segment_t PROGMEM my_layer4_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_DARKORANGE});
 // Light bottom LEDs in purple when ADJUST layer is active
 const rgblight_segment_t PROGMEM my_layer5_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 2, HSV_MAGENTA}, {7, 3, HSV_MAGENTA});
 // Light bottom LEDs in darkorange when caps lock is active. Hard to ignore!
@@ -1369,6 +1369,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(3, layer_state_cmp(state, _GAMING));
     rgblight_set_layer_state(4, layer_state_cmp(state, _WIDECOLEMAK));
     rgblight_set_layer_state(5, layer_state_cmp(state, _ADJUST));
+    rgblight_set_layer_state(4, layer_state_cmp(state, _NAGINATA));
     //if ((layer_state_cmp(state, _LOWER) && layer_state_cmp(state, _RAISE)) || (layer_state_cmp(state, _LOWER_DE) && layer_state_cmp(state, _RAISE_DE))) {
     //    return state | (1UL << _ADJUST);
     //} else {
