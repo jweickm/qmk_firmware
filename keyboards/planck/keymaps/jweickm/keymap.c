@@ -18,11 +18,19 @@
 #include "muse.h"
 #include "keymap_german.h"
 
+// 薙刀式
+#include "naginata.h"
+NGKEYS naginata_keys;
+// 薙刀式
+
 enum planck_layers {
     _HRWIDECOLEMAK,
     _HRWIDECOLEMAK_DE,
     _GAMING,
     _WIDECOLEMAK,
+    // 薙刀式
+    _NAGINATA, // 薙刀式入力レイヤー
+    // 薙刀式
     _LOWER,
     _RAISE,
     _LOWER_DE,
