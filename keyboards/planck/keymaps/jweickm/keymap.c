@@ -1017,19 +1017,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         // 薙刀式
         case EISU:
-            if (!de_layout_active && naginata_active) {
+            if (!de_layout_active) {
                 if (record->event.pressed) {
                     naginata_off();
-                    PLAY_SONG(naginata_off_sound);
+                    if (naginata_active) {
+                        PLAY_SONG(naginata_off_sound);
+                    }
                 }
             }
             return false;
             break;
         case KANA2:
-            if (!de_layout_active && !naginata_active) {
+            if (!de_layout_active) {
                 if (record->event.pressed) {
                     naginata_on();
-                    PLAY_SONG(naginata_on_sound);
+                    if (!naginata_active) {
+                        PLAY_SONG(naginata_on_sound);
+                    }
                 }
             }
             return false;
