@@ -1023,7 +1023,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
             break;
         case KANA2:
-            if (!de_layout_active && !naginata_active) {
+            if (!de_layout_active) {
                 if (record->event.pressed) {
                     naginata_on();
                     PLAY_SONG(naginata_on_sound);
@@ -1379,6 +1379,11 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(4, layer_state_cmp(state, _WIDECOLEMAK));
     rgblight_set_layer_state(5, layer_state_cmp(state, _ADJUST));
     rgblight_set_layer_state(4, layer_state_cmp(state, _NAGINATA));
+    if (layer_state_cmp(state, _NAGINATA)) {
+        naginata_active = true;
+    } else {
+        naginata_active = false;
+    }
     //if ((layer_state_cmp(state, _LOWER) && layer_state_cmp(state, _RAISE)) || (layer_state_cmp(state, _LOWER_DE) && layer_state_cmp(state, _RAISE_DE))) {
     //    return state | (1UL << _ADJUST);
     //} else {
@@ -1397,11 +1402,6 @@ layer_state_t default_layer_state_set_user(layer_state_t state) {
         de_layout_active = true;
     } else {
         de_layout_active = false;
-    }
-    if (layer_state_cmp(state, _NAGINATA)) {
-        naginata_active = true;
-    } else {
-        naginata_active = false;
     }
     return state;
 }
