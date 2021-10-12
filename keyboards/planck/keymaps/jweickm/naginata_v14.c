@@ -367,7 +367,7 @@ const PROGMEM naginata_keymap_long ngmapl[] = {
   {.key = B_D|B_F|B_O		, .kana = SS_TAP(NGUP)SS_TAP(NGUP)SS_TAP(NGUP)SS_TAP(NGUP)SS_TAP(NGUP)}, // {↑ 5}
   {.key = B_D|B_F|B_P		, .kana = SS_TAP(X_ESCAPE)SS_TAP(X_ESCAPE)SS_TAP(X_ESCAPE)}, // {Esc 3}
 //{.key = B_D|B_F|B_H		, .kana = SS_TAP(X_ENTER)SS_TAP(X_END)}, // {Enter}{End}
-  {.key = B_D|B_F|B_H		, .kana = SS_TAP(NGLT)}, // {<-}
+//{.key = B_D|B_F|B_H		, .kana = SS_TAP(NGLT)}, // {<-}
 //{.key = B_D|B_F|B_J		, .kana = SS_TAP(NGUP)}, // {↑}
 //{.key = B_D|B_F|B_K		, .kana = SS_LSFT(SS_TAP(NGUP))}, // +{↑}
 //{.key = B_D|B_F|B_L		, .kana = SS_TAP(NGUP)SS_TAP(NGUP)SS_TAP(NGUP)SS_TAP(NGUP)SS_TAP(NGUP)}, // {↑ 5}
@@ -914,16 +914,16 @@ bool naginata_lookup(int nt, bool shifted) {
 
   switch (keycomb_buf) {
     // send_stringできないキー、長すぎるマクロはここで定義
-    case B_H|B_J:
-      naginata_on();
-      compress_buffer(nt);
-      return true;
-      break;
-    case B_F|B_G:
-      naginata_off();
-      compress_buffer(nt);
-      return true;
-      break;
+//    case B_H|B_J:
+//      naginata_on();
+//      compress_buffer(nt);
+//      return true;
+//      break;
+//    case B_F|B_G:
+//      naginata_off();
+//      compress_buffer(nt);
+//      return true;
+//      break;
     case B_M|B_COMM|B_Q: //　　　×　　　×　　　×{改行 2}
       switch (naginata_config.os) {
         case NG_WIN:
