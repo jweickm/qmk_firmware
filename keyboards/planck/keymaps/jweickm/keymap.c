@@ -1050,6 +1050,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (!de_layout_active) {
                     if (!naginata_active) {
                         PLAY_SONG(naginata_on_sound);
+                    }
                     naginata_on();
                 }
             }
@@ -1423,11 +1424,6 @@ layer_state_t default_layer_state_set_user(layer_state_t state) {
         de_layout_active = true;
     } else {
         de_layout_active = false;
-    }
-    if (layer_state_cmp(state, _NAGINATA)) {
-        naginata_active = true;
-    } else {
-        naginata_active = false;
     }
     return state;
 }
