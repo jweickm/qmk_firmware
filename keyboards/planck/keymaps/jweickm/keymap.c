@@ -1424,6 +1424,11 @@ layer_state_t default_layer_state_set_user(layer_state_t state) {
     } else {
         de_layout_active = false;
     }
+    if (layer_state_cmp(state, _NAGINATA)) {
+        naginata_active = true;
+    } else {
+        naginata_active = false;
+    }
     return state;
 }
 
