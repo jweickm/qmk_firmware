@@ -771,6 +771,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     de_layout_active = false;  // deactivate German overlay
                     set_single_persistent_default_layer(_HRWIDECOLEMAK);
                 } else {
+                    if (naginata_active) {
+                        naginata_off();
+                    }
                     de_layout_active = true;  // activate German overlay
                     set_single_persistent_default_layer(_HRWIDECOLEMAK_DE);
                 }
@@ -779,18 +782,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case LANG_SWITCH:
             if (record->event.pressed) {
-                register_mods(MOD_LALT);
-                register_code(KC_LSFT);
                 if (de_layout_active) {
                     de_layout_active = false;  // deactivate German overlay
                     set_single_persistent_default_layer(_HRWIDECOLEMAK);
                 } else {
+                    if (naginata_active) {
+                        naginata_off();
+                    }
                     de_layout_active = true;  // activate German overlay
                     set_single_persistent_default_layer(_HRWIDECOLEMAK_DE);
                 }
             } else {
-                unregister_code(KC_LSFT);
-                unregister_mods(MOD_LALT);
+                tap_code16(LALT(KC_LSFT));
             }
             return false;
         case DE_SZ:

@@ -472,14 +472,14 @@ void set_naginata(uint8_t layer, uint16_t *onk, uint16_t *offk) {
   ngoff_keys[0] = *offk;
   ngoff_keys[1] = *(offk+1);
 
-  naginata_config.raw = eeconfig_read_user();
-  if (naginata_config.os != NG_WIN && naginata_config.os != NG_MAC && naginata_config.os != NG_LINUX) {
+//  naginata_config.raw = eeconfig_read_user();
+//  if (naginata_config.os != NG_WIN && naginata_config.os != NG_MAC && naginata_config.os != NG_LINUX) {
     naginata_config.os = NG_WIN;
     naginata_config.live_conv = 1;
-    naginata_config.tategaki = 1;
-    naginata_config.kouchi_shift = 0;
-    eeconfig_update_user(naginata_config.raw);
-  }
+    naginata_config.tategaki = 0;
+    naginata_config.kouchi_shift = 1;
+//    eeconfig_update_user(naginata_config.raw);
+//  }
   ng_set_unicode_mode(naginata_config.os);
   copyTYtable();
 }
@@ -526,7 +526,7 @@ void compress_buffer(int n) {
 
 void switchOS(uint8_t os) {
   naginata_config.os = os;
-  eeconfig_update_user(naginata_config.raw);
+//  eeconfig_update_user(naginata_config.raw);
   ng_set_unicode_mode(naginata_config.os);
 }
 
@@ -546,7 +546,7 @@ void ng_set_unicode_mode(uint8_t os) {
 
 void mac_live_conversion_toggle() {
   naginata_config.live_conv ^= 1;
-  eeconfig_update_user(naginata_config.raw);
+//  eeconfig_update_user(naginata_config.raw);
 }
 
 // 出典 https://programming-place.net/ppp/contents/c/rev_res/string014.html
@@ -576,7 +576,7 @@ char* replace(char* s, const char* before, const char* after)
 
 void tategaki_toggle() {
   naginata_config.tategaki ^= 1;
-  eeconfig_update_user(naginata_config.raw);
+//  eeconfig_update_user(naginata_config.raw);
 
   copyTYtable();
 }
@@ -601,7 +601,7 @@ void copyTYtable() {
 
 void kouchi_shift_toggle() {
   naginata_config.kouchi_shift ^= 1;
-  eeconfig_update_user(naginata_config.raw);
+//  eeconfig_update_user(naginata_config.raw);
 }
 
 void ng_show_os(void) {
