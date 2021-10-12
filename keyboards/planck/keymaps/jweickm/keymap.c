@@ -97,10 +97,12 @@ enum tap_dance_codes {
 #define RAISE_DE OSL(_RAISE_DE)
 #define ADJUST OSL(_ADJUST)
 
-float macro_on_song[][2]  = SONG(SCROLL_LOCK_ON_SOUND);
-float macro_off_song[][2] = SONG(SCROLL_LOCK_OFF_SOUND);
-float tone_caps_on[][2]   = SONG(CAPS_LOCK_ON_SOUND);
-float tone_caps_off[][2]  = SONG(CAPS_LOCK_OFF_SOUND);
+float macro_on_song[][2]        = SONG(SCROLL_LOCK_ON_SOUND);
+float macro_off_song[][2]       = SONG(SCROLL_LOCK_OFF_SOUND);
+float tone_caps_on[][2]         = SONG(CAPS_LOCK_ON_SOUND);
+float tone_caps_off[][2]        = SONG(CAPS_LOCK_OFF_SOUND);
+float naginata_on_sound[][2]    = SONG(PLOVER_SOUND);
+float naginata_off_sound[][2]   = SONG(PLOVER_GOODBYE_SOUND);
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* _HRWIDECOLEMAK
@@ -1013,12 +1015,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case EISU:
             if (record->event.pressed) {
                 naginata_off();
+                PLAY_SONG(naginata_off_sound);
             }
             return false;
             break;
         case KANA2:
-            if (record->event.pressed) {
-                naginata_on();
+            if (!de_layout_active) {
+                if (record->event.pressed) {
+                    naginata_on();
+                    PLAY_SONG(naginata_on_sound);
+                }
             }
             return false;
             break;
