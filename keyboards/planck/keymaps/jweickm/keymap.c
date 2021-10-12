@@ -526,6 +526,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 bool is_alt_tab_active = false;
 bool is_ctl_tab_active = false;
 bool de_layout_active  = false;
+bool naginata_active   = false;
 
 static uint16_t key_timer;
 
@@ -1013,14 +1014,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         // 薙刀式
         case EISU:
-            if (record->event.pressed) {
-                naginata_off();
-                PLAY_SONG(naginata_off_sound);
+            if (!de_layout_active && naginata_active) {
+                if (record->event.pressed) {
+                    naginata_off();
+                    PLAY_SONG(naginata_off_sound);
+                }
             }
             return false;
             break;
         case KANA2:
-            if (!de_layout_active) {
+            if (!de_layout_active && !naginata_active) {
                 if (record->event.pressed) {
                     naginata_on();
                     PLAY_SONG(naginata_on_sound);
@@ -1394,6 +1397,11 @@ layer_state_t default_layer_state_set_user(layer_state_t state) {
         de_layout_active = true;
     } else {
         de_layout_active = false;
+    }
+    if (layer_state_cmp(state, _NAGINATA)) {
+        naginata_active = true;
+    } else {
+        naginata_active = false;
     }
     return state;
 }
