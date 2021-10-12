@@ -18,6 +18,7 @@
 #include "muse.h"
 #include "keymap_german.h"
 
+
 // 薙刀式
 #include "naginata.h"
 NGKEYS naginata_keys;
@@ -1049,13 +1050,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (!de_layout_active) {
                     if (!naginata_active) {
                         PLAY_SONG(naginata_on_sound);
-                    }
                     naginata_on();
                 }
             }
-            return false;
-            break;
-        // 薙刀式
     }
     // 薙刀式
     if (!process_naginata(keycode, record))
