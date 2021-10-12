@@ -18,7 +18,6 @@
 #include "muse.h"
 #include "keymap_german.h"
 
-
 // 薙刀式
 #include "naginata.h"
 NGKEYS naginata_keys;
