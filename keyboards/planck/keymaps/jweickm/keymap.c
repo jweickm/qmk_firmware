@@ -1141,7 +1141,7 @@ void matrix_scan_user(void) {
             tap_code16(LSFT(KC_UP));
             tap_code16(LSFT(KC_DEL));
         }
-        SEQ_TWO_KEYS(KC_R, KC_R) {
+        SEQ_TWO_KEYS(KC_H, KC_G) {
             if (de_layout_active) {
                 SEND_STRING("Mit herylichen Gr[-en");
             } else {
