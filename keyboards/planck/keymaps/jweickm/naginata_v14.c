@@ -352,18 +352,18 @@ const PROGMEM naginata_keymap ngmap[] = {
 //  {.key = B_J|B_G|B_O              , .kana = "dye"     }, // ぢぇ
   {.key = B_J|B_G|B_U              , .kana = "dye"     }, // ぢぇ
   {.key = B_V|B_DOT|B_J            , .kana = "fa"      }, // ふぁ
-  {.key = B_V|B_DOT|B_J            , .kana = "fa"      }, // ふぁ
+  {.key = B_V|B_SLSH|B_J           , .kana = "fa"      }, // ふぁ
 //  {.key = B_V|B_DOT|B_K            , .kana = "fi"      }, // ふぃ
   {.key = B_V|B_DOT|B_L            , .kana = "fi"      }, // ふぃ
-  {.key = B_V|B_SLSH|B_L            , .kana = "fi"      }, // ふぃ
+  {.key = B_V|B_SLSH|B_L           , .kana = "fi"      }, // ふぃ
 //  {.key = B_V|B_DOT|B_O            , .kana = "fe"      }, // ふぇ
   {.key = B_V|B_DOT|B_U            , .kana = "fe"      }, // ふぇ
-  {.key = B_V|B_SLSH|B_U            , .kana = "fe"      }, // ふぇ
+  {.key = B_V|B_SLSH|B_U           , .kana = "fe"      }, // ふぇ
   {.key = B_V|B_DOT|B_N            , .kana = "fo"      }, // ふぉ
-  {.key = B_V|B_SLSH|B_N            , .kana = "fo"      }, // ふぉ
+  {.key = B_V|B_SLSH|B_N           , .kana = "fo"      }, // ふぉ
 //  {.key = B_V|B_DOT|B_P            , .kana = "fyu"     }, // ふゅ
   {.key = B_V|B_DOT|B_O            , .kana = "fyu"     }, // ふゅ
-  {.key = B_V|B_SLSH|B_O            , .kana = "fyu"     }, // ふゅ
+  {.key = B_V|B_SLSH|B_O           , .kana = "fyu"     }, // ふゅ
 //  {.key = B_V|B_K|B_O              , .kana = "ixe"     }, // いぇ
   {.key = B_V|B_L|B_U              , .kana = "ixe"     }, // いぇ
 //  {.key = B_V|B_L|B_K              , .kana = "wi"      }, // うぃ
