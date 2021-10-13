@@ -527,6 +527,7 @@ bool is_alt_tab_active = false;
 bool is_ctl_tab_active = false;
 bool de_layout_active  = false;
 bool naginata_active   = false;
+bool come_from_naginata = false;
 
 static uint16_t key_timer;
 
@@ -786,14 +787,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     de_layout_active = false;  // deactivate German overlay
                     set_single_persistent_default_layer(_HRWIDECOLEMAK);
                 } else {
+                    come_from_naginata = naginata_active;
                     if (naginata_active) {
                         naginata_off();
+                    } else {
                     }
                     de_layout_active = true;  // activate German overlay
                     set_single_persistent_default_layer(_HRWIDECOLEMAK_DE);
                 }
             } else {
                 tap_code16(LALT(KC_LSFT));
+                if (come_from_naginata && !de_layout_active) {
+                    naginata_on();
+                }
             }
             return false;
         case DE_SZ:
