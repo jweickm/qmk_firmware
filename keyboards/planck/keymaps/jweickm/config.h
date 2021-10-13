@@ -30,7 +30,7 @@
                                   SONG(GOODBYE_SOUND), \
                                 }
     #define AUDIO_DAC_SAMPLE_WAVEFORM_SQUARE
-    #define AUDIO_DAC_SAMPLE_MAX 523U // define the volume: 65535U is standard
+    #define AUDIO_DAC_SAMPLE_MAX 423U // define the volume: 65535U is standard
 #endif
 
 /*
