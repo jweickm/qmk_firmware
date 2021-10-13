@@ -189,6 +189,7 @@ const PROGMEM naginata_keymap ngmap[] = {
   {.key = B_X                      , .kana = "hi"      }, // ひ
   {.key = B_SHFT|B_X               , .kana = "hi"      }, // ひ
   {.key = B_SHFT|B_DOT             , .kana = "hu"      }, // ふ
+  {.key = B_SHFT|B_SLSH            , .kana = "hu"      }, // ふ
   {.key = B_P                      , .kana = "he"      }, // へ
   {.key = B_Z                      , .kana = "ho"      }, // ほ
   {.key = B_SHFT|B_Z               , .kana = "ho"      }, // ほ
@@ -235,6 +236,7 @@ const PROGMEM naginata_keymap ngmap[] = {
   {.key = B_J|B_C                  , .kana = "ba"      }, // ば
   {.key = B_J|B_X                  , .kana = "bi"      }, // び
   {.key = B_F|B_DOT                , .kana = "bu"      }, // ぶ
+  {.key = B_F|B_SLSH               , .kana = "bu"      }, // ぶ
   {.key = B_F|B_P                  , .kana = "be"      }, // べ
   {.key = B_J|B_Z                  , .kana = "bo"      }, // ぼ
 //  {.key = B_F|B_L                  , .kana = "vu"      }, // ゔ
@@ -244,6 +246,7 @@ const PROGMEM naginata_keymap ngmap[] = {
   {.key = B_M|B_C                  , .kana = "pa"      }, // ぱ
   {.key = B_M|B_X                  , .kana = "pi"      }, // ぴ
   {.key = B_V|B_DOT                , .kana = "pu"      }, // ぷ
+  {.key = B_V|B_SLSH               , .kana = "pu"      }, // ぷ
   {.key = B_V|B_P                  , .kana = "pe"      }, // ぺ
   {.key = B_M|B_Z                  , .kana = "po"      }, // ぽ
 
@@ -349,13 +352,18 @@ const PROGMEM naginata_keymap ngmap[] = {
 //  {.key = B_J|B_G|B_O              , .kana = "dye"     }, // ぢぇ
   {.key = B_J|B_G|B_U              , .kana = "dye"     }, // ぢぇ
   {.key = B_V|B_DOT|B_J            , .kana = "fa"      }, // ふぁ
+  {.key = B_V|B_DOT|B_J            , .kana = "fa"      }, // ふぁ
 //  {.key = B_V|B_DOT|B_K            , .kana = "fi"      }, // ふぃ
   {.key = B_V|B_DOT|B_L            , .kana = "fi"      }, // ふぃ
+  {.key = B_V|B_SLSH|B_L            , .kana = "fi"      }, // ふぃ
 //  {.key = B_V|B_DOT|B_O            , .kana = "fe"      }, // ふぇ
   {.key = B_V|B_DOT|B_U            , .kana = "fe"      }, // ふぇ
+  {.key = B_V|B_SLSH|B_U            , .kana = "fe"      }, // ふぇ
   {.key = B_V|B_DOT|B_N            , .kana = "fo"      }, // ふぉ
+  {.key = B_V|B_SLSH|B_N            , .kana = "fo"      }, // ふぉ
 //  {.key = B_V|B_DOT|B_P            , .kana = "fyu"     }, // ふゅ
   {.key = B_V|B_DOT|B_O            , .kana = "fyu"     }, // ふゅ
+  {.key = B_V|B_SLSH|B_O            , .kana = "fyu"     }, // ふゅ
 //  {.key = B_V|B_K|B_O              , .kana = "ixe"     }, // いぇ
   {.key = B_V|B_L|B_U              , .kana = "ixe"     }, // いぇ
 //  {.key = B_V|B_L|B_K              , .kana = "wi"      }, // うぃ
