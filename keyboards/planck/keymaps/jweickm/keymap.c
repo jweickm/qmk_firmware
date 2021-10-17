@@ -530,9 +530,9 @@ bool de_layout_active  = false;
 bool naginata_active   = false;
 bool come_from_naginata = false;
 
-static uint16_t key_timer;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    static uint16_t key_timer;
     switch (keycode) {
         case WIDECOLEMAK:
             if (record->event.pressed) {
@@ -1148,7 +1148,7 @@ void matrix_scan_user(void) {
             tap_code16(LSFT(KC_UP));
             tap_code16(LSFT(KC_DEL));
         }
-        SEQ_TWO_KEYS(KC_H, KC_H) {
+        SEQ_TWO_KEYS(KC_R, KC_R) {
             if (de_layout_active) {
                 SEND_STRING("Mit herylichen Gr[-en");
             } else {

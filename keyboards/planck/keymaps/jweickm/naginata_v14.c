@@ -1273,8 +1273,6 @@ bool naginata_lookup(int nt, bool shifted) {
           return true;
           break;
       }
-      break;
-
     default:
       // キーから仮名に変換して出力する
 
