@@ -70,6 +70,7 @@ enum planck_keycodes {
     KC_CURRENCY,
     KC_DE_SWITCH,
     LANG_SWITCH,
+    NAGINATA_SWITCH,
     DE_SLSH_QUST,
     DE_EN_QUOT,
     DE_EN_SCLN,
@@ -188,14 +189,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |  ほ　|  ひ　|は　を|こ゜、|そ　み| ____ |た　お|な゜。|ん　ね|ら　ふ|  れ　| TATE |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ | ____ | ____ |  NAV |   NGSHFT    | ____ | ____ | ____ | ____ | ____ |
+     * | ____ | ____ | ____ | ____ |NGSHFT|   NGSHFT    | ____ | ____ | ____ | ____ | ____ |
      * `-----------------------------------------------------------------------------------'
      */
     [_NAGINATA] = LAYOUT_planck_grid(
         NG_Q, NG_W, NG_E, NG_R, NG_T, KC_TRNS, NG_Y, NG_U, NG_I, NG_O, NG_P, EISU,
         NG_A, NG_S, NG_D, NG_F, NG_G, KC_TRNS, NG_H, NG_J, NG_K, NG_L, NG_SCLN, NG_KOTI, 
         NG_Z, NG_X, NG_C, NG_V, NG_B, KC_TRNS, NG_N, NG_M, NG_COMM, NG_DOT, NG_SLSH, NG_TAYO, 
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LT(_NAV, KC_SPC), NG_SHFT, NG_SHFT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, NG_SHFT, NG_SHFT, NG_SHFT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
     ),
     // 薙刀式
 
@@ -215,7 +216,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC, KC_TILD, KC_CIRC, KC_AMPR, KC_ASTR, TD(TD_PRN), KC_RPRN, DE_OE, 
         KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, DE_SZ, KC_UNDS, KC_PLUS, TD(TD_CBR), KC_RCBR, DE_AE, 
         KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_MPLY, KC_SLSH, KC_NUBS, KC_PIPE, KC_BSLS, DE_EGRAVE, 
-        TG(_MOUSE), ADJUST, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_DEL, EISU, ADJUST, KC_DOWN, KC_UP
+        TG(_MOUSE), ADJUST, KC_TRNS, KC_TRNS, KC_TRNS, LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), KC_DEL, EISU, ADJUST, KC_DOWN, KC_UP
     ),
     
     /* _LOWER_DE
@@ -251,7 +252,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_1, KC_2, KC_3, KC_4, KC_5, KC_GRV, KC_6, KC_7, KC_8, KC_9, KC_0, DE_oe, 
         KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, DE_SZ, KC_MINS, KC_EQL, TD(TD_BRC), KC_RBRC, DE_ae, 
         KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, S(KC_COMM), KC_SLSH, KC_COMM, KC_DOT, KC_PIPE, DE_EAIGU, 
-        TG(_MOUSE), ADJUST, KANA2, KC_BSPC, KC_TRNS, KC_TRNS, KC_TRNS, KC_ENT, KC_TRNS, ADJUST, KC_DOWN, KC_UP
+        TG(_MOUSE), ADJUST, KANA2, KC_BSPC, KC_TRNS, LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), KC_ENT, KC_TRNS, ADJUST, KC_DOWN, KC_UP
     ),
 
     /* _RAISE_DE
@@ -310,7 +311,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* _NAV
      * ,-----------------------------------------------------------------------------------.
-     * |A(TAB)| C(->)| !LANG|A(GRV)| C(<-)| MAIL | HOME |  ->  | PGUP | COPY | PASTE| BSPC |
+     * |A(TAB)| C(->)| !LANG|A(GRV)| C(<-)| MAIL | HOME |  ->  | PGUP | COPY | PASTE|NAG-SW|
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |C(TAB)|  TAB |  ESC |  ENT |VIM_GG| MPLY |  <-  |   ↓  |   ↑  |  ->  |  END | VIM_O|  
      * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -320,7 +321,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_NAV] = LAYOUT_planck_grid(
-        ALT_TAB, LCTL(KC_RGHT), LANG_SWITCH, LALT(KC_GRV), LCTL(KC_LEFT), KC_MAIL, KC_HOME, KC_RIGHT, KC_PGUP, LCTL(KC_INS), LSFT(KC_INS), KC_BSPC, 
+        ALT_TAB, LCTL(KC_RGHT), LANG_SWITCH, LALT(KC_GRV), LCTL(KC_LEFT), KC_MAIL, KC_HOME, KC_RIGHT, KC_PGUP, LCTL(KC_INS), LSFT(KC_INS), NAGINATA_SWITCH, 
         CTL_TAB, KC_TAB, KC_ESC, KC_ENT, TD(TD_VIM_GG), KC_MPLY, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, KC_END, VIM_O, 
         KC_LSFT, LSFT(KC_DEL), C(G(KC_LEFT)), C(G(KC_RGHT)), VIM_V, KC_MUTE, KC_HOME, KC_PGDN, KC_LSFT, KC_RSFT, LCTL(KC_F), KC_DE_SWITCH, 
         KANA2, EISU, KC_TRNS, KC_ESC, KC_CAPS, LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), KC_ENT, KC_TRNS, KC_DE_SWITCH, KC_TRNS, KC_DE_SWITCH
@@ -781,6 +782,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             break;
+        case NAGINATA_SWITCH:
+            if (record->event.pressed) {
+                if (naginata_active) {
+                    tap_code(KC_MHEN);
+                    naginata_off();
+                } else {
+                    naginata_on();
+                    tap_code(KC_HENK);
+                }
+            }
+            return false;
         case LANG_SWITCH:
             if (record->event.pressed) {
                 if (de_layout_active) {
