@@ -85,7 +85,8 @@ enum planck_keycodes {
     M_ESCM,
     M_RGUI_SCLN,
     DE_DOT_RAB,
-    DE_COMM_LAB };
+    DE_COMM_LAB 
+};
 
 // Tap Dance declarations
 enum tap_dance_codes {
@@ -98,6 +99,37 @@ enum tap_dance_codes {
     TD_VIM_GG,  // single tap to scroll down, double tap to scroll up
     TD_F4       // double tap F4 to alt-F4
 };
+
+// Combo Declarations
+enum combos {
+    HCOMM_ENT,
+    HCOMM_DE_ENT,
+    CD_ESC,
+    HDOT_TAB,
+    HDOT_DE_TAB,
+    XD_CAPS,
+    BJ_NUM,
+};
+
+const uint16_t PROGMEM hcomm_combo[]= {KC_H, KC_COMM, COMBO_END};
+const uint16_t PROGMEM hcomm_de_combo[]= {KC_H, DE_COMM_LAB, COMBO_END};
+const uint16_t PROGMEM cd_combo[]   = {KC_C, KC_D, COMBO_END};
+const uint16_t PROGMEM hdot_combo[] = {KC_H, KC_DOT, COMBO_END};
+const uint16_t PROGMEM hdot_de_combo[] = {KC_H, DE_DOT_RAB, COMBO_END};
+const uint16_t PROGMEM xd_combo[]   = {KC_X, KC_D, COMBO_END};
+const uint16_t PROGMEM num_combo[]   = {LT(_NUM, KC_B), LT(_NUM, KC_J), COMBO_END};
+
+combo_t key_combos[] = {  
+    [HCOMM_ENT] = COMBO(hcomm_combo, KC_ENT),  
+    [HCOMM_DE_ENT] = COMBO(hcomm_de_combo, KC_ENT),  
+    [CD_ESC]    = COMBO(cd_combo, KC_ESC),  
+    [HDOT_TAB]  = COMBO(hdot_combo, KC_TAB),  
+    [HDOT_DE_TAB]  = COMBO(hdot_de_combo, KC_TAB),  
+    [XD_CAPS]   = COMBO(xd_combo, KC_CAPS),
+    [BJ_NUM]    = COMBO_ACTION(num_combo)
+};
+
+uint16_t COMBO_LEN = sizeof(key_combos) / sizeof(key_combos[0]);
 
 #define LOWER OSL(_LOWER)
 #define LOWER_DE OSL(_LOWER_DE)
@@ -312,7 +344,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* _NUM
      * ,-----------------------------------------------------------------------------------.
-     * |  Esc |  F2  |   ↑  |  Ent |  |<< |NUMLCK| >>|  |   7  |   8  |   9  |   -  | !NUM |
+     * |  Esc |  F2  |   ↑  |  Ent | ____ |NUMLCK| ____ |   7  |   8  |   9  |   -  | !NUM |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | HOME |  <-  |   ↓  |  ->  | END  | TAB  |   *  |   4  |   5  |   6  |   +  |   .  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -322,7 +354,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_NUM] = LAYOUT_planck_grid(
-        KC_ESC, KC_F2,  KC_UP,  KC_ENT, KC_MPRV, KC_NLCK, KC_MNXT, KC_P7, KC_P8, KC_P9, KC_MINS, TG(_NUM), 
+        KC_ESC, KC_F2,  KC_UP,  KC_ENT, KC_TRNS, KC_NLCK, KC_TRNS, KC_P7, KC_P8, KC_P9, KC_MINS, TG(_NUM), 
         KC_HOME, KC_LEFT,  KC_DOWN,  KC_RIGHT, KC_END, KC_TAB, KC_ASTR, KC_P4, KC_P5, KC_P6, KC_PLUS, KC_DOT, 
         MO(_MOUSE), KC_F10, KC_F11, KC_ENT, KC_VOLD, KC_MUTE, KC_EQL, KC_P1, KC_P2, KC_P3, KC_SLSH, KC_COMM, 
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_P0, KC_DOT, KC_COMM, KC_EQL, KC_TRNS
@@ -575,6 +607,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case GAMING:
             if (record->event.pressed) {
                 layer_invert(_GAMING);
+                combo_toggle(); // turns off combos when moving to _GAMING
             }
             return false;
             break;
@@ -1099,6 +1132,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
 
     return true;
+}
+
+void process_combo_event(uint16_t combo_index, bool pressed) {
+    switch(combo_index) {
+        case BJ_NUM:
+            if (pressed) {
+                layer_invert(_NUM);
+            }
+            break;
+    }
 }
 
 bool     muse_mode      = false;

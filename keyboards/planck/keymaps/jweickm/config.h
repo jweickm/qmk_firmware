@@ -70,7 +70,11 @@
 #define LEADER_TIMEOUT 280
 #define LEADER_NO_TIMEOUT
 
+// settings for COMBOS
+#define COMBO_TERM 40
+
 #define RGBLIGHT_SLEEP // RGB lighting will switch off when the host goes to sleep
 #define RGBLIGHT_LAYERS
 
+// 薙刀式の設定
 //#define NAGINATA_ENABLE // requires 10,560 bytes
