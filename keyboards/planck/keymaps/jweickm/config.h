@@ -72,3 +72,5 @@
 
 #define RGBLIGHT_SLEEP // RGB lighting will switch off when the host goes to sleep
 #define RGBLIGHT_LAYERS
+
+//#define NAGINATA_ENABLE // requires 10,560 bytes

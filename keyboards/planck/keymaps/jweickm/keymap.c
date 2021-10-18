@@ -18,20 +18,23 @@
 #include "muse.h"
 #include "keymap_german.h"
 
-
+#ifdef NAGINATA_ENABLE
 // 薙刀式
 #include "naginata.h"
 NGKEYS naginata_keys;
 // 薙刀式
+#endif
 
 enum planck_layers {
     _HRWIDECOLEMAK,
     _HRWIDECOLEMAK_DE,
     _GAMING,
     _WIDECOLEMAK,
+#ifdef NAGINATA_ENABLE
     // 薙刀式
     _NAGINATA, // 薙刀式入力レイヤー
     // 薙刀式
+#endif
     _LOWER,
     _RAISE,
     _LOWER_DE,
@@ -43,11 +46,15 @@ enum planck_layers {
 };
 
 enum planck_keycodes { 
+#ifdef NAGINATA_ENABLE
     // 薙刀式: SAFE_RANGE -> NG_SAFE_RANGE
     HRWIDECOLEMAK = NG_SAFE_RANGE,
     EISU,
     KANA2,
     // 薙刀式
+#else
+    HRWIDECOLEMAK = SAFE_RANGE,
+#endif
     GAMING,
     WIDECOLEMAK,
     TG_COLEMAK,
@@ -102,8 +109,11 @@ float macro_on_song[][2]        = SONG(SCROLL_LOCK_ON_SOUND);
 float macro_off_song[][2]       = SONG(SCROLL_LOCK_OFF_SOUND);
 float tone_caps_on[][2]         = SONG(CAPS_LOCK_ON_SOUND);
 float tone_caps_off[][2]        = SONG(CAPS_LOCK_OFF_SOUND);
+#ifdef NAGINATA_ENABLE
 float naginata_on_sound[][2]    = SONG(PLOVER_SOUND);
 float naginata_off_sound[][2]   = SONG(PLOVER_GOODBYE_SOUND);
+#endif
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* _HRWIDECOLEMAK
@@ -180,6 +190,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         LCTL_T(KC_CAPS), KC_LEAD, M_ESCM, LT(_LOWER, KC_BSPC), OSM(MOD_LSFT), LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), LT(_RAISE, KC_ENT), RSFT_T(KC_DEL), KC_RALT, LT(_MOUSE, KC_DOWN), LT(_MOUSE, KC_UP)
     ),
 
+#ifdef NAGINATA_ENABLE
     /* 薙刀式
      * 
      * ,-----------------------------------------------------------------------------------.
@@ -199,7 +210,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, NG_SHFT, NG_SHFT, NG_SHFT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
     ),
     // 薙刀式
-
+#endif
 
     /* _LOWER
      * ,-----------------------------------------------------------------------------------.
@@ -216,7 +227,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC, KC_TILD, KC_CIRC, KC_AMPR, KC_ASTR, TD(TD_PRN), KC_RPRN, DE_OE, 
         KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, DE_SZ, KC_UNDS, KC_PLUS, TD(TD_CBR), KC_RCBR, DE_AE, 
         KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_MPLY, KC_SLSH, KC_NUBS, KC_PIPE, KC_BSLS, DE_EGRAVE, 
+#ifdef NAGINATA_ENABLE
         TG(_MOUSE), ADJUST, KC_TRNS, KC_TRNS, KC_TRNS, LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), KC_DEL, EISU, ADJUST, KC_DOWN, KC_UP
+#else
+        TG(_MOUSE), ADJUST, KC_TRNS, KC_TRNS, KC_TRNS, LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), KC_DEL, KC_TRNS, ADJUST, KC_DOWN, KC_UP
+#endif
     ),
     
     /* _LOWER_DE
@@ -227,14 +242,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 | MPLY |   /  |   \  |   |  |   \  |   `  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |!MOUSE|ADJUST| ____ | ____ | ____ |     ____    |  DEL | EISU |ADJUST|   ↓  |   ↑  |
+     * |!MOUSE|ADJUST| ____ | ____ | ____ |     ____    |  DEL | ____ |ADJUST|   ↓  |   ↑  |
      * `-----------------------------------------------------------------------------------'
      */
     [_LOWER_DE] = LAYOUT_planck_grid(
         DE_EXLM, DE_AT, DE_HASH, DE_DLR, DE_PERC, RALT(KC_RBRC), DE_CIRC, DE_AMPR, DE_ASTR, TD(TD_PRN_DE), DE_RPRN, LSFT(DE_ODIA), 
         KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, DE_SS, DE_UNDS, DE_PLUS, TD(TD_CBR_DE), DE_RCBR, LSFT(DE_ADIA), 
         KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_MPLY, DE_SLSH, DE_BSLS, DE_PIPE, DE_BSLS, DE_GRV, 
-        TG(_MOUSE), ADJUST, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_DEL, EISU, ADJUST, KC_DOWN, KC_UP
+        TG(_MOUSE), ADJUST, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_DEL, KC_TRNS, ADJUST, KC_DOWN, KC_UP
     ),
 
     /* _RAISE
@@ -252,7 +267,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_1, KC_2, KC_3, KC_4, KC_5, KC_GRV, KC_6, KC_7, KC_8, KC_9, KC_0, DE_oe, 
         KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, DE_SZ, KC_MINS, KC_EQL, TD(TD_BRC), KC_RBRC, DE_ae, 
         KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, S(KC_COMM), KC_SLSH, KC_COMM, KC_DOT, KC_PIPE, DE_EAIGU, 
+#ifdef NAGINATA_ENABLE
         TG(_MOUSE), ADJUST, KANA2, KC_BSPC, KC_TRNS, LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), KC_ENT, KC_TRNS, ADJUST, KC_DOWN, KC_UP
+#else
+        TG(_MOUSE), ADJUST, KC_TRNS, KC_BSPC, KC_TRNS, LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), KC_ENT, KC_TRNS, ADJUST, KC_DOWN, KC_UP
+#endif
     ),
 
     /* _RAISE_DE
@@ -263,14 +282,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |   <  |   /  |   ,  |   .  |   \  |   ´  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |!MOUSE|ADJUST| KANA | BSPC | ____ |     ____    |  ENT | ____ |ADJUST|   ↓  |   ↑  |
+     * |!MOUSE|ADJUST| ____ | BSPC | ____ |     ____    |  ENT | ____ |ADJUST|   ↓  |   ↑  |
      * `-----------------------------------------------------------------------------------'
      */
     [_RAISE_DE] = LAYOUT_planck_grid(
         KC_1, KC_2, KC_3, KC_4, KC_5, LSFT(KC_GRV), KC_6, KC_7, KC_8, KC_9, KC_0, DE_ODIA, 
         KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, DE_SS, DE_MINS, DE_EQL, TD(TD_BRC_DE), DE_RBRC, DE_ADIA, 
         KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, DE_LABK, DE_SLSH, KC_COMM, KC_DOT, DE_BSLS, DE_ACUT, 
-        TG(_MOUSE), ADJUST, KANA2, KC_BSPC, KC_TRNS, KC_TRNS, KC_TRNS, KC_ENT, KC_TRNS, ADJUST, KC_DOWN, KC_UP
+        TG(_MOUSE), ADJUST, KC_TRNS, KC_BSPC, KC_TRNS, KC_TRNS, KC_TRNS, KC_ENT, KC_TRNS, ADJUST, KC_DOWN, KC_UP
     ),
 
     /* _ADJUST
@@ -321,10 +340,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_NAV] = LAYOUT_planck_grid(
+#ifdef NAGINATA_ENABLE
         ALT_TAB, LCTL(KC_RGHT), LANG_SWITCH, LALT(KC_GRV), LCTL(KC_LEFT), KC_MAIL, KC_HOME, KC_RIGHT, KC_PGUP, LCTL(KC_INS), LSFT(KC_INS), NAGINATA_SWITCH, 
+#else
+        ALT_TAB, LCTL(KC_RGHT), LANG_SWITCH, LALT(KC_GRV), LCTL(KC_LEFT), KC_MAIL, KC_HOME, KC_RIGHT, KC_PGUP, LCTL(KC_INS), LSFT(KC_INS), KC_BSPC, 
+#endif
         CTL_TAB, KC_TAB, KC_ESC, KC_ENT, TD(TD_VIM_GG), KC_MPLY, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, KC_END, VIM_O, 
         KC_LSFT, LSFT(KC_DEL), C(G(KC_LEFT)), C(G(KC_RGHT)), VIM_V, KC_MUTE, KC_HOME, KC_PGDN, KC_LSFT, KC_RSFT, LCTL(KC_F), KC_DE_SWITCH, 
-        KANA2, EISU, KC_TRNS, KC_ESC, KC_CAPS, LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), KC_ENT, KC_TRNS, KC_DE_SWITCH, KC_TRNS, KC_DE_SWITCH
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_ESC, KC_CAPS, LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), KC_ENT, KC_TRNS, KC_DE_SWITCH, KC_TRNS, KC_DE_SWITCH
     ),
 
     /* _MOUSE
@@ -347,6 +370,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
+#ifdef NAGINATA_ENABLE
 // 薙刀式
 void matrix_init_user(void) {
   uint16_t ngonkeys[] = {KC_H, KC_J};
@@ -354,6 +378,7 @@ void matrix_init_user(void) {
   set_naginata(_NAGINATA, ngonkeys, ngoffkeys);
 }
 // 薙刀式
+#endif
 
 // define the tap dance functions
 void dance_prn(qk_tap_dance_state_t *state, void *user_data) {
@@ -527,9 +552,10 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 bool is_alt_tab_active = false;
 bool is_ctl_tab_active = false;
 bool de_layout_active  = false;
+#ifdef NAGINATA_ENABLE
 bool naginata_active   = false;
 bool come_from_naginata = false;
-
+#endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     static uint16_t key_timer;
@@ -773,45 +799,39 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     de_layout_active = false;  // deactivate German overlay
                     set_single_persistent_default_layer(_HRWIDECOLEMAK);
                 } else {
+#ifdef NAGINATA_ENABLE
                     if (naginata_active) {
                         naginata_off();
                     }
+#endif
                     de_layout_active = true;  // activate German overlay
                     set_single_persistent_default_layer(_HRWIDECOLEMAK_DE);
                 }
                 return false;
             }
             break;
-        case NAGINATA_SWITCH:
-            if (record->event.pressed) {
-                if (naginata_active) {
-                    tap_code(KC_MHEN);
-                    naginata_off();
-                } else {
-                    naginata_on();
-                    tap_code(KC_HENK);
-                }
-            }
-            return false;
         case LANG_SWITCH:
             if (record->event.pressed) {
                 if (de_layout_active) {
                     de_layout_active = false;  // deactivate German overlay
                     set_single_persistent_default_layer(_HRWIDECOLEMAK);
                 } else {
+#ifdef NAGINATA_ENABLE
                     come_from_naginata = naginata_active;
                     if (naginata_active) {
                         naginata_off();
-                    } else {
                     }
+#endif
                     de_layout_active = true;  // activate German overlay
                     set_single_persistent_default_layer(_HRWIDECOLEMAK_DE);
                 }
             } else {
                 tap_code16(LALT(KC_LSFT));
+#ifdef NAGINATA_ENABLE
                 if (come_from_naginata && !de_layout_active) {
                     naginata_on();
                 }
+#endif
             }
             return false;
         case DE_SZ:
@@ -1033,6 +1053,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
             break;
+#ifdef NAGINATA_ENABLE
         // 薙刀式
         case EISU:
             if (record->event.pressed) {
@@ -1041,6 +1062,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         PLAY_SONG(naginata_off_sound);
                     }
                     naginata_off();
+                }
+            }
+            return false;
+            break;
+        case NAGINATA_SWITCH:
+            if (record->event.pressed) {
+                if (naginata_active) {
+                    tap_code(KC_MHEN);
+                    naginata_off();
+                } else {
+                    naginata_on();
+                    tap_code(KC_HENK);
                 }
             }
             return false;
@@ -1054,11 +1087,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     naginata_on();
                 }
             }
+            return false;
+            break;
+#endif
     }
+#ifdef NAGINATA_ENABLE
     // 薙刀式
     if (!process_naginata(keycode, record))
         return false;
     // 薙刀式
+#endif
 
     return true;
 }
@@ -1400,12 +1438,14 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(3, layer_state_cmp(state, _GAMING));
     rgblight_set_layer_state(4, layer_state_cmp(state, _WIDECOLEMAK));
     rgblight_set_layer_state(5, layer_state_cmp(state, _ADJUST));
+#ifdef NAGINATA_ENABLE
     rgblight_set_layer_state(4, layer_state_cmp(state, _NAGINATA));
     if (layer_state_cmp(state, _NAGINATA)) {
         naginata_active = true;
     } else {
         naginata_active = false;
     }
+#endif
     //if ((layer_state_cmp(state, _LOWER) && layer_state_cmp(state, _RAISE)) || (layer_state_cmp(state, _LOWER_DE) && layer_state_cmp(state, _RAISE_DE))) {
     //    return state | (1UL << _ADJUST);
     //} else {
