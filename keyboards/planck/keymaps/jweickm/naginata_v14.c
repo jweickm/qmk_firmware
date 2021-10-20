@@ -512,24 +512,24 @@ const PROGMEM naginata_keymap_long ngmapl_tate[] = {
 
 static naginata_keymap_long ngmapl_ty[12];
 
-const PROGMEM naginata_keymap_long ngmapl_mac[] = {
-// 編集モード Mac
-  {.key = B_J|B_K|B_Q		, .kana = SS_LCMD(SS_LCTL("e"))}, // ^{End}
-  {.key = B_J|B_K|B_R		, .kana = SS_LCMD("s")}, // ^s
-  {.key = B_D|B_F|B_Y		, .kana = SS_LCTL("a")}, // {Home}
-  {.key = B_D|B_F|B_U		, .kana = SS_LSFT(SS_LCTL("e"))SS_TAP(X_BSPACE)}, // +{End}{BS}
-  {.key = B_D|B_F|B_N		, .kana = SS_LCTL("e")}, // {End}
-  {.key = B_M|B_COMM|B_E		, .kana = SS_LCTL("a")SS_TAP(X_ENTER)SS_TAP(X_SPACE)SS_TAP(X_SPACE)SS_TAP(X_SPACE)SS_LCTL("e")}, // {Home}{改行}{Space 3}{End}
-  {.key = B_M|B_COMM|B_R		, .kana = SS_LCTL("a")SS_TAP(X_ENTER)SS_TAP(X_SPACE)SS_LCTL("e")}, // {Home}{改行}{Space 1}{End}
-  {.key = B_M|B_COMM|B_X		, .kana = SS_LCMD("x")SS_TAP(X_BSPACE)SS_TAP(X_DELETE)SS_LCMD("v")}, // ^x{BS}{Del}^v
-  {.key = B_C|B_V|B_Y		, .kana = SS_LSFT(SS_LCTL(SS_TAP(NGUP)))}, // +{Home}
-  {.key = B_C|B_V|B_U		, .kana = SS_LCMD("x")}, // ^x
-  {.key = B_C|B_V|B_I		, .kana = SS_LCMD("v")}, // ^v
-  {.key = B_C|B_V|B_O		, .kana = SS_LCTL("j")}, // ^u
-  {.key = B_C|B_V|B_P		, .kana = SS_LCTL("k")}, // ^i
-  {.key = B_C|B_V|B_H		, .kana = SS_LCMD("c")}, // ^c
-  {.key = B_C|B_V|B_N		, .kana = SS_LSFT(SS_LCTL("e"))}, // +{End}
-};
+//const PROGMEM naginata_keymap_long ngmapl_mac[] = {
+//// 編集モード Mac
+//  {.key = B_J|B_K|B_Q		, .kana = SS_LCMD(SS_LCTL("e"))}, // ^{End}
+//  {.key = B_J|B_K|B_R		, .kana = SS_LCMD("s")}, // ^s
+//  {.key = B_D|B_F|B_Y		, .kana = SS_LCTL("a")}, // {Home}
+//  {.key = B_D|B_F|B_U		, .kana = SS_LSFT(SS_LCTL("e"))SS_TAP(X_BSPACE)}, // +{End}{BS}
+//  {.key = B_D|B_F|B_N		, .kana = SS_LCTL("e")}, // {End}
+//  {.key = B_M|B_COMM|B_E		, .kana = SS_LCTL("a")SS_TAP(X_ENTER)SS_TAP(X_SPACE)SS_TAP(X_SPACE)SS_TAP(X_SPACE)SS_LCTL("e")}, // {Home}{改行}{Space 3}{End}
+//  {.key = B_M|B_COMM|B_R		, .kana = SS_LCTL("a")SS_TAP(X_ENTER)SS_TAP(X_SPACE)SS_LCTL("e")}, // {Home}{改行}{Space 1}{End}
+//  {.key = B_M|B_COMM|B_X		, .kana = SS_LCMD("x")SS_TAP(X_BSPACE)SS_TAP(X_DELETE)SS_LCMD("v")}, // ^x{BS}{Del}^v
+//  {.key = B_C|B_V|B_Y		, .kana = SS_LSFT(SS_LCTL(SS_TAP(NGUP)))}, // +{Home}
+//  {.key = B_C|B_V|B_U		, .kana = SS_LCMD("x")}, // ^x
+//  {.key = B_C|B_V|B_I		, .kana = SS_LCMD("v")}, // ^v
+//  {.key = B_C|B_V|B_O		, .kana = SS_LCTL("j")}, // ^u
+//  {.key = B_C|B_V|B_P		, .kana = SS_LCTL("k")}, // ^i
+//  {.key = B_C|B_V|B_H		, .kana = SS_LCMD("c")}, // ^c
+//  {.key = B_C|B_V|B_N		, .kana = SS_LSFT(SS_LCTL("e"))}, // +{End}
+//};
 
 //// 編集モードunicode
 //const PROGMEM naginata_keymap_unicode ngmapu[] = {
@@ -621,10 +621,10 @@ void switchOS(uint8_t os) {
 //  }
 //}
 
-void mac_live_conversion_toggle() {
-  naginata_config.live_conv ^= 1;
-//  eeconfig_update_user(naginata_config.raw);
-}
+//void mac_live_conversion_toggle() {
+//  naginata_config.live_conv ^= 1;
+////  eeconfig_update_user(naginata_config.raw);
+//}
 
 // 出典 https://programming-place.net/ppp/contents/c/rev_res/string014.html
 char* replace(char* s, const char* before, const char* after)
@@ -710,11 +710,11 @@ void kouchi_shift_toggle() {
 //  }
 //}
 
-void mac_send_string(const char *str) {
-  send_string(str);
-  if (!naginata_config.live_conv) tap_code(KC_SPC);
-  tap_code(KC_ENT);
-}
+//void mac_send_string(const char *str) {
+//  send_string(str);
+//  if (!naginata_config.live_conv) tap_code(KC_SPC);
+//  tap_code(KC_ENT);
+//}
 
 //void ng_send_unicode_string(const char *str) {
 //  switch (naginata_config.os) {

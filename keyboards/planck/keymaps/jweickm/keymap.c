@@ -29,7 +29,7 @@ enum planck_layers {
     _HRWIDECOLEMAK,
     _HRWIDECOLEMAK_DE,
     _GAMING,
-    _WIDECOLEMAK,
+    _CHATTING,
 #ifdef NAGINATA_ENABLE
     // 薙刀式
     _NAGINATA, // 薙刀式入力レイヤー
@@ -57,8 +57,8 @@ enum planck_keycodes {
     HRWIDECOLEMAK = SAFE_RANGE,
 #endif
     GAMING,
-    WIDECOLEMAK,
-    TG_COLEMAK,
+    HRWIDECOLEMAK_DE,
+    CHAT,
     VIM_O,
     VIM_V,
     KC_SVD_BD,
@@ -86,7 +86,7 @@ enum planck_keycodes {
     M_ESCM,
     M_RGUI_SCLN,
     DE_DOT_RAB,
-    DE_COMM_LAB 
+    DE_COMM_LAB,
 };
 
 // Tap Dance declarations
@@ -111,7 +111,10 @@ enum combos {
     XD_MENU,
     BJ_NUM,
     VOLUTAB_MNXT,
-    VOLDTAB_MPRV
+    VOLDTAB_MPRV,
+#ifdef NAGINATA_ENABLE
+    ST_NAV,
+#endif
 };
 
 const uint16_t PROGMEM hcomm_combo[]= {KC_H, KC_COMM, COMBO_END};
@@ -123,7 +126,9 @@ const uint16_t PROGMEM xd_combo[]   = {KC_X, KC_D, COMBO_END};
 const uint16_t PROGMEM num_combo[]  = {LT(_NUM, KC_B), LT(_NUM, KC_J), COMBO_END};
 const uint16_t PROGMEM mnxt_combo[] = {LT(_MOUSE, KC_VOLU), KC_TAB, COMBO_END};
 const uint16_t PROGMEM mprv_combo[] = {LT(_MOUSE, KC_VOLD), KC_TAB, COMBO_END};
-
+#ifdef NAGINATA_ENABLE
+const uint16_t PROGMEM stnav_combo[] = {NG_E, NG_R, COMBO_END};
+#endif
 
 combo_t key_combos[] = {  
     [HCOMM_ENT] = COMBO(hcomm_combo, KC_ENT),  
@@ -134,7 +139,10 @@ combo_t key_combos[] = {
     [XD_MENU]   = COMBO(xd_combo, KC_APP),
     [BJ_NUM]    = COMBO_ACTION(num_combo),
     [VOLUTAB_MNXT]= COMBO(mnxt_combo, KC_MNXT),
-    [VOLDTAB_MPRV]= COMBO(mprv_combo, KC_MPRV)
+    [VOLDTAB_MPRV]= COMBO(mprv_combo, KC_MPRV),
+#ifdef NAGINATA_ENABLE
+    [ST_NAV]    = COMBO(stnav_combo, MO(_NAV)),
+#endif
 };
 
 uint16_t COMBO_LEN = sizeof(key_combos) / sizeof(key_combos[0]);
@@ -145,13 +153,19 @@ uint16_t COMBO_LEN = sizeof(key_combos) / sizeof(key_combos[0]);
 #define RAISE_DE OSL(_RAISE_DE)
 #define ADJUST OSL(_ADJUST)
 
+#ifdef AUDIO_ENABLE
 float macro_on_song[][2]        = SONG(SCROLL_LOCK_ON_SOUND);
 float macro_off_song[][2]       = SONG(SCROLL_LOCK_OFF_SOUND);
 float tone_caps_on[][2]         = SONG(CAPS_LOCK_ON_SOUND);
 float tone_caps_off[][2]        = SONG(CAPS_LOCK_OFF_SOUND);
+float colemak_de_song[][2]      = SONG(PLANCK_SOUND);
+float colemak_en_song[][2]      = SONG(COLEMAK_SOUND);
+float gaming_song[][2]          = SONG(CHROMATIC_SOUND);
+float chat_song[][2]            = SONG(VOICE_CHANGE_SOUND);
 #ifdef NAGINATA_ENABLE
 float naginata_on_sound[][2]    = SONG(PLOVER_SOUND);
 float naginata_off_sound[][2]   = SONG(PLOVER_GOODBYE_SOUND);
+#endif
 #endif
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -207,11 +221,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_GAMING] = LAYOUT_planck_grid(
         KC_ESC, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_F5, KC_F8, KC_F9, KC_BSPC, 
         KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, C(G(KC_LEFT)), C(G(KC_RGHT)), 
-        KC_LSFT, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_Z, KC_M, KC_SCLN, TG_COLEMAK, 
+        KC_LSFT, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_Z, KC_M, KC_SCLN, CHAT, 
         KC_LCTL, KC_C, KC_B, KC_X, KC_LALT, KC_SPC, KC_SPC, KC_ENT, KC_RALT, KC_VOLD, KC_VOLU, GAMING
     ),
 
-    /* WIDECOLEMAK
+    /* CHATTING
      * no mod taps
      * ,-----------------------------------------------------------------------------------.
      * |   Q  |   W  |   F  |   P  |   B  |Vol/B+|   J  |   L  |   U  |   Y  |   /  |   Ü  |
@@ -223,10 +237,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |C-CAPS| LEAD | BSPC | LOWER| LSFT |  _Nav-SPC   | RAISE| S-DEL| RALT |_Mo ↓ |_Mo ↑ |
      * `-----------------------------------------------------------------------------------'
      */
-    [_WIDECOLEMAK] = LAYOUT_planck_grid(
+    [_CHATTING] = LAYOUT_planck_grid(
         KC_Q, KC_W, KC_F, KC_P, KC_B, KC_SVU_BU, KC_J, KC_L, KC_U, KC_Y, KC_SCLN, DE_ue,
         KC_A, KC_R, KC_S, KC_T, KC_G, KC_TAB_MPLY, KC_M, KC_N, KC_E, KC_I, KC_O, KC_QUOT, 
-        KC_Z, KC_X, KC_C, KC_D, KC_V, KC_SVD_BD, KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH, TG_COLEMAK, 
+        KC_Z, KC_X, KC_C, KC_D, KC_V, KC_SVD_BD, KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH, CHAT, 
         LCTL_T(KC_CAPS), KC_LEAD, M_ESCM, LT(_LOWER, KC_BSPC), OSM(MOD_LSFT), LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), LT(_RAISE, KC_ENT), RSFT_T(KC_DEL), KC_RALT, LT(_MOUSE, KC_DOWN), LT(_MOUSE, KC_UP)
     ),
 
@@ -345,7 +359,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_ADJUST] = LAYOUT_planck_grid(
         LALT(KC_LSFT), RESET, DEBUG, RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, TG(_NUM), 
-        LALT(KC_GRV), EEP_RST, MU_MOD, AU_ON, AU_OFF, AG_NORM, AG_SWAP, HRWIDECOLEMAK, WIDECOLEMAK, LALT(KC_GRV), LANG_SWITCH, GAMING, 
+        LALT(KC_GRV), EEP_RST, MU_MOD, AU_ON, AU_OFF, AG_NORM, AG_SWAP, HRWIDECOLEMAK, HRWIDECOLEMAK_DE, LALT(KC_GRV), LANG_SWITCH, GAMING, 
         KC_TRNS, MUV_DE, MUV_IN, MU_ON, MU_OFF, MI_ON, MI_OFF, KC_SVD_BD, KC_MPLY, KC_SVU_BU, KC_TRNS, KC_TRNS,
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, EEPROM_RESET
     ),
@@ -362,9 +376,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_NUM] = LAYOUT_planck_grid(
-        KC_ESC, KC_F2,  KC_UP,  KC_ENT, KC_TRNS, KC_NLCK, KC_TRNS, KC_P7, KC_P8, KC_P9, KC_MINS, TG(_NUM), 
-        KC_HOME, KC_LEFT,  KC_DOWN,  KC_RIGHT, KC_END, KC_TAB, KC_ASTR, KC_P4, KC_P5, KC_P6, KC_PLUS, KC_DOT, 
-        MO(_MOUSE), KC_F10, KC_F11, KC_ENT, KC_VOLD, KC_MUTE, KC_EQL, KC_P1, KC_P2, KC_P3, KC_SLSH, KC_COMM, 
+        KC_ESC, KC_F2,  KC_UP,  KC_ENT, KC_TRNS, KC_NLCK, KC_TRNS, KC_P7, KC_P8, KC_P9, KC_MINS, TG(_NUM),
+        KC_HOME, KC_LEFT,  KC_DOWN,  KC_RIGHT, KC_END, KC_TAB, KC_ASTR, KC_P4, KC_P5, KC_P6, KC_PLUS, KC_DOT,
+        MO(_MOUSE), KC_F10, KC_F11, KC_ENT, KC_VOLD, KC_MUTE, KC_EQL, KC_P1, KC_P2, KC_P3, KC_SLSH, KC_COMM,
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_P0, KC_DOT, KC_COMM, KC_EQL, KC_TRNS
     ),
 
@@ -372,21 +386,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ,-----------------------------------------------------------------------------------.
      * |A(TAB)| C(->)| !LANG|A(GRV)| C(<-)| MAIL | HOME |  ->  | PGUP | COPY | PASTE|NAG-SW|
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |C(TAB)|  TAB |  ESC |  ENT |VIM_GG| MPLY |  <-  |   ↓  |   ↑  |  ->  |  END | VIM_O|  
+     * |C(TAB)|  TAB |  ESC |  ENT |VIM_GG| MPLY |  <-  |   ↓  |   ↑  |  ->  |  END | VIM_O|
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | LSFT |S(DEL)|DESK<-|DESK->| VIM_V| MUTE | HOME | PGDN | LSFT | RFST | C(F) | DE_SW|
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | XXXX | XXXX | ____ |  ESC | CAPS |     ____    |  ENT | ____ | DE_SW| ____ | DE_SW|
+     * | ____ | ____ | ____ |  ESC | CAPS |     ____    |  ENT | ____ | DE_SW| ____ | DE_SW|
      * `-----------------------------------------------------------------------------------'
      */
     [_NAV] = LAYOUT_planck_grid(
 #ifdef NAGINATA_ENABLE
-        ALT_TAB, LCTL(KC_RGHT), LANG_SWITCH, LALT(KC_GRV), LCTL(KC_LEFT), KC_MAIL, KC_HOME, KC_RIGHT, KC_PGUP, LCTL(KC_INS), LSFT(KC_INS), NAGINATA_SWITCH, 
+        ALT_TAB, LCTL(KC_RGHT), LANG_SWITCH, LALT(KC_GRV), LCTL(KC_LEFT), KC_MAIL, KC_HOME, KC_RIGHT, KC_PGUP, LCTL(KC_INS), LSFT(KC_INS), NAGINATA_SWITCH,
 #else
-        ALT_TAB, LCTL(KC_RGHT), LANG_SWITCH, LALT(KC_GRV), LCTL(KC_LEFT), KC_MAIL, KC_HOME, KC_RIGHT, KC_PGUP, LCTL(KC_INS), LSFT(KC_INS), KC_BSPC, 
+        ALT_TAB, LCTL(KC_RGHT), LANG_SWITCH, LALT(KC_GRV), LCTL(KC_LEFT), KC_MAIL, KC_HOME, KC_RIGHT, KC_PGUP, LCTL(KC_INS), LSFT(KC_INS), KC_BSPC,
 #endif
-        CTL_TAB, KC_TAB, KC_ESC, KC_ENT, TD(TD_VIM_GG), KC_MPLY, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, KC_END, VIM_O, 
-        KC_LSFT, LSFT(KC_DEL), C(G(KC_LEFT)), C(G(KC_RGHT)), VIM_V, KC_MUTE, KC_HOME, KC_PGDN, KC_LSFT, KC_RSFT, LCTL(KC_F), KC_DE_SWITCH, 
+        CTL_TAB, KC_TAB, KC_ESC, KC_ENT, TD(TD_VIM_GG), KC_MPLY, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, KC_END, VIM_O,
+        KC_LSFT, LSFT(KC_DEL), C(G(KC_LEFT)), C(G(KC_RGHT)), VIM_V, KC_MUTE, KC_HOME, KC_PGDN, KC_LSFT, KC_RSFT, LCTL(KC_F), KC_DE_SWITCH,
         KC_TRNS, KC_TRNS, KC_TRNS, KC_ESC, KC_CAPS, LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), KC_ENT, KC_TRNS, KC_DE_SWITCH, KC_TRNS, KC_DE_SWITCH
     ),
 
@@ -402,21 +416,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_MOUSE] = LAYOUT_planck_grid(
-        KC_NO, KC_NO, KC_BTN4, KC_BTN5, KC_NO, KC_BRIU, KC_NO, KC_WH_U, KC_MS_U, KC_WH_U, DM_PLY2, DM_REC2, 
-        KC_NO, KC_BTN3, KC_BTN2, KC_BTN1, KC_NO, KC_MPLY, KC_NO, KC_MS_L, KC_MS_D, KC_MS_R, DM_PLY1, DM_REC1, 
-        KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_BRID, KC_NO, KC_WH_D, KC_NO, KC_NO, KC_TRNS, DM_RSTP, 
+        KC_NO, KC_NO, KC_BTN4, KC_BTN5, KC_NO, KC_BRIU, KC_NO, KC_WH_U, KC_MS_U, KC_WH_U, DM_PLY2, DM_REC2,
+        KC_NO, KC_BTN3, KC_BTN2, KC_BTN1, KC_NO, KC_MPLY, KC_NO, KC_MS_L, KC_MS_D, KC_MS_R, DM_PLY1, DM_REC1,
+        KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_BRID, KC_NO, KC_WH_D, KC_NO, KC_NO, KC_TRNS, DM_RSTP,
         TG(_MOUSE), KC_NO, KC_NO, KC_TRNS, KC_NO, KC_ACL2, KC_ACL2, KC_TRNS, KC_NO, KC_NO, KC_LEFT, KC_RIGHT
     )
-
 };
 
 #ifdef NAGINATA_ENABLE
 // 薙刀式
 void matrix_init_user(void) {
-  uint16_t ngonkeys[] = {NG_DUMMY, NG_DUMMY};
+  uint16_t ngonkeys[]  = {NG_DUMMY, NG_DUMMY};
   uint16_t ngoffkeys[] = {NG_DUMMY, NG_DUMMY};
   set_naginata(_NAGINATA, ngonkeys, ngoffkeys);
-//  set_naginata(_NAGINATA);
+// set_naginata(_NAGINATA);
 }
 // 薙刀式
 #endif
@@ -601,15 +614,23 @@ bool come_from_naginata = false;
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     static uint16_t key_timer;
     switch (keycode) {
-        case WIDECOLEMAK:
+        case HRWIDECOLEMAK:
             if (record->event.pressed) {
-                set_single_persistent_default_layer(_WIDECOLEMAK);
+//                set_single_persistent_default_layer(_HRWIDECOLEMAK);
+                default_layer_set(1UL<<_HRWIDECOLEMAK); // reduce writing to the eeprom
+#ifdef AUDIO_ENABLE
+                PLAY_SONG(colemak_en_song);
+#endif
             }
             return false;
             break;
-        case HRWIDECOLEMAK:
+        case HRWIDECOLEMAK_DE:
             if (record->event.pressed) {
-                set_single_persistent_default_layer(_HRWIDECOLEMAK);
+//                set_single_persistent_default_layer(_HRWIDECOLEMAK_DE);
+                default_layer_set(1UL<<_HRWIDECOLEMAK_DE); // reduce writing to the eeprom
+#ifdef AUDIO_ENABLE
+                PLAY_SONG(colemak_de_song);
+#endif
             }
             return false;
             break;
@@ -617,13 +638,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 layer_invert(_GAMING);
                 combo_toggle(); // turns off combos when moving to _GAMING
+#ifdef AUDIO_ENABLE
+                PLAY_SONG(gaming_song);
+#endif
             }
             return false;
             break;
-        case TG_COLEMAK:
+        case CHAT:
             if (record->event.pressed) {
                 tap_code(KC_ENT);
-                layer_invert(_WIDECOLEMAK);
+                layer_invert(_CHATTING);
+#ifdef AUDIO_ENABLE
+                PLAY_SONG(chat_song);
+#endif
             }
             return false;
             break;
@@ -839,7 +866,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (de_layout_active) {
                     de_layout_active = false;  // deactivate German overlay
-                    set_single_persistent_default_layer(_HRWIDECOLEMAK);
+//                    set_single_persistent_default_layer(_HRWIDECOLEMAK);
+                    default_layer_set(1UL<<_HRWIDECOLEMAK); // reduce writing to eeprom
+#ifdef AUDIO_ENABLE
+                PLAY_SONG(colemak_en_song);
+#endif
                 } else {
 #ifdef NAGINATA_ENABLE
                     if (naginata_active) {
@@ -847,7 +878,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     }
 #endif
                     de_layout_active = true;  // activate German overlay
-                    set_single_persistent_default_layer(_HRWIDECOLEMAK_DE);
+//                    set_single_persistent_default_layer(_HRWIDECOLEMAK_DE);
+                    default_layer_set(1UL<<_HRWIDECOLEMAK_DE); // reduce writing to eeprom
+#ifdef AUDIO_ENABLE
+                PLAY_SONG(colemak_de_song);
+#endif
                 }
                 return false;
             }
@@ -856,7 +891,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (de_layout_active) {
                     de_layout_active = false;  // deactivate German overlay
-                    set_single_persistent_default_layer(_HRWIDECOLEMAK);
+//                    set_single_persistent_default_layer(_HRWIDECOLEMAK);
+                    default_layer_set(1UL<<_HRWIDECOLEMAK); // reduce writing to eeprom
+#ifdef AUDIO_ENABLE
+                PLAY_SONG(colemak_en_song);
+#endif
                 } else {
 #ifdef NAGINATA_ENABLE
                     come_from_naginata = naginata_active;
@@ -865,7 +904,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     }
 #endif
                     de_layout_active = true;  // activate German overlay
-                    set_single_persistent_default_layer(_HRWIDECOLEMAK_DE);
+ //                   set_single_persistent_default_layer(_HRWIDECOLEMAK_DE);
+                    default_layer_set(1UL<<_HRWIDECOLEMAK_DE); // reduce writing to eeprom
+#ifdef AUDIO_ENABLE
+                PLAY_SONG(colemak_de_song);
+#endif
                 }
             } else {
                 tap_code16(LALT(KC_LSFT));
@@ -1101,7 +1144,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
 //                if (!de_layout_active) {
                     if (naginata_active) {
+#ifdef AUDIO_ENABLE
                         PLAY_SONG(naginata_off_sound);
+#endif
                     }
                     naginata_off();
 //                }
@@ -1124,7 +1169,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (!de_layout_active) {
                     if (!naginata_active) {
+#ifdef AUDIO_ENABLE
                         PLAY_SONG(naginata_on_sound);
+#endif
                     }
                     naginata_on();
                 }
@@ -1429,31 +1476,28 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
 #define HSV_GRASS 57, 255, 255
 #define HSV_OCEAN 148, 255, 255
 
-// Light LEDs 1 to 10 in darkorange when HRCOLEMAK is active
-const rgblight_segment_t PROGMEM my_layer0_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_DARKORANGE});
 // Light LEDs 1 to 10 in green when HRWIDECOLEMAK is active
-const rgblight_segment_t PROGMEM my_layer1_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_OCEAN});
+const rgblight_segment_t PROGMEM my_layer0_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_OCEAN});
 // Light LEDs 1 to 10 in green when de_layout_active is true
-const rgblight_segment_t PROGMEM my_layer2_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_GRASS});
+const rgblight_segment_t PROGMEM my_layer1_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_GRASS});
 // Light LEDs 1 to 10 in red when GAMING layer is active
-const rgblight_segment_t PROGMEM my_layer3_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_RED});
-// Light LEDs 1 to 10 in darkorange when WIDECOLEMAK is active
-const rgblight_segment_t PROGMEM my_layer4_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_DARKORANGE});
+const rgblight_segment_t PROGMEM my_layer2_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_RED});
+// Light LEDs 1 to 10 in darkorange when NAGINATA is active
+const rgblight_segment_t PROGMEM my_layer3_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_DARKORANGE});
 // Light bottom LEDs in purple when ADJUST layer is active
-const rgblight_segment_t PROGMEM my_layer5_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 2, HSV_MAGENTA}, {7, 3, HSV_MAGENTA});
+const rgblight_segment_t PROGMEM my_layer4_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 2, HSV_MAGENTA}, {7, 3, HSV_MAGENTA});
+// Light LEDs 1 to 10 in white when CHATTING is active
+const rgblight_segment_t PROGMEM my_layer5_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_WHITE});
 // Light bottom LEDs in darkorange when caps lock is active. Hard to ignore!
 const rgblight_segment_t PROGMEM my_capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 3, HSV_DARKORANGE}, {7, 3, HSV_DARKORANGE});
-// Light LEDs 1 to 10 in white when NAVIGATION is active
-const rgblight_segment_t PROGMEM my_nav_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_WHITE});
 
 // Now define the array of layers. Later layers take precedence
-const rgblight_segment_t *const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(my_layer0_layer,   // hrcolemak
-                                                                               my_layer1_layer,   // hrwidecolemak
-                                                                               my_layer2_layer,   // de_layout
-                                                                               my_layer3_layer,   // gaming
-                                                                               my_layer4_layer,   // widecolemak
-                                                                               my_layer5_layer,   // adjust
-                                                                               my_nav_layer,      // nav
+const rgblight_segment_t *const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(my_layer0_layer,   // hrwidecolemak
+                                                                               my_layer1_layer,   // de_layout
+                                                                               my_layer2_layer,   // gaming
+                                                                               my_layer3_layer,   // naginata
+                                                                               my_layer4_layer,   // adjust
+                                                                               my_layer5_layer,   // chatting
                                                                                my_capslock_layer  // capslock
 );
 
@@ -1481,17 +1525,17 @@ void keyboard_post_init_user(void) {
 #endif
 
 bool led_update_user(led_t led_state) {
-    rgblight_set_layer_state(7, led_state.caps_lock);
+    rgblight_set_layer_state(6, led_state.caps_lock);
 
     return true;
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    rgblight_set_layer_state(3, layer_state_cmp(state, _GAMING));
-    rgblight_set_layer_state(4, layer_state_cmp(state, _WIDECOLEMAK));
-    rgblight_set_layer_state(5, layer_state_cmp(state, _ADJUST));
+    rgblight_set_layer_state(2, layer_state_cmp(state, _GAMING));
+    rgblight_set_layer_state(5, layer_state_cmp(state, _CHATTING));
+    rgblight_set_layer_state(4, layer_state_cmp(state, _ADJUST));
 #ifdef NAGINATA_ENABLE
-    rgblight_set_layer_state(4, layer_state_cmp(state, _NAGINATA));
+    rgblight_set_layer_state(3, layer_state_cmp(state, _NAGINATA));
     if (layer_state_cmp(state, _NAGINATA)) {
         naginata_active = true;
     } else {
@@ -1509,9 +1553,8 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 }
 
 layer_state_t default_layer_state_set_user(layer_state_t state) {
-    rgblight_set_layer_state(4, layer_state_cmp(state, _WIDECOLEMAK));
-    rgblight_set_layer_state(1, layer_state_cmp(state, _HRWIDECOLEMAK));
-    rgblight_set_layer_state(2, layer_state_cmp(state, _HRWIDECOLEMAK_DE));
+    rgblight_set_layer_state(0, layer_state_cmp(state, _HRWIDECOLEMAK));
+    rgblight_set_layer_state(1, layer_state_cmp(state, _HRWIDECOLEMAK_DE));
     if (layer_state_cmp(state, _HRWIDECOLEMAK_DE)) {
         de_layout_active = true;
     } else {
