@@ -110,6 +110,8 @@ enum combos {
     HDOT_DE_RALT,
     XD_MENU,
     BJ_NUM,
+    VOLUTAB_MNXT,
+    VOLDTAB_MPRV
 };
 
 const uint16_t PROGMEM hcomm_combo[]= {KC_H, KC_COMM, COMBO_END};
@@ -118,7 +120,10 @@ const uint16_t PROGMEM cd_combo[]   = {KC_C, KC_D, COMBO_END};
 const uint16_t PROGMEM hdot_combo[] = {KC_H, KC_DOT, COMBO_END};
 const uint16_t PROGMEM hdot_de_combo[] = {KC_H, DE_DOT_RAB, COMBO_END};
 const uint16_t PROGMEM xd_combo[]   = {KC_X, KC_D, COMBO_END};
-const uint16_t PROGMEM num_combo[]   = {LT(_NUM, KC_B), LT(_NUM, KC_J), COMBO_END};
+const uint16_t PROGMEM num_combo[]  = {LT(_NUM, KC_B), LT(_NUM, KC_J), COMBO_END};
+const uint16_t PROGMEM mnxt_combo[] = {LT(_MOUSE, KC_VOLU), KC_TAB, COMBO_END};
+const uint16_t PROGMEM mprv_combo[] = {LT(_MOUSE, KC_VOLD), KC_TAB, COMBO_END};
+
 
 combo_t key_combos[] = {  
     [HCOMM_ENT] = COMBO(hcomm_combo, KC_ENT),  
@@ -127,7 +132,9 @@ combo_t key_combos[] = {
     [HDOT_RALT]  = COMBO(hdot_combo, KC_RALT),  
     [HDOT_DE_RALT]  = COMBO(hdot_de_combo, KC_RALT),  
     [XD_MENU]   = COMBO(xd_combo, KC_APP),
-    [BJ_NUM]    = COMBO_ACTION(num_combo)
+    [BJ_NUM]    = COMBO_ACTION(num_combo),
+    [VOLUTAB_MNXT]= COMBO(mnxt_combo, KC_MNXT),
+    [VOLDTAB_MPRV]= COMBO(mprv_combo, KC_MPRV)
 };
 
 uint16_t COMBO_LEN = sizeof(key_combos) / sizeof(key_combos[0]);
@@ -151,19 +158,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* _HRWIDECOLEMAK
      * ,-----------------------------------------------------------------------------------.
-     * |  G-Q |  A-W |  S-F |  C-P |_Num-B|Vol/B+|_Num-J|  C-L |  S-U |  A-Y |  G-/ |   ü  |
+     * |  G-Q |  A-W |  S-F |  C-P |_Num-B| Vol+ |_Num-J|  C-L |  S-U |  A-Y |  G-/ |   ü  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |   A  |   R  |   S  |   T  |   G  | TAB  |   M  |   N  |   E  |   I  |   O  |   '  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |_Mo-Z |   X  |   C  |   D  |   V  |Vol/B-|   K  |   H  |   ,  |   .  |_Mo-/ | LEAD |
+     * |_Mo-Z |   X  |   C  |   D  |   V  | Vol- |   K  |   H  |   ,  |   .  |_Mo-/ | LEAD |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |C-CAPS| LEAD | ESCM | LOWER| LSFT |  _Nav-SPC   | RAISE| S-DEL| RALT |_Mo ↓ |_Mo ↑ |
      * `-----------------------------------------------------------------------------------'
      */
     [_HRWIDECOLEMAK] = LAYOUT_planck_grid(
-        LGUI_T(KC_Q), LALT_T(KC_W), LSFT_T(KC_F), LCTL_T(KC_P), LT(_NUM, KC_B), KC_SVU_BU, LT(_NUM, KC_J), RCTL_T(KC_L), RSFT_T(KC_U), LALT_T(KC_Y), RGUI_T(KC_SCLN), DE_ue, 
+        LGUI_T(KC_Q), LALT_T(KC_W), LSFT_T(KC_F), LCTL_T(KC_P), LT(_NUM, KC_B), LT(_MOUSE, KC_VOLU), LT(_NUM, KC_J), RCTL_T(KC_L), RSFT_T(KC_U), LALT_T(KC_Y), RGUI_T(KC_SCLN), DE_ue, 
         KC_A, KC_R, KC_S, KC_T, KC_G, KC_TAB, KC_M, KC_N, KC_E, KC_I, KC_O, KC_QUOT, 
-        LT(_MOUSE, KC_Z), KC_X, KC_C, KC_D, KC_V, KC_SVD_BD, KC_K, KC_H, KC_COMM, KC_DOT, LT(_MOUSE, KC_SLSH), KC_LEAD, 
+        LT(_MOUSE, KC_Z), KC_X, KC_C, KC_D, KC_V, LT(_MOUSE, KC_VOLD), KC_K, KC_H, KC_COMM, KC_DOT, LT(_MOUSE, KC_SLSH), KC_LEAD, 
         LCTL_T(KC_CAPS), KC_LEAD, M_ESCM, LT(_LOWER, KC_BSPC), OSM(MOD_LSFT), LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), LT(_RAISE, KC_ENT), RSFT_T(KC_DEL), KC_RALT, LT(_MOUSE, KC_DOWN), LT(_MOUSE, KC_UP)
     ),
 
@@ -180,9 +187,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_HRWIDECOLEMAK_DE] = LAYOUT_planck_grid(
-        LGUI_T(KC_Q), LALT_T(KC_W), LSFT_T(KC_F), LCTL_T(KC_P), LT(_NUM, KC_B), KC_SVU_BU, LT(_NUM, KC_J), RCTL_T(KC_L), RSFT_T(KC_U), LALT_T(KC_Z), M_RGUI_SCLN, DE_UDIA, 
+        LGUI_T(KC_Q), LALT_T(KC_W), LSFT_T(KC_F), LCTL_T(KC_P), LT(_NUM, KC_B), LT(_MOUSE, KC_VOLU), LT(_NUM, KC_J), RCTL_T(KC_L), RSFT_T(KC_U), LALT_T(KC_Z), M_RGUI_SCLN, DE_UDIA, 
         KC_A, KC_R, KC_S, KC_T, KC_G, KC_TAB, KC_M, KC_N, KC_E, KC_I, KC_O, DE_EN_QUOT, 
-        LT(_MOUSE, KC_Y), KC_X, KC_C, KC_D, KC_V, KC_SVD_BD, KC_K, KC_H, DE_COMM_LAB, DE_DOT_RAB, DE_SLSH_QUST, KC_LEAD, 
+        LT(_MOUSE, KC_Y), KC_X, KC_C, KC_D, KC_V, LT(_MOUSE, KC_VOLD), KC_K, KC_H, DE_COMM_LAB, DE_DOT_RAB, DE_SLSH_QUST, KC_LEAD, 
         LCTL_T(KC_CAPS), KC_LEAD, M_ESCM, LT(_LOWER_DE, KC_BSPC), OSM(MOD_LSFT), LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), LT(_RAISE_DE, KC_ENT), RSFT_T(KC_DEL), KC_RALT, LT(_MOUSE, KC_DOWN), LT(_MOUSE, KC_UP)
     ),
 
@@ -557,7 +564,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case LT(_MOUSE, KC_SLSH):
             return TAPPING_TERM * pinky_factor;
         case LCTL_T(KC_CAPS):
-            return TAPPING_TERM * pinky_factor;
+            return TAPPING_TERM; // prefer this one to be shorter
 
         // tap-dance actions
         case TD(TD_PRN):
