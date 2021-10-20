@@ -405,9 +405,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #ifdef NAGINATA_ENABLE
 // 薙刀式
 void matrix_init_user(void) {
-  uint16_t ngonkeys[] = {KC_H, KC_J};
-  uint16_t ngoffkeys[] = {KC_F, KC_G};
-  set_naginata(_NAGINATA, ngonkeys, ngoffkeys);
+//  uint16_t ngonkeys[] = {};
+//  uint16_t ngoffkeys[] = {};
+//  set_naginata(_NAGINATA, ngonkeys, ngoffkeys);
+  set_naginata(_NAGINATA);
 }
 // 薙刀式
 #endif
