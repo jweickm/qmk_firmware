@@ -7,6 +7,6 @@ COMBO_ENABLE = yes 			# Enable Keyboard Combos 1,764 bytes
 SRC += muse.c
 
 #ifdef NAGINATA_ENABLE 		# enabled in config.h
-UNICODE_ENABLE = yes 		# UNICODE SUPPORT, using Wincompose under Windows
+# UNICODE_ENABLE = yes 		# UNICODE SUPPORT, using Wincompose under Windows
 SRC += naginata_v14.c
 #endif
