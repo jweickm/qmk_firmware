@@ -32,8 +32,8 @@ static uint8_t ng_chrcount = 0; // 文字キー入力のカウンタ
 static bool is_naginata = false; // 薙刀式がオンかオフか
 static uint8_t naginata_layer = 0; // NG_*を配置しているレイヤー番号
 static uint32_t keycomb = 0UL; // 同時押しの状態を示す。32bitの各ビットがキーに対応する。
-//static uint16_t ngon_keys[2]; // 薙刀式をオンにするキー(通常HJ)
-//static uint16_t ngoff_keys[2]; // 薙刀式をオフにするキー(通常FG)
+static uint16_t ngon_keys[2]; // 薙刀式をオンにするキー(通常HJ)
+static uint16_t ngoff_keys[2]; // 薙刀式をオフにするキー(通常FG)
 
 // // EEPROMに保存する設定
 // typedef union {
@@ -542,13 +542,12 @@ const PROGMEM naginata_keymap_long ngmapl_mac[] = {
 //};
 
 // 薙刀式のレイヤー、オンオフするキー
-//void set_naginata(uint8_t layer, uint16_t *onk, uint16_t *offk) {
-void set_naginata(uint8_t layer) {
+void set_naginata(uint8_t layer, uint16_t *onk, uint16_t *offk) {
   naginata_layer = layer;
-//  ngon_keys[0] = *onk;
-//  ngon_keys[1] = *(onk+1);
-//  ngoff_keys[0] = *offk;
-//  ngoff_keys[1] = *(offk+1);
+  ngon_keys[0] = *onk;
+  ngon_keys[1] = *(onk+1);
+  ngoff_keys[0] = *offk;
+  ngoff_keys[1] = *(offk+1);
 
 //  naginata_config.raw = eeconfig_read_user();
 //  if (naginata_config.os != NG_WIN && naginata_config.os != NG_MAC && naginata_config.os != NG_LINUX) {
@@ -770,57 +769,57 @@ bool process_modifier(uint16_t keycode, keyrecord_t *record) {
   return false;
 }
 
-//static uint16_t fghj_buf = 0; // 押しているJかKのキーコード
-//static uint8_t nkeypress = 0; // 同時にキーを押している数
+static uint16_t fghj_buf = 0; // 押しているJかKのキーコード
+static uint8_t nkeypress = 0; // 同時にキーを押している数
 
-//// 薙刀式の起動処理(COMBOを使わない)
-//bool enable_naginata(uint16_t keycode, keyrecord_t *record) {
-//  // キープレス
-//  if (record->event.pressed) {
-//    nkeypress++;
-//    // 1キー目、JKの前に他のキーを押していないこと
-//    if (fghj_buf == 0 && nkeypress == 1) {
-//      // かなオンキーの場合
-//      if (keycode == ngon_keys[0] || keycode == ngon_keys[1] || keycode == ngoff_keys[0] || keycode == ngoff_keys[1]) {
-//        fghj_buf = keycode;
-//        return false;
-//      }
-//    // ２キー目
-//    } else {
-//      // ２キー目、１キー目、両方ともかなオンキー
-//      if ((keycode == ngon_keys[0] && fghj_buf == ngon_keys[1]) ||
-//          (keycode == ngon_keys[1] && fghj_buf == ngon_keys[0])) {
-//        naginata_on();
-//        fghj_buf = 0;
-//        nkeypress = 0;
-//        return false;
-//      } else if ((keycode == ngoff_keys[0] && fghj_buf == ngoff_keys[1]) ||
-//          (keycode == ngoff_keys[1] && fghj_buf == ngoff_keys[0])) {
-//        naginata_off();
-//        fghj_buf = 0;
-//        nkeypress = 0;
-//        return false;
-//      // ２キー目はかなオンキーではない
-//      } else {
-//        tap_code(fghj_buf); // 1キー目を出力
-//        fghj_buf = 0;
-//        nkeypress = 0;
-//        return true; // 2キー目はQMKにまかせる
-//      }
-//    }
-//  } else {
-//    nkeypress = 0;
-//    // J/K単押しだった
-//    if (fghj_buf > 0) {
-//      tap_code(fghj_buf);
-//      fghj_buf = 0;
-//      return false;
-//    }
-//  }
-//
-//  fghj_buf = 0;
-//  return true;
-//}
+// 薙刀式の起動処理(COMBOを使わない)
+bool enable_naginata(uint16_t keycode, keyrecord_t *record) {
+  // キープレス
+  if (record->event.pressed) {
+    nkeypress++;
+    // 1キー目、JKの前に他のキーを押していないこと
+    if (fghj_buf == 0 && nkeypress == 1) {
+      // かなオンキーの場合
+      if (keycode == ngon_keys[0] || keycode == ngon_keys[1] || keycode == ngoff_keys[0] || keycode == ngoff_keys[1]) {
+        fghj_buf = keycode;
+        return false;
+      }
+    // ２キー目
+    } else {
+      // ２キー目、１キー目、両方ともかなオンキー
+      if ((keycode == ngon_keys[0] && fghj_buf == ngon_keys[1]) ||
+          (keycode == ngon_keys[1] && fghj_buf == ngon_keys[0])) {
+        naginata_on();
+        fghj_buf = 0;
+        nkeypress = 0;
+        return false;
+      } else if ((keycode == ngoff_keys[0] && fghj_buf == ngoff_keys[1]) ||
+          (keycode == ngoff_keys[1] && fghj_buf == ngoff_keys[0])) {
+        naginata_off();
+        fghj_buf = 0;
+        nkeypress = 0;
+        return false;
+      // ２キー目はかなオンキーではない
+      } else {
+        tap_code(fghj_buf); // 1キー目を出力
+        fghj_buf = 0;
+        nkeypress = 0;
+        return true; // 2キー目はQMKにまかせる
+      }
+    }
+  } else {
+    nkeypress = 0;
+    // J/K単押しだった
+    if (fghj_buf > 0) {
+      tap_code(fghj_buf);
+      fghj_buf = 0;
+      return false;
+    }
+  }
+
+  fghj_buf = 0;
+  return true;
+}
 
 // バッファをクリアする
 void naginata_clear(void) {
@@ -829,8 +828,8 @@ void naginata_clear(void) {
   }
   ng_chrcount = 0;
   n_modifier = 0;
-//  nkeypress = 0;
-//  fghj_buf = 0;
+  nkeypress = 0;
+  fghj_buf = 0;
 }
 
 // 薙刀式の入力処理
@@ -892,7 +891,7 @@ bool process_naginata(uint16_t keycode, keyrecord_t *record) {
 
   if (!is_naginata)
     // return true;
-    //return enable_naginata(keycode, record);
+    return enable_naginata(keycode, record);
 
   if (process_modifier(keycode, record))
     return true;
@@ -1211,8 +1210,8 @@ bool naginata_lookup(int nt, bool shifted) {
 //          compress_buffer(nt);
 //          return true;
 //          break;
-//      }
-//      break;
+//     }
+//     break;
 //    case B_M|B_COMM|B_S: // ^x(^v){改行}{Space}+{↑}^x
 //      switch (naginata_config.os) {
 //        case NG_WIN:

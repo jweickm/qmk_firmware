@@ -37,8 +37,8 @@ void ty_send_string(char *);
 void copyTYtable(void);
 
 bool process_naginata(uint16_t, keyrecord_t *);
-//void set_naginata(uint8_t, uint16_t *, uint16_t *);
-void set_naginata(uint8_t); //for use without key combo activation
+void set_naginata(uint8_t, uint16_t *, uint16_t *);
+//void set_naginata(uint8_t); //for use without key combo activation
 
 // bool enable_naginata(uint16_t, keyrecord_t *);
 

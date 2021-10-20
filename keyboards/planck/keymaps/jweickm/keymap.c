@@ -51,6 +51,7 @@ enum planck_keycodes {
     HRWIDECOLEMAK = NG_SAFE_RANGE,
     EISU,
     KANA2,
+    NG_DUMMY,
     // 薙刀式
 #else
     HRWIDECOLEMAK = SAFE_RANGE,
@@ -405,10 +406,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #ifdef NAGINATA_ENABLE
 // 薙刀式
 void matrix_init_user(void) {
-//  uint16_t ngonkeys[] = {};
-//  uint16_t ngoffkeys[] = {};
-//  set_naginata(_NAGINATA, ngonkeys, ngoffkeys);
-  set_naginata(_NAGINATA);
+  uint16_t ngonkeys[] = {NG_DUMMY, NG_DUMMY};
+  uint16_t ngoffkeys[] = {NG_DUMMY, NG_DUMMY};
+  set_naginata(_NAGINATA, ngonkeys, ngoffkeys);
+//  set_naginata(_NAGINATA);
 }
 // 薙刀式
 #endif
@@ -1091,12 +1092,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // 薙刀式
         case EISU:
             if (record->event.pressed) {
-                if (!de_layout_active) {
+//                if (!de_layout_active) {
                     if (naginata_active) {
                         PLAY_SONG(naginata_off_sound);
                     }
                     naginata_off();
-                }
+//                }
             }
             return false;
             break;
