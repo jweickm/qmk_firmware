@@ -612,11 +612,11 @@ void ng_set_unicode_mode(uint8_t os) {
     case NG_WIN:
       set_unicode_input_mode(UC_WINC);
       break;
-    case NG_MAC:
-      set_unicode_input_mode(UC_MAC);
-      break;
-    case NG_LINUX:
-      set_unicode_input_mode(UC_LNX);
+//    case NG_MAC:
+//      set_unicode_input_mode(UC_MAC);
+//      break;
+//    case NG_LINUX:
+//      set_unicode_input_mode(UC_LNX);
       break;
   }
 }
@@ -681,34 +681,34 @@ void kouchi_shift_toggle() {
 //  eeconfig_update_user(naginata_config.raw);
 }
 
-void ng_show_os(void) {
-  switch (naginata_config.os) {
-    case NG_WIN:
-      send_string("win");
-      break;
-    case NG_MAC:
-      send_string("mac");
-      if (naginata_config.live_conv) {
-        send_string("/:lc");
-      } else {
-        send_string("/-lc");
-      }
-      break;
-    case NG_LINUX:
-      send_string("linux");
-      break;
-  }
-  if (naginata_config.tategaki) {
-    send_string("/tate");
-  } else {
-    send_string("/yoko");
-  }
-  if (naginata_config.kouchi_shift) {
-    send_string("/:kouchi");
-  } else {
-    send_string("/-kouchi");
-  }
-}
+//void ng_show_os(void) {
+//  switch (naginata_config.os) {
+//    case NG_WIN:
+//      send_string("win");
+//      break;
+//    case NG_MAC:
+//      send_string("mac");
+//      if (naginata_config.live_conv) {
+//        send_string("/:lc");
+//      } else {
+//        send_string("/-lc");
+//      }
+//      break;
+//    case NG_LINUX:
+//      send_string("linux");
+//      break;
+//  }
+//  if (naginata_config.tategaki) {
+//    send_string("/tate");
+//  } else {
+//    send_string("/yoko");
+//  }
+//  if (naginata_config.kouchi_shift) {
+//    send_string("/:kouchi");
+//  } else {
+//    send_string("/-kouchi");
+//  }
+//}
 
 void mac_send_string(const char *str) {
   send_string(str);
@@ -726,7 +726,7 @@ void ng_send_unicode_string(const char *str) {
     case NG_WIN:
     case NG_MAC:
       send_unicode_string(str);
-      tap_code(KC_ENT);
+//      tap_code(KC_ENT);
       break;
   }
 }
@@ -858,26 +858,26 @@ bool process_naginata(uint16_t keycode, keyrecord_t *record) {
         naginata_clear();
         return false;
         break;
-      case NGSW_WIN:
-        switchOS(NG_WIN);
-        return false;
-        break;
-      case NGSW_MAC:
-        switchOS(NG_MAC);
-        return false;
-        break;
-      case NGSW_LNX:
-        switchOS(NG_LINUX);
-        return false;
-        break;
-      case NG_MLV:
-        mac_live_conversion_toggle();
-        return false;
-        break;
-      case NG_SHOS:
-        ng_show_os();
-        return false;
-        break;
+//      case NGSW_WIN:
+//        switchOS(NG_WIN);
+//        return false;
+//        break;
+//      case NGSW_MAC:
+//        switchOS(NG_MAC);
+//        return false;
+//        break;
+//      case NGSW_LNX:
+//        switchOS(NG_LINUX);
+//        return false;
+//        break;
+//      case NG_MLV:
+//        mac_live_conversion_toggle();
+//        return false;
+//        break;
+//      case NG_SHOS:
+//        ng_show_os();
+//        return false;
+//        break;
       case NG_TAYO:
         tategaki_toggle();
         return false;
@@ -1010,12 +1010,12 @@ bool naginata_lookup(int nt, bool shifted) {
           compress_buffer(nt);
           return true;
           break;
-        case NG_MAC:
-          mac_send_string("nagibatu");
-          tap_code(KC_ENT);
-          compress_buffer(nt);
-          return true;
-          break;
+//        case NG_MAC:
+//          mac_send_string("nagibatu");
+//          tap_code(KC_ENT);
+//          compress_buffer(nt);
+//          return true;
+//          break;
       }
       break;
 
@@ -1032,17 +1032,17 @@ bool naginata_lookup(int nt, bool shifted) {
           compress_buffer(nt);
           return true;
           break;
-        case NG_MAC:
-          mac_send_string("nagikakkohie");
-          mac_send_string("nagikakkomie");
-          if (naginata_config.tategaki) {
-            tap_code(KC_UP);
-          } else {
-            tap_code(KC_LEFT);
-          }
-          compress_buffer(nt);
-          return true;
-          break;
+//        case NG_MAC:
+//          mac_send_string("nagikakkohie");
+//          mac_send_string("nagikakkomie");
+//          if (naginata_config.tategaki) {
+//            tap_code(KC_UP);
+//          } else {
+//            tap_code(KC_LEFT);
+//          }
+//          compress_buffer(nt);
+//          return true;
+//          break;
       }
       break;
     case B_J|B_K|B_S: // (){改行}{↑}
@@ -1058,17 +1058,17 @@ bool naginata_lookup(int nt, bool shifted) {
           compress_buffer(nt);
           return true;
           break;
-        case NG_MAC:
-          mac_send_string("nagikakkohika");
-          mac_send_string("nagikakkomika");
-          if (naginata_config.tategaki) {
-            tap_code(KC_UP);
-          } else {
-            tap_code(KC_LEFT);
-          }
-          compress_buffer(nt);
-          return true;
-          break;
+//        case NG_MAC:
+//          mac_send_string("nagikakkohika");
+//          mac_send_string("nagikakkomika");
+//          if (naginata_config.tategaki) {
+//            tap_code(KC_UP);
+//          } else {
+//            tap_code(KC_LEFT);
+//          }
+//          compress_buffer(nt);
+//          return true;
+//          break;
       }
       break;
     case B_J|B_K|B_F: // 「」{改行}{↑}
@@ -1084,17 +1084,17 @@ bool naginata_lookup(int nt, bool shifted) {
           compress_buffer(nt);
           return true;
           break;
-        case NG_MAC:
-          mac_send_string("nagikakkohiu");
-          mac_send_string("nagikakkomiu");
-          if (naginata_config.tategaki) {
-            tap_code(KC_UP);
-          } else {
-            tap_code(KC_LEFT);
-          }
-          compress_buffer(nt);
-          return true;
-          break;
+//        case NG_MAC:
+//          mac_send_string("nagikakkohiu");
+//          mac_send_string("nagikakkomiu");
+//          if (naginata_config.tategaki) {
+//            tap_code(KC_UP);
+//          } else {
+//            tap_code(KC_LEFT);
+//          }
+//          compress_buffer(nt);
+//          return true;
+//          break;
       }
       break;
     case B_J|B_K|B_G: // {改行}{End}{改行}「」{改行}{↑}
@@ -1113,20 +1113,20 @@ bool naginata_lookup(int nt, bool shifted) {
           compress_buffer(nt);
           return true;
           break;
-        case NG_MAC:
-          tap_code(KC_ENT);
-          tap_code(KC_END);
-          tap_code(KC_ENT);
-          mac_send_string("nagikakkohiu");
-          mac_send_string("nagikakkomiu");
-          if (naginata_config.tategaki) {
-            tap_code(KC_UP);
-          } else {
-            tap_code(KC_LEFT);
-          }
-          compress_buffer(nt);
-          return true;
-          break;
+//        case NG_MAC:
+//          tap_code(KC_ENT);
+//          tap_code(KC_END);
+//          tap_code(KC_ENT);
+//          mac_send_string("nagikakkohiu");
+//          mac_send_string("nagikakkomiu");
+//          if (naginata_config.tategaki) {
+//            tap_code(KC_UP);
+//          } else {
+//            tap_code(KC_LEFT);
+//          }
+//          compress_buffer(nt);
+//          return true;
+//          break;
       }
       break;
     case B_J|B_K|B_X: // 【】{改行}{↑}
@@ -1142,17 +1142,17 @@ bool naginata_lookup(int nt, bool shifted) {
           compress_buffer(nt);
           return true;
           break;
-        case NG_MAC:
-          mac_send_string("nagikakkohia");
-          mac_send_string("nagikakkomia");
-          if (naginata_config.tategaki) {
-            tap_code(KC_UP);
-          } else {
-            tap_code(KC_LEFT);
-          }
-          compress_buffer(nt);
-          return true;
-          break;
+//        case NG_MAC:
+//          mac_send_string("nagikakkohia");
+//          mac_send_string("nagikakkomia");
+//          if (naginata_config.tategaki) {
+//            tap_code(KC_UP);
+//          } else {
+//            tap_code(KC_LEFT);
+//          }
+//          compress_buffer(nt);
+//          return true;
+//          break;
       }
       break;
     case B_J|B_K|B_B: // 《》{改行}{↑}
@@ -1168,17 +1168,17 @@ bool naginata_lookup(int nt, bool shifted) {
           compress_buffer(nt);
           return true;
           break;
-        case NG_MAC:
-          mac_send_string("nagikakkohio");
-          mac_send_string("nagikakkomio");
-          if (naginata_config.tategaki) {
-            tap_code(KC_UP);
-          } else {
-            tap_code(KC_LEFT);
-          }
-          compress_buffer(nt);
-          return true;
-          break;
+//        case NG_MAC:
+//          mac_send_string("nagikakkohio");
+//          mac_send_string("nagikakkomio");
+//          if (naginata_config.tategaki) {
+//            tap_code(KC_UP);
+//          } else {
+//            tap_code(KC_LEFT);
+//          }
+//          compress_buffer(nt);
+//          return true;
+//          break;
       }
       break;
     case B_M|B_COMM|B_W: // ^x『^v』{改行}{Space}+{↑}^x
@@ -1197,19 +1197,19 @@ bool naginata_lookup(int nt, bool shifted) {
           compress_buffer(nt);
           return true;
           break;
-        case NG_MAC:
-          send_string(SS_LCMD("x"));
-          mac_send_string("nagikakkohie");
-          send_string(SS_LCMD("v"));
-          mac_send_string("nagikakkomie");
-          if (naginata_config.tategaki) {
-            send_string(" "SS_LSFT(SS_TAP(X_UP))SS_LCMD("x"));
-          } else {
-            send_string(" "SS_LSFT(SS_TAP(X_LEFT))SS_LCMD("x"));
-          }
-          compress_buffer(nt);
-          return true;
-          break;
+//        case NG_MAC:
+//          send_string(SS_LCMD("x"));
+//          mac_send_string("nagikakkohie");
+//          send_string(SS_LCMD("v"));
+//          mac_send_string("nagikakkomie");
+//          if (naginata_config.tategaki) {
+//            send_string(" "SS_LSFT(SS_TAP(X_UP))SS_LCMD("x"));
+//          } else {
+//            send_string(" "SS_LSFT(SS_TAP(X_LEFT))SS_LCMD("x"));
+//          }
+//          compress_buffer(nt);
+//          return true;
+//          break;
       }
       break;
     case B_M|B_COMM|B_S: // ^x(^v){改行}{Space}+{↑}^x
@@ -1228,19 +1228,19 @@ bool naginata_lookup(int nt, bool shifted) {
           compress_buffer(nt);
           return true;
           break;
-        case NG_MAC:
-          send_string(SS_LCMD("x"));
-          mac_send_string("nagikakkohika");
-          send_string(SS_LCMD("v"));
-          mac_send_string("nagikakkomika");
-          if (naginata_config.tategaki) {
-            send_string(" "SS_LSFT(SS_TAP(X_UP))SS_LCMD("x"));
-          } else {
-            send_string(" "SS_LSFT(SS_TAP(X_LEFT))SS_LCMD("x"));
-          }
-          compress_buffer(nt);
-          return true;
-          break;
+//        case NG_MAC:
+//          send_string(SS_LCMD("x"));
+//          mac_send_string("nagikakkohika");
+//          send_string(SS_LCMD("v"));
+//          mac_send_string("nagikakkomika");
+//          if (naginata_config.tategaki) {
+//            send_string(" "SS_LSFT(SS_TAP(X_UP))SS_LCMD("x"));
+//          } else {
+//            send_string(" "SS_LSFT(SS_TAP(X_LEFT))SS_LCMD("x"));
+//          }
+//          compress_buffer(nt);
+//          return true;
+//          break;
       }
       break;
     case B_M|B_COMM|B_F: // ^x「^v」{改行}{Space}+{↑}^x
@@ -1259,19 +1259,19 @@ bool naginata_lookup(int nt, bool shifted) {
           compress_buffer(nt);
           return true;
           break;
-        case NG_MAC:
-          send_string(SS_LCMD("x"));
-          mac_send_string("nagikakkohiu");
-          send_string(SS_LCMD("v"));
-          mac_send_string("nagikakkomiu");
-          if (naginata_config.tategaki) {
-            send_string(" "SS_LSFT(SS_TAP(X_UP))SS_LCMD("x"));
-          } else {
-            send_string(" "SS_LSFT(SS_TAP(X_LEFT))SS_LCMD("x"));
-          }
-          compress_buffer(nt);
-          return true;
-          break;
+//        case NG_MAC:
+//          send_string(SS_LCMD("x"));
+//          mac_send_string("nagikakkohiu");
+//          send_string(SS_LCMD("v"));
+//          mac_send_string("nagikakkomiu");
+//          if (naginata_config.tategaki) {
+//            send_string(" "SS_LSFT(SS_TAP(X_UP))SS_LCMD("x"));
+//          } else {
+//            send_string(" "SS_LSFT(SS_TAP(X_LEFT))SS_LCMD("x"));
+//          }
+//          compress_buffer(nt);
+//          return true;
+//          break;
       }
     default:
       // キーから仮名に変換して出力する
@@ -1286,16 +1286,16 @@ bool naginata_lookup(int nt, bool shifted) {
         }
       }
       // 編集モード Mac
-      if (naginata_config.os == NG_MAC) {
-        for (int i = 0; i < sizeof ngmapl_mac / sizeof bngmapl; i++) {
-          memcpy_P(&bngmapl, &ngmapl_mac[i], sizeof(bngmapl));
-          if (keycomb_buf == bngmapl.key) {
-            send_string(bngmapl.kana);
-            compress_buffer(nt);
-            return true;
-          }
-        }
-      }
+//      if (naginata_config.os == NG_MAC) {
+//        for (int i = 0; i < sizeof ngmapl_mac / sizeof bngmapl; i++) {
+//          memcpy_P(&bngmapl, &ngmapl_mac[i], sizeof(bngmapl));
+//          if (keycomb_buf == bngmapl.key) {
+//            send_string(bngmapl.kana);
+//            compress_buffer(nt);
+//            return true;
+//          }
+//        }
+//      }
       // 編集モード 共通
       for (int i = 0; i < sizeof ngmapl / sizeof bngmapl; i++) {
         memcpy_P(&bngmapl, &ngmapl[i], sizeof(bngmapl));
@@ -1322,9 +1322,9 @@ bool naginata_lookup(int nt, bool shifted) {
             case NG_LINUX:
               ng_send_unicode_string(bngmapu.win);
               break;
-            case NG_MAC:
-              mac_send_string(bngmapu.mac);
-              break;
+//            case NG_MAC:
+//              mac_send_string(bngmapu.mac);
+//              break;
           }
           compress_buffer(nt);
           return true;

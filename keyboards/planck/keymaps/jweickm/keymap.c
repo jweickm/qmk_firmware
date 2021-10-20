@@ -105,9 +105,9 @@ enum combos {
     HCOMM_ENT,
     HCOMM_DE_ENT,
     CD_ESC,
-    HDOT_TAB,
-    HDOT_DE_TAB,
-    XD_CAPS,
+    HDOT_RALT,
+    HDOT_DE_RALT,
+    XD_MENU,
     BJ_NUM,
 };
 
@@ -123,9 +123,9 @@ combo_t key_combos[] = {
     [HCOMM_ENT] = COMBO(hcomm_combo, KC_ENT),  
     [HCOMM_DE_ENT] = COMBO(hcomm_de_combo, KC_ENT),  
     [CD_ESC]    = COMBO(cd_combo, KC_ESC),  
-    [HDOT_TAB]  = COMBO(hdot_combo, KC_TAB),  
-    [HDOT_DE_TAB]  = COMBO(hdot_de_combo, KC_TAB),  
-    [XD_CAPS]   = COMBO(xd_combo, KC_CAPS),
+    [HDOT_RALT]  = COMBO(hdot_combo, KC_RALT),  
+    [HDOT_DE_RALT]  = COMBO(hdot_de_combo, KC_RALT),  
+    [XD_MENU]   = COMBO(xd_combo, KC_APP),
     [BJ_NUM]    = COMBO_ACTION(num_combo)
 };
 

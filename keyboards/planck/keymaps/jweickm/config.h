@@ -77,4 +77,4 @@
 #define RGBLIGHT_LAYERS
 
 // 薙刀式の設定
-//#define NAGINATA_ENABLE // requires 10,560 bytes
+#define NAGINATA_ENABLE // requires 10,560 bytes
