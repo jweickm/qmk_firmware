@@ -152,6 +152,7 @@ combo_t key_combos[] = {
     [XC_BSPC]       = COMBO(xc_combo, KC_BSPC),
     [COMMDOT_CAPS]          = COMBO(commdot_combo, KC_CAPS),
     [COMMDOT_DE_CAPS]       = COMBO(commdot_de_combo, KC_CAPS),
+
 #ifdef NAGINATA_ENABLE
     [ST_NAV]    = COMBO(stnav_combo, MO(_NAV)),
 #endif
