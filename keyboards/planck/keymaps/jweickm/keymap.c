@@ -116,6 +116,10 @@ enum combos {
     XC_BSPC,
     COMMDOT_CAPS,
     COMMDOT_DE_CAPS,
+    NRAISE,
+    NRAISE_DE,
+    TLOWER, 
+    TLOWER_DE,
 #ifdef NAGINATA_ENABLE
     ST_NAV,
 #endif
@@ -134,6 +138,10 @@ const uint16_t PROGMEM dh_combo[]   = {KC_D, KC_H, COMBO_END};
 const uint16_t PROGMEM xc_combo[]   = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM commdot_combo[]      = {KC_COMM, KC_DOT, COMBO_END};
 const uint16_t PROGMEM commdot_de_combo[]   = {DE_COMM_LAB, DE_DOT_RAB, COMBO_END};
+const uint16_t PROGMEM nraise_combo[]       = {KC_N, LT(_RAISE, KC_ENT), COMBO_END};
+const uint16_t PROGMEM nraise_de_combo[]    = {KC_N, LT(_RAISE_DE, KC_ENT), COMBO_END};
+const uint16_t PROGMEM tlower_combo[]       = {KC_T, LT(_LOWER, KC_BSPC), COMBO_END};
+const uint16_t PROGMEM tlower_de_combo[]    = {KC_T, LT(_LOWER_DE, KC_BSPC), COMBO_END};
 #ifdef NAGINATA_ENABLE
 const uint16_t PROGMEM stnav_combo[] = {NG_D, NG_F, COMBO_END};
 #endif
@@ -152,7 +160,10 @@ combo_t key_combos[] = {
     [XC_BSPC]       = COMBO(xc_combo, KC_BSPC),
     [COMMDOT_CAPS]          = COMBO(commdot_combo, KC_CAPS),
     [COMMDOT_DE_CAPS]       = COMBO(commdot_de_combo, KC_CAPS),
-
+    [NRAISE]        = COMBO(nraise_combo, OSL(_RAISE)),
+    [NRAISE_DE]     = COMBO(nraise_de_combo, OSL(_RAISE_DE)),
+    [TLOWER]        = COMBO(tlower_combo, OSL(_LOWER)),
+    [TLOWER_DE]     = COMBO(tlower_de_combo, OSL(_LOWER_DE)),
 #ifdef NAGINATA_ENABLE
     [ST_NAV]    = COMBO(stnav_combo, MO(_NAV)),
 #endif
@@ -198,7 +209,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         LGUI_T(KC_Q), LALT_T(KC_W), LSFT_T(KC_F), LCTL_T(KC_P), LT(_NUM, KC_B), LT(_MOUSE, KC_VOLU), LT(_NUM, KC_J), RCTL_T(KC_L), RSFT_T(KC_U), LALT_T(KC_Y), RGUI_T(KC_SCLN), DE_ue, 
         KC_A, KC_R, KC_S, KC_T, KC_G, KC_TAB, KC_M, KC_N, KC_E, KC_I, KC_O, KC_QUOT, 
         LT(_MOUSE, KC_Z), KC_X, KC_C, KC_D, KC_V, LT(_MOUSE, KC_VOLD), KC_K, KC_H, KC_COMM, KC_DOT, LT(_MOUSE, KC_SLSH), KC_LEAD, 
-        LCTL_T(KC_CAPS), KC_LEAD, KC_BSPC, LOWER, OSM(MOD_LSFT), LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), RAISE, RSFT_T(KC_DEL), KC_RALT, LT(_MOUSE, KC_DOWN), LT(_MOUSE, KC_UP)
+        LCTL_T(KC_CAPS), KC_LEAD, M_ESCM, LT(_LOWER, KC_BSPC), OSM(MOD_LSFT), LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), LT(_RAISE, KC_ENT), RSFT_T(KC_DEL), KC_RALT, LT(_MOUSE, KC_DOWN), LT(_MOUSE, KC_UP)
     ),
 
     /* _HRWIDECOLEMAK_DE
@@ -217,7 +228,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         LGUI_T(KC_Q), LALT_T(KC_W), LSFT_T(KC_F), LCTL_T(KC_P), LT(_NUM, KC_B), LT(_MOUSE, KC_VOLU), LT(_NUM, KC_J), RCTL_T(KC_L), RSFT_T(KC_U), LALT_T(KC_Z), M_RGUI_SCLN, DE_UDIA, 
         KC_A, KC_R, KC_S, KC_T, KC_G, KC_TAB, KC_M, KC_N, KC_E, KC_I, KC_O, DE_EN_QUOT, 
         LT(_MOUSE, KC_Y), KC_X, KC_C, KC_D, KC_V, LT(_MOUSE, KC_VOLD), KC_K, KC_H, DE_COMM_LAB, DE_DOT_RAB, DE_SLSH_QUST, KC_LEAD, 
-        LCTL_T(KC_CAPS), KC_LEAD, KC_BSPC, LOWER_DE, OSM(MOD_LSFT), LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), RAISE_DE, RSFT_T(KC_DEL), KC_RALT, LT(_MOUSE, KC_DOWN), LT(_MOUSE, KC_UP)
+        LCTL_T(KC_CAPS), KC_LEAD, M_ESCM, LT(_LOWER_DE, KC_BSPC), OSM(MOD_LSFT), LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), LT(_RAISE_DE, KC_ENT), RSFT_T(KC_DEL), KC_RALT, LT(_MOUSE, KC_DOWN), LT(_MOUSE, KC_UP)
     ),
 
     /* _GAMING
@@ -564,9 +575,9 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case LT(_NUM, KC_J):
             return TAPPING_TERM * index_factor;
         case LT(_MOUSE, KC_VOLU):
-            return TAPPING_TERM * index_factor;
+            return TAPPING_TERM * td_factor;
         case LT(_MOUSE, KC_VOLD):
-            return TAPPING_TERM * index_factor;
+            return TAPPING_TERM * td_factor;
 
         // middle finger keys
         case LSFT_T(KC_F):
