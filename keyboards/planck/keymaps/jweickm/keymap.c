@@ -116,16 +116,18 @@ enum combos {
     XC_BSPC,
     COMMDOT_CAPS,
     COMMDOT_DE_CAPS,
-    //NRAISE,
-    NRAISE_DE,
+//    NRAISE,
+//    NRAISE_DE,
     TLOWER, 
     TLOWER_DE,
+
     // combos for the lower and raise keys
     QLOWER, 
     WLOWER, 
     FLOWER, 
     PLOWER, 
     BLOWER, 
+    VOLLOWER,
     JLOWER, 
     LLOWER, 
     ULOWER, 
@@ -138,11 +140,13 @@ enum combos {
     ILOWER, 
     OLOWER, 
     QUOTLOWER,
+
     QRAISE, 
     WRAISE, 
     FRAISE, 
     PRAISE, 
     BRAISE, 
+    VOLRAISE,
     JRAISE, 
     LRAISE, 
     URAISE, 
@@ -155,6 +159,44 @@ enum combos {
     IRAISE, 
     ORAISE, 
     QUOTRAISE,
+// combos for lower and raise on german
+    QLOWER_DE, 
+    WLOWER_DE, 
+    FLOWER_DE, 
+    PLOWER_DE, 
+    VOLLOWER_DE,
+    BLOWER_DE, 
+    JLOWER_DE, 
+    LLOWER_DE, 
+    ULOWER_DE, 
+    YLOWER_DE, 
+    SCLNLOWER_DE, 
+    UELOWER_DE,
+    MLOWER_DE, 
+    NLOWER_DE, 
+    ELOWER_DE, 
+    ILOWER_DE, 
+    OLOWER_DE, 
+    QUOTLOWER_DE,
+
+    QRAISE_DE, 
+    WRAISE_DE, 
+    FRAISE_DE, 
+    PRAISE_DE, 
+    VOLRAISE_DE,
+    BRAISE_DE, 
+    JRAISE_DE, 
+    LRAISE_DE, 
+    URAISE_DE, 
+    YRAISE_DE, 
+    SCLNRAISE_DE, 
+    UERAISE_DE,
+    MRAISE_DE, 
+    NRAISE_DE, 
+    ERAISE_DE, 
+    IRAISE_DE, 
+    ORAISE_DE, 
+    QUOTRAISE_DE,
 
 #ifdef NAGINATA_ENABLE
     ST_NAV,
@@ -175,7 +217,7 @@ const uint16_t PROGMEM xc_combo[]   = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM commdot_combo[]      = {KC_COMM, KC_DOT, COMBO_END};
 const uint16_t PROGMEM commdot_de_combo[]   = {DE_COMM_LAB, DE_DOT_RAB, COMBO_END};
 //const uint16_t PROGMEM nraise_combo[]       = {KC_N, LT(_RAISE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM nraise_de_combo[]    = {KC_N, LT(_RAISE_DE, KC_ENT), COMBO_END};
+//const uint16_t PROGMEM nraise_de_combo[]    = {KC_N, LT(_RAISE_DE, KC_ENT), COMBO_END};
 const uint16_t PROGMEM tlower_combo[]       = {KC_T, LT(_LOWER, KC_BSPC), COMBO_END};
 const uint16_t PROGMEM tlower_de_combo[]    = {KC_T, LT(_LOWER_DE, KC_BSPC), COMBO_END};
 // combos for lower and raise
@@ -184,6 +226,7 @@ const uint16_t PROGMEM wlower_combo[]       = {LALT_T(KC_W), LT(_LOWER, KC_BSPC)
 const uint16_t PROGMEM flower_combo[]       = {LSFT_T(KC_F), LT(_LOWER, KC_BSPC), COMBO_END};
 const uint16_t PROGMEM plower_combo[]       = {LCTL_T(KC_P), LT(_LOWER, KC_BSPC), COMBO_END};
 const uint16_t PROGMEM blower_combo[]       = {LT(_NUM, KC_B), LT(_LOWER, KC_BSPC), COMBO_END};
+const uint16_t PROGMEM vollower_combo[]     = {LT(_MOUSE, KC_VOLU), LT(_LOWER, KC_BSPC), COMBO_END};
 const uint16_t PROGMEM jlower_combo[]       = {LT(_NUM, KC_J), LT(_LOWER, KC_BSPC), COMBO_END};
 const uint16_t PROGMEM llower_combo[]       = {RCTL_T(KC_L), LT(_LOWER, KC_BSPC), COMBO_END};
 const uint16_t PROGMEM ulower_combo[]       = {RSFT_T(KC_U), LT(_LOWER, KC_BSPC), COMBO_END};
@@ -203,6 +246,7 @@ const uint16_t PROGMEM wraise_combo[]       = {LALT_T(KC_W), LT(_RAISE, KC_ENT),
 const uint16_t PROGMEM fraise_combo[]       = {LSFT_T(KC_F), LT(_RAISE, KC_ENT), COMBO_END};
 const uint16_t PROGMEM praise_combo[]       = {LCTL_T(KC_P), LT(_RAISE, KC_ENT), COMBO_END};
 const uint16_t PROGMEM braise_combo[]       = {LT(_NUM, KC_B), LT(_RAISE, KC_ENT), COMBO_END};
+const uint16_t PROGMEM volraise_combo[]     = {LT(_MOUSE, KC_VOLU), LT(_RAISE, KC_ENT), COMBO_END};
 const uint16_t PROGMEM jraise_combo[]       = {LT(_NUM, KC_J), LT(_RAISE, KC_ENT), COMBO_END};
 const uint16_t PROGMEM lraise_combo[]       = {RCTL_T(KC_L), LT(_RAISE, KC_ENT), COMBO_END};
 const uint16_t PROGMEM uraise_combo[]       = {RSFT_T(KC_U), LT(_RAISE, KC_ENT), COMBO_END};
@@ -216,6 +260,47 @@ const uint16_t PROGMEM eraise_combo[]       = {KC_E, LT(_RAISE, KC_ENT), COMBO_E
 const uint16_t PROGMEM iraise_combo[]       = {KC_I, LT(_RAISE, KC_ENT), COMBO_END};
 const uint16_t PROGMEM oraise_combo[]       = {KC_O, LT(_RAISE, KC_ENT), COMBO_END};
 const uint16_t PROGMEM quotraise_combo[]    = {KC_QUOT, LT(_RAISE, KC_ENT), COMBO_END};
+
+// combos for lower and raise german
+const uint16_t PROGMEM qlower_de_combo[]       = {LGUI_T(KC_Q), LT(_LOWER_DE, KC_BSPC), COMBO_END};
+const uint16_t PROGMEM wlower_de_combo[]       = {LALT_T(KC_W), LT(_LOWER_DE, KC_BSPC), COMBO_END};
+const uint16_t PROGMEM flower_de_combo[]       = {LSFT_T(KC_F), LT(_LOWER_DE, KC_BSPC), COMBO_END};
+const uint16_t PROGMEM plower_de_combo[]       = {LCTL_T(KC_P), LT(_LOWER_DE, KC_BSPC), COMBO_END};
+const uint16_t PROGMEM blower_de_combo[]       = {LT(_NUM, KC_B), LT(_LOWER_DE, KC_BSPC), COMBO_END};
+const uint16_t PROGMEM vollower_de_combo[]     = {LT(_MOUSE, KC_VOLU), LT(_LOWER_DE, KC_BSPC), COMBO_END};
+const uint16_t PROGMEM jlower_de_combo[]       = {LT(_NUM, KC_J), LT(_LOWER_DE, KC_BSPC), COMBO_END};
+const uint16_t PROGMEM llower_de_combo[]       = {RCTL_T(KC_L), LT(_LOWER_DE, KC_BSPC), COMBO_END};
+const uint16_t PROGMEM ulower_de_combo[]       = {RSFT_T(KC_U), LT(_LOWER_DE, KC_BSPC), COMBO_END};
+const uint16_t PROGMEM ylower_de_combo[]       = {LALT_T(KC_Z), LT(_LOWER_DE, KC_BSPC), COMBO_END};
+const uint16_t PROGMEM sclnlower_de_combo[]    = {M_RGUI_SCLN, LT(_LOWER_DE, KC_BSPC), COMBO_END};
+const uint16_t PROGMEM uelower_de_combo[]      = {DE_UDIA, LT(_LOWER_DE, KC_BSPC), COMBO_END};
+
+const uint16_t PROGMEM mlower_de_combo[]       = {KC_M, LT(_LOWER_DE, KC_BSPC), COMBO_END};
+const uint16_t PROGMEM nlower_de_combo[]       = {KC_N, LT(_LOWER_DE, KC_BSPC), COMBO_END};
+const uint16_t PROGMEM elower_de_combo[]       = {KC_E, LT(_LOWER_DE, KC_BSPC), COMBO_END};
+const uint16_t PROGMEM ilower_de_combo[]       = {KC_I, LT(_LOWER_DE, KC_BSPC), COMBO_END};
+const uint16_t PROGMEM olower_de_combo[]       = {KC_O, LT(_LOWER_DE, KC_BSPC), COMBO_END};
+const uint16_t PROGMEM quotlower_de_combo[]    = {DE_EN_QUOT, LT(_LOWER_DE, KC_BSPC), COMBO_END};
+
+const uint16_t PROGMEM qraise_de_combo[]       = {LGUI_T(KC_Q), LT(_RAISE_DE, KC_ENT), COMBO_END};
+const uint16_t PROGMEM wraise_de_combo[]       = {LALT_T(KC_W), LT(_RAISE_DE, KC_ENT), COMBO_END};
+const uint16_t PROGMEM fraise_de_combo[]       = {LSFT_T(KC_F), LT(_RAISE_DE, KC_ENT), COMBO_END};
+const uint16_t PROGMEM praise_de_combo[]       = {LCTL_T(KC_P), LT(_RAISE_DE, KC_ENT), COMBO_END};
+const uint16_t PROGMEM volraise_de_combo[]     = {LT(_MOUSE, KC_VOLU), LT(_RAISE_DE, KC_ENT), COMBO_END};
+const uint16_t PROGMEM braise_de_combo[]       = {LT(_NUM, KC_B), LT(_RAISE_DE, KC_ENT), COMBO_END};
+const uint16_t PROGMEM jraise_de_combo[]       = {LT(_NUM, KC_J), LT(_RAISE_DE, KC_ENT), COMBO_END};
+const uint16_t PROGMEM lraise_de_combo[]       = {RCTL_T(KC_L), LT(_RAISE_DE, KC_ENT), COMBO_END};
+const uint16_t PROGMEM uraise_de_combo[]       = {RSFT_T(KC_U), LT(_RAISE_DE, KC_ENT), COMBO_END};
+const uint16_t PROGMEM yraise_de_combo[]       = {LALT_T(KC_Z), LT(_RAISE_DE, KC_ENT), COMBO_END};
+const uint16_t PROGMEM sclnraise_de_combo[]    = {M_RGUI_SCLN, LT(_RAISE_DE, KC_ENT), COMBO_END};
+const uint16_t PROGMEM ueraise_de_combo[]      = {DE_UDIA, LT(_RAISE_DE, KC_ENT), COMBO_END};
+
+const uint16_t PROGMEM mraise_de_combo[]       = {KC_M, LT(_RAISE_DE, KC_ENT), COMBO_END};
+const uint16_t PROGMEM nraise_de_combo[]       = {KC_N, LT(_RAISE_DE, KC_ENT), COMBO_END};
+const uint16_t PROGMEM eraise_de_combo[]       = {KC_E, LT(_RAISE_DE, KC_ENT), COMBO_END};
+const uint16_t PROGMEM iraise_de_combo[]       = {KC_I, LT(_RAISE_DE, KC_ENT), COMBO_END};
+const uint16_t PROGMEM oraise_de_combo[]       = {KC_O, LT(_RAISE_DE, KC_ENT), COMBO_END};
+const uint16_t PROGMEM quotraise_de_combo[]    = {DE_EN_QUOT, LT(_RAISE_DE, KC_ENT), COMBO_END};
 #ifdef NAGINATA_ENABLE
 const uint16_t PROGMEM stnav_combo[] = {NG_D, NG_F, COMBO_END};
 #endif
@@ -235,7 +320,7 @@ combo_t key_combos[] = {
     [COMMDOT_CAPS]          = COMBO(commdot_combo, KC_CAPS),
     [COMMDOT_DE_CAPS]       = COMBO(commdot_de_combo, KC_CAPS),
 //    [NRAISE]        = COMBO(nraise_combo, OSL(_RAISE)),
-    [NRAISE_DE]     = COMBO(nraise_de_combo, OSL(_RAISE_DE)),
+//    [NRAISE_DE]     = COMBO(nraise_de_combo, OSL(_RAISE_DE)),
     [TLOWER]        = COMBO(tlower_combo, OSL(_LOWER)),
     [TLOWER_DE]     = COMBO(tlower_de_combo, OSL(_LOWER_DE)),
     // combos for the lower and raise keys
@@ -244,6 +329,7 @@ combo_t key_combos[] = {
     [FLOWER]        = COMBO(flower_combo, KC_HASH),
     [PLOWER]        = COMBO(plower_combo, KC_DLR),
     [BLOWER]        = COMBO(blower_combo, KC_PERC),
+    [VOLLOWER]      = COMBO(vollower_combo, KC_TILD),
     [JLOWER]        = COMBO(jlower_combo, KC_CIRC),
     [LLOWER]        = COMBO(llower_combo, KC_AMPR),
     [ULOWER]        = COMBO(ulower_combo, KC_ASTR),
@@ -261,6 +347,7 @@ combo_t key_combos[] = {
     [WRAISE]        = COMBO(wraise_combo, KC_2),
     [FRAISE]        = COMBO(fraise_combo, KC_3),
     [PRAISE]        = COMBO(praise_combo, KC_4),
+    [VOLRAISE]      = COMBO(volraise_combo, KC_GRV),
     [BRAISE]        = COMBO(braise_combo, KC_5),
     [JRAISE]        = COMBO(jraise_combo, KC_6),
     [LRAISE]        = COMBO(lraise_combo, KC_7),
@@ -274,6 +361,45 @@ combo_t key_combos[] = {
     [IRAISE]        = COMBO(iraise_combo, KC_LBRC),
     [ORAISE]        = COMBO(oraise_combo, KC_RBRC),
     [QUOTRAISE]     = COMBO(quotraise_combo, DE_ae),
+
+    // combos for the lower and raise keys German
+    [QLOWER_DE]        = COMBO(qlower_de_combo, DE_EXLM),
+    [WLOWER_DE]        = COMBO(wlower_de_combo, DE_AT),
+    [FLOWER_DE]        = COMBO(flower_de_combo, DE_HASH),
+    [PLOWER_DE]        = COMBO(plower_de_combo, DE_DLR),
+    [BLOWER_DE]        = COMBO(blower_de_combo, DE_PERC),
+    [VOLLOWER_DE]      = COMBO(vollower_de_combo, DE_TILD),
+    [JLOWER_DE]        = COMBO(jlower_de_combo, DE_CIRC),
+    [LLOWER_DE]        = COMBO(llower_de_combo, DE_AMPR),
+    [ULOWER_DE]        = COMBO(ulower_de_combo, DE_ASTR),
+    [YLOWER_DE]        = COMBO(ylower_de_combo, DE_LPRN),
+    [SCLNLOWER_DE]     = COMBO(sclnlower_de_combo, DE_RPRN),
+    [UELOWER_DE]       = COMBO(uelower_de_combo, S(DE_ODIA)),
+    [MLOWER_DE]        = COMBO(mlower_de_combo, DE_SS),
+    [NLOWER_DE]        = COMBO(nlower_de_combo, DE_UNDS),
+    [ELOWER_DE]        = COMBO(elower_de_combo, DE_PLUS),
+    [ILOWER_DE]        = COMBO(ilower_de_combo, DE_LCBR),
+    [OLOWER_DE]        = COMBO(olower_de_combo, DE_RCBR),
+    [QUOTLOWER_DE]     = COMBO(quotlower_de_combo, S(DE_ADIA)),
+
+    [QRAISE_DE]        = COMBO(qraise_de_combo, DE_1),
+    [WRAISE_DE]        = COMBO(wraise_de_combo, DE_2),
+    [FRAISE_DE]        = COMBO(fraise_de_combo, DE_3),
+    [PRAISE_DE]        = COMBO(praise_de_combo, DE_4),
+    [BRAISE_DE]        = COMBO(braise_de_combo, DE_5),
+    [VOLRAISE_DE]      = COMBO(volraise_de_combo, DE_GRV),
+    [JRAISE_DE]        = COMBO(jraise_de_combo, DE_6),
+    [LRAISE_DE]        = COMBO(lraise_de_combo, DE_7),
+    [URAISE_DE]        = COMBO(uraise_de_combo, DE_8),
+    [YRAISE_DE]        = COMBO(yraise_de_combo, DE_9),
+    [SCLNRAISE_DE]     = COMBO(sclnraise_de_combo, DE_0),
+    [UERAISE_DE]       = COMBO(ueraise_de_combo, DE_ODIA),
+    [MRAISE_DE]        = COMBO(mraise_de_combo, DE_SS),
+    [NRAISE_DE]        = COMBO(nraise_de_combo, DE_MINS),
+    [ERAISE_DE]        = COMBO(eraise_de_combo, DE_EQL),
+    [IRAISE_DE]        = COMBO(iraise_de_combo, DE_LBRC),
+    [ORAISE_DE]        = COMBO(oraise_de_combo, DE_RBRC),
+    [QUOTRAISE_DE]     = COMBO(quotraise_de_combo, DE_ADIA),
 #ifdef NAGINATA_ENABLE
     [ST_NAV]    = COMBO(stnav_combo, MO(_NAV)),
 #endif
@@ -434,8 +560,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_LOWER_DE] = LAYOUT_planck_grid(
-        DE_EXLM, DE_AT, DE_HASH, DE_DLR, DE_PERC, RALT(KC_RBRC), DE_CIRC, DE_AMPR, DE_ASTR, TD(TD_PRN_DE), DE_RPRN, LSFT(DE_ODIA), 
-        KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, DE_SS, DE_UNDS, DE_PLUS, TD(TD_CBR_DE), DE_RCBR, LSFT(DE_ADIA), 
+        DE_EXLM, DE_AT, DE_HASH, DE_DLR, DE_PERC, DE_TILD, DE_CIRC, DE_AMPR, DE_ASTR, TD(TD_PRN_DE), DE_RPRN, S(DE_ODIA), 
+        KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, DE_SS, DE_UNDS, DE_PLUS, TD(TD_CBR_DE), DE_RCBR, S(DE_ADIA), 
         KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_MPLY, DE_SLSH, DE_BSLS, DE_PIPE, DE_BSLS, DE_GRV, 
         TG(_MOUSE), ADJUST, KC_TRNS, KC_ESC, KC_TRNS, KC_TRNS, KC_TRNS, KC_DEL, KC_TRNS, ADJUST, KC_DOWN, KC_UP
     ),
@@ -474,7 +600,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_RAISE_DE] = LAYOUT_planck_grid(
-        KC_1, KC_2, KC_3, KC_4, KC_5, LSFT(KC_GRV), KC_6, KC_7, KC_8, KC_9, KC_0, DE_ODIA, 
+        KC_1, KC_2, KC_3, KC_4, KC_5, S(KC_GRV), KC_6, KC_7, KC_8, KC_9, KC_0, DE_ODIA, 
         KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, DE_SS, DE_MINS, DE_EQL, TD(TD_BRC_DE), DE_RBRC, DE_ADIA, 
         KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, DE_LABK, DE_SLSH, KC_COMM, KC_DOT, DE_BSLS, DE_ACUT, 
         TG(_MOUSE), ADJUST, KC_TRNS, KC_BSPC, KC_TRNS, KC_TRNS, KC_TRNS, KC_ENT, KC_TRNS, ADJUST, KC_DOWN, KC_UP
@@ -492,8 +618,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_ADJUST] = LAYOUT_planck_grid(
-        LALT(KC_LSFT), RESET, DEBUG, RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, TG(_NUM), 
-        LALT(KC_GRV), EEP_RST, MU_MOD, AU_ON, AU_OFF, AG_NORM, AG_SWAP, HRWIDECOLEMAK, HRWIDECOLEMAK_DE, LALT(KC_GRV), LANG_SWITCH, GAMING, 
+        A(KC_LSFT), RESET, DEBUG, RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, TG(_NUM), 
+        A(KC_GRV), EEP_RST, MU_MOD, AU_ON, AU_OFF, AG_NORM, AG_SWAP, HRWIDECOLEMAK, HRWIDECOLEMAK_DE, A(KC_GRV), LANG_SWITCH, GAMING, 
         KC_TRNS, MUV_DE, MUV_IN, MU_ON, MU_OFF, MI_ON, MI_OFF, KC_SVD_BD, KC_MPLY, KC_SVU_BU, KC_TRNS, KC_TRNS,
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, EEPROM_RESET
     ),
@@ -529,12 +655,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_NAV] = LAYOUT_planck_grid(
 #ifdef NAGINATA_ENABLE
-        ALT_TAB, LCTL(KC_RGHT), LANG_SWITCH, LALT(KC_GRV), LCTL(KC_LEFT), KC_MAIL, KC_HOME, KC_RIGHT, KC_PGUP, LCTL(KC_INS), LSFT(KC_INS), NAGINATA_SWITCH,
+        ALT_TAB, C(KC_RGHT), LANG_SWITCH, A(KC_GRV), C(KC_LEFT), KC_MAIL, KC_HOME, KC_RIGHT, KC_PGUP, C(KC_INS), S(KC_INS), NAGINATA_SWITCH,
 #else
-        ALT_TAB, LCTL(KC_RGHT), LANG_SWITCH, LALT(KC_GRV), LCTL(KC_LEFT), KC_MAIL, KC_HOME, KC_RIGHT, KC_PGUP, LCTL(KC_INS), LSFT(KC_INS), KC_BSPC,
+        ALT_TAB, C(KC_RGHT), LANG_SWITCH, A(KC_GRV), C(KC_LEFT), KC_MAIL, KC_HOME, KC_RIGHT, KC_PGUP, C(KC_INS), S(KC_INS), KC_BSPC,
 #endif
         CTL_TAB, KC_TAB, KC_ESC, KC_ENT, TD(TD_VIM_GG), KC_MPLY, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, KC_END, VIM_O,
-        KC_LSFT, LSFT(KC_DEL), C(G(KC_LEFT)), C(G(KC_RGHT)), VIM_V, KC_MUTE, KC_HOME, KC_PGDN, KC_LSFT, KC_RSFT, LCTL(KC_F), KC_DE_SWITCH,
+        KC_LSFT, S(KC_DEL), C(G(KC_LEFT)), C(G(KC_RGHT)), VIM_V, KC_MUTE, KC_HOME, KC_PGDN, KC_LSFT, KC_RSFT, C(KC_F), KC_DE_SWITCH,
         KC_TRNS, KC_TRNS, KC_TRNS, KC_ESC, KC_CAPS, LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), KC_ENT, KC_TRNS, KC_DE_SWITCH, KC_TRNS, KC_DE_SWITCH
     ),
 
@@ -607,27 +733,27 @@ void dance_prn_de(qk_tap_dance_state_t *state, void *user_data) {
 }
 void dance_brc_de(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
-        tap_code16(RALT(KC_8));
+        tap_code16(DE_LBRC);
     } else {
-        tap_code16(RALT(KC_8));
-        tap_code16(RALT(KC_9));
+        tap_code16(DE_LBRC);
+        tap_code16(DE_RBRC);
         tap_code(KC_LEFT);
     }
 }
 void dance_cbr_de(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
-        tap_code16(RALT(KC_7));
+        tap_code16(DE_LPRN);
     } else {
-        tap_code16(RALT(KC_7));
-        tap_code16(RALT(KC_0));
+        tap_code16(DE_LPRN);
+        tap_code16(DE_RPRN);
         tap_code(KC_LEFT);
     }
 }
 void vim_gg(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
-        tap_code16(LCTL(KC_END));
+        tap_code16(C(KC_END));
     } else {
-        tap_code16(LCTL(KC_HOME));
+        tap_code16(C(KC_HOME));
     }
 }
 
@@ -640,7 +766,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_BRC_DE] = ACTION_TAP_DANCE_FN(dance_brc_de), 
     [TD_CBR_DE] = ACTION_TAP_DANCE_FN(dance_cbr_de), 
     [TD_VIM_GG] = ACTION_TAP_DANCE_FN(vim_gg),
-    [TD_F4] = ACTION_TAP_DANCE_DOUBLE(KC_F4, LALT(KC_F4))
+    [TD_F4] = ACTION_TAP_DANCE_DOUBLE(KC_F4, A(KC_F4))
 };
 
 float thumb_factor  = 0.95;
@@ -1049,7 +1175,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
                 }
             } else {
-                tap_code16(LALT(KC_LSFT));
+                tap_code16(A(KC_LSFT));
 #ifdef NAGINATA_ENABLE
                 if (come_from_naginata && !de_layout_active) {
                     naginata_on();
@@ -1188,12 +1314,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 uint8_t temp_mods = get_mods() | get_oneshot_mods();
                 if (temp_mods & MOD_MASK_SHIFT) {
-                    register_code16(LSFT(KC_NUBS));  // > right angle bracket 
+                    register_code16(S(KC_NUBS));  // > right angle bracket 
                 } else {
                     register_code(KC_DOT);  // .
                 }
             } else {
-                unregister_code16(LSFT(KC_NUBS));
+                unregister_code16(S(KC_NUBS));
                 unregister_code(KC_DOT);
             }
             return true;
@@ -1417,8 +1543,8 @@ void matrix_scan_user(void) {
         SEQ_TWO_KEYS(KC_D, KC_D) {
             tap_code(KC_END);
             tap_code(KC_RIGHT);
-            tap_code16(LSFT(KC_UP));
-            tap_code16(LSFT(KC_DEL));
+            tap_code16(S(KC_UP));
+            tap_code16(S(KC_DEL));
         }
         SEQ_TWO_KEYS(KC_H, KC_G) {
             if (de_layout_active) {
@@ -1470,7 +1596,7 @@ void matrix_scan_user(void) {
         SEQ_FOUR_KEYS(KC_P, KC_O, KC_S, KC_T) {
             SEND_STRING("jakob.weickmann");
             if (de_layout_active) {
-                tap_code16(RALT(KC_Q));
+                tap_code16(DE_AT);
             } else {
                 tap_code16(KC_AT);
             }
@@ -1479,7 +1605,7 @@ void matrix_scan_user(void) {
         SEQ_THREE_KEYS(KC_U, KC_N, KC_I) {
             SEND_STRING("jakob.weickmann");
             if (de_layout_active) {
-                tap_code16(RALT(KC_Q));
+                tap_code16(DE_AT);
             } else {
                 tap_code16(KC_AT);
             }
@@ -1488,7 +1614,7 @@ void matrix_scan_user(void) {
         SEQ_FOUR_KEYS(KC_D, KC_J, KC_J, KC_G) {
             SEND_STRING("jakob.weickmann");
             if (de_layout_active) {
-                tap_code16(RALT(KC_Q));
+                tap_code16(DE_AT);
             } else {
                 tap_code16(KC_AT);
             }
@@ -1518,7 +1644,7 @@ void matrix_scan_user(void) {
         }
         SEQ_THREE_KEYS(KC_E, KC_U, KC_R) {
             if (de_layout_active) {
-                tap_code16(RALT(KC_E));
+                tap_code16(DE_EURO);
             } else {
                 add_mods(MOD_BIT(KC_LALT));
                 tap_code(KC_P0);
