@@ -12,10 +12,9 @@ NGKEYS naginata_keys;
 #endif
 
 enum planck_layers {
-    _HRWIDECOLEMAK,
-    _HRWIDECOLEMAK_DE,
+    _COLEMAK,
+    _COLEMAK_DE,
     _GAMING,
-    _CHATTING,
 #ifdef NAGINATA_ENABLE
     // 薙刀式
     _NAGINATA, // 薙刀式入力レイヤー
@@ -34,17 +33,16 @@ enum planck_layers {
 enum planck_keycodes { 
 #ifdef NAGINATA_ENABLE
     // 薙刀式: SAFE_RANGE -> NG_SAFE_RANGE
-    HRWIDECOLEMAK = NG_SAFE_RANGE,
+    COLEMAK = NG_SAFE_RANGE,
     EISU,
     KANA2,
     NG_DUMMY,
     // 薙刀式
 #else
-    HRWIDECOLEMAK = SAFE_RANGE,
+    COLEMAK = SAFE_RANGE,
 #endif
     GAMING,
-    HRWIDECOLEMAK_DE,
-    CHAT,
+    COLEMAK_DE,
     VIM_O,
     VIM_V,
     KC_SVD_BD,
