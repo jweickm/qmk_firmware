@@ -1051,7 +1051,7 @@ void keyboard_post_init_user(void) {
 
 bool led_update_user(led_t led_state) {
     rgblight_set_layer_state(6, led_state.caps_lock);
-
+    rgblight_set_layer_state(1, de_layout_active);
     return true;
 }
 
@@ -1078,12 +1078,12 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 layer_state_t default_layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(0, layer_state_cmp(state, _COLEMAK));
-    rgblight_set_layer_state(1, layer_state_cmp(state, _COLEMAK_DE));
-    if (layer_state_cmp(state, _COLEMAK_DE)) {
-        de_layout_active = true;
-    } else {
-        de_layout_active = false;
-    }
+//    rgblight_set_layer_state(1, layer_state_cmp(state, _COLEMAK_DE));
+//    if (layer_state_cmp(state, _COLEMAK_DE)) {
+//        de_layout_active = true;
+//    } else {
+//        de_layout_active = false;
+//    }
     return state;
 }
 

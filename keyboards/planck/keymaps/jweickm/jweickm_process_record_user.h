@@ -60,12 +60,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
             break;
-        case KC_DE_SWITCH:
+        case KC_DE_SWITCH: // switches only kb lang
             if (record->event.pressed) {
                 if (de_layout_active) {
                     de_layout_active = false;  // deactivate German overlay
 //                    set_single_persistent_default_layer(_COLEMAK);
-                    default_layer_set(1UL<<_COLEMAK); // reduce writing to eeprom
+//                    default_layer_set(1UL<<_COLEMAK); // reduce writing to eeprom
 #ifdef AUDIO_ENABLE
                 PLAY_SONG(colemak_en_song);
 #endif
@@ -77,7 +77,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
                     de_layout_active = true;  // activate German overlay
 //                    set_single_persistent_default_layer(_COLEMAK_DE);
-                    default_layer_set(1UL<<_COLEMAK_DE); // reduce writing to eeprom
+//                    default_layer_set(1UL<<_COLEMAK_DE); // reduce writing to eeprom
 #ifdef AUDIO_ENABLE
                 PLAY_SONG(colemak_de_song);
 #endif
@@ -85,12 +85,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             break;
-        case LANG_SWITCH:
+        case LANG_SWITCH: // switches both system lang and kb lang
             if (record->event.pressed) {
                 if (de_layout_active) {
                     de_layout_active = false;  // deactivate German overlay
 //                    set_single_persistent_default_layer(_COLEMAK);
-                    default_layer_set(1UL<<_COLEMAK); // reduce writing to eeprom
+//                    default_layer_set(1UL<<_COLEMAK); // reduce writing to eeprom
 #ifdef AUDIO_ENABLE
                 PLAY_SONG(colemak_en_song);
 #endif
@@ -103,7 +103,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
                     de_layout_active = true;  // activate German overlay
  //                   set_single_persistent_default_layer(_COLEMAK_DE);
-                    default_layer_set(1UL<<_COLEMAK_DE); // reduce writing to eeprom
+ //                   default_layer_set(1UL<<_COLEMAK_DE); // reduce writing to eeprom
 #ifdef AUDIO_ENABLE
                 PLAY_SONG(colemak_de_song);
 #endif
@@ -555,6 +555,60 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
                 return true;
             }
+        case KC_QUOT:
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    uint8_t temp_mods = get_mods() | get_oneshot_mods();
+                    if (temp_mods & MOD_MASK_SHIFT) {
+                        register_code16(DE_DQUO);  // \"
+                    } else {
+                        register_code16(DE_QUOT);  // /'
+                    }
+                } else {
+                    unregister_code16(DE_DQUO);
+                    unregister_code16(DE_QUOT);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case KC_DOT:
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    uint8_t temp_mods = get_mods() | get_oneshot_mods();
+                    if (temp_mods & MOD_MASK_SHIFT) {
+                        register_code16(DE_RABK);  // > right angle bracket 
+                    } else {
+                        register_code16(DE_DOT);  // .
+                    }
+                } else {
+                    unregister_code16(DE_RABK);
+                    unregister_code16(DE_DOT);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case KC_COMM:
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    uint8_t temp_mods = get_mods() | get_oneshot_mods();
+                    if (temp_mods & MOD_MASK_SHIFT) {
+                        clear_mods();
+                        clear_oneshot_mods();
+                        register_code16(DE_LABK);  // < left angle bracket
+                        set_mods(temp_mods);
+                    } else {
+                        register_code16(DE_COMM);  // ,
+                    }
+                } else {
+                    unregister_code16(DE_LABK);
+                    unregister_code16(DE_COMM);
+                }
+                return false;
+            } else {
+                return true;
+            }
         case S(KC_COMM): // <
             if (de_layout_active) {
                 if (record->event.pressed) {
@@ -792,77 +846,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else { //process the key normally when the English layout is active
                 return true;
             }
-        case KC_QUOT:
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    uint8_t temp_mods = get_mods() | get_oneshot_mods();
-                    if (temp_mods & MOD_MASK_SHIFT) {
-                        register_code16(DE_DQUO);  // \"
-                    } else {
-                        register_code16(DE_QUOT);  // /'
-                    }
-                } else {
-                    unregister_code16(DE_DQUO);
-                    unregister_code16(DE_QUOT);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        case KC_DOT:
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    uint8_t temp_mods = get_mods() | get_oneshot_mods();
-                    if (temp_mods & MOD_MASK_SHIFT) {
-                        register_code16(DE_RABK);  // > right angle bracket 
-                    } else {
-                        register_code16(DE_DOT);  // .
-                    }
-                } else {
-                    unregister_code16(DE_RABK);
-                    unregister_code16(DE_DOT);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        case KC_COMM:
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    uint8_t temp_mods = get_mods() | get_oneshot_mods();
-                    if (temp_mods & MOD_MASK_SHIFT) {
-                        clear_mods();
-                        clear_oneshot_mods();
-                        register_code16(DE_LABK);  // < left angle bracket
-                        set_mods(temp_mods);
-                    } else {
-                        register_code16(DE_COMM);  // ,
-                    }
-                } else {
-                    unregister_code16(DE_LABK);
-                    unregister_code16(DE_COMM);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        case DE_EN_BSLS:
-            if (record->event.pressed) {
-                uint8_t temp_mods = get_mods() | get_oneshot_mods();
-                clear_mods();
-                clear_oneshot_mods();
-                add_mods(MOD_BIT(KC_RALT));
-                if (temp_mods & MOD_MASK_SHIFT) {
-                    register_code(KC_NUBS);  // | Pipe
-                } else {
-                    register_code(KC_MINS);  // Backslash
-                }
-                set_mods(temp_mods);
-            } else {
-                unregister_code(KC_NUBS);
-                unregister_code(KC_MINS);
-            }
-            return true;
         // switch multiplexing for escape, short tap for escape, long press for context menu
         case M_ESCM:
             if (record->event.pressed) {
