@@ -15,7 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "jweickm_header.h"
-#define layout 3 // 1: 1x2uC, 2: 2x2u, 3: grid
+#include "jweickm_process_record_user.h"
+#define layout 1 // 1: 1x2uC, 2: 2x2u, 3: grid
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* =========================================================================================
@@ -60,9 +61,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_COLEMAK_DE] = LAYOUT_planck_grid(
-        LGUI_T(KC_Q), LALT_T(KC_W), LSFT_T(KC_F), LCTL_T(KC_P), LT(_NUM, KC_B), LT(_MOUSE, KC_VOLU), LT(_NUM, KC_J), RCTL_T(KC_L), RSFT_T(KC_U), LALT_T(KC_Z), M_RGUI_SCLN, DE_UDIA, 
-        KC_A, KC_R, KC_S, KC_T, KC_G, KC_TAB, KC_M, KC_N, KC_E, KC_I, KC_O, DE_EN_QUOT, 
-        LT(_MOUSE, KC_Y), KC_X, KC_C, KC_D, KC_V, LT(_MOUSE, KC_VOLD), KC_K, KC_H, DE_COMM_LAB, DE_DOT_RAB, DE_SLSH_QUST, KC_LEAD, 
+        LGUI_T(KC_Q), LALT_T(KC_W), LSFT_T(KC_F), LCTL_T(KC_P), LT(_NUM, KC_B), LT(_MOUSE, KC_VOLU), LT(_NUM, KC_J), RCTL_T(KC_L), RSFT_T(KC_U), LALT_T(KC_Y), RGUI_T(KC_SCLN), XP(DE_ue, DE_UE),
+        KC_A, KC_R, KC_S, KC_T, KC_G, KC_TAB, KC_M, KC_N, KC_E, KC_I, KC_O, KC_QUOT, 
+        LT(_MOUSE, KC_Z), KC_X, KC_C, KC_D, KC_V, LT(_MOUSE, KC_VOLD), KC_K, KC_H, KC_COMM, KC_DOT, LT(_MOUSE, KC_SLSH), KC_LEAD, 
         LCTL_T(KC_CAPS), KC_LEAD, M_ESCM, LT(_LOWER_DE, KC_BSPC), OSM(MOD_LSFT), LT(_NAV, KC_SPC), LT(_NAV, KC_SPC), LT(_RAISE_DE, KC_ENT), RSFT_T(KC_DEL), KC_RALT, LT(_MOUSE, KC_DOWN), LT(_MOUSE, KC_UP)
     ),
 
@@ -143,8 +144,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_LOWER_DE] = LAYOUT_planck_grid(
-        DE_EXLM, DE_AT, DE_HASH, DE_DLR, DE_PERC, DE_TILD, DE_CIRC, DE_AMPR, DE_ASTR, TD(TD_PRN_DE), DE_RPRN, S(DE_ODIA), 
-        KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, DE_SS, DE_UNDS, DE_PLUS, TD(TD_CBR_DE), DE_RCBR, S(DE_ADIA), 
+        DE_EXLM, DE_AT, DE_HASH, DE_DLR, DE_PERC, DE_TILD, DE_CIRC, DE_AMPR, DE_ASTR, TD(TD_PRN), DE_RPRN, S(DE_ODIA), 
+        KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, DE_SS, DE_UNDS, DE_PLUS, TD(TD_CBR), DE_RCBR, S(DE_ADIA), 
         KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, DE_RABK, DE_DQUO, DE_BSLS, DE_PIPE, DE_BSLS, DE_GRV, 
         TG(_MOUSE), ADJUST, KC_TRNS, KC_ESC, KC_TRNS, KC_TRNS, KC_TRNS, KC_DEL, KC_TRNS, ADJUST, KC_DOWN, KC_UP
     ),
@@ -186,7 +187,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_RAISE_DE] = LAYOUT_planck_grid(
         KC_1, KC_2, KC_3, KC_4, KC_5, S(KC_GRV), KC_6, KC_7, KC_8, KC_9, KC_0, DE_ODIA, 
-        KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, DE_SS, DE_MINS, DE_EQL, TD(TD_BRC_DE), DE_RBRC, DE_ADIA, 
+        KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, DE_SS, DE_MINS, DE_EQL, TD(TD_BRC), DE_RBRC, DE_ADIA, 
         KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, DE_LABK, DE_QUOT, KC_COMM, KC_DOT, DE_PIPE, DE_ACUT, 
         TG(_MOUSE), ADJUST, KC_TRNS, KC_BSPC, KC_TRNS, KC_TRNS, KC_TRNS, KC_ENT, KC_TRNS, ADJUST, KC_DOWN, KC_UP
     ),
@@ -312,9 +313,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_COLEMAK_DE] = LAYOUT_planck_grid(
-        LGUI_T(KC_Q), LALT_T(KC_W), LSFT_T(KC_F), LCTL_T(KC_P), LT(_NUM, KC_B), LT(_MOUSE, KC_VOLU), LT(_NUM, KC_J), RCTL_T(KC_L), RSFT_T(KC_U), LALT_T(KC_Z), M_RGUI_SCLN, DE_UDIA, 
-        KC_A, KC_R, KC_S, KC_T, KC_G, KC_TAB, KC_M, KC_N, KC_E, KC_I, KC_O, DE_EN_QUOT, 
-        LT(_MOUSE, KC_Y), KC_X, KC_C, KC_D, KC_V, LT(_MOUSE, KC_VOLD), KC_K, KC_H, DE_COMM_LAB, DE_DOT_RAB, DE_SLSH_QUST, KC_LEAD, 
+        LGUI_T(KC_Q), LALT_T(KC_W), LSFT_T(KC_F), LCTL_T(KC_P), LT(_NUM, KC_B), LT(_MOUSE, KC_VOLU), LT(_NUM, KC_J), RCTL_T(KC_L), RSFT_T(KC_U), LALT_T(KC_Y), M_RGUI_SCLN, DE_UDIA, 
+        KC_A, KC_R, KC_S, KC_T, KC_G, KC_TAB, KC_M, KC_N, KC_E, KC_I, KC_O, KC_QUOT, 
+        LT(_MOUSE, KC_Z), KC_X, KC_C, KC_D, KC_V, LT(_MOUSE, KC_VOLD), KC_K, KC_H, KC_COMM, KC_DOT, LT(_MOUSE, KC_SLSH), KC_LEAD, 
         LCTL_T(KC_CAPS), KC_LEAD, M_ESCM, LT(_LOWER_DE, KC_BSPC), OSM(MOD_LSFT), LT(_NAV, KC_SPC), KC_RALT, LT(_NAV, KC_SPC), LT(_RAISE_DE, KC_ENT), RSFT_T(KC_DEL), LT(_MOUSE, KC_DOWN), LT(_MOUSE, KC_UP)
     ),
 
@@ -395,8 +396,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */ 
     [_LOWER_DE] = LAYOUT_planck_grid(
-        DE_EXLM, DE_AT, DE_HASH, DE_DLR, DE_PERC, DE_TILD, S(DE_ODIA), DE_CIRC, DE_AMPR, DE_ASTR, TD(TD_PRN_DE), DE_RPRN,
-        KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, S(DE_ADIA), DE_SS, DE_UNDS, DE_PLUS, TD(TD_CBR_DE), DE_RCBR,
+        DE_EXLM, DE_AT, DE_HASH, DE_DLR, DE_PERC, DE_TILD, S(DE_ODIA), DE_CIRC, DE_AMPR, DE_ASTR, TD(TD_PRN), DE_RPRN,
+        KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, S(DE_ADIA), DE_SS, DE_UNDS, DE_PLUS, TD(TD_CBR), DE_RCBR,
         KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, DE_GRV, DE_RABK, DE_DQUO, DE_BSLS, DE_PIPE, DE_BSLS,
         TG(_MOUSE), ADJUST, KC_TRNS, KC_ESC, KC_TRNS, LT(_NAV, KC_SPC), KC_UP, LT(_NAV, KC_SPC), KC_DEL, KC_TRNS, ADJUST, KC_DOWN
     ),
@@ -438,7 +439,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_RAISE_DE] = LAYOUT_planck_grid(
         KC_1, KC_2, KC_3, KC_4, KC_5, S(KC_GRV), DE_ODIA, KC_6, KC_7, KC_8, KC_9, KC_0,
-        KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, DE_ADIA, DE_SS, DE_MINS, DE_EQL, TD(TD_BRC_DE), DE_RBRC,
+        KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, DE_ADIA, DE_SS, DE_MINS, DE_EQL, TD(TD_BRC), DE_RBRC,
         KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, DE_ACUT, DE_LABK, DE_QUOT, KC_COMM, KC_DOT, DE_PIPE,
         TG(_MOUSE), ADJUST, KC_TRNS, KC_BSPC, KC_TRNS, KC_TRNS, KC_UP, KC_TRNS, KC_ENT, KC_TRNS, ADJUST, KC_DOWN
     ),
@@ -542,56 +543,59 @@ void matrix_init_user(void) {
 // define the tap dance functions
 void dance_prn(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
-        tap_code16(KC_LPRN);
+        if (de_layout_active) {
+            tap_code16(DE_LPRN);
+        } else {
+            tap_code16(KC_LPRN);
+        }
     } else {
-        tap_code16(KC_LPRN);
-        tap_code16(KC_RPRN);
-        tap_code(KC_LEFT);
+        if (de_layout_active) {
+            tap_code16(DE_LPRN);
+            tap_code16(DE_RPRN);
+            tap_code(KC_LEFT);
+        } else {
+            tap_code16(KC_LPRN);
+            tap_code16(KC_RPRN);
+            tap_code(KC_LEFT);
+        }
     }
 }
 void dance_brc(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
-        tap_code(KC_LBRC);
+        if (de_layout_active) {
+            tap_code16(DE_LBRC);
+        } else {
+            tap_code(KC_LBRC);
+        }
     } else {
-        tap_code(KC_LBRC);
-        tap_code(KC_RBRC);
-        tap_code(KC_LEFT);
+        if (de_layout_active) {
+            tap_code16(DE_LBRC);
+            tap_code16(DE_RBRC);
+            tap_code(KC_LEFT);
+        } else {
+            tap_code(KC_LBRC);
+            tap_code(KC_RBRC);
+            tap_code(KC_LEFT);
+        }
     }
 }
 void dance_cbr(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
-        tap_code16(KC_LCBR);
+        if (de_layout_active) {
+            tap_code16(DE_LCBR);
+        } else {
+            tap_code16(KC_LCBR);
+        }
     } else {
-        tap_code16(KC_LCBR);
-        tap_code16(KC_RCBR);
-        tap_code(KC_LEFT);
-    }
-}
-void dance_prn_de(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        tap_code16(KC_ASTR);
-    } else {
-        tap_code16(KC_ASTR);
-        tap_code16(KC_LPRN);
-        tap_code(KC_LEFT);
-    }
-}
-void dance_brc_de(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        tap_code16(DE_LBRC);
-    } else {
-        tap_code16(DE_LBRC);
-        tap_code16(DE_RBRC);
-        tap_code(KC_LEFT);
-    }
-}
-void dance_cbr_de(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        tap_code16(DE_LCBR);
-    } else {
-        tap_code16(DE_LCBR);
-        tap_code16(DE_RCBR);
-        tap_code(KC_LEFT);
+        if (de_layout_active) {
+            tap_code16(DE_LCBR);
+            tap_code16(DE_RCBR);
+            tap_code(KC_LEFT);
+        } else {
+            tap_code16(KC_LCBR);
+            tap_code16(KC_RCBR);
+            tap_code(KC_LEFT);
+        }
     }
 }
 void vim_gg(qk_tap_dance_state_t *state, void *user_data) {
@@ -607,19 +611,9 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_PRN] = ACTION_TAP_DANCE_FN(dance_prn), 
     [TD_BRC] = ACTION_TAP_DANCE_FN(dance_brc), 
     [TD_CBR] = ACTION_TAP_DANCE_FN(dance_cbr), 
-    [TD_PRN_DE] = ACTION_TAP_DANCE_FN(dance_prn_de), 
-    [TD_BRC_DE] = ACTION_TAP_DANCE_FN(dance_brc_de), 
-    [TD_CBR_DE] = ACTION_TAP_DANCE_FN(dance_cbr_de), 
     [TD_VIM_GG] = ACTION_TAP_DANCE_FN(vim_gg),
     [TD_F4] = ACTION_TAP_DANCE_DOUBLE(KC_F4, A(KC_F4))
 };
-
-float thumb_factor  = 0.95;
-float index_factor  = 1.15;
-float middle_factor = 1.2;
-float ring_factor   = 1.25;
-float pinky_factor  = 1.15;
-float td_factor     = 1.3;
 
 // define the per_key_tapping_term
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
@@ -695,12 +689,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM * td_factor;
         case TD(TD_CBR):
             return TAPPING_TERM * td_factor;
-        case TD(TD_PRN_DE):
-            return TAPPING_TERM * td_factor;
-        case TD(TD_BRC_DE):
-            return TAPPING_TERM * td_factor;
-        case TD(TD_CBR_DE):
-            return TAPPING_TERM * td_factor;
         case TD(TD_VIM_GG):
             return TAPPING_TERM * td_factor;
         case TD(TD_F4):
@@ -711,611 +699,31 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-// declaring several logical variables
-bool is_alt_tab_active = false;
-bool is_ctl_tab_active = false;
-bool de_layout_active  = false;
-bool win_unicode_enable= true;
-
-#ifdef NAGINATA_ENABLE
-bool naginata_active   = false;
-bool come_from_naginata = false;
-#endif
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    static uint16_t key_timer;
+bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case COLEMAK:
-            if (record->event.pressed) {
-//                set_single_persistent_default_layer(_COLEMAK);
-                default_layer_set(1UL<<_COLEMAK); // reduce writing to the eeprom
-#ifdef AUDIO_ENABLE
-                PLAY_SONG(colemak_en_song);
-#endif
-            }
-            return false;
-            break;
-        case COLEMAK_DE:
-            if (record->event.pressed) {
-//                set_single_persistent_default_layer(_COLEMAK_DE);
-                default_layer_set(1UL<<_COLEMAK_DE); // reduce writing to the eeprom
-#ifdef AUDIO_ENABLE
-                PLAY_SONG(colemak_de_song);
-#endif
-            }
-            return false;
-            break;
-        case GAMING:
-            if (record->event.pressed) {
-                layer_invert(_GAMING);
-                combo_toggle(); // turns off combos when moving to _GAMING
-#ifdef AUDIO_ENABLE
-                PLAY_SONG(gaming_song);
-#endif
-            }
-            return false;
-            break;
-        case VIM_O:
-            if (record->event.pressed) {
-                tap_code(KC_END);
-                tap_code(KC_ENT);
-            }
-            return false;
-            break;
-        case VIM_V:
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    clear_mods();
-                } else {
-                    register_mods(MOD_LSFT);
-                }
-            }
-            return false;
-            break;
-        case KC_SVU_BU:  // increase backlight when pressing shift and vol up
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    register_code(KC_BRIU);
-                } else if (get_mods() & MOD_MASK_CTRL) {
-                    register_code(KC_MNXT);
-                } else {
-                    register_code(KC_VOLU);
-                }
-            } else {
-                unregister_code(KC_BRIU);
-                unregister_code(KC_MNXT);
-                unregister_code(KC_VOLU);
-            }
-            return false;
-        case KC_SVD_BD:  // decrease backlight when pressing shift and vol up
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
-                    register_code(KC_BRID);
-                } else if (get_mods() & MOD_MASK_CTRL) {
-                    register_code(KC_MPRV);
-                } else {
-                    register_code(KC_VOLD);
-                }
-            } else {
-                unregister_code(KC_BRID);
-                unregister_code(KC_MPRV);
-                unregister_code(KC_VOLD);
-            }
-            return false;
-        case KC_TAB_MPLY:  // press tab or play/pause when ctrl is pressed
-            if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_CTRL) {
-                    register_code(KC_MPLY);
-                } else {
-                    register_code(KC_TAB);
-                }
-            } else {
-                unregister_code(KC_MPLY);
-                unregister_code(KC_TAB);
-            }
-            return false;
-        case ALT_TAB:
-            if (record->event.pressed) {
-                if (!is_alt_tab_active) {
-                    is_alt_tab_active = true;
-                    add_mods(MOD_BIT(KC_LALT));
-                }
-                register_code(KC_TAB);
-            } else {
-                unregister_code(KC_TAB);
-            }
-            break;
-        case CTL_TAB:
-            if (record->event.pressed) {
-                if (!is_ctl_tab_active) {
-                    is_ctl_tab_active = true;
-                    add_mods(MOD_BIT(KC_LCTL));
-                }
-                register_code(KC_TAB);
-            } else {
-                unregister_code(KC_TAB);
-            }
-            break;
-        // the next case allows us to use alt_tab without a timer
-        case LT(_NAV, KC_SPC):
-            if (record->event.pressed) {
-            } else {
-                unregister_mods(MOD_LALT);
-                unregister_mods(MOD_LCTL);
-                is_alt_tab_active = false;
-                is_ctl_tab_active = false;
-            }
-            break;
-        case XP(DE_ae, DE_AE):
-            if (record->event.pressed) {
-                if (!win_unicode_enable) {
-                    uint8_t temp_mods = get_mods();
-                    if ((get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
-                        clear_oneshot_mods();
-                        clear_mods();
-                        add_mods(MOD_BIT(KC_LALT));
-                        tap_code(KC_P0);
-                        tap_code(KC_P1);
-                        tap_code(KC_P9);
-                        tap_code(KC_P6);  // Ä
-                    } else {
-                        clear_mods();
-                        add_mods(MOD_BIT(KC_LALT));
-                        tap_code(KC_P0);
-                        tap_code(KC_P2);
-                        tap_code(KC_P2);
-                        tap_code(KC_P8);  // ä
-                    }
-                    unregister_mods(MOD_LALT);
-                    set_mods(temp_mods);
-                    return false;
-                    break;
-                }
-                return true;
-            }
-        case X(DE_AE):
-            if (record->event.pressed) {
-                if (!win_unicode_enable) {
-                    uint8_t temp_mods = get_mods() | get_oneshot_mods();
-                    clear_oneshot_mods();
-                    clear_mods();
-                    add_mods(MOD_BIT(KC_LALT));
-                    tap_code(KC_P0);
-                    tap_code(KC_P1);
-                    tap_code(KC_P9);
-                    tap_code(KC_P6);  // Ä
-                    unregister_mods(MOD_LALT);
-                    set_mods(temp_mods);
-                    return false;
-                    break;
-                }
-                return true;
-            }
-        case XP(DE_oe, DE_OE):
-            if (record->event.pressed) {
-                if (!win_unicode_enable) {
-                    uint8_t temp_mods = get_mods();
-                    if ((get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
-                        clear_oneshot_mods();
-                        clear_mods();
-                        add_mods(MOD_BIT(KC_LALT));
-                        tap_code(KC_P0);
-                        tap_code(KC_P2);
-                        tap_code(KC_P1);
-                        tap_code(KC_P4);  // Ö
-                    } else {
-                        clear_mods();
-                        add_mods(MOD_BIT(KC_LALT));
-                        tap_code(KC_P0);
-                        tap_code(KC_P2);
-                        tap_code(KC_P4);
-                        tap_code(KC_P6);  // ö
-                    }
-                    unregister_mods(MOD_LALT);
-                    set_mods(temp_mods);
-                    return false;
-                    break;
-                }
-                return true;
-            }
-        case X(DE_OE):
-            if (record->event.pressed) {
-                if (!win_unicode_enable) {
-                    uint8_t temp_mods = get_mods() | get_oneshot_mods();
-                    clear_oneshot_mods();
-                    clear_mods();
-                    add_mods(MOD_BIT(KC_LALT));
-                    tap_code(KC_P0);
-                    tap_code(KC_P2);
-                    tap_code(KC_P1);
-                    tap_code(KC_P4);  // Ö
-                    unregister_mods(MOD_LALT);
-                    set_mods(temp_mods);
-                    return false;
-                    break;
-                }
-                return true;
-            }
-        case XP(DE_ue, DE_UE):
-            if (record->event.pressed) {
-                if (!win_unicode_enable) {
-                    uint8_t temp_mods = get_mods();
-                    if ((get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
-                        clear_oneshot_mods();
-                        clear_mods();
-                        add_mods(MOD_BIT(KC_LALT));
-                        tap_code(KC_P0);
-                        tap_code(KC_P2);
-                        tap_code(KC_P2);
-                        tap_code(KC_P0);  // Ü
-                    } else {
-                        clear_mods();
-                        add_mods(MOD_BIT(KC_LALT));
-                        tap_code(KC_P0);
-                        tap_code(KC_P2);
-                        tap_code(KC_P5);
-                        tap_code(KC_P2);  // ü
-                    }
-                    unregister_mods(MOD_LALT);
-                    set_mods(temp_mods);
-                    return false;
-                    break;
-                }
-                return true;
-            }
-        case X(DE_UE):
-            if (record->event.pressed) {
-                if (!win_unicode_enable) {
-                    uint8_t temp_mods = get_mods() | get_oneshot_mods();
-                    clear_oneshot_mods();
-                    clear_mods();
-                    add_mods(MOD_BIT(KC_LALT));
-                    tap_code(KC_P0);
-                    tap_code(KC_P2);
-                    tap_code(KC_P2);
-                    tap_code(KC_P0);  // Ü
-                    unregister_mods(MOD_LALT);
-                    set_mods(temp_mods);
-                    return false;
-                    break;
-                }
-                return true;
-            }
-        case KC_DE_SWITCH:
-            if (record->event.pressed) {
-                if (de_layout_active) {
-                    de_layout_active = false;  // deactivate German overlay
-//                    set_single_persistent_default_layer(_COLEMAK);
-                    default_layer_set(1UL<<_COLEMAK); // reduce writing to eeprom
-#ifdef AUDIO_ENABLE
-                PLAY_SONG(colemak_en_song);
-#endif
-                } else {
-#ifdef NAGINATA_ENABLE
-                    if (naginata_active) {
-                        naginata_off();
-                    }
-#endif
-                    de_layout_active = true;  // activate German overlay
-//                    set_single_persistent_default_layer(_COLEMAK_DE);
-                    default_layer_set(1UL<<_COLEMAK_DE); // reduce writing to eeprom
-#ifdef AUDIO_ENABLE
-                PLAY_SONG(colemak_de_song);
-#endif
-                }
-                return false;
-            }
-            break;
-        case LANG_SWITCH:
-            if (record->event.pressed) {
-                if (de_layout_active) {
-                    de_layout_active = false;  // deactivate German overlay
-//                    set_single_persistent_default_layer(_COLEMAK);
-                    default_layer_set(1UL<<_COLEMAK); // reduce writing to eeprom
-#ifdef AUDIO_ENABLE
-                PLAY_SONG(colemak_en_song);
-#endif
-                } else {
-#ifdef NAGINATA_ENABLE
-                    come_from_naginata = naginata_active;
-                    if (naginata_active) {
-                        naginata_off();
-                    }
-#endif
-                    de_layout_active = true;  // activate German overlay
- //                   set_single_persistent_default_layer(_COLEMAK_DE);
-                    default_layer_set(1UL<<_COLEMAK_DE); // reduce writing to eeprom
-#ifdef AUDIO_ENABLE
-                PLAY_SONG(colemak_de_song);
-#endif
-                }
-            } else {
-                tap_code16(A(KC_LSFT));
-#ifdef NAGINATA_ENABLE
-                if (come_from_naginata && !de_layout_active) {
-                    naginata_on();
-                }
-#endif
-            }
-            return false;
-        case UNICODE_ALT_SW:
-            if (record->event.pressed) {
-                win_unicode_enable = !win_unicode_enable;   
-            }
-            return false;
-            break;
-        case X(DE_SZ): 
-            if (record->event.pressed) {
-                if (!win_unicode_enable) {
-                    uint8_t temp_mods = get_mods();
-                    if ((get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
-                        clear_oneshot_mods();
-                        clear_mods();
-                        add_mods(MOD_BIT(KC_LALT));
-                        tap_code(KC_P0);
-                        tap_code(KC_P1);
-                        tap_code(KC_P7);
-                        tap_code(KC_P6);  // °
-                    } else {
-                        clear_mods();
-                        add_mods(MOD_BIT(KC_LALT));
-                        tap_code(KC_P0);
-                        tap_code(KC_P2);
-                        tap_code(KC_P2);
-                        tap_code(KC_P3);  // ß
-                    }
-                    unregister_mods(MOD_LALT);
-                    set_mods(temp_mods);
-                    return false;
-                    break;
-                }
-                return true;
-            } 
-        case DE_EGRAVE:
-            if (record->event.pressed) {
-                uint8_t temp_mods = get_mods();
-                if ((get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
-                    clear_oneshot_mods();
-                    clear_mods();
-                    add_mods(MOD_BIT(KC_LALT));
-                    tap_code(KC_P0);
-                    tap_code(KC_P2);
-                    tap_code(KC_P0);
-                    tap_code(KC_P0);  // È
-                } else {
-                    clear_mods();
-                    add_mods(MOD_BIT(KC_LALT));
-                    tap_code(KC_P0);
-                    tap_code(KC_P2);
-                    tap_code(KC_P3);
-                    tap_code(KC_P2);  // è
-                }
-                unregister_mods(MOD_LALT);
-                set_mods(temp_mods);
-            }
-            return false;
-            break;
-        case DE_EAIGU:
-            if (record->event.pressed) {
-                uint8_t temp_mods = get_mods();
-                if ((get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
-                    clear_oneshot_mods();
-                    clear_mods();
-                    add_mods(MOD_BIT(KC_LALT));
-                    tap_code(KC_P0);
-                    tap_code(KC_P2);
-                    tap_code(KC_P0);
-                    tap_code(KC_P1);  // É
-                } else {
-                    clear_mods();
-                    add_mods(MOD_BIT(KC_LALT));
-                    tap_code(KC_P0);
-                    tap_code(KC_P2);
-                    tap_code(KC_P3);
-                    tap_code(KC_P3);  // é
-                }
-                unregister_mods(MOD_LALT);
-                set_mods(temp_mods);
-            }
-            return false;
-            break;
-        case KC_CURRENCY:
-            if (record->event.pressed) {
-                uint8_t temp_mods = get_mods();
-                if ((get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
-                    clear_oneshot_mods();
-                    clear_mods();
-                    add_mods(MOD_BIT(KC_LALT));
-                    tap_code(KC_P1);
-                    tap_code(KC_P5);
-                    tap_code(KC_P7);  // ¥
-                } else {
-                    clear_mods();
-                    add_mods(MOD_BIT(KC_LALT));
-                    tap_code(KC_P0);
-                    tap_code(KC_P1);
-                    tap_code(KC_P2);
-                    tap_code(KC_P8);  // €
-                }
-                unregister_mods(MOD_LALT);
-                set_mods(temp_mods);
-            }
-            return false;
-            break;
-        case DE_SLSH_QUST:
-            if (record->event.pressed) {
-                key_timer = timer_read();
-                layer_on(_MOUSE);
-            } else {
-                if (timer_elapsed(key_timer) < (TAPPING_TERM * pinky_factor)) {
-                    layer_off(_MOUSE);
-                    uint8_t temp_mods = get_mods() | get_oneshot_mods();
-                    if (temp_mods & MOD_MASK_SHIFT) {
-                        tap_code(KC_MINS);  // ?
-                    } else {
-                        tap_code16(KC_AMPR);  // /
-                    }
-                } else {
-                    layer_off(_MOUSE);
-                }
-            }
-            return false;
-            break;
-        case DE_EN_QUOT:
-            if (record->event.pressed) {
-                uint8_t temp_mods = get_mods() | get_oneshot_mods();
-                if (temp_mods & MOD_MASK_SHIFT) {
-                    register_code(KC_2);  // \"
-                } else {
-                    register_code16(KC_PIPE);  // /'
-                }
-            } else {
-                unregister_code(KC_2);
-                unregister_code16(KC_PIPE);
-            }
+        case LSFT_T(KC_S):
             return true;
-        case DE_DOT_RAB:
-            if (record->event.pressed) {
-                uint8_t temp_mods = get_mods() | get_oneshot_mods();
-                if (temp_mods & MOD_MASK_SHIFT) {
-                    register_code16(S(KC_NUBS));  // > right angle bracket 
-                } else {
-                    register_code(KC_DOT);  // .
-                }
-            } else {
-                unregister_code16(S(KC_NUBS));
-                unregister_code(KC_DOT);
-            }
+        case RSFT_T(KC_E):
             return true;
-        case DE_COMM_LAB:
-            if (record->event.pressed) {
-                uint8_t temp_mods = get_mods() | get_oneshot_mods();
-                if (temp_mods & MOD_MASK_SHIFT) {
-                    clear_mods();
-                    clear_oneshot_mods();
-                    register_code16(KC_NUBS);  // < left angle bracket
-                    set_mods(temp_mods);
-                } else {
-                    register_code(KC_COMM);  // ,
-                }
-            } else {
-                unregister_code16(KC_NUBS);
-                unregister_code(KC_COMM);
-            }
+        case LSFT_T(KC_D):
             return true;
-        case DE_EN_SCLN:
-            if (record->event.pressed) {
-                uint8_t temp_mods = get_mods() | get_oneshot_mods();
-                if (temp_mods & MOD_MASK_SHIFT) {
-                    tap_code(KC_DOT);  // ;
-                } else {
-                    add_mods(MOD_BIT(KC_LSFT));
-                    tap_code(KC_COMM);  // :
-                    del_mods(MOD_BIT(KC_LSFT));
-                }
-                return false;
-            }
-            break;
-        case DE_EN_BSLS:
-            if (record->event.pressed) {
-                uint8_t temp_mods = get_mods() | get_oneshot_mods();
-                clear_mods();
-                clear_oneshot_mods();
-                add_mods(MOD_BIT(KC_RALT));
-                if (temp_mods & MOD_MASK_SHIFT) {
-                    register_code(KC_NUBS);  // | Pipe
-                } else {
-                    register_code(KC_MINS);  // Backslash
-                }
-                set_mods(temp_mods);
-            } else {
-                unregister_code(KC_NUBS);
-                unregister_code(KC_MINS);
-            }
+        case RSFT_T(KC_K):
             return true;
-        // switch multiplexing for escape, short tap for escape, long press for context menu
-        case M_ESCM:
-            if (record->event.pressed) {
-                key_timer = timer_read();
-            } else {
-                if (timer_elapsed(key_timer) > TAPPING_TERM) {
-                    tap_code(KC_APP);
-                } else {
-                    tap_code(KC_ESC);
-                }
-            }
+        case LSFT_T(KC_F):
+            return true;
+        case RSFT_T(KC_U):
+            return true;
+        case LT(_RAISE, KC_ENT):
+            return true;
+        case LT(_RAISE_DE, KC_ENT):
+            return true;
+        case LT(_LOWER, KC_BSPC):
+            return true;
+        case LT(_LOWER_DE, KC_BSPC):
+            return true;
+        default:
             return false;
-        case M_RGUI_SCLN:
-            if (record->event.pressed) {
-                key_timer = timer_read();
-                add_mods(MOD_BIT(KC_RGUI));
-            } else {
-                del_mods(MOD_BIT(KC_RGUI));
-                if (timer_elapsed(key_timer) < (TAPPING_TERM * pinky_factor)) {
-                    uint8_t temp_mods = get_mods() | get_oneshot_mods();
-                    if (temp_mods & MOD_MASK_SHIFT) {
-                        tap_code(KC_DOT);  // ;
-                    } else {
-                        add_mods(MOD_BIT(KC_LSFT));
-                        tap_code(KC_COMM);  // :
-                        del_mods(MOD_BIT(KC_LSFT));
-                    }
-                } else {
-                    tap_code(KC_RGUI);
-                }
-            }
-            return false;
-            break;
-#ifdef NAGINATA_ENABLE
-        // 薙刀式
-        case EISU:
-            if (record->event.pressed) {
-//                if (!de_layout_active) {
-                    if (naginata_active) {
-#ifdef AUDIO_ENABLE
-                        PLAY_SONG(naginata_off_sound);
-#endif
-                    }
-                    naginata_off();
-//                }
-            }
-            return false;
-            break;
-        case NAGINATA_SWITCH:
-            if (record->event.pressed) {
-                if (naginata_active) {
-                    tap_code(KC_MHEN);
-                    naginata_off();
-                } else if (!de_layout_active){
-                    naginata_on();
-                    tap_code(KC_HENK);
-                }
-            }
-            return false;
-            break;
-        case KANA2:
-            if (record->event.pressed) {
-                if (!de_layout_active) {
-                    if (!naginata_active) {
-#ifdef AUDIO_ENABLE
-                        PLAY_SONG(naginata_on_sound);
-#endif
-                    }
-                    naginata_on();
-                }
-            }
-            return false;
-            break;
-#endif
     }
-#ifdef NAGINATA_ENABLE
-    // 薙刀式
-    if (!process_naginata(keycode, record))
-        return false;
-    // 薙刀式
-#endif
-
-    return true;
 }
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
@@ -1588,33 +996,6 @@ bool music_mask_user(uint16_t keycode) {
     }
 }
 
-bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case LSFT_T(KC_S):
-            return true;
-        case RSFT_T(KC_E):
-            return true;
-        case LSFT_T(KC_D):
-            return true;
-        case RSFT_T(KC_K):
-            return true;
-        case LSFT_T(KC_F):
-            return true;
-        case RSFT_T(KC_U):
-            return true;
-        case LT(_RAISE, KC_ENT):
-            return true;
-        case LT(_RAISE_DE, KC_ENT):
-            return true;
-        case LT(_LOWER, KC_BSPC):
-            return true;
-        case LT(_LOWER_DE, KC_BSPC):
-            return true;
-        default:
-            return false;
-    }
-}
-
 // Set RGB to change with layer changes
 #define HSV_DARKORANGE 10, 255, 255
 #define HSV_DARKPINK 150, 100, 255
@@ -1652,7 +1033,6 @@ void keyboard_post_init_user(void) {
 }
 
 #ifdef AUDIO_ENABLE
-
     void led_set_user(uint8_t usb_led) {
         static uint8_t old_usb_led = 0;
 

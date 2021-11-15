@@ -45,9 +45,6 @@ enum planck_keycodes {
     COLEMAK_DE,
     VIM_O,
     VIM_V,
-    KC_SVD_BD,
-    KC_SVU_BU,
-    KC_TAB_MPLY,
     ALT_TAB,
     CTL_TAB,
     DE_EGRAVE,
@@ -56,25 +53,16 @@ enum planck_keycodes {
     KC_DE_SWITCH,
     LANG_SWITCH,
     NAGINATA_SWITCH,
-    DE_SLSH_QUST,
-    DE_EN_QUOT,
-    DE_EN_SCLN,
     DE_EN_BSLS,
     M_ESCM,
-    M_RGUI_SCLN,
-    DE_DOT_RAB,
-    DE_COMM_LAB,
     UNICODE_ALT_SW,
 };
 
 // Tap Dance declarations
 enum tap_dance_codes {
     TD_PRN,     // round brackets (parentheses)
-    TD_PRN_DE,  // round brackets (parentheses)
     TD_BRC,     // square brackets
-    TD_BRC_DE,  // square brackets
     TD_CBR,     // curly brackets
-    TD_CBR_DE,  // curly brackets
     TD_VIM_GG,  // single tap to scroll down, double tap to scroll up
     TD_F4       // double tap F4 to alt-F4
 };
@@ -89,6 +77,7 @@ enum unicode_names {
     DE_ue,
     DE_UE,
     DE_SZ,
+    UNI_GRV,
 };
 const uint32_t PROGMEM unicode_map[] = {
     [DE_ae]    = 0xE4, // ä
@@ -98,6 +87,7 @@ const uint32_t PROGMEM unicode_map[] = {
     [DE_ue]    = 0xFC, // ü
     [DE_UE]    = 0xDC, // Ü
     [DE_SZ]    = 0xDF, // ß
+    [UNI_GRV]   = 0x60, // `
 };
 #endif
 
@@ -125,10 +115,8 @@ float naginata_off_sound[][2]   = SONG(PLOVER_GOODBYE_SOUND);
 // Combo Declarations
 enum combos {
     HCOMM_ENT,
-    HCOMM_DE_ENT,
     CD_ESC,
     HDOT_RALT,
-    HDOT_DE_RALT,
     XD_MENU,
     BJ_NUM,
     VOLUTAB_MNXT,
@@ -136,7 +124,6 @@ enum combos {
     DH_BSPC,
     XC_BSPC,
     COMMDOT_CAPS,
-    COMMDOT_DE_CAPS,
 //    NRAISE,
 //    NRAISE_DE,
     TLOWER, 
@@ -190,15 +177,12 @@ enum combos {
     JLOWER_DE, 
     LLOWER_DE, 
     ULOWER_DE, 
-    YLOWER_DE, 
-    SCLNLOWER_DE, 
     UELOWER_DE,
     MLOWER_DE, 
     NLOWER_DE, 
     ELOWER_DE, 
     ILOWER_DE, 
     OLOWER_DE, 
-    QUOTLOWER_DE,
 
     QRAISE_DE, 
     WRAISE_DE, 
@@ -210,14 +194,12 @@ enum combos {
     LRAISE_DE, 
     URAISE_DE, 
     YRAISE_DE, 
-    SCLNRAISE_DE, 
     UERAISE_DE,
     MRAISE_DE, 
     NRAISE_DE, 
     ERAISE_DE, 
     IRAISE_DE, 
     ORAISE_DE, 
-    QUOTRAISE_DE,
 
 #ifdef NAGINATA_ENABLE
     ST_NAV,
@@ -225,10 +207,8 @@ enum combos {
 };
 
 const uint16_t PROGMEM hcomm_combo[]= {KC_H, KC_COMM, COMBO_END};
-const uint16_t PROGMEM hcomm_de_combo[]= {KC_H, DE_COMM_LAB, COMBO_END};
 const uint16_t PROGMEM cd_combo[]   = {KC_C, KC_D, COMBO_END};
 const uint16_t PROGMEM hdot_combo[] = {KC_H, KC_DOT, COMBO_END};
-const uint16_t PROGMEM hdot_de_combo[] = {KC_H, DE_DOT_RAB, COMBO_END};
 const uint16_t PROGMEM xd_combo[]   = {KC_X, KC_D, COMBO_END};
 const uint16_t PROGMEM num_combo[]  = {LT(_NUM, KC_B), LT(_NUM, KC_J), COMBO_END};
 const uint16_t PROGMEM mnxt_combo[] = {LT(_MOUSE, KC_VOLU), KC_TAB, COMBO_END};
@@ -236,7 +216,6 @@ const uint16_t PROGMEM mprv_combo[] = {LT(_MOUSE, KC_VOLD), KC_TAB, COMBO_END};
 const uint16_t PROGMEM dh_combo[]   = {KC_D, KC_H, COMBO_END};
 const uint16_t PROGMEM xc_combo[]   = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM commdot_combo[]      = {KC_COMM, KC_DOT, COMBO_END};
-const uint16_t PROGMEM commdot_de_combo[]   = {DE_COMM_LAB, DE_DOT_RAB, COMBO_END};
 //const uint16_t PROGMEM nraise_combo[]       = {KC_N, LT(_RAISE, KC_ENT), COMBO_END};
 //const uint16_t PROGMEM nraise_de_combo[]    = {KC_N, LT(_RAISE_DE, KC_ENT), COMBO_END};
 const uint16_t PROGMEM tlower_combo[]       = {KC_T, LT(_LOWER, KC_BSPC), COMBO_END};
@@ -292,8 +271,6 @@ const uint16_t PROGMEM vollower_de_combo[]     = {LT(_MOUSE, KC_VOLU), LT(_LOWER
 const uint16_t PROGMEM jlower_de_combo[]       = {LT(_NUM, KC_J), LT(_LOWER_DE, KC_BSPC), COMBO_END};
 const uint16_t PROGMEM llower_de_combo[]       = {RCTL_T(KC_L), LT(_LOWER_DE, KC_BSPC), COMBO_END};
 const uint16_t PROGMEM ulower_de_combo[]       = {RSFT_T(KC_U), LT(_LOWER_DE, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM ylower_de_combo[]       = {LALT_T(KC_Z), LT(_LOWER_DE, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM sclnlower_de_combo[]    = {M_RGUI_SCLN, LT(_LOWER_DE, KC_BSPC), COMBO_END};
 const uint16_t PROGMEM uelower_de_combo[]      = {DE_UDIA, LT(_LOWER_DE, KC_BSPC), COMBO_END};
 
 const uint16_t PROGMEM mlower_de_combo[]       = {KC_M, LT(_LOWER_DE, KC_BSPC), COMBO_END};
@@ -301,7 +278,6 @@ const uint16_t PROGMEM nlower_de_combo[]       = {KC_N, LT(_LOWER_DE, KC_BSPC), 
 const uint16_t PROGMEM elower_de_combo[]       = {KC_E, LT(_LOWER_DE, KC_BSPC), COMBO_END};
 const uint16_t PROGMEM ilower_de_combo[]       = {KC_I, LT(_LOWER_DE, KC_BSPC), COMBO_END};
 const uint16_t PROGMEM olower_de_combo[]       = {KC_O, LT(_LOWER_DE, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM quotlower_de_combo[]    = {DE_EN_QUOT, LT(_LOWER_DE, KC_BSPC), COMBO_END};
 
 const uint16_t PROGMEM qraise_de_combo[]       = {LGUI_T(KC_Q), LT(_RAISE_DE, KC_ENT), COMBO_END};
 const uint16_t PROGMEM wraise_de_combo[]       = {LALT_T(KC_W), LT(_RAISE_DE, KC_ENT), COMBO_END};
@@ -312,8 +288,6 @@ const uint16_t PROGMEM braise_de_combo[]       = {LT(_NUM, KC_B), LT(_RAISE_DE, 
 const uint16_t PROGMEM jraise_de_combo[]       = {LT(_NUM, KC_J), LT(_RAISE_DE, KC_ENT), COMBO_END};
 const uint16_t PROGMEM lraise_de_combo[]       = {RCTL_T(KC_L), LT(_RAISE_DE, KC_ENT), COMBO_END};
 const uint16_t PROGMEM uraise_de_combo[]       = {RSFT_T(KC_U), LT(_RAISE_DE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM yraise_de_combo[]       = {LALT_T(KC_Z), LT(_RAISE_DE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM sclnraise_de_combo[]    = {M_RGUI_SCLN, LT(_RAISE_DE, KC_ENT), COMBO_END};
 const uint16_t PROGMEM ueraise_de_combo[]      = {DE_UDIA, LT(_RAISE_DE, KC_ENT), COMBO_END};
 
 const uint16_t PROGMEM mraise_de_combo[]       = {KC_M, LT(_RAISE_DE, KC_ENT), COMBO_END};
@@ -321,17 +295,15 @@ const uint16_t PROGMEM nraise_de_combo[]       = {KC_N, LT(_RAISE_DE, KC_ENT), C
 const uint16_t PROGMEM eraise_de_combo[]       = {KC_E, LT(_RAISE_DE, KC_ENT), COMBO_END};
 const uint16_t PROGMEM iraise_de_combo[]       = {KC_I, LT(_RAISE_DE, KC_ENT), COMBO_END};
 const uint16_t PROGMEM oraise_de_combo[]       = {KC_O, LT(_RAISE_DE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM quotraise_de_combo[]    = {DE_EN_QUOT, LT(_RAISE_DE, KC_ENT), COMBO_END};
 #ifdef NAGINATA_ENABLE
 const uint16_t PROGMEM stnav_combo[] = {NG_D, NG_F, COMBO_END};
 #endif
 
 combo_t key_combos[] = {  
+//    [HCOMM_ENT]     = COMBO(hcomm_combo, KC_ENT),  
     [HCOMM_ENT]     = COMBO(hcomm_combo, KC_ENT),  
-    [HCOMM_DE_ENT]  = COMBO(hcomm_de_combo, KC_ENT),  
     [CD_ESC]        = COMBO(cd_combo, KC_ESC),  
     [HDOT_RALT]     = COMBO(hdot_combo, KC_RALT),  
-    [HDOT_DE_RALT]  = COMBO(hdot_de_combo, KC_RALT),  
     [XD_MENU]       = COMBO(xd_combo, KC_APP),
     [BJ_NUM]        = COMBO_ACTION(num_combo),
     [VOLUTAB_MNXT]  = COMBO(mnxt_combo, KC_MNXT),
@@ -339,7 +311,6 @@ combo_t key_combos[] = {
     [DH_BSPC]       = COMBO(dh_combo, KC_BSPC),
     [XC_BSPC]       = COMBO(xc_combo, KC_BSPC),
     [COMMDOT_CAPS]          = COMBO(commdot_combo, KC_CAPS),
-    [COMMDOT_DE_CAPS]       = COMBO(commdot_de_combo, KC_CAPS),
 //    [NRAISE]        = COMBO(nraise_combo, OSL(_RAISE)),
 //    [NRAISE_DE]     = COMBO(nraise_de_combo, OSL(_RAISE_DE)),
     [TLOWER]        = COMBO(tlower_combo, OSL(_LOWER)),
@@ -394,15 +365,12 @@ combo_t key_combos[] = {
     [JLOWER_DE]        = COMBO(jlower_de_combo, DE_CIRC),
     [LLOWER_DE]        = COMBO(llower_de_combo, DE_AMPR),
     [ULOWER_DE]        = COMBO(ulower_de_combo, DE_ASTR),
-    [YLOWER_DE]        = COMBO(ylower_de_combo, DE_LPRN),
-    [SCLNLOWER_DE]     = COMBO(sclnlower_de_combo, DE_RPRN),
     [UELOWER_DE]       = COMBO(uelower_de_combo, S(DE_ODIA)),
     [MLOWER_DE]        = COMBO(mlower_de_combo, DE_SS),
     [NLOWER_DE]        = COMBO(nlower_de_combo, DE_UNDS),
     [ELOWER_DE]        = COMBO(elower_de_combo, DE_PLUS),
     [ILOWER_DE]        = COMBO(ilower_de_combo, DE_LCBR),
     [OLOWER_DE]        = COMBO(olower_de_combo, DE_RCBR),
-    [QUOTLOWER_DE]     = COMBO(quotlower_de_combo, S(DE_ADIA)),
 
     [QRAISE_DE]        = COMBO(qraise_de_combo, DE_1),
     [WRAISE_DE]        = COMBO(wraise_de_combo, DE_2),
@@ -413,15 +381,12 @@ combo_t key_combos[] = {
     [JRAISE_DE]        = COMBO(jraise_de_combo, DE_6),
     [LRAISE_DE]        = COMBO(lraise_de_combo, DE_7),
     [URAISE_DE]        = COMBO(uraise_de_combo, DE_8),
-    [YRAISE_DE]        = COMBO(yraise_de_combo, DE_9),
-    [SCLNRAISE_DE]     = COMBO(sclnraise_de_combo, DE_0),
     [UERAISE_DE]       = COMBO(ueraise_de_combo, DE_ODIA),
     [MRAISE_DE]        = COMBO(mraise_de_combo, DE_SS),
     [NRAISE_DE]        = COMBO(nraise_de_combo, DE_MINS),
     [ERAISE_DE]        = COMBO(eraise_de_combo, DE_EQL),
     [IRAISE_DE]        = COMBO(iraise_de_combo, DE_LBRC),
     [ORAISE_DE]        = COMBO(oraise_de_combo, DE_RBRC),
-    [QUOTRAISE_DE]     = COMBO(quotraise_de_combo, DE_ADIA),
 #ifdef NAGINATA_ENABLE
     [ST_NAV]    = COMBO(stnav_combo, MO(_NAV)),
 #endif
