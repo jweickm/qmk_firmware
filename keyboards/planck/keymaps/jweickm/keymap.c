@@ -144,7 +144,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_LOWER_DE] = LAYOUT_planck_grid(
-        DE_EXLM, DE_AT, DE_HASH, DE_DLR, DE_PERC, DE_TILD, DE_CIRC, DE_AMPR, DE_ASTR, TD(TD_PRN), DE_RPRN, S(DE_ODIA), 
+        DE_EXLM, KC_AT, DE_HASH, DE_DLR, DE_PERC, DE_TILD, DE_CIRC, DE_AMPR, DE_ASTR, TD(TD_PRN), DE_RPRN, S(DE_ODIA), 
         KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, DE_SS, DE_UNDS, DE_PLUS, TD(TD_CBR), DE_RCBR, S(DE_ADIA), 
         KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, DE_RABK, DE_DQUO, DE_BSLS, DE_PIPE, DE_BSLS, DE_GRV, 
         TG(_MOUSE), ADJUST, KC_TRNS, KC_ESC, KC_TRNS, KC_TRNS, KC_TRNS, KC_DEL, KC_TRNS, ADJUST, KC_DOWN, KC_UP
@@ -396,7 +396,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */ 
     [_LOWER_DE] = LAYOUT_planck_grid(
-        DE_EXLM, DE_AT, DE_HASH, DE_DLR, DE_PERC, DE_TILD, S(DE_ODIA), DE_CIRC, DE_AMPR, DE_ASTR, TD(TD_PRN), DE_RPRN,
+        DE_EXLM, KC_AT, DE_HASH, DE_DLR, DE_PERC, DE_TILD, S(DE_ODIA), DE_CIRC, DE_AMPR, DE_ASTR, TD(TD_PRN), DE_RPRN,
         KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, S(DE_ADIA), DE_SS, DE_UNDS, DE_PLUS, TD(TD_CBR), DE_RCBR,
         KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, DE_GRV, DE_RABK, DE_DQUO, DE_BSLS, DE_PIPE, DE_BSLS,
         TG(_MOUSE), ADJUST, KC_TRNS, KC_ESC, KC_TRNS, LT(_NAV, KC_SPC), KC_UP, LT(_NAV, KC_SPC), KC_DEL, KC_TRNS, ADJUST, KC_DOWN

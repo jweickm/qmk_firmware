@@ -51,6 +51,7 @@ enum planck_keycodes {
     DE_EAIGU,
     KC_CURRENCY,
     KC_DE_SWITCH,
+    KC_ACUT,
     LANG_SWITCH,
     NAGINATA_SWITCH,
     DE_EN_BSLS,

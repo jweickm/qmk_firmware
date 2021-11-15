@@ -423,6 +423,274 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
 
 // ------------------------- GERMAN KEYMAP ----------------------------------------- 
+        case KC_AT: // @
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_AT);
+                } else {
+                    unregister_code16(DE_AT);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case KC_HASH: // #
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_HASH);
+                } else {
+                    unregister_code16(DE_HASH);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case KC_TILD: // ~
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_TILD);
+                } else {
+                    unregister_code16(DE_TILD);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case KC_CIRC: // ^
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_CIRC);
+                } else {
+                    unregister_code16(DE_CIRC);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case KC_AMPR: // &
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_AMPR);
+                } else {
+                    unregister_code16(DE_AMPR);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case KC_ASTR: // *
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_ASTR);
+                } else {
+                    unregister_code16(DE_ASTR);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case KC_LPRN: // (
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_LPRN);
+                } else {
+                    unregister_code16(DE_LPRN);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case KC_RPRN: // )
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_RPRN);
+                } else {
+                    unregister_code16(DE_RPRN);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case KC_UNDS: // _
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_UNDS);
+                } else {
+                    unregister_code16(DE_UNDS);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case KC_PLUS: // +
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_PLUS);
+                } else {
+                    unregister_code16(DE_PLUS);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case KC_LCBR: // {
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_LCBR);
+                } else {
+                    unregister_code16(DE_LCBR);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case KC_RCBR: // }
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_RCBR);
+                } else {
+                    unregister_code16(DE_RCBR);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case S(KC_COMM): // <
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_LABK);
+                } else {
+                    unregister_code16(DE_LABK);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case S(KC_DOT): // >
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_RABK);
+                } else {
+                    unregister_code16(DE_RABK);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case S(KC_QUOT): // "
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_DQUO);
+                } else {
+                    unregister_code16(DE_DQUO);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case KC_NUBS: // "\"
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_BSLS);
+                } else {
+                    unregister_code16(DE_BSLS);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case KC_PIPE: // |
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_PIPE);
+                } else {
+                    unregister_code16(DE_PIPE);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case KC_BSLS: // "\"
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_BSLS);
+                } else {
+                    unregister_code16(DE_BSLS);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case KC_GRV: // `
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_GRV);
+                } else {
+                    unregister_code16(DE_GRV);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case KC_MINS: // -
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_MINS);
+                } else {
+                    unregister_code16(DE_MINS);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case KC_EQL: // =
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_EQL);
+                } else {
+                    unregister_code16(DE_EQL);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case KC_LBRC: // [
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_LBRC);
+                } else {
+                    unregister_code16(DE_LBRC);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case KC_RBRC: // ]
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_RBRC);
+                } else {
+                    unregister_code16(DE_RBRC);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case KC_ACUT: // ´
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_ACUT);
+                } else {
+                    unregister_code16(DE_ACUT);    
+                }
+                return false;
+            } else {
+                if (record->event.pressed) {
+                    send_unicode_hex_string("0xB4");
+                }
+                return false;
+            }
+// ------------------------- MOD-/LAYER-TAPS ---------------------------------
         case LT(_MOUSE, KC_Z):
             if (de_layout_active) {
                 if (record->event.pressed) {
