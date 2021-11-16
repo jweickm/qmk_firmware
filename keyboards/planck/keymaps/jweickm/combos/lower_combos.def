@@ -1,0 +1,24 @@
+// combos for the lower key
+//#define PREFIX LT(_LOWER, KC_BSPC),
+
+//COMB( ident,  keycodeToEmit,  PREFIX keySequence           )
+
+COMB(  QLOWER,      KC_EXLM,    LT(_LOWER, KC_BSPC), LGUI_T(KC_Q)          ) 
+COMB(  WLOWER,      KC_AT,      LT(_LOWER, KC_BSPC), LALT_T(KC_W)          )
+COMB(  FLOWER,      KC_HASH,    LT(_LOWER, KC_BSPC), LSFT_T(KC_F)          )
+COMB(  PLOWER,      KC_DLR,     LT(_LOWER, KC_BSPC), LCTL_T(KC_P)          )
+COMB(  BLOWER,      KC_PERC,    LT(_LOWER, KC_BSPC), LT(_NUM, KC_B)        )
+COMB(  VOLLOWER,    KC_TILD,    LT(_LOWER, KC_BSPC), LT(_MOUSE, KC_VOLU)   )
+COMB(  JLOWER,      KC_CIRC,    LT(_LOWER, KC_BSPC), LT(_NUM, KC_J)        )
+COMB(  LLOWER,      KC_AMPR,    LT(_LOWER, KC_BSPC), RCTL_T(KC_L)          )
+COMB(  ULOWER,      KC_ASTR,    LT(_LOWER, KC_BSPC), RSFT_T(KC_U)          )
+COMB(  YLOWER,      KC_LPRN,    LT(_LOWER, KC_BSPC), LALT_T(KC_Y)          )
+COMB(  SCLNLOWER,   KC_RPRN,    LT(_LOWER, KC_BSPC), RGUI_T(KC_SCLN)       )
+COMB(  UELOWER,     X(DE_OE),   LT(_LOWER, KC_BSPC), XP(DE_ue, DE_UE)      )
+COMB(  MLOWER,      X(DE_SZ),   LT(_LOWER, KC_BSPC), KC_M                  )
+COMB(  NLOWER,      KC_UNDS,    LT(_LOWER, KC_BSPC), KC_N                  )
+COMB(  ELOWER,      KC_PLUS,    LT(_LOWER, KC_BSPC), KC_E                  )
+COMB(  ILOWER,      KC_LCBR,    LT(_LOWER, KC_BSPC), KC_I                  )
+COMB(  OLOWER,      KC_RCBR,    LT(_LOWER, KC_BSPC), KC_O                  )
+COMB(  QUOTLOWER,   X(DE_AE),   LT(_LOWER, KC_BSPC), KC_QUOT               )
+

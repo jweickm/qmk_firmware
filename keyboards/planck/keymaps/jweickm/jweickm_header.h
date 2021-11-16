@@ -13,7 +13,6 @@ NGKEYS naginata_keys;
 
 enum planck_layers {
     _COLEMAK,
-    _COLEMAK_DE,
     _GAMING,
 #ifdef NAGINATA_ENABLE
     // 薙刀式
@@ -22,8 +21,6 @@ enum planck_layers {
 #endif
     _LOWER,
     _RAISE,
-    _LOWER_DE,
-    _RAISE_DE,
     _ADJUST,
     _NUM,
     _NAV,
@@ -42,7 +39,6 @@ enum planck_keycodes {
     COLEMAK = SAFE_RANGE,
 #endif
     GAMING,
-    COLEMAK_DE,
     VIM_O,
     VIM_V,
     ALT_TAB,
@@ -93,9 +89,7 @@ const uint32_t PROGMEM unicode_map[] = {
 #endif
 
 #define LOWER OSL(_LOWER)
-#define LOWER_DE OSL(_LOWER_DE)
 #define RAISE OSL(_RAISE)
-#define RAISE_DE OSL(_RAISE_DE)
 #define ADJUST OSL(_ADJUST)
 
 #ifdef AUDIO_ENABLE
@@ -118,17 +112,23 @@ enum combos {
     HCOMM_ENT,
     CD_ESC,
     HDOT_RALT,
-    XD_MENU,
+    XD_LEAD,
     BJ_NUM,
+    LOWER_RAISE_ADJUST,
     VOLUTAB_MNXT,
     VOLDTAB_MPRV,
     DH_BSPC,
-    XC_BSPC,
+    XC_APP,
     COMMDOT_CAPS,
 //    NRAISE,
-//    NRAISE_DE,
     TLOWER, 
-    TLOWER_DE,
+    EO_OE,
+    EA_AE,
+    EU_UE,
+    SPC_U,
+    SPC_O, 
+    SPC_A, 
+    SPC_S,
 
     // combos for the lower and raise keys
     QLOWER, 
@@ -168,134 +168,74 @@ enum combos {
     IRAISE, 
     ORAISE, 
     QUOTRAISE,
-// combos for lower and raise on german
-    QLOWER_DE, 
-    WLOWER_DE, 
-    FLOWER_DE, 
-    PLOWER_DE, 
-    VOLLOWER_DE,
-    BLOWER_DE, 
-    JLOWER_DE, 
-    LLOWER_DE, 
-    ULOWER_DE, 
-    UELOWER_DE,
-    MLOWER_DE, 
-    NLOWER_DE, 
-    ELOWER_DE, 
-    ILOWER_DE, 
-    OLOWER_DE, 
-
-    QRAISE_DE, 
-    WRAISE_DE, 
-    FRAISE_DE, 
-    PRAISE_DE, 
-    VOLRAISE_DE,
-    BRAISE_DE, 
-    JRAISE_DE, 
-    LRAISE_DE, 
-    URAISE_DE, 
-    YRAISE_DE, 
-    UERAISE_DE,
-    MRAISE_DE, 
-    NRAISE_DE, 
-    ERAISE_DE, 
-    IRAISE_DE, 
-    ORAISE_DE, 
 
 #ifdef NAGINATA_ENABLE
     ST_NAV,
 #endif
 };
 
-const uint16_t PROGMEM hcomm_combo[]= {KC_H, KC_COMM, COMBO_END};
-const uint16_t PROGMEM cd_combo[]   = {KC_C, KC_D, COMBO_END};
-const uint16_t PROGMEM hdot_combo[] = {KC_H, KC_DOT, COMBO_END};
-const uint16_t PROGMEM xd_combo[]   = {KC_X, KC_D, COMBO_END};
-const uint16_t PROGMEM num_combo[]  = {LT(_NUM, KC_B), LT(_NUM, KC_J), COMBO_END};
-const uint16_t PROGMEM mnxt_combo[] = {LT(_MOUSE, KC_VOLU), KC_TAB, COMBO_END};
-const uint16_t PROGMEM mprv_combo[] = {LT(_MOUSE, KC_VOLD), KC_TAB, COMBO_END};
-const uint16_t PROGMEM dh_combo[]   = {KC_D, KC_H, COMBO_END};
-const uint16_t PROGMEM xc_combo[]   = {KC_X, KC_C, COMBO_END};
+const uint16_t PROGMEM hcomm_combo[]        = {KC_H, KC_COMM, COMBO_END}; 
+const uint16_t PROGMEM cd_combo[]           = {KC_C, KC_D, COMBO_END}; 
+const uint16_t PROGMEM hdot_combo[]         = {KC_H, KC_DOT, COMBO_END}; 
+const uint16_t PROGMEM xd_combo[]           = {KC_X, KC_D, COMBO_END};
+const uint16_t PROGMEM num_combo[]          = {LT(_NUM, KC_B), LT(_NUM, KC_J), COMBO_END};
+const uint16_t PROGMEM adj_combo[]          = {LT(_LOWER, KC_BSPC), LT(_RAISE, KC_DEL), COMBO_END};
+const uint16_t PROGMEM mnxt_combo[]         = {LT(_MOUSE, KC_VOLU), KC_TAB, COMBO_END};
+const uint16_t PROGMEM mprv_combo[]         = {LT(_MOUSE, KC_VOLD), KC_TAB, COMBO_END};
+const uint16_t PROGMEM dh_combo[]           = {KC_D, KC_H, COMBO_END};
+const uint16_t PROGMEM xc_combo[]           = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM commdot_combo[]      = {KC_COMM, KC_DOT, COMBO_END};
-//const uint16_t PROGMEM nraise_combo[]       = {KC_N, LT(_RAISE, KC_ENT), COMBO_END};
-//const uint16_t PROGMEM nraise_de_combo[]    = {KC_N, LT(_RAISE_DE, KC_ENT), COMBO_END};
+//const uint16_t PROGMEM nraise_combo[]       = {KC_N, LT(_RAISE, KC_DEL), COMBO_END};
 const uint16_t PROGMEM tlower_combo[]       = {KC_T, LT(_LOWER, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM tlower_de_combo[]    = {KC_T, LT(_LOWER_DE, KC_BSPC), COMBO_END};
+const uint16_t PROGMEM ae_combo[]           = {KC_E, KC_A, COMBO_END};
+const uint16_t PROGMEM oe_combo[]           = {KC_E, KC_O, COMBO_END};
+const uint16_t PROGMEM ue_combo[]           = {KC_E, RSFT_T(KC_U), COMBO_END};
+const uint16_t PROGMEM spcu_combo[]         = {LT(_NAV, KC_SPC), RSFT_T(KC_U), COMBO_END};
+const uint16_t PROGMEM spco_combo[]         = {LT(_NAV, KC_SPC), KC_O, COMBO_END};
+const uint16_t PROGMEM spca_combo[]         = {LT(_NAV, KC_SPC), KC_A, COMBO_END};
+const uint16_t PROGMEM spcs_combo[]         = {LT(_NAV, KC_SPC), KC_S, COMBO_END};
+
 // combos for lower and raise
-const uint16_t PROGMEM qlower_combo[]       = {LGUI_T(KC_Q), LT(_LOWER, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM wlower_combo[]       = {LALT_T(KC_W), LT(_LOWER, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM flower_combo[]       = {LSFT_T(KC_F), LT(_LOWER, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM plower_combo[]       = {LCTL_T(KC_P), LT(_LOWER, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM blower_combo[]       = {LT(_NUM, KC_B), LT(_LOWER, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM vollower_combo[]     = {LT(_MOUSE, KC_VOLU), LT(_LOWER, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM jlower_combo[]       = {LT(_NUM, KC_J), LT(_LOWER, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM llower_combo[]       = {RCTL_T(KC_L), LT(_LOWER, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM ulower_combo[]       = {RSFT_T(KC_U), LT(_LOWER, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM ylower_combo[]       = {LALT_T(KC_Y), LT(_LOWER, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM sclnlower_combo[]    = {RGUI_T(KC_SCLN), LT(_LOWER, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM uelower_combo[]      = {XP(DE_ue, DE_UE), LT(_LOWER, KC_BSPC), COMBO_END};
+const uint16_t PROGMEM qlower_combo[]       = {LT(_LOWER, KC_BSPC), LGUI_T(KC_Q),       COMBO_END};
+const uint16_t PROGMEM wlower_combo[]       = {LT(_LOWER, KC_BSPC), LALT_T(KC_W),       COMBO_END};
+const uint16_t PROGMEM flower_combo[]       = {LT(_LOWER, KC_BSPC), LSFT_T(KC_F),       COMBO_END};
+const uint16_t PROGMEM plower_combo[]       = {LT(_LOWER, KC_BSPC), LCTL_T(KC_P),       COMBO_END};
+const uint16_t PROGMEM blower_combo[]       = {LT(_LOWER, KC_BSPC), LT(_NUM, KC_B),     COMBO_END};
+const uint16_t PROGMEM vollower_combo[]     = {LT(_LOWER, KC_BSPC), LT(_MOUSE, KC_VOLU),COMBO_END};
+const uint16_t PROGMEM jlower_combo[]       = {LT(_LOWER, KC_BSPC), LT(_NUM, KC_J),     COMBO_END};
+const uint16_t PROGMEM llower_combo[]       = {LT(_LOWER, KC_BSPC), RCTL_T(KC_L),       COMBO_END};
+const uint16_t PROGMEM ulower_combo[]       = {LT(_LOWER, KC_BSPC), RSFT_T(KC_U),       COMBO_END};
+const uint16_t PROGMEM ylower_combo[]       = {LT(_LOWER, KC_BSPC), LALT_T(KC_Y),       COMBO_END};
+const uint16_t PROGMEM sclnlower_combo[]    = {LT(_LOWER, KC_BSPC), RGUI_T(KC_SCLN),    COMBO_END};
+const uint16_t PROGMEM uelower_combo[]      = {LT(_LOWER, KC_BSPC), XP(DE_ue, DE_UE),   COMBO_END};
 
-const uint16_t PROGMEM mlower_combo[]       = {KC_M, LT(_LOWER, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM nlower_combo[]       = {KC_N, LT(_LOWER, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM elower_combo[]       = {KC_E, LT(_LOWER, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM ilower_combo[]       = {KC_I, LT(_LOWER, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM olower_combo[]       = {KC_O, LT(_LOWER, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM quotlower_combo[]    = {KC_QUOT, LT(_LOWER, KC_BSPC), COMBO_END};
+const uint16_t PROGMEM mlower_combo[]       = {LT(_LOWER, KC_BSPC), KC_M,               COMBO_END};
+const uint16_t PROGMEM nlower_combo[]       = {LT(_LOWER, KC_BSPC), KC_N,               COMBO_END};
+const uint16_t PROGMEM elower_combo[]       = {LT(_LOWER, KC_BSPC), KC_E,               COMBO_END};
+const uint16_t PROGMEM ilower_combo[]       = {LT(_LOWER, KC_BSPC), KC_I,               COMBO_END};
+const uint16_t PROGMEM olower_combo[]       = {LT(_LOWER, KC_BSPC), KC_O,               COMBO_END};
+const uint16_t PROGMEM quotlower_combo[]    = {LT(_LOWER, KC_BSPC), KC_QUOT,            COMBO_END};
 
-const uint16_t PROGMEM qraise_combo[]       = {LGUI_T(KC_Q), LT(_RAISE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM wraise_combo[]       = {LALT_T(KC_W), LT(_RAISE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM fraise_combo[]       = {LSFT_T(KC_F), LT(_RAISE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM praise_combo[]       = {LCTL_T(KC_P), LT(_RAISE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM braise_combo[]       = {LT(_NUM, KC_B), LT(_RAISE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM volraise_combo[]     = {LT(_MOUSE, KC_VOLU), LT(_RAISE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM jraise_combo[]       = {LT(_NUM, KC_J), LT(_RAISE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM lraise_combo[]       = {RCTL_T(KC_L), LT(_RAISE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM uraise_combo[]       = {RSFT_T(KC_U), LT(_RAISE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM yraise_combo[]       = {LALT_T(KC_Y), LT(_RAISE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM sclnraise_combo[]    = {RGUI_T(KC_SCLN), LT(_RAISE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM ueraise_combo[]      = {XP(DE_ue, DE_UE), LT(_RAISE, KC_ENT), COMBO_END};
+const uint16_t PROGMEM qraise_combo[]       = {LT(_RAISE, KC_DEL), LGUI_T(KC_Q),        COMBO_END};
+const uint16_t PROGMEM wraise_combo[]       = {LT(_RAISE, KC_DEL), LALT_T(KC_W),        COMBO_END};
+const uint16_t PROGMEM fraise_combo[]       = {LT(_RAISE, KC_DEL), LSFT_T(KC_F),        COMBO_END};
+const uint16_t PROGMEM praise_combo[]       = {LT(_RAISE, KC_DEL), LCTL_T(KC_P),        COMBO_END};
+const uint16_t PROGMEM braise_combo[]       = {LT(_RAISE, KC_DEL), LT(_NUM, KC_B),      COMBO_END};
+const uint16_t PROGMEM volraise_combo[]     = {LT(_RAISE, KC_DEL), LT(_MOUSE, KC_VOLU), COMBO_END};
+const uint16_t PROGMEM jraise_combo[]       = {LT(_RAISE, KC_DEL), LT(_NUM, KC_J),      COMBO_END};
+const uint16_t PROGMEM lraise_combo[]       = {LT(_RAISE, KC_DEL), RCTL_T(KC_L),        COMBO_END};
+const uint16_t PROGMEM uraise_combo[]       = {LT(_RAISE, KC_DEL), RSFT_T(KC_U),        COMBO_END};
+const uint16_t PROGMEM yraise_combo[]       = {LT(_RAISE, KC_DEL), LALT_T(KC_Y),        COMBO_END};
+const uint16_t PROGMEM sclnraise_combo[]    = {LT(_RAISE, KC_DEL), RGUI_T(KC_SCLN),     COMBO_END};
+const uint16_t PROGMEM ueraise_combo[]      = {LT(_RAISE, KC_DEL), XP(DE_ue, DE_UE),    COMBO_END};
 
-const uint16_t PROGMEM mraise_combo[]       = {KC_M, LT(_RAISE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM nraise_combo[]       = {KC_N, LT(_RAISE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM eraise_combo[]       = {KC_E, LT(_RAISE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM iraise_combo[]       = {KC_I, LT(_RAISE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM oraise_combo[]       = {KC_O, LT(_RAISE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM quotraise_combo[]    = {KC_QUOT, LT(_RAISE, KC_ENT), COMBO_END};
+const uint16_t PROGMEM mraise_combo[]       = {LT(_RAISE, KC_DEL), KC_M,                COMBO_END};
+const uint16_t PROGMEM nraise_combo[]       = {LT(_RAISE, KC_DEL), KC_N,                COMBO_END};
+const uint16_t PROGMEM eraise_combo[]       = {LT(_RAISE, KC_DEL), KC_E,                COMBO_END};
+const uint16_t PROGMEM iraise_combo[]       = {LT(_RAISE, KC_DEL), KC_I,                COMBO_END};
+const uint16_t PROGMEM oraise_combo[]       = {LT(_RAISE, KC_DEL), KC_O,                COMBO_END};
+const uint16_t PROGMEM quotraise_combo[]    = {LT(_RAISE, KC_DEL), KC_QUOT,             COMBO_END};
 
-// combos for lower and raise german
-const uint16_t PROGMEM qlower_de_combo[]       = {LGUI_T(KC_Q), LT(_LOWER_DE, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM wlower_de_combo[]       = {LALT_T(KC_W), LT(_LOWER_DE, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM flower_de_combo[]       = {LSFT_T(KC_F), LT(_LOWER_DE, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM plower_de_combo[]       = {LCTL_T(KC_P), LT(_LOWER_DE, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM blower_de_combo[]       = {LT(_NUM, KC_B), LT(_LOWER_DE, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM vollower_de_combo[]     = {LT(_MOUSE, KC_VOLU), LT(_LOWER_DE, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM jlower_de_combo[]       = {LT(_NUM, KC_J), LT(_LOWER_DE, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM llower_de_combo[]       = {RCTL_T(KC_L), LT(_LOWER_DE, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM ulower_de_combo[]       = {RSFT_T(KC_U), LT(_LOWER_DE, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM uelower_de_combo[]      = {DE_UDIA, LT(_LOWER_DE, KC_BSPC), COMBO_END};
-
-const uint16_t PROGMEM mlower_de_combo[]       = {KC_M, LT(_LOWER_DE, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM nlower_de_combo[]       = {KC_N, LT(_LOWER_DE, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM elower_de_combo[]       = {KC_E, LT(_LOWER_DE, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM ilower_de_combo[]       = {KC_I, LT(_LOWER_DE, KC_BSPC), COMBO_END};
-const uint16_t PROGMEM olower_de_combo[]       = {KC_O, LT(_LOWER_DE, KC_BSPC), COMBO_END};
-
-const uint16_t PROGMEM qraise_de_combo[]       = {LGUI_T(KC_Q), LT(_RAISE_DE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM wraise_de_combo[]       = {LALT_T(KC_W), LT(_RAISE_DE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM fraise_de_combo[]       = {LSFT_T(KC_F), LT(_RAISE_DE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM praise_de_combo[]       = {LCTL_T(KC_P), LT(_RAISE_DE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM volraise_de_combo[]     = {LT(_MOUSE, KC_VOLU), LT(_RAISE_DE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM braise_de_combo[]       = {LT(_NUM, KC_B), LT(_RAISE_DE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM jraise_de_combo[]       = {LT(_NUM, KC_J), LT(_RAISE_DE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM lraise_de_combo[]       = {RCTL_T(KC_L), LT(_RAISE_DE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM uraise_de_combo[]       = {RSFT_T(KC_U), LT(_RAISE_DE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM ueraise_de_combo[]      = {DE_UDIA, LT(_RAISE_DE, KC_ENT), COMBO_END};
-
-const uint16_t PROGMEM mraise_de_combo[]       = {KC_M, LT(_RAISE_DE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM nraise_de_combo[]       = {KC_N, LT(_RAISE_DE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM eraise_de_combo[]       = {KC_E, LT(_RAISE_DE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM iraise_de_combo[]       = {KC_I, LT(_RAISE_DE, KC_ENT), COMBO_END};
-const uint16_t PROGMEM oraise_de_combo[]       = {KC_O, LT(_RAISE_DE, KC_ENT), COMBO_END};
 #ifdef NAGINATA_ENABLE
 const uint16_t PROGMEM stnav_combo[] = {NG_D, NG_F, COMBO_END};
 #endif
@@ -305,17 +245,23 @@ combo_t key_combos[] = {
     [HCOMM_ENT]     = COMBO(hcomm_combo, KC_ENT),  
     [CD_ESC]        = COMBO(cd_combo, KC_ESC),  
     [HDOT_RALT]     = COMBO(hdot_combo, KC_RALT),  
-    [XD_MENU]       = COMBO(xd_combo, KC_APP),
+    [XD_LEAD]       = COMBO(xd_combo, KC_LEAD),
     [BJ_NUM]        = COMBO_ACTION(num_combo),
+    [LOWER_RAISE_ADJUST] = COMBO(adj_combo, MO(_ADJUST)),
     [VOLUTAB_MNXT]  = COMBO(mnxt_combo, KC_MNXT),
     [VOLDTAB_MPRV]  = COMBO(mprv_combo, KC_MPRV),
     [DH_BSPC]       = COMBO(dh_combo, KC_BSPC),
-    [XC_BSPC]       = COMBO(xc_combo, KC_BSPC),
-    [COMMDOT_CAPS]          = COMBO(commdot_combo, KC_CAPS),
+    [XC_APP]        = COMBO(xc_combo, KC_APP),
+    [COMMDOT_CAPS]  = COMBO(commdot_combo, KC_CAPS),
 //    [NRAISE]        = COMBO(nraise_combo, OSL(_RAISE)),
-//    [NRAISE_DE]     = COMBO(nraise_de_combo, OSL(_RAISE_DE)),
     [TLOWER]        = COMBO(tlower_combo, OSL(_LOWER)),
-    [TLOWER_DE]     = COMBO(tlower_de_combo, OSL(_LOWER_DE)),
+    [EO_OE]         = COMBO(oe_combo, XP(DE_oe, DE_OE)),
+    [EA_AE]         = COMBO(ae_combo, XP(DE_ae, DE_AE)),
+    [EU_UE]         = COMBO(ue_combo, XP(DE_ue, DE_UE)),
+    [SPC_U]         = COMBO(spcu_combo, XP(DE_ue, DE_UE)),
+    [SPC_O]         = COMBO(spco_combo, XP(DE_oe, DE_OE)),
+    [SPC_A]         = COMBO(spca_combo, XP(DE_ae, DE_AE)),
+    [SPC_S]         = COMBO(spcs_combo, X(DE_SZ)),
 
     // combos for the lower and raise keys
     [QLOWER]        = COMBO(qlower_combo, KC_EXLM),
@@ -356,38 +302,6 @@ combo_t key_combos[] = {
     [ORAISE]        = COMBO(oraise_combo, KC_RBRC),
     [QUOTRAISE]     = COMBO(quotraise_combo, XP(DE_ae, DE_AE)),
 
-    // combos for the lower and raise keys German
-    [QLOWER_DE]        = COMBO(qlower_de_combo, DE_EXLM),
-    [WLOWER_DE]        = COMBO(wlower_de_combo, DE_AT),
-    [FLOWER_DE]        = COMBO(flower_de_combo, DE_HASH),
-    [PLOWER_DE]        = COMBO(plower_de_combo, DE_DLR),
-    [BLOWER_DE]        = COMBO(blower_de_combo, DE_PERC),
-    [VOLLOWER_DE]      = COMBO(vollower_de_combo, DE_TILD),
-    [JLOWER_DE]        = COMBO(jlower_de_combo, DE_CIRC),
-    [LLOWER_DE]        = COMBO(llower_de_combo, DE_AMPR),
-    [ULOWER_DE]        = COMBO(ulower_de_combo, DE_ASTR),
-    [UELOWER_DE]       = COMBO(uelower_de_combo, S(DE_ODIA)),
-    [MLOWER_DE]        = COMBO(mlower_de_combo, DE_SS),
-    [NLOWER_DE]        = COMBO(nlower_de_combo, DE_UNDS),
-    [ELOWER_DE]        = COMBO(elower_de_combo, DE_PLUS),
-    [ILOWER_DE]        = COMBO(ilower_de_combo, DE_LCBR),
-    [OLOWER_DE]        = COMBO(olower_de_combo, DE_RCBR),
-
-    [QRAISE_DE]        = COMBO(qraise_de_combo, DE_1),
-    [WRAISE_DE]        = COMBO(wraise_de_combo, DE_2),
-    [FRAISE_DE]        = COMBO(fraise_de_combo, DE_3),
-    [PRAISE_DE]        = COMBO(praise_de_combo, DE_4),
-    [BRAISE_DE]        = COMBO(braise_de_combo, DE_5),
-    [VOLRAISE_DE]      = COMBO(volraise_de_combo, DE_GRV),
-    [JRAISE_DE]        = COMBO(jraise_de_combo, DE_6),
-    [LRAISE_DE]        = COMBO(lraise_de_combo, DE_7),
-    [URAISE_DE]        = COMBO(uraise_de_combo, DE_8),
-    [UERAISE_DE]       = COMBO(ueraise_de_combo, DE_ODIA),
-    [MRAISE_DE]        = COMBO(mraise_de_combo, DE_SS),
-    [NRAISE_DE]        = COMBO(nraise_de_combo, DE_MINS),
-    [ERAISE_DE]        = COMBO(eraise_de_combo, DE_EQL),
-    [IRAISE_DE]        = COMBO(iraise_de_combo, DE_LBRC),
-    [ORAISE_DE]        = COMBO(oraise_de_combo, DE_RBRC),
 #ifdef NAGINATA_ENABLE
     [ST_NAV]    = COMBO(stnav_combo, MO(_NAV)),
 #endif
@@ -395,3 +309,12 @@ combo_t key_combos[] = {
 
 uint16_t COMBO_LEN = sizeof(key_combos) / sizeof(key_combos[0]);
 
+void process_combo_event(uint16_t combo_index, bool pressed) {
+    switch(combo_index) {
+        case BJ_NUM:
+            if (pressed) {
+                layer_invert(_NUM);
+            }
+            break;
+    }
+}

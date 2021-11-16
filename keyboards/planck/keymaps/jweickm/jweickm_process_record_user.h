@@ -40,16 +40,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
             break;
-        case COLEMAK_DE:
-            if (record->event.pressed) {
-//                set_single_persistent_default_layer(_COLEMAK_DE);
-                default_layer_set(1UL<<_COLEMAK_DE); // reduce writing to the eeprom
-#ifdef AUDIO_ENABLE
-                PLAY_SONG(colemak_de_song);
-#endif
-            }
-            return false;
-            break;
         case GAMING:
             if (record->event.pressed) {
                 layer_invert(_GAMING);
@@ -168,6 +158,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return true;
             }
             return true;
+        case LT(_NAV, KC_ENT):
+            if (!record->event.pressed) {
+                del_mods(MOD_BIT(KC_LALT));
+                del_mods(MOD_BIT(KC_LCTL));
+                is_alt_tab_active = false;
+                is_ctl_tab_active = false;
+                return true;
+            }
+            return true;
 
 // ------------------------- UNICODE ----------------------------------------- 
         case UNICODE_ALT_SW:
@@ -178,7 +177,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case X(DE_SZ): 
             if (record->event.pressed) {
-                if (!win_unicode_enable) {
+                if (de_layout_active) {
+                    register_code16(DE_SS);
+                    return false;
+                } else if (!win_unicode_enable) {
                     uint8_t temp_mods = get_mods();
                     if ((get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
                         clear_oneshot_mods();
@@ -202,10 +204,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     break;
                 }
                 return true;
+            } else {
+                if (de_layout_active) {
+                    unregister_code16(DE_SS);
+                    return false;
+                }
             } 
         case XP(DE_ae, DE_AE):
             if (record->event.pressed) {
-                if (!win_unicode_enable) {
+                if (de_layout_active) {
+                    register_code16(DE_ADIA);
+                    return false;
+                } else if (!win_unicode_enable) {
                     uint8_t temp_mods = get_mods();
                     if ((get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
                         clear_oneshot_mods();
@@ -229,10 +239,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     break;
                 }
                 return true;
+            } else {
+                unregister_code16(DE_ADIA);
+                return false;
             }
         case X(DE_AE):
             if (record->event.pressed) {
-                if (!win_unicode_enable) {
+                if (de_layout_active) {
+                    register_code16(S(DE_ADIA));
+                    return false;
+                } else if (!win_unicode_enable) {
                     uint8_t temp_mods = get_mods() | get_oneshot_mods();
                     clear_oneshot_mods();
                     clear_mods();
@@ -247,10 +263,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     break;
                 }
                 return true;
+            } else {
+                if (de_layout_active) {
+                    unregister_code16(DE_ADIA);
+                    return false;
+                }
             }
         case XP(DE_oe, DE_OE):
             if (record->event.pressed) {
-                if (!win_unicode_enable) {
+                if (de_layout_active) {
+                    register_code16(DE_ODIA);
+                    return false;
+                } else if (!win_unicode_enable) {
                     uint8_t temp_mods = get_mods();
                     if ((get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
                         clear_oneshot_mods();
@@ -274,10 +298,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     break;
                 }
                 return true;
+            } else {
+                if (de_layout_active) {
+                    unregister_code16(DE_ODIA);
+                    return false;
+                }
             }
         case X(DE_OE):
             if (record->event.pressed) {
-                if (!win_unicode_enable) {
+                if (de_layout_active) {
+                    register_code16(S(DE_ODIA));
+                    return false;
+                } else if (!win_unicode_enable) {
                     uint8_t temp_mods = get_mods() | get_oneshot_mods();
                     clear_oneshot_mods();
                     clear_mods();
@@ -292,6 +324,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     break;
                 }
                 return true;
+            } else {
+                if (de_layout_active) {
+                    unregister_code16(DE_ODIA);
+                    return false;
+                }
             }
         case XP(DE_ue, DE_UE):
             if (record->event.pressed) {
@@ -324,6 +361,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
                 if (de_layout_active) {
                     unregister_code16(DE_UDIA);
+                    return false;
                 }
             }
         case X(DE_UE):
@@ -348,6 +386,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
                 if (de_layout_active) {
                     unregister_code16(DE_UDIA);
+                    return false;
                 }
             }
         case DE_EGRAVE:
