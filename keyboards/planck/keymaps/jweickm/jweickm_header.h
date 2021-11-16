@@ -149,6 +149,7 @@ enum combos {
     ILOWER, 
     OLOWER, 
     QUOTLOWER,
+    HLOWER, 
 
     QRAISE, 
     WRAISE, 
@@ -168,6 +169,7 @@ enum combos {
     IRAISE, 
     ORAISE, 
     QUOTRAISE,
+    HRAISE,
 
 #ifdef NAGINATA_ENABLE
     ST_NAV,
@@ -215,6 +217,7 @@ const uint16_t PROGMEM elower_combo[]       = {LT(_LOWER, KC_BSPC), KC_E,       
 const uint16_t PROGMEM ilower_combo[]       = {LT(_LOWER, KC_BSPC), KC_I,               COMBO_END};
 const uint16_t PROGMEM olower_combo[]       = {LT(_LOWER, KC_BSPC), KC_O,               COMBO_END};
 const uint16_t PROGMEM quotlower_combo[]    = {LT(_LOWER, KC_BSPC), KC_QUOT,            COMBO_END};
+const uint16_t PROGMEM hlower_combo[]       = {LT(_LOWER, KC_BSPC), KC_H,               COMBO_END};
 
 const uint16_t PROGMEM qraise_combo[]       = {LT(_RAISE, KC_DEL), LGUI_T(KC_Q),        COMBO_END};
 const uint16_t PROGMEM wraise_combo[]       = {LT(_RAISE, KC_DEL), LALT_T(KC_W),        COMBO_END};
@@ -235,6 +238,7 @@ const uint16_t PROGMEM eraise_combo[]       = {LT(_RAISE, KC_DEL), KC_E,        
 const uint16_t PROGMEM iraise_combo[]       = {LT(_RAISE, KC_DEL), KC_I,                COMBO_END};
 const uint16_t PROGMEM oraise_combo[]       = {LT(_RAISE, KC_DEL), KC_O,                COMBO_END};
 const uint16_t PROGMEM quotraise_combo[]    = {LT(_RAISE, KC_DEL), KC_QUOT,             COMBO_END};
+const uint16_t PROGMEM hraise_combo[]       = {LT(_RAISE, KC_DEL), KC_H,                COMBO_END};
 
 #ifdef NAGINATA_ENABLE
 const uint16_t PROGMEM stnav_combo[] = {NG_D, NG_F, COMBO_END};
@@ -282,6 +286,7 @@ combo_t key_combos[] = {
     [ILOWER]        = COMBO(ilower_combo, KC_LCBR),
     [OLOWER]        = COMBO(olower_combo, KC_RCBR),
     [QUOTLOWER]     = COMBO(quotlower_combo, X(DE_AE)),
+    [HLOWER]        = COMBO(hlower_combo, S(KC_QUOT)),
 
     [QRAISE]        = COMBO(qraise_combo, KC_1),
     [WRAISE]        = COMBO(wraise_combo, KC_2),
@@ -301,6 +306,7 @@ combo_t key_combos[] = {
     [IRAISE]        = COMBO(iraise_combo, KC_LBRC),
     [ORAISE]        = COMBO(oraise_combo, KC_RBRC),
     [QUOTRAISE]     = COMBO(quotraise_combo, XP(DE_ae, DE_AE)),
+    [HRAISE]        = COMBO(hraise_combo, KC_QUOT),
 
 #ifdef NAGINATA_ENABLE
     [ST_NAV]    = COMBO(stnav_combo, MO(_NAV)),
