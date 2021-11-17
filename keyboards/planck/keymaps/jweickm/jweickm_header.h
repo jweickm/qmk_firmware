@@ -27,9 +27,23 @@ enum planck_layers {
     _MOUSE,
 };
 
+// IMPORTANT: DEFINE THE LAYOUT FOR THE KEYBOARD HERE
+#define hand_position 1 // 1: semi-wide, 2: wide
+#if hand_position == 1
+    #define layout 2 // 1: with OSM, 2: with OSL
+#elif hand_position == 2
+    #define layout 1 // 1: 1x2uC, 2: 2x2u, 3: grid
+#endif
+
 // define the secondary function of the lower and raise keys here
-#define LOWER LT(_LOWER, KC_BSPC)
-#define RAISE LT(_RAISE, KC_ENT)
+#if hand_position == 1 && layout == 2
+    #define LOWER OSL(_LOWER)
+    #define RAISE OSL(_RAISE)
+#else
+    #define LOWER LT(_LOWER, KC_BSPC)
+    #define RAISE LT(_RAISE, KC_ENT)
+#endif
+
 #define NAVSPACE LT(_NAV, KC_SPC)
 #define NAVENT LT(_NAV, KC_ENT)
 #define CUT_X LT(0, KC_X)
@@ -276,10 +290,10 @@ combo_t key_combos[] = {
 //    [EO_OE]         = COMBO(oe_combo, XP(DE_oe, DE_OE)),
 //    [EA_AE]         = COMBO(ae_combo, XP(DE_ae, DE_AE)),
 //    [EU_UE]         = COMBO(ue_combo, XP(DE_ue, DE_UE)),
-    [SPC_U]         = COMBO(spcu_combo, XP(DE_ue, DE_UE)),
-    [SPC_O]         = COMBO(spco_combo, XP(DE_oe, DE_OE)),
-    [SPC_A]         = COMBO(spca_combo, XP(DE_ae, DE_AE)),
-    [SPC_S]         = COMBO(spcs_combo, X(DE_SZ)),
+//    [SPC_U]         = COMBO(spcu_combo, XP(DE_ue, DE_UE)),
+//    [SPC_O]         = COMBO(spco_combo, XP(DE_oe, DE_OE)),
+//    [SPC_A]         = COMBO(spca_combo, XP(DE_ae, DE_AE)),
+//    [SPC_S]         = COMBO(spcs_combo, X(DE_SZ)),
 
     // combos for the lower and raise keys
     [QLOWER]        = COMBO(qlower_combo, KC_EXLM),

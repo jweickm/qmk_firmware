@@ -16,12 +16,6 @@
  */
 #include "jweickm_header.h"
 #include "jweickm_process_record_user.h"
-#define hand_position 1 // 1: semi-wide, 2: wide
-#if hand_position == 1
-    #define layout 2 // 1: with OSM, 2: with OSL
-#elif hand_position == 2
-    #define layout 1 // 1: 1x2uC, 2: 2x2u, 3: grid
-#endif
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* ================================================================================================
@@ -335,7 +329,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     #if layout == 1
         LCTL_T(KC_CAPS), TG(_MOUSE), M_ESCM, LOWER, OSM(MOD_LSFT), NAVSPACE, NAVSPACE, RAISE, KC_DEL, LT(_MOUSE, KC_DOWN), LT(_MOUSE, KC_UP), KC_LEAD
     #elif layout == 2
-        LCTL_T(KC_CAPS), TG(_MOUSE), M_ESCM, OSL(_LOWER), LSFT_T(KC_BSPC), NAVSPACE, NAVSPACE, OSL(_RAISE), KC_DEL, LT(_MOUSE, KC_DOWN), LT(_MOUSE, KC_UP), KC_LEAD
+        LCTL_T(KC_CAPS), TG(_MOUSE), M_ESCM, LOWER, LSFT_T(KC_BSPC), NAVSPACE, NAVSPACE, RAISE, KC_DEL, LT(_MOUSE, KC_DOWN), LT(_MOUSE, KC_UP), KC_LEAD
     #endif
     ),
 
@@ -675,8 +669,11 @@ bool dip_switch_update_user(uint8_t index, bool active) {
 }
 
 #ifdef KEY_OVERRIDE_ENABLE
-const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, LOWER, KC_DEL);
-
+#if layout == 1 // OSM_SHIFT
+    const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, LOWER, KC_DEL);
+#elif layout == 2 // OSL
+    const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, LSFT_T(KC_BSPC), KC_DEL);
+#endif
 // This globally defines all key overrides to be used
 const key_override_t **key_overrides = (const key_override_t *[]){
     &delete_key_override,
