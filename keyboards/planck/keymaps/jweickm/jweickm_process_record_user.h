@@ -10,6 +10,101 @@ float ring_factor   = 1.25;
 float pinky_factor  = 1.15;
 float td_factor     = 1.3;
 
+// define the per_key_tapping_term
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        // thumb keys
+        case LOWER:
+            return TAPPING_TERM * thumb_factor;
+        case RAISE:
+            return TAPPING_TERM * thumb_factor;
+        case NAVSPACE:
+            return TAPPING_TERM * 1.1;
+        case NAVENT:
+            return TAPPING_TERM * 1.1;
+
+        // index finger keys
+        case PASTE_V:
+            return TAPPING_TERM * index_factor;
+        case LCTL_T(KC_P):
+            return TAPPING_TERM * index_factor;
+        case RCTL_T(KC_L):
+            return TAPPING_TERM * (index_factor + 0.1);
+        case LT(_NUM, KC_B):
+            return TAPPING_TERM * (index_factor + 0.1);
+        case LT(_NUM, KC_J):
+            return TAPPING_TERM * index_factor;
+        case LT(_MOUSE, KC_VOLU):
+            return TAPPING_TERM * td_factor;
+        case LT(_MOUSE, KC_VOLD):
+            return TAPPING_TERM * td_factor;
+
+        // middle finger keys
+        case LSFT_T(KC_F):
+            return TAPPING_TERM * middle_factor;
+        case RSFT_T(KC_U):
+            return TAPPING_TERM * middle_factor;
+        case COPY_C:
+            return TAPPING_TERM * middle_factor;
+
+        // ring finger keys
+        case LALT_T(KC_W):
+            return TAPPING_TERM * ring_factor;
+        case LALT_T(KC_Y):
+            return TAPPING_TERM * ring_factor;
+        case LGUI_T(KC_TAB):
+            return TAPPING_TERM * ring_factor;
+        case CUT_X:
+            return TAPPING_TERM * ring_factor;
+
+        // pinky keys
+        case LGUI_T(KC_Q):
+            return TAPPING_TERM * pinky_factor;
+        case RGUI_T(KC_SCLN):
+            return TAPPING_TERM * pinky_factor;
+        case LT(_MOUSE, KC_Z):
+            return TAPPING_TERM * pinky_factor;
+        case LSFT_T(KC_Z):
+            return TAPPING_TERM * pinky_factor;
+        case RSFT_T(KC_RALT):
+            return TAPPING_TERM;
+        case LT(_MOUSE, KC_SLSH):
+            return TAPPING_TERM * pinky_factor;
+        case LCTL_T(KC_CAPS):
+            return TAPPING_TERM; // prefer this one to be shorter
+
+        // tap-dance actions
+        case TD(TD_PRN):
+            return TAPPING_TERM * td_factor;
+        case TD(TD_BRC):
+            return TAPPING_TERM * td_factor;
+        case TD(TD_CBR):
+            return TAPPING_TERM * td_factor;
+        case TD(TD_VIM_GG):
+            return TAPPING_TERM * td_factor;
+        case TD(TD_F4):
+            return TAPPING_TERM * td_factor;
+
+        default:
+            return TAPPING_TERM;
+    }
+}
+
+bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LSFT_T(KC_F):
+            return true;
+        case RSFT_T(KC_U):
+            return true;
+//      case LOWER:
+//            return true;
+//      case LT(_LOWER, KC_BSPC):
+//            return true;
+        default:
+            return false;
+    }
+}
+
 // logical variable to differentiate between the German and the English input mode
 bool de_layout_active  = false; 
 
@@ -108,7 +203,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
 
-// ------------------------ TABBING, VIM ----------------------------------------
+// ------------------------ SPECIAL FUNCTION KEYS ------------------------------------
         case VIM_O:
             if (record->event.pressed) {
                 tap_code(KC_END);
@@ -126,6 +221,33 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
             break;
+        case CUT_X:
+            if (record->tap.count && record->event.pressed) {
+                return true;         // Return true for normal processing of tap keycode
+                break;
+            } else if (record->event.pressed) {
+                tap_code16(S(KC_DEL)); // Intercept hold function to send SHIFT-DELETE
+                return false;
+            }
+            return true;
+        case COPY_C:
+            if (record->tap.count && record->event.pressed) {
+                return true;         // Return true for normal processing of tap keycode
+                break;
+            } else if (record->event.pressed) {
+                tap_code16(C(KC_INS)); // Intercept hold function to send CTRL-INSERT
+                return false;
+            }
+            return true;
+        case PASTE_V:
+            if (record->tap.count && record->event.pressed) {
+                return true;         // Return true for normal processing of tap keycode
+                break;
+            } else if (record->event.pressed) {
+                tap_code16(S(KC_INS)); // Intercept hold function to send SHIFT-INSERT
+                return false;
+            }
+            return true;
         case ALT_TAB:
             if (record->event.pressed) {
                 if (!is_alt_tab_active) {
@@ -149,7 +271,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
         // the next case allows us to use alt_tab without a timer
-        case LT(_NAV, KC_SPC):
+        case NAVSPACE:
             if (!record->event.pressed) {
                 del_mods(MOD_BIT(KC_LALT));
                 del_mods(MOD_BIT(KC_LCTL));
@@ -158,7 +280,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return true;
             }
             return true;
-        case LT(_NAV, KC_ENT):
+        case NAVENT:
             if (!record->event.pressed) {
                 del_mods(MOD_BIT(KC_LALT));
                 del_mods(MOD_BIT(KC_LCTL));
@@ -784,7 +906,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
 // ------------------------- MOD-/LAYER-TAPS ---------------------------------
-        case LT(_MOUSE, KC_Z):
+        case LSFT_T(KC_Z): case LT(_MOUSE, KC_Z):
             if (de_layout_active) {
                 if (record->event.pressed) {
                     // if it's a hold check whether it's part of a tap-hold 

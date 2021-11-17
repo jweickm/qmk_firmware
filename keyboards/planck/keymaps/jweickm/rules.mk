@@ -4,6 +4,7 @@ TAP_DANCE_ENABLE = yes		# enable tap dance functionality
 DYNAMIC_MACRO_ENABLE = yes 	# QMK support for temporary macros
 SRC += muse.c
 COMBO_ENABLE = yes 			# Enable Keyboard Combos 1,764 bytes
+KEY_OVERRIDE_ENABLE = yes 	# Enable key override functionality
 
 #ifdef NAGINATA_ENABLE 		# enabled in config.h
 SRC += naginata_v14.c
