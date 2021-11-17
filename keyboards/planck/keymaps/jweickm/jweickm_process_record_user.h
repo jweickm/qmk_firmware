@@ -14,74 +14,55 @@ float td_factor     = 1.3;
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // thumb keys
-        case LOWER:
-            return TAPPING_TERM * thumb_factor;
+        case LOWER: 
         case RAISE:
+        case LSFT_T(KC_BSPC):
             return TAPPING_TERM * thumb_factor;
         case NAVSPACE:
-            return TAPPING_TERM * 1.1;
         case NAVENT:
             return TAPPING_TERM * 1.1;
 
         // index finger keys
         case PASTE_V:
-            return TAPPING_TERM * index_factor;
+        case LT(_NUM, KC_J):
         case LCTL_T(KC_P):
             return TAPPING_TERM * index_factor;
         case RCTL_T(KC_L):
-            return TAPPING_TERM * (index_factor + 0.1);
         case LT(_NUM, KC_B):
             return TAPPING_TERM * (index_factor + 0.1);
-        case LT(_NUM, KC_J):
-            return TAPPING_TERM * index_factor;
         case LT(_MOUSE, KC_VOLU):
-            return TAPPING_TERM * td_factor;
         case LT(_MOUSE, KC_VOLD):
             return TAPPING_TERM * td_factor;
 
         // middle finger keys
         case LSFT_T(KC_F):
-            return TAPPING_TERM * middle_factor;
         case RSFT_T(KC_U):
-            return TAPPING_TERM * middle_factor;
         case COPY_C:
             return TAPPING_TERM * middle_factor;
 
         // ring finger keys
         case LALT_T(KC_W):
-            return TAPPING_TERM * ring_factor;
         case LALT_T(KC_Y):
-            return TAPPING_TERM * ring_factor;
         case LGUI_T(KC_TAB):
-            return TAPPING_TERM * ring_factor;
         case CUT_X:
             return TAPPING_TERM * ring_factor;
 
         // pinky keys
         case LGUI_T(KC_Q):
-            return TAPPING_TERM * pinky_factor;
         case RGUI_T(KC_SCLN):
-            return TAPPING_TERM * pinky_factor;
         case LT(_MOUSE, KC_Z):
-            return TAPPING_TERM * pinky_factor;
+        case LT(_MOUSE, KC_SLSH):
         case LSFT_T(KC_Z):
             return TAPPING_TERM * pinky_factor;
         case RSFT_T(KC_RALT):
-            return TAPPING_TERM;
-        case LT(_MOUSE, KC_SLSH):
-            return TAPPING_TERM * pinky_factor;
         case LCTL_T(KC_CAPS):
             return TAPPING_TERM; // prefer this one to be shorter
 
         // tap-dance actions
         case TD(TD_PRN):
-            return TAPPING_TERM * td_factor;
         case TD(TD_BRC):
-            return TAPPING_TERM * td_factor;
         case TD(TD_CBR):
-            return TAPPING_TERM * td_factor;
         case TD(TD_VIM_GG):
-            return TAPPING_TERM * td_factor;
         case TD(TD_F4):
             return TAPPING_TERM * td_factor;
 

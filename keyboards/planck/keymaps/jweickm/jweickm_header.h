@@ -122,9 +122,11 @@ enum combos {
     LOWER_RAISE_ADJUST,
     VOLUTAB_MNXT,
     VOLDTAB_MPRV,
-    DH_BSPC,
+    DH_ROW,
     XC_APP,
     COMMDOT_CAPS,
+    XS_TAB, 
+    EDOT_BSPC,
 //    NRAISE,
     TLOWER, 
     EO_OE,
@@ -192,6 +194,9 @@ const uint16_t PROGMEM mprv_combo[]         = {LT(_MOUSE, KC_VOLD), KC_TAB, COMB
 const uint16_t PROGMEM dh_combo[]           = {KC_D, KC_H, COMBO_END};
 const uint16_t PROGMEM xc_combo[]           = {CUT_X, COPY_C, COMBO_END};
 const uint16_t PROGMEM commdot_combo[]      = {KC_COMM, KC_DOT, COMBO_END};
+const uint16_t PROGMEM xs_combo[]           = {CUT_X, KC_S, COMBO_END};
+const uint16_t PROGMEM edot_combo[]         = {KC_E, KC_DOT, COMBO_END};
+
 //const uint16_t PROGMEM nraise_combo[]       = {KC_N, LT(_RAISE, KC_DEL), COMBO_END};
 const uint16_t PROGMEM tlower_combo[]       = {LOWER, KC_T, COMBO_END};
 const uint16_t PROGMEM ae_combo[]           = {KC_E, KC_A, COMBO_END};
@@ -255,16 +260,19 @@ combo_t key_combos[] = {
     [CD_ESC]        = COMBO(cd_combo, KC_ESC),  
     [HDOT_RALT]     = COMBO(hdot_combo, KC_RALT),  
     [XD_LEAD]       = COMBO(xd_combo, KC_LEAD),
-    [BJ_NUM]        = COMBO_ACTION(num_combo),
     [LOWER_RAISE_ADJUST] = COMBO(adj_combo, MO(_ADJUST)),
     [VOLUTAB_MNXT]  = COMBO(mnxt_combo, KC_MNXT),
     [VOLDTAB_MPRV]  = COMBO(mprv_combo, KC_MPRV),
-    [DH_BSPC]       = COMBO(dh_combo, KC_BSPC),
     [XC_APP]        = COMBO(xc_combo, KC_APP),
     [COMMDOT_CAPS]  = COMBO(commdot_combo, KC_CAPS),
-//    [NRAISE]        = COMBO(nraise_combo, OSL(_RAISE)),
-    [TLOWER]        = COMBO(tlower_combo, OSL(_LOWER)),
+    [XS_TAB]        = COMBO(xs_combo, KC_TAB),      
+    [EDOT_BSPC]     = COMBO(edot_combo, KC_BSPC),
 
+    [DH_ROW]        = COMBO_ACTION(dh_combo),
+    [BJ_NUM]        = COMBO_ACTION(num_combo),
+
+//    [NRAISE]        = COMBO(nraise_combo, OSL(_RAISE)),
+//    [TLOWER]        = COMBO(tlower_combo, OSL(_LOWER)),
 //    [EO_OE]         = COMBO(oe_combo, XP(DE_oe, DE_OE)),
 //    [EA_AE]         = COMBO(ae_combo, XP(DE_ae, DE_AE)),
 //    [EU_UE]         = COMBO(ue_combo, XP(DE_ue, DE_UE)),
@@ -326,6 +334,13 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         case BJ_NUM:
             if (pressed) {
                 layer_invert(_NUM);
+            }
+            break;
+        case DH_ROW:
+            if (pressed) {
+                tap_code(KC_END);
+                tap_code(KC_RIGHT);
+                tap_code16(S(KC_UP));
             }
             break;
     }
