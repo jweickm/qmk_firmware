@@ -794,30 +794,54 @@ void matrix_scan_user(void) {
         }
         SEQ_FOUR_KEYS(KC_P, KC_O, KC_S, KC_T) {
             SEND_STRING("jakob.weickmann");
-            tap_code16(KC_AT);
+            if (de_layout_active) {
+                tap_code16(DE_AT);    
+            } else {
+                tap_code16(KC_AT);
+            }
             SEND_STRING("posteo.de");
         }
         SEQ_THREE_KEYS(KC_U, KC_N, KC_I) {
             SEND_STRING("jakob.weickmann");
-            tap_code16(KC_AT);
+            if (de_layout_active) {
+                tap_code16(DE_AT);    
+            } else {
+                tap_code16(KC_AT);
+            }
             SEND_STRING("univie.ac.at");
         }
         SEQ_THREE_KEYS(KC_G, KC_M, KC_X) {
             SEND_STRING("j.weickmann"); 
-            tap_code16(KC_AT);
+            if (de_layout_active) {
+                tap_code16(DE_AT);    
+            } else {
+                tap_code16(KC_AT);
+            }
             SEND_STRING("gmx.net");
         }
         SEQ_FOUR_KEYS(KC_D, KC_J, KC_J, KC_G) {
             SEND_STRING("jakob.weickmann");
-            tap_code16(KC_AT);
+            if (de_layout_active) {
+                tap_code16(DE_AT);    
+            } else {
+                tap_code16(KC_AT);
+            }
             SEND_STRING("djjg.org");
         }
         SEQ_FOUR_KEYS(KC_A, KC_T, KC_N, KC_R) {
-            tap_code16(KC_PLUS);
+            if (de_layout_active) {
+                tap_code16(DE_PLUS);
+            } else {
+                tap_code16(KC_PLUS);
+            }
             SEND_STRING("4367761832729");
         }
         SEQ_FOUR_KEYS(KC_D, KC_E, KC_N, KC_R) {
-            tap_code16(KC_PLUS);
+            if (de_layout_active) {
+                tap_code16(DE_PLUS);
+            } else {
+                tap_code16(KC_PLUS);
+            }
             SEND_STRING("491743625328");
         }
         SEQ_FOUR_KEYS(KC_I, KC_B, KC_A, KC_N) {
