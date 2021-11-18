@@ -506,7 +506,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | XXXX | XXXX | BSPC | XXXX | Bri- | XXXX | MWHL↓| XXXX | XXXX | ____ | STOP |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |!MOUSE| XXXX | XXXX | ____ | XXXX | MAUS_ACCEL2 | ____ | XXXX |  <-  |  ->  | XXXX | 1x2uC
+     * |!MOUSE|!MOUSE| XXXX | ____ | XXXX | MAUS_ACCEL2 | ____ | XXXX |  <-  |  ->  | XXXX | 1x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_MOUSE] = LAYOUT_planck_grid(
@@ -514,9 +514,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO, KC_BTN3, KC_BTN2, KC_BTN1, KC_NO, KC_MPLY, KC_NO, KC_MS_L, KC_MS_D, KC_MS_R, DM_PLY1, DM_REC1,
         KC_TRNS, KC_NO, KC_NO, KC_BSPC, KC_NO, KC_BRID, KC_NO, KC_WH_D, KC_NO, KC_NO, KC_TRNS, DM_RSTP,
     #if layout == 1
-        TG(_MOUSE), KC_NO, KC_NO, KC_TRNS, KC_NO, KC_ACL2, KC_ACL2, KC_TRNS, KC_NO, KC_LEFT, KC_RIGHT, KC_NO
+        TG(_MOUSE), TG(_MOUSE), KC_NO, KC_TRNS, KC_NO, KC_ACL2, KC_ACL2, KC_TRNS, KC_NO, KC_LEFT, KC_RIGHT, KC_NO
     #elif layout == 2
-        TG(_MOUSE), KC_NO, KC_NO, KC_TRNS, KC_NO, KC_ACL2, KC_ACL2, KC_TRNS, KC_NO, KC_LEFT, KC_RIGHT, KC_NO
+        TG(_MOUSE), TG(_MOUSE), KC_NO, KC_TRNS, KC_NO, KC_ACL2, KC_ACL2, KC_TRNS, KC_NO, KC_LEFT, KC_RIGHT, KC_NO
     #endif
     )
 #endif // hand-position
