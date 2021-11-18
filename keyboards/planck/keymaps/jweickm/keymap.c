@@ -506,7 +506,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | XXXX | XXXX | BSPC | XXXX | Bri- | XXXX | MWHL↓| XXXX | XXXX | ____ | STOP |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |!MOUSE| XXXX | XXXX | ____ | XXXX | MAUS_ACCEL2 | ____ | XXXX | XXXX |  <-  |  ->  | 1x2uC
+     * |!MOUSE| XXXX | XXXX | ____ | XXXX | MAUS_ACCEL2 | ____ | XXXX |  <-  |  ->  | XXXX | 1x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_MOUSE] = LAYOUT_planck_grid(
@@ -514,9 +514,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO, KC_BTN3, KC_BTN2, KC_BTN1, KC_NO, KC_MPLY, KC_NO, KC_MS_L, KC_MS_D, KC_MS_R, DM_PLY1, DM_REC1,
         KC_TRNS, KC_NO, KC_NO, KC_BSPC, KC_NO, KC_BRID, KC_NO, KC_WH_D, KC_NO, KC_NO, KC_TRNS, DM_RSTP,
     #if layout == 1
-        TG(_MOUSE), KC_NO, KC_NO, KC_TRNS, KC_NO, KC_ACL2, KC_ACL2, KC_TRNS, KC_NO, KC_NO, KC_LEFT, KC_RIGHT
+        TG(_MOUSE), KC_NO, KC_NO, KC_TRNS, KC_NO, KC_ACL2, KC_ACL2, KC_TRNS, KC_NO, KC_LEFT, KC_RIGHT, KC_NO
     #elif layout == 2
-        TG(_MOUSE), KC_NO, KC_NO, KC_TRNS, KC_NO, KC_ACL2, KC_ACL2, KC_TRNS, KC_NO, KC_NO, KC_LEFT, KC_RIGHT
+        TG(_MOUSE), KC_NO, KC_NO, KC_TRNS, KC_NO, KC_ACL2, KC_ACL2, KC_TRNS, KC_NO, KC_LEFT, KC_RIGHT, KC_NO
     #endif
     )
 #endif // hand-position
@@ -674,9 +674,11 @@ bool dip_switch_update_user(uint8_t index, bool active) {
 #elif layout == 2 // OSL
     const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, LSFT_T(KC_BSPC), KC_DEL);
 #endif
+    const key_override_t combo_delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
 // This globally defines all key overrides to be used
 const key_override_t **key_overrides = (const key_override_t *[]){
     &delete_key_override,
+    &combo_delete_key_override,
     NULL // Null terminate the array of overrides!
 };
 #endif
@@ -697,6 +699,27 @@ void matrix_scan_user(void) {
         }
         SEQ_TWO_KEYS(KC_M, KC_E) {
             SEND_STRING("Jakob Weickmann");
+        }
+        SEQ_TWO_KEYS(KC_G, KC_R) {
+            if (de_layout_active) {
+                SEND_STRING("Gr[-e");
+            } else {
+                SEND_STRING("Gr");
+                add_mods(MOD_BIT(KC_LALT));
+                tap_code(KC_P0);
+                tap_code(KC_P2);
+                tap_code(KC_P5);
+                tap_code(KC_P2);  // ü
+                unregister_mods(MOD_LALT);
+                
+                add_mods(MOD_BIT(KC_LALT));
+                tap_code(KC_P0);
+                tap_code(KC_P2);
+                tap_code(KC_P2);
+                tap_code(KC_P3);  // ß
+                unregister_mods(MOD_LALT);
+                SEND_STRING("e");
+            }
         }
         SEQ_TWO_KEYS(KC_V, KC_A) {
             if (!de_layout_active) {
