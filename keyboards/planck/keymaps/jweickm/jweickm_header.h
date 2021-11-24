@@ -242,7 +242,7 @@ const uint16_t PROGMEM nlower_combo[]       = {LOWER, KC_N,               COMBO_
 const uint16_t PROGMEM elower_combo[]       = {LOWER, KC_E,               COMBO_END};
 const uint16_t PROGMEM ilower_combo[]       = {LOWER, KC_I,               COMBO_END};
 const uint16_t PROGMEM olower_combo[]       = {LOWER, KC_O,               COMBO_END};
-const uint16_t PROGMEM quotlower_combo[]    = {LOWER, KC_QUOT,            COMBO_END};
+const uint16_t PROGMEM quotlower_combo[]    = {LOWER, LT(0, KC_QUOT),            COMBO_END};
 const uint16_t PROGMEM hlower_combo[]       = {LOWER, KC_H,               COMBO_END};
 
 const uint16_t PROGMEM qraise_combo[]       = {RAISE, LGUI_T(KC_Q),        COMBO_END};
@@ -263,7 +263,7 @@ const uint16_t PROGMEM nraise_combo[]       = {RAISE, KC_N,                COMBO
 const uint16_t PROGMEM eraise_combo[]       = {RAISE, KC_E,                COMBO_END};
 const uint16_t PROGMEM iraise_combo[]       = {RAISE, KC_I,                COMBO_END};
 const uint16_t PROGMEM oraise_combo[]       = {RAISE, KC_O,                COMBO_END};
-const uint16_t PROGMEM quotraise_combo[]    = {RAISE, KC_QUOT,             COMBO_END};
+const uint16_t PROGMEM quotraise_combo[]    = {RAISE, LT(0, KC_QUOT),             COMBO_END};
 const uint16_t PROGMEM hraise_combo[]       = {RAISE, KC_H,                COMBO_END};
 
 #ifdef NAGINATA_ENABLE
