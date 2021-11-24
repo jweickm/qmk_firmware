@@ -207,7 +207,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return true;         // Return true for normal processing of tap keycode
                 break;
             } else if (record->event.pressed) {
-                tap_code16(S(KC_DEL)); // Intercept hold function to send SHIFT-DELETE
+                tap_code16(C(KC_X)); // Intercept hold function to send CTL-C
                 return false;
             }
             return true;
@@ -433,40 +433,114 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return false;
                 }
             }
-        case XP(DE_ue, DE_UE):
-            if (record->event.pressed) {
+        case LT(0, DE_UDIA):
+            if (record->tap.count && record->event.pressed) {
+                // tap
                 if (de_layout_active) {
-                    register_code16(DE_UDIA);
-                    return false;
-                } else if (!win_unicode_enable) {
+                    return true;
+                } else {
                     uint8_t temp_mods = get_mods();
-                    if ((get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
-                        clear_oneshot_mods();
-                        clear_mods();
-                        add_mods(MOD_BIT(KC_LALT));
-                        tap_code(KC_P0);
-                        tap_code(KC_P2);
-                        tap_code(KC_P2);
-                        tap_code(KC_P0);  // Ü
+                    if (!win_unicode_enable) {
+                        if ((get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
+                            clear_oneshot_mods();
+                            clear_mods();
+                            add_mods(MOD_BIT(KC_LALT));
+                            tap_code(KC_P0);
+                            tap_code(KC_P2);
+                            tap_code(KC_P2);
+                            tap_code(KC_P0);  // Ü
+                        } else {
+                            clear_mods();
+                            add_mods(MOD_BIT(KC_LALT));
+                            tap_code(KC_P0);
+                            tap_code(KC_P2);
+                            tap_code(KC_P5);
+                            tap_code(KC_P2);  // ü
+                        }
+                        unregister_mods(MOD_LALT);
+                        set_mods(temp_mods);
+                        return false;
                     } else {
-                        clear_mods();
-                        add_mods(MOD_BIT(KC_LALT));
-                        tap_code(KC_P0);
-                        tap_code(KC_P2);
-                        tap_code(KC_P5);
-                        tap_code(KC_P2);  // ü
+                        if ((get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
+                            send_unicode_string("Ü");
+                        } else {
+                            send_unicode_string("ü");
+                        }
+                        return false;
                     }
-                    unregister_mods(MOD_LALT);
-                    set_mods(temp_mods);
-                    return false;
-                } 
-                return true;
-            } else {
-                if (de_layout_active) {
-                    unregister_code16(DE_UDIA);
-                    return false;
                 }
+            } else if (record->event.pressed) {
+                if (de_layout_active) {
+                    tap_code16(DE_ODIA);
+                    return false;
+                } else {
+                    uint8_t temp_mods = get_mods();
+                    if (!win_unicode_enable) {
+                        if ((get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
+                            clear_oneshot_mods();
+                            clear_mods();
+                            add_mods(MOD_BIT(KC_LALT));
+                            tap_code(KC_P0);
+                            tap_code(KC_P2);
+                            tap_code(KC_P1);
+                            tap_code(KC_P4);  // Ö
+                        } else {
+                            clear_mods();
+                            add_mods(MOD_BIT(KC_LALT));
+                            tap_code(KC_P0);
+                            tap_code(KC_P2);
+                            tap_code(KC_P4);
+                            tap_code(KC_P6);  // ö
+                        }
+                        unregister_mods(MOD_LALT);
+                        set_mods(temp_mods);
+                        return false;
+                    } else {
+                        if ((get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
+                            send_unicode_string("Ö");
+                        } else {
+                            send_unicode_string("ö");
+                        }
+                        return false;
+                    }
+                }
+            } else {
+                return true;
             }
+//        case XP(DE_ue, DE_UE):
+//            if (record->event.pressed) {
+//                if (de_layout_active) {
+//                    register_code16(DE_UDIA);
+//                    return false;
+//                } else if (!win_unicode_enable) {
+//                    uint8_t temp_mods = get_mods();
+//                    if ((get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
+//                        clear_oneshot_mods();
+//                        clear_mods();
+//                        add_mods(MOD_BIT(KC_LALT));
+//                        tap_code(KC_P0);
+//                        tap_code(KC_P2);
+//                        tap_code(KC_P2);
+//                        tap_code(KC_P0);  // Ü
+//                    } else {
+//                        clear_mods();
+//                        add_mods(MOD_BIT(KC_LALT));
+//                        tap_code(KC_P0);
+//                        tap_code(KC_P2);
+//                        tap_code(KC_P5);
+//                        tap_code(KC_P2);  // ü
+//                    }
+//                    unregister_mods(MOD_LALT);
+//                    set_mods(temp_mods);
+//                    return false;
+//                }  
+//                return true;
+//            } else {
+//                if (de_layout_active) {
+//                    unregister_code16(DE_UDIA);
+//                    return false;
+//                }
+//            }
         case X(DE_UE):
             if (record->event.pressed) {
                 if (de_layout_active) {
@@ -697,23 +771,80 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
                 return true;
             }
-        case KC_QUOT:
-            if (de_layout_active) {
-                if (record->event.pressed) {
+        case LT(0, KC_QUOT):
+            if (record->tap.count && record->event.pressed) {
+                // tap
+                if (!de_layout_active) {
+                    return true;
+                } else {
                     uint8_t temp_mods = get_mods() | get_oneshot_mods();
                     if (temp_mods & MOD_MASK_SHIFT) {
                         register_code16(DE_DQUO);  // \"
                     } else {
                         register_code16(DE_QUOT);  // /'
                     }
-                } else {
-                    unregister_code16(DE_DQUO);
-                    unregister_code16(DE_QUOT);
                 }
                 return false;
+            } else if (record->event.pressed) {
+                if (de_layout_active) {
+                    tap_code16(DE_ADIA);
+                    return false;
+                } else {
+                    uint8_t temp_mods = get_mods();
+                    if (!win_unicode_enable) {
+                        if ((get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
+                            clear_oneshot_mods();
+                            clear_mods();
+                            add_mods(MOD_BIT(KC_LALT));
+                            tap_code(KC_P0);
+                            tap_code(KC_P1);
+                            tap_code(KC_P9);
+                            tap_code(KC_P6);  // Ä
+                        } else {
+                            clear_mods();
+                            add_mods(MOD_BIT(KC_LALT));
+                            tap_code(KC_P0);
+                            tap_code(KC_P2);
+                            tap_code(KC_P2);
+                            tap_code(KC_P8);  // ä
+                        }
+                        unregister_mods(MOD_LALT);
+                        set_mods(temp_mods);
+                        return false;
+                    } else {
+                        if ((get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
+                            send_unicode_string("Ä");
+                        } else {
+                            send_unicode_string("ä");
+                        }
+                        return false;
+                    }
+                }
             } else {
+                if (de_layout_active) {
+                    unregister_code16(DE_DQUO);
+                    unregister_code16(DE_QUOT);
+                    return false;
+                }
                 return true;
             }
+//        case KC_QUOT:
+//            if (de_layout_active) {
+//                if (record->event.pressed) {
+//                    uint8_t temp_mods = get_mods() | get_oneshot_mods();
+//                    if (temp_mods & MOD_MASK_SHIFT) {
+//                        register_code16(DE_DQUO);  // \"
+//                    } else {
+//                        register_code16(DE_QUOT);  // /'
+//                    }
+//                } else {
+//                    unregister_code16(DE_DQUO);
+//                    unregister_code16(DE_QUOT);
+//                }
+//                return false;
+//            } else {
+//                return true;
+//            }
         case KC_DOT:
             if (de_layout_active) {
                 if (record->event.pressed) {

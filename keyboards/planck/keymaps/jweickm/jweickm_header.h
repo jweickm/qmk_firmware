@@ -140,6 +140,7 @@ enum combos {
     XC_APP,
     COMMDOT_CAPS,
     XS_TAB, 
+    ZS_SZ,
     EDOT_BSPC,
 //    NRAISE,
     TLOWER, 
@@ -209,6 +210,7 @@ const uint16_t PROGMEM dh_combo[]           = {KC_D, KC_H, COMBO_END};
 const uint16_t PROGMEM xc_combo[]           = {CUT_X, COPY_C, COMBO_END};
 const uint16_t PROGMEM commdot_combo[]      = {KC_COMM, KC_DOT, COMBO_END};
 const uint16_t PROGMEM xs_combo[]           = {CUT_X, KC_S, COMBO_END};
+const uint16_t PROGMEM zs_combo[]           = {LT(_MOUSE, KC_Z), KC_S, COMBO_END};
 const uint16_t PROGMEM edot_combo[]         = {KC_E, KC_DOT, COMBO_END};
 
 //const uint16_t PROGMEM nraise_combo[]       = {KC_N, LT(_RAISE, KC_DEL), COMBO_END};
@@ -280,6 +282,7 @@ combo_t key_combos[] = {
     [XC_APP]        = COMBO(xc_combo, KC_APP),
     [COMMDOT_CAPS]  = COMBO(commdot_combo, KC_CAPS),
     [XS_TAB]        = COMBO(xs_combo, KC_TAB),      
+    [ZS_SZ]         = COMBO(zs_combo, X(DE_SZ)),      
     [EDOT_BSPC]     = COMBO(edot_combo, KC_BSPC),
 
     [DH_ROW]        = COMBO_ACTION(dh_combo),

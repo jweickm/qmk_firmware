@@ -323,9 +323,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_COLEMAK] = LAYOUT_planck_grid(
-        LGUI_T(KC_Q), LALT_T(KC_W), LSFT_T(KC_F), LCTL_T(KC_P), LT(_NUM, KC_B), LT(_MOUSE, KC_VOLU), LT(_NUM, KC_J), RCTL_T(KC_L), RSFT_T(KC_U), LALT_T(KC_Y), RGUI_T(KC_SCLN), XP(DE_ue, DE_UE),  
-        KC_A, KC_R, KC_S, KC_T, KC_G, KC_TAB, KC_M, KC_N, KC_E, KC_I, KC_O, KC_QUOT, 
-        LSFT_T(KC_Z), CUT_X, COPY_C, KC_D, PASTE_V, LT(_MOUSE, KC_VOLD), KC_K, KC_H, KC_COMM, KC_DOT, LT(_MOUSE, KC_SLSH), RSFT_T(KC_RALT), 
+        LGUI_T(KC_Q), LALT_T(KC_W), LSFT_T(KC_F), LCTL_T(KC_P), LT(_NUM, KC_B), LT(_MOUSE, KC_VOLU), LT(_NUM, KC_J), RCTL_T(KC_L), RSFT_T(KC_U), LALT_T(KC_Y), RGUI_T(KC_SCLN), LT(0, DE_UDIA), //XP(DE_ue, DE_UE),  
+        KC_A, KC_R, KC_S, KC_T, KC_G, KC_TAB, KC_M, KC_N, KC_E, KC_I, KC_O, LT(0, KC_QUOT), //KC_QUOT, 
+        LT(_MOUSE, KC_Z), CUT_X, COPY_C, KC_D, PASTE_V, LT(_MOUSE, KC_VOLD), KC_K, KC_H, KC_COMM, KC_DOT, LT(_MOUSE, KC_SLSH), RSFT_T(KC_RALT), 
     #if layout == 1
         LCTL_T(KC_CAPS), TG(_MOUSE), M_ESCM, LOWER, OSM(MOD_LSFT), NAVSPACE, NAVSPACE, RAISE, KC_DEL, LT(_MOUSE, KC_DOWN), LT(_MOUSE, KC_UP), KC_LEAD
     #elif layout == 2
