@@ -92,7 +92,7 @@ bool de_layout_active  = false;
 // declaring several logical variables
 bool is_alt_tab_active = false;
 bool is_ctl_tab_active = false;
-bool win_unicode_enable= true;
+bool win_unicode_enable= false;
 bool tap_hold_active   = false;
 
 #ifdef NAGINATA_ENABLE
