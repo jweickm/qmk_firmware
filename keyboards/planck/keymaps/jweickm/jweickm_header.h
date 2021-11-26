@@ -66,6 +66,8 @@ enum planck_keycodes {
     VIM_V,
     ALT_TAB,
     CTL_TAB,
+    REDO, 
+    UNDO, 
     DE_EGRAVE,
     DE_EAIGU,
     KC_CURRENCY,
@@ -131,14 +133,14 @@ enum combos {
     HCOMM_ENT,
     CD_ESC,
     HDOT_RALT,
-    XD_LEAD,
+    XD_APP,
     BJ_NUM,
     LOWER_RAISE_ADJUST,
     VOLUTAB_MNXT,
     VOLDTAB_MPRV,
     DH_ROW,
-    XC_APP,
-    COMMDOT_CAPS,
+    XC_CAPS,
+    COMMDOT_LEAD,
     XS_TAB, 
     ZS_SZ,
     EDOT_BSPC,
@@ -210,7 +212,7 @@ const uint16_t PROGMEM dh_combo[]           = {KC_D, KC_H, COMBO_END};
 const uint16_t PROGMEM xc_combo[]           = {CUT_X, COPY_C, COMBO_END};
 const uint16_t PROGMEM commdot_combo[]      = {KC_COMM, KC_DOT, COMBO_END};
 const uint16_t PROGMEM xs_combo[]           = {CUT_X, KC_S, COMBO_END};
-const uint16_t PROGMEM zs_combo[]           = {LT(_MOUSE, KC_Z), KC_S, COMBO_END};
+const uint16_t PROGMEM zs_combo[]           = {KC_Z, KC_S, COMBO_END};
 const uint16_t PROGMEM edot_combo[]         = {KC_E, KC_DOT, COMBO_END};
 
 //const uint16_t PROGMEM nraise_combo[]       = {KC_N, LT(_RAISE, KC_DEL), COMBO_END};
@@ -275,12 +277,12 @@ combo_t key_combos[] = {
     [HCOMM_ENT]     = COMBO(hcomm_combo, KC_ENT),  
     [CD_ESC]        = COMBO(cd_combo, KC_ESC),  
     [HDOT_RALT]     = COMBO(hdot_combo, KC_RALT),  
-    [XD_LEAD]       = COMBO(xd_combo, KC_LEAD),
+    [XD_APP]        = COMBO(xd_combo, KC_APP),
     [LOWER_RAISE_ADJUST] = COMBO(adj_combo, MO(_ADJUST)),
     [VOLUTAB_MNXT]  = COMBO(mnxt_combo, KC_MNXT),
     [VOLDTAB_MPRV]  = COMBO(mprv_combo, KC_MPRV),
-    [XC_APP]        = COMBO(xc_combo, KC_APP),
-    [COMMDOT_CAPS]  = COMBO(commdot_combo, KC_CAPS),
+    [XC_CAPS]       = COMBO(xc_combo, KC_CAPS),
+    [COMMDOT_LEAD]  = COMBO(commdot_combo, KC_LEAD),
     [XS_TAB]        = COMBO(xs_combo, KC_TAB),      
     [ZS_SZ]         = COMBO(zs_combo, X(DE_SZ)),      
     [EDOT_BSPC]     = COMBO(edot_combo, KC_BSPC),

@@ -14,9 +14,11 @@ float td_factor     = 1.3;
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // thumb keys
+        case LT(_NUM, KC_ESC):
         case LOWER: 
-        case RAISE:
         case LSFT_T(KC_BSPC):
+        case RAISE:
+        case LT(_MOUSE, KC_DEL):
             return TAPPING_TERM * thumb_factor;
         case NAVSPACE:
         case NAVENT:
@@ -240,6 +242,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_code(KC_TAB);
             }
             break;
+        case UNDO:
+            if (record->event.pressed) {
+                if (de_layout_active) {
+                    tap_code16(C(KC_Y));
+                } else {
+                    tap_code16(C(KC_Z));
+                }
+            }
+            return false;
+        case REDO:
+            if (record->event.pressed) {
+                if (de_layout_active) {
+                    tap_code16(C(KC_Z));
+                } else {
+                    tap_code16(C(KC_Y));
+                }
+            }
+            return false;
         case CTL_TAB:
             if (record->event.pressed) {
                 if (!is_ctl_tab_active) {
@@ -252,22 +272,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
         // the next case allows us to use alt_tab without a timer
-        case NAVSPACE:
-            if (!record->event.pressed) {
-                del_mods(MOD_BIT(KC_LALT));
-                del_mods(MOD_BIT(KC_LCTL));
-                is_alt_tab_active = false;
-                is_ctl_tab_active = false;
-                return true;
-            }
-            return true;
+        case NAVSPACE: 
         case NAVENT:
+        case LOWER:
             if (!record->event.pressed) {
-                del_mods(MOD_BIT(KC_LALT));
-                del_mods(MOD_BIT(KC_LCTL));
-                is_alt_tab_active = false;
-                is_ctl_tab_active = false;
-                return true;
+                if (is_alt_tab_active || is_ctl_tab_active) {
+                    del_mods(MOD_BIT(KC_LALT));
+                    del_mods(MOD_BIT(KC_LCTL));
+                    is_alt_tab_active = false;
+                    is_ctl_tab_active = false;
+                    return true;
+                }
             }
             return true;
 
@@ -639,6 +654,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
 
 // ------------------------- GERMAN KEYMAP ----------------------------------------- 
+        case KC_Z: // Z
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code(DE_Z);
+                } else {
+                    unregister_code(DE_Z);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        case KC_Y: // Y
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code(DE_Y);
+                } else {
+                    unregister_code(DE_Y);
+                }
+                return false;
+            } else {
+                return true;
+            }
         case KC_AT: // @
             if (de_layout_active) {
                 if (record->event.pressed) {
@@ -915,6 +952,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
                 return true;
             }
+        case KC_SLSH:
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    uint8_t temp_mods = get_mods() | get_oneshot_mods(); 
+                    if (temp_mods & MOD_MASK_SHIFT) {
+                        register_code16(DE_QUES); // register ?
+                    } else {
+                        register_code16(DE_SLSH); // register /
+                    }
+                    return false;
+                } else {
+                    unregister_code16(DE_QUES); // release ?
+                    unregister_code16(DE_SLSH); // release /
+                    return false;
+                }
+            } else { //process the key normally when the English layout is active
+                return true;
+            }
         case KC_NUBS: // "\"
             if (de_layout_active) {
                 if (record->event.pressed) {
@@ -1017,6 +1072,88 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 return false;
             }
+
+// ------------------------- NUMBERS AUTOSHIFT -------------------------------
+        case LT(0, KC_1): 
+            if (record->tap.count && record->event.pressed) {
+                return true;
+            } else if (record->event.pressed) {
+                tap_code16(KC_EXLM);
+                return false;
+            }
+            return true;
+        case LT(0, KC_2): 
+            if (record->tap.count && record->event.pressed) {
+                return true;
+            } else if (record->event.pressed) {
+                tap_code16(KC_AT);
+                return false;
+            }
+            return true;
+        case LT(0, KC_3): 
+            if (record->tap.count && record->event.pressed) {
+                return true;
+            } else if (record->event.pressed) {
+                tap_code16(KC_HASH);
+                return false;
+            }
+            return true;
+        case LT(0, KC_4): 
+            if (record->tap.count && record->event.pressed) {
+                return true;
+            } else if (record->event.pressed) {
+                tap_code16(KC_DLR);
+                return false;
+            }
+            return true;
+        case LT(0, KC_5): 
+            if (record->tap.count && record->event.pressed) {
+                return true;
+            } else if (record->event.pressed) {
+                tap_code16(KC_PERC);
+                return false;
+            }
+            return true;
+        case LT(0, KC_6): 
+            if (record->tap.count && record->event.pressed) {
+                return true;
+            } else if (record->event.pressed) {
+                tap_code16(KC_CIRC);
+                return false;
+            }
+            return true;
+        case LT(0, KC_7): 
+            if (record->tap.count && record->event.pressed) {
+                return true;
+            } else if (record->event.pressed) {
+                tap_code16(KC_AMPR);
+                return false;
+            }
+            return true;
+        case LT(0, KC_8): 
+            if (record->tap.count && record->event.pressed) {
+                return true;
+            } else if (record->event.pressed) {
+                tap_code16(KC_ASTR);
+                return false;
+            }
+            return true;
+        case LT(0, KC_9): 
+            if (record->tap.count && record->event.pressed) {
+                return true;
+            } else if (record->event.pressed) {
+                tap_code16(KC_LPRN);
+                return false;
+            }
+            return true;
+        case LT(0, KC_0): 
+            if (record->tap.count && record->event.pressed) {
+                return true;
+            } else if (record->event.pressed) {
+                tap_code16(KC_RPRN);
+                return false;
+            }
+            return true;
 // ------------------------- MOD-/LAYER-TAPS ---------------------------------
         case LSFT_T(KC_Z): case LT(_MOUSE, KC_Z):
             if (de_layout_active) {
