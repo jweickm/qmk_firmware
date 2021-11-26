@@ -89,7 +89,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ,-----------------------------------------------------------------------------------.
      * |   !  |   @  |   #  |   $  |   %  |   ~  |   ^  |   &  |   *  |   (  |   )  |   Ö  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |ALTTAB| LALT | LSFT | LCTL |   ß  | XXXX |   ß  |   _  |   +  |   {  |   }  |   Ä  |
+     * |ALTTAB| LALT |   ß  | LSTF | XXXX | XXXX |   ß  |   _  |   +  |   {  |   }  |   Ä  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |CTLTAB| XXXX | XXXX | XXXX | XXXX | XXXX |   >  |   "  |   \  |   |  |   \  |   `  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -98,7 +98,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */ 
     [_LOWER] = LAYOUT_planck_grid(
         KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC, KC_TILD, KC_CIRC, KC_AMPR, KC_ASTR, TD(TD_PRN), KC_RPRN, X(DE_OE),
-        ALT_TAB, KC_LALT, KC_LSFT, KC_LCTL, X(DE_SZ), KC_NO, X(DE_SZ), KC_UNDS, KC_PLUS, TD(TD_CBR), KC_RCBR, X(DE_AE), 
+        ALT_TAB, KC_LALT, X(DE_SZ), KC_LSFT, KC_NO, KC_NO, X(DE_SZ), KC_UNDS, KC_PLUS, TD(TD_CBR), KC_RCBR, X(DE_AE), 
         CTL_TAB, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, S(KC_DOT), S(KC_QUOT), KC_NUBS, KC_PIPE, KC_BSLS, DE_ACC_GRV, 
     #if layout == 1
         TG(_MOUSE), OSL(_ADJUST), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, MO(_ADJUST), KC_TRNS, KC_TRNS, KC_TRNS, TG(_NUM)
@@ -156,7 +156,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* ----------------------------------------------------------------------------------------
 * _NUM
      * ,-----------------------------------------------------------------------------------.
-     * |  Esc |  TAB | LSFT |  Ent | ____ | XXXX | ____ |   7  |   8  |   9  |   -  | BSPC |
+     * |  Esc |  TAB | LSFT |  Ent | ____ | XXXX |  ENT |   7  |   8  |   9  |   -  | BSPC |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | LGUI | LALT | LSFT | LCTL | END  | TAB  |   *  |   4  |   5  |   6  |   +  |   .  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -166,7 +166,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_NUM] = LAYOUT_planck_grid(
-        KC_ESC, KC_TAB, KC_LSFT, KC_ENT, KC_TRNS, KC_NO, KC_TRNS, LT(0, KC_7), LT(0, KC_8), LT(0, KC_9), KC_MINS, KC_BSPC,
+        KC_ESC, KC_TAB, KC_LSFT, KC_ENT, KC_TRNS, KC_NO, KC_ENT, LT(0, KC_7), LT(0, KC_8), LT(0, KC_9), KC_MINS, KC_BSPC,
         KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_END, KC_TAB, KC_ASTR, LT(0, KC_4), LT(0, KC_5), LT(0, KC_6), KC_PLUS, KC_DOT,
         KC_NO, KC_NO, KC_NO, KC_ENT, KC_NO, KC_MUTE, KC_EQL, LT(0, KC_1), LT(0, KC_2), LT(0, KC_3), KC_SLSH, KC_COMM,
     #if layout == 1
