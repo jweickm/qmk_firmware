@@ -19,19 +19,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |   A  |   R  |   S  |   T  |   G  | TAB  |   M  |   N  |   E  |   I  |   O  |   '  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |   Z  |   X  |   C  |   D  |   V  | Vol- |   K  |   H  |   ,  |   .  |   /  |S-RALT|
+     * |   Z  |   X  |   C  |   D  |   V  | Vol- |   K  |   H  |   ,  |   .  |   /  | LEAD |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |C-CAPS| RALT |  ESC | LOWER| LSFT |   NAV-SPC   | RAISE|  DEL | Mo ↓ | Mo ↑ | LEAD | 1x2uC 
+     * |C-CAPS|  WIN |  ESC | LOWER| LSFT |   NAV-SPC   | RAISE|  DEL | Mo ↓ | Mo ↑ |S-RALT| 1x2uC 
      * `-----------------------------------------------------------------------------------'
      */
     [_COLEMAK] = LAYOUT_planck_grid(
         LGUI_T(KC_Q), LALT_T(KC_W), LSFT_T(KC_F), LCTL_T(KC_P), KC_B, LT(_MOUSE, KC_VOLU), KC_J, RCTL_T(KC_L), RSFT_T(KC_U), LALT_T(KC_Y), RGUI_T(KC_SCLN), LT(0, DE_UDIA), //XP(DE_ue, DE_UE),  
         KC_A, KC_R, KC_S, KC_T, KC_G, KC_TAB, KC_M, KC_N, KC_E, KC_I, KC_O, LT(0, KC_QUOT), //KC_QUOT, 
-        KC_Z, CUT_X, COPY_C, KC_D, PASTE_V, LT(_MOUSE, KC_VOLD), KC_K, KC_H, KC_COMM, KC_DOT, LT(0, KC_SLSH), RSFT_T(KC_RALT), 
+        KC_Z, CUT_X, COPY_C, KC_D, PASTE_V, LT(_MOUSE, KC_VOLD), KC_K, KC_H, KC_COMM, KC_DOT, LT(0, KC_SLSH), KC_LEAD, 
     #if layout == 1
-        LCTL_T(KC_CAPS), KC_RALT, LT(_NUM, KC_ESC), LOWER, OSM(MOD_LSFT), NAVSPACE, NAVSPACE, RAISE, LT(_MOUSE, KC_DEL), LT(_MOUSE, KC_DOWN), LT(_MOUSE, KC_UP), KC_LEAD
+        LCTL_T(KC_CAPS), KC_LGUI, LT(_NUM, KC_ESC), LOWER, OSM(MOD_LSFT), NAVSPACE, NAVSPACE, RAISE, LT(_MOUSE, KC_DEL), LT(_MOUSE, KC_DOWN), LT(_MOUSE, KC_UP), RSFT_T(KC_RALT)
     #elif layout == 2
-        LCTL_T(KC_CAPS), KC_RALT, LT(_NUM, KC_ESC), LOWER, LSFT_T(KC_BSPC), NAVSPACE, NAVSPACE, RAISE, LT(_MOUSE, KC_DEL), LT(_MOUSE, KC_DOWN), LT(_MOUSE, KC_UP), KC_LEAD
+        LCTL_T(KC_CAPS), KC_LGUI, LT(_NUM, KC_ESC), LOWER, LSFT_T(KC_BSPC), NAVSPACE, NAVSPACE, RAISE, LT(_MOUSE, KC_DEL), LT(_MOUSE, KC_DOWN), LT(_MOUSE, KC_UP), RSFT_T(KC_RALT)
     #endif
     ),
 
