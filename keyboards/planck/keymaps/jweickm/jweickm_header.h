@@ -57,6 +57,7 @@ enum planck_keycodes {
     EISU,
     KANA2,
     NG_DUMMY,
+    NAGINATA_SWITCH,
     // 薙刀式
 #else
     COLEMAK = SAFE_RANGE,
@@ -68,15 +69,10 @@ enum planck_keycodes {
     CTL_TAB,
     REDO, 
     UNDO, 
-    DE_EGRAVE,
-    DE_EAIGU,
-    KC_CURRENCY,
+    DE_ACC_GRV,
+    DE_ACC_ACUT,
     KC_DE_SWITCH,
-    KC_ACUT,
     LANG_SWITCH,
-    NAGINATA_SWITCH,
-    DE_EN_BSLS,
-    M_ESCM,
     UNICODE_ALT_SW,
 };
 
@@ -99,7 +95,6 @@ enum unicode_names {
     DE_ue,
     DE_UE,
     DE_SZ,
-    UNI_GRV,
 };
 const uint32_t PROGMEM unicode_map[] = {
     [DE_ae]    = 0xE4, // ä
@@ -109,7 +104,6 @@ const uint32_t PROGMEM unicode_map[] = {
     [DE_ue]    = 0xFC, // ü
     [DE_UE]    = 0xDC, // Ü
     [DE_SZ]    = 0xDF, // ß
-    [UNI_GRV]   = 0x60, // `
 };
 #endif
 

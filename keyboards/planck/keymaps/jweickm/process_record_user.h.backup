@@ -26,9 +26,11 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
         // index finger keys
         case PASTE_V:
+        case LT(_NUM, KC_J):
         case LCTL_T(KC_P):
             return TAPPING_TERM * index_factor;
         case RCTL_T(KC_L):
+        case LT(_NUM, KC_B):
             return TAPPING_TERM * (index_factor + 0.1);
         case LT(_MOUSE, KC_VOLU):
         case LT(_MOUSE, KC_VOLD):
@@ -106,6 +108,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
 
 // ------------------------------- LANGUAGES & LAYERS --------------------------
+        case COLEMAK:
+            if (record->event.pressed) {
+//                set_single_persistent_default_layer(_COLEMAK);
+                default_layer_set(1UL<<_COLEMAK); // reduce writing to the eeprom
+#ifdef AUDIO_ENABLE
+                PLAY_SONG(colemak_en_song);
+#endif
+            }
+            return false;
+            break;
         case GAMING:
             if (record->event.pressed) {
                 layer_invert(_GAMING);
@@ -182,6 +194,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
             break;
+        case VIM_V:
+            if (record->event.pressed) {
+                if (get_mods() & MOD_MASK_SHIFT) {
+                    clear_mods();
+                } else {
+                    register_mods(MOD_LSFT);
+                }
+            }
+            return false;
+            break;
         case CUT_X:
             if (record->tap.count && record->event.pressed) {
                 return true;         // Return true for normal processing of tap keycode
@@ -209,6 +231,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             return true;
+        case ALT_TAB:
+            if (record->event.pressed) {
+                if (!is_alt_tab_active) {
+                    is_alt_tab_active = true;
+                    add_mods(MOD_BIT(KC_LALT));
+                }
+                register_code(KC_TAB);
+            } else {
+                unregister_code(KC_TAB);
+            }
+            break;
         case UNDO:
             if (record->event.pressed) {
                 if (de_layout_active) {
@@ -227,17 +260,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;
-        case ALT_TAB:
-            if (record->event.pressed) {
-                if (!is_alt_tab_active) {
-                    is_alt_tab_active = true;
-                    add_mods(MOD_BIT(KC_LALT));
-                }
-                register_code(KC_TAB);
-            } else {
-                unregister_code(KC_TAB);
-            }
-            break;
         case CTL_TAB:
             if (record->event.pressed) {
                 if (!is_ctl_tab_active) {
@@ -274,16 +296,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case X(DE_SZ): 
             if (record->event.pressed) {
                 if (de_layout_active) {
-                    register_code(DE_SS);
+                    register_code16(DE_SS);
                     return false;
                 } else if (!win_unicode_enable) {
                     uint8_t temp_mods = get_mods();
-                    clear_mods();
-                    add_mods(MOD_BIT(KC_LALT));
-                    tap_code(KC_P0);
-                    tap_code(KC_P2);
-                    tap_code(KC_P2);
-                    tap_code(KC_P3);  // ß
+                    if ((get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
+                        clear_oneshot_mods();
+                        clear_mods();
+                        add_mods(MOD_BIT(KC_LALT));
+                        tap_code(KC_P0);
+                        tap_code(KC_P1);
+                        tap_code(KC_P7);
+                        tap_code(KC_P6);  // °
+                    } else {
+                        clear_mods();
+                        add_mods(MOD_BIT(KC_LALT));
+                        tap_code(KC_P0);
+                        tap_code(KC_P2);
+                        tap_code(KC_P2);
+                        tap_code(KC_P3);  // ß
+                    }
                     unregister_mods(MOD_LALT);
                     set_mods(temp_mods);
                     return false;
@@ -292,7 +324,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return true;
             } else {
                 if (de_layout_active) {
-                    unregister_code(DE_SS);
+                    unregister_code16(DE_SS);
                     return false;
                 }
             } 
@@ -549,32 +581,77 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return false;
                 }
             }
-        case DE_ACC_ACUT: // ´ (dead)
-            if (!de_layout_active) {
-                if (record->event.pressed && win_unicode_enable) {
-                    tap_code(KC_RALT);
-                    tap_code(KC_QUOT);
+        case DE_EGRAVE:
+            if (record->event.pressed) {
+                uint8_t temp_mods = get_mods();
+                if ((get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
+                    clear_oneshot_mods();
+                    clear_mods();
+                    add_mods(MOD_BIT(KC_LALT));
+                    tap_code(KC_P0);
+                    tap_code(KC_P2);
+                    tap_code(KC_P0);
+                    tap_code(KC_P0);  // È
+                } else {
+                    clear_mods();
+                    add_mods(MOD_BIT(KC_LALT));
+                    tap_code(KC_P0);
+                    tap_code(KC_P2);
+                    tap_code(KC_P3);
+                    tap_code(KC_P2);  // è
                 }
-                return false;
-                break;
-            } else {
-                tap_code(DE_ACUT);
-                return false;
-                break;
+                unregister_mods(MOD_LALT);
+                set_mods(temp_mods);
             }
-        case DE_ACC_GRV: // ` (dead)
-            if (!de_layout_active) {
-                if (record->event.pressed && win_unicode_enable) {
-                    tap_code(KC_RALT);
-                    tap_code(KC_GRV);
+            return false;
+            break;
+        case DE_EAIGU:
+            if (record->event.pressed) {
+                uint8_t temp_mods = get_mods();
+                if ((get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
+                    clear_oneshot_mods();
+                    clear_mods();
+                    add_mods(MOD_BIT(KC_LALT));
+                    tap_code(KC_P0);
+                    tap_code(KC_P2);
+                    tap_code(KC_P0);
+                    tap_code(KC_P1);  // É
+                } else {
+                    clear_mods();
+                    add_mods(MOD_BIT(KC_LALT));
+                    tap_code(KC_P0);
+                    tap_code(KC_P2);
+                    tap_code(KC_P3);
+                    tap_code(KC_P3);  // é
                 }
-                return false;
-                break;
-            } else {
-                tap_code16(DE_GRV);
-                return false;
-                break;
+                unregister_mods(MOD_LALT);
+                set_mods(temp_mods);
             }
+            return false;
+            break;
+        case KC_CURRENCY:
+            if (record->event.pressed) {
+                uint8_t temp_mods = get_mods();
+                if ((get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
+                    clear_oneshot_mods();
+                    clear_mods();
+                    add_mods(MOD_BIT(KC_LALT));
+                    tap_code(KC_P1);
+                    tap_code(KC_P5);
+                    tap_code(KC_P7);  // ¥
+                } else {
+                    clear_mods();
+                    add_mods(MOD_BIT(KC_LALT));
+                    tap_code(KC_P0);
+                    tap_code(KC_P1);
+                    tap_code(KC_P2);
+                    tap_code(KC_P8);  // €
+                }
+                unregister_mods(MOD_LALT);
+                set_mods(temp_mods);
+            }
+            return false;
+            break;
 
 // ------------------------- GERMAN KEYMAP ----------------------------------------- 
         case KC_Z: // Z
@@ -981,6 +1058,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
                 return true;
             }
+        case KC_ACUT: // ´
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_ACUT);
+                } else {
+                    unregister_code16(DE_ACUT);    
+                }
+                return false;
+            } else {
+                if (record->event.pressed) {
+                    send_unicode_hex_string("0xB4");
+                }
+                return false;
+            }
 
 // ------------------------- NUMBERS AUTOSHIFT -------------------------------
         case LT(0, KC_1): 
@@ -1063,15 +1154,78 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             return true;
-        case LT(0, KC_SLSH): 
-            if (record->tap.count && record->event.pressed) {
-                return true;
-            } else if (record->event.pressed) {
-                tap_code16(S(KC_SLSH));
-                return false;
-            }
-            return true;
 // ------------------------- MOD-/LAYER-TAPS ---------------------------------
+        case LSFT_T(KC_Z): case LT(_MOUSE, KC_Z):
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    // if it's a hold check whether it's part of a tap-hold 
+                    // (it can only be true, when key_timer has been recently set, i.e. by tapping once before)
+                    if (timer_elapsed(key_timer) < (TAPPING_TERM * pinky_factor)) {
+                        register_code16(DE_Z); // register Z
+                        tap_hold_active = true; 
+                        return false;
+                    }
+                    if (record->tap.count) { // changes the output for the tap key to work with the german layout
+                        tap_code16(DE_Z); // tap Z
+                        key_timer = timer_read(); // start a timer so that we can detect a quick tap-hold 
+                        return false;
+                    } 
+                    return true;
+                } else {
+                    // when releasing, check whether tap_hold_active was true
+                    // and disable it, no tapping of the GUI key in this case
+                    if (tap_hold_active) {
+                        unregister_code16(DE_Z); // release Z
+                        tap_hold_active = false;
+                        return false;
+                    } else { // otherwise process the release normally and tap the gui key
+                        return true;
+                    }
+                }
+            } else { //process the key normally when the English layout is active
+                return true;
+            }
+        case LT(_MOUSE, KC_SLSH):
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    // get the status of the mods to differentiate shifted state
+                    uint8_t temp_mods = get_mods() | get_oneshot_mods(); 
+                    // if it's a hold check whether it's part of a tap-hold 
+                    // (it can only be true, when key_timer has been recently set, i.e. by tapping once before)
+                    if (timer_elapsed(key_timer) < (TAPPING_TERM * pinky_factor)) {
+                        if (temp_mods & MOD_MASK_SHIFT) {
+                            register_code16(DE_QUES); // register ?
+                        } else {
+                            register_code16(DE_SLSH); // register /
+                        }
+                        tap_hold_active = true; 
+                        return false;
+                    }
+                    if (record->tap.count) { // changes the output for the tap key to work with the german layout
+                        if (temp_mods & MOD_MASK_SHIFT) {
+                            tap_code16(DE_QUES); // tap ?
+                        } else {
+                            tap_code16(DE_SLSH); // tap /
+                        }
+                        key_timer = timer_read(); // start a timer so that we can detect a quick tap-hold 
+                        return false;
+                    } 
+                    return true;
+                } else {
+                    // when releasing, check whether tap_hold_active was true
+                    // and disable it, no tapping of the GUI key in this case
+                    if (tap_hold_active) {
+                        unregister_code16(DE_QUES); // release ?
+                        unregister_code16(DE_SLSH); // release /
+                        tap_hold_active = false;
+                        return false;
+                    } else { // otherwise process the release normally and tap the gui key
+                        return true;
+                    }
+                }
+            } else { //process the key normally when the English layout is active
+                return true;
+            }
         case LALT_T(KC_Y):
             if (de_layout_active) {
                 if (record->event.pressed) {
@@ -1103,6 +1257,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return true;
             }
         // switch multiplexing for escape, short tap for escape, long press for context menu
+        case M_ESCM:
+            if (record->event.pressed) {
+                key_timer = timer_read();
+            } else {
+                if (timer_elapsed(key_timer) > TAPPING_TERM) {
+                    tap_code(KC_APP);
+                } else {
+                    tap_code(KC_ESC);
+                }
+            }
+            return false;
         case RGUI_T(KC_SCLN): // this key behaves as a gui mod tap for both german and english layout
             if (de_layout_active) {
                 if (record->event.pressed) {

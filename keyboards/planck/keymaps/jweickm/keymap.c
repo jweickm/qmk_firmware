@@ -363,7 +363,7 @@ void matrix_scan_user(void) {
                 unregister_mods(MOD_BIT(KC_LALT));
             }
         }
-        SEQ_THREE_KEYS(KC_Y, KC_E, KC_N) {
+        SEQ_TWO_KEYS(KC_E, KC_N) {
             add_mods(MOD_BIT(KC_LALT));
             tap_code(KC_P1);
             tap_code(KC_P5);
