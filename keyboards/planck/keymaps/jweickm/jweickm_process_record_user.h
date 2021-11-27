@@ -551,30 +551,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
         case DE_ACC_ACUT: // ´ (dead)
             if (!de_layout_active) {
-                if (record->event.pressed && win_unicode_enable) {
+                if (record->event.pressed) {
                     tap_code(KC_RALT);
                     tap_code(KC_QUOT);
                 }
-                return false;
-                break;
             } else {
-                tap_code(DE_ACUT);
-                return false;
-                break;
+                if (record->event.pressed) {
+                    tap_code(DE_ACUT);
+                }
             }
+            return false;
         case DE_ACC_GRV: // ` (dead)
             if (!de_layout_active) {
-                if (record->event.pressed && win_unicode_enable) {
+                if (record->event.pressed) {
                     tap_code(KC_RALT);
                     tap_code(KC_GRV);
                 }
-                return false;
-                break;
             } else {
-                tap_code16(DE_GRV);
-                return false;
-                break;
+                if (record->event.pressed) {
+                    tap_code16(DE_GRV);
+                }
             }
+            return false;
 
 // ------------------------- GERMAN KEYMAP ----------------------------------------- 
         case KC_Z: // Z
