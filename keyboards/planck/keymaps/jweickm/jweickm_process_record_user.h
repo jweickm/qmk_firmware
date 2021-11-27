@@ -230,7 +230,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
                 unregister_code(KC_TAB);
             }
-            break;
+            return false;
         case CTL_TAB:
             if (record->event.pressed) {
                 if (!is_ctl_tab_active) {
@@ -241,19 +241,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
                 unregister_code(KC_TAB);
             }
-            break;
+            return false;
         // the next case allows us to use alt_tab without a timer
         case NAVSPACE: 
         case NAVENT:
         case LOWER:
-            if (!record->event.pressed) {
-                if (is_alt_tab_active || is_ctl_tab_active) {
-                    del_mods(MOD_BIT(KC_LALT));
-                    del_mods(MOD_BIT(KC_LCTL));
-                    is_alt_tab_active = false;
-                    is_ctl_tab_active = false;
-                    return true;
-                }
+            if (!record->event.pressed && (is_alt_tab_active || is_ctl_tab_active)) {
+                del_mods(MOD_BIT(KC_LALT));
+                del_mods(MOD_BIT(KC_LCTL));
+                is_alt_tab_active = false;
+                is_ctl_tab_active = false;
             }
             return true;
 
