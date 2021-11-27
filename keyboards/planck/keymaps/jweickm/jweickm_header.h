@@ -195,9 +195,9 @@ enum combos {
 #endif
 };
 
-const uint16_t PROGMEM hcomm_combo[]        = {KC_H, KC_COMM,              COMBO_END}; 
+const uint16_t PROGMEM hcomm_combo[]        = {KC_H, LT(0, KC_COMM),              COMBO_END}; 
 const uint16_t PROGMEM cd_combo[]           = {COPY_C, KC_D,               COMBO_END}; 
-const uint16_t PROGMEM hdot_combo[]         = {KC_H, KC_DOT,               COMBO_END}; 
+const uint16_t PROGMEM hdot_combo[]         = {KC_H, LT(0, KC_DOT),               COMBO_END}; 
 const uint16_t PROGMEM xd_combo[]           = {CUT_X, KC_D,                COMBO_END};
 const uint16_t PROGMEM num_combo[]          = {LT(_NUM, KC_B), LT(_NUM, KC_J), COMBO_END};
 const uint16_t PROGMEM adj_combo[]          = {LOWER, LT(_RAISE, KC_DEL),  COMBO_END};
@@ -205,10 +205,10 @@ const uint16_t PROGMEM mnxt_combo[]         = {LT(_MOUSE, KC_VOLU), KC_TAB,COMBO
 const uint16_t PROGMEM mprv_combo[]         = {LT(_MOUSE, KC_VOLD), KC_TAB,COMBO_END};
 const uint16_t PROGMEM dh_combo[]           = {KC_D, KC_H,                 COMBO_END};
 const uint16_t PROGMEM xc_combo[]           = {CUT_X, COPY_C,              COMBO_END};
-const uint16_t PROGMEM commdot_combo[]      = {KC_COMM, KC_DOT,            COMBO_END};
+const uint16_t PROGMEM commdot_combo[]      = {LT(0, KC_COMM), LT(0, KC_DOT),            COMBO_END};
 const uint16_t PROGMEM xs_combo[]           = {CUT_X, KC_S,                COMBO_END};
-const uint16_t PROGMEM zs_combo[]           = {KC_Z, KC_S,                 COMBO_END};
-const uint16_t PROGMEM edot_combo[]         = {KC_E, KC_DOT,               COMBO_END};
+const uint16_t PROGMEM zs_combo[]           = {LT(0, KC_Z), KC_S,                 COMBO_END};
+const uint16_t PROGMEM edot_combo[]         = {KC_E, LT(0, KC_DOT),               COMBO_END};
 
 //const uint16_t PROGMEM nraise_combo[]       = {KC_N, LT(_RAISE, KC_DEL), COMBO_END};
 const uint16_t PROGMEM tlower_combo[]       = {LOWER, KC_T,                COMBO_END};
