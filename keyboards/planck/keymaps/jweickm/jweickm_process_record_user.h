@@ -92,7 +92,6 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
 
 uint8_t mod_state;
 uint8_t osmod_state;
-static uint16_t key_timer;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     mod_state = get_mods();
@@ -1122,72 +1121,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 // ------------------------- MOD-/LAYER-TAPS ---------------------------------
         case LALT_T(KC_Y):
             if (de_layout_active) {
-                if (record->event.pressed) {
-                    // if it's a hold check whether it's part of a tap-hold 
-                    // (it can only be true, when key_timer has been recently set, i.e. by tapping once before)
-                    if (timer_elapsed(key_timer) < (TAPPING_TERM * ring_factor)) {
-                        register_code16(DE_Y); // register Y
-                        tap_hold_active = true; 
-                        return false;
-                    }
-                    if (record->tap.count) { // changes the output for the tap key to work with the german layout
-                        tap_code16(DE_Y); // tap Y
-                        key_timer = timer_read(); // start a timer so that we can detect a quick tap-hold 
-                        return false;
-                    } 
+                if (record->tap.count && record->event.pressed) {
+                    register_code(DE_Y); // tap Y
+                    return false;
+                } else if (record->event.pressed) {
                     return true;
                 } else {
-                    // when releasing, check whether tap_hold_active was true
-                    // and disable it, no tapping of the GUI key in this case
-                    if (tap_hold_active) {
-                        unregister_code16(DE_Y); // release Y
-                        tap_hold_active = false;
-                        return false;
-                    } else { // otherwise process the release normally and tap the gui key
-                        return true;
-                    }
+                    unregister_code(DE_Y);
+                    return false;
                 }
-            } else { //process the key normally when the English layout is active
+            } else {
                 return true;
             }
         // switch multiplexing for escape, short tap for escape, long press for context menu
         case RGUI_T(KC_SCLN): // this key behaves as a gui mod tap for both german and english layout
             if (de_layout_active) {
-                if (record->event.pressed) {
-                    // if it's a hold check whether it's part of a tap-hold 
-                    // (it can only be true, when key_timer has been recently set, i.e. by tapping once before)
-                    if (timer_elapsed(key_timer) < (TAPPING_TERM * pinky_factor)) {
-                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            register_code16(DE_COLN); // register :
-                        } else {
-                            register_code16(DE_SCLN); // register ;
-                        }
-                        tap_hold_active = true; 
-                        return false;
+                if (record->tap.count && record->event.pressed) {
+                    if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
+                        register_code16(DE_COLN); // register :
+                    } else {
+                        register_code16(DE_SCLN); // register ;
                     }
-                    if (record->tap.count) { // changes the output for the tap key to work with the german layout
-                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            tap_code16(DE_COLN); // tap :
-                        } else {
-                            tap_code16(DE_SCLN); // tap ;
-                        }
-                        key_timer = timer_read(); // start a timer so that we can detect a quick tap-hold 
-                        return false;
-                    } 
+                    return false;
+                } else if (record->event.pressed) {
                     return true;
                 } else {
-                    // when releasing, check whether tap_hold_active was true
-                    // and disable it, no tapping of the GUI key in this case
-                    if (tap_hold_active) {
-                        unregister_code16(DE_COLN);
-                        unregister_code16(DE_SCLN);
-                        tap_hold_active = false;
-                        return false;
-                    } else { // otherwise process the release normally and tap the gui key
-                        return true;
-                    }
+                    unregister_code16(DE_COLN);
+                    unregister_code16(DE_SCLN);
+                    return false;
                 }
-            } else { //process the key normally when the English layout is active
+            } else {
                 return true;
             }
 #ifdef NAGINATA_ENABLE
