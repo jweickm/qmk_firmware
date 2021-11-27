@@ -198,6 +198,18 @@ void matrix_scan_user(void) {
         SEQ_ONE_KEY(KC_W) {
             SEND_STRING("Weickmann");
         }
+        SEQ_ONE_KEY(KC_S) {
+            if (de_layout_active) {
+                tap_code16(DE_SS);
+            } else {
+                add_mods(MOD_BIT(KC_LALT));
+                tap_code(KC_P0);
+                tap_code(KC_P2);
+                tap_code(KC_P2);
+                tap_code(KC_P3);  // ß
+                unregister_mods(MOD_LALT);
+            }
+        }
         SEQ_TWO_KEYS(KC_M, KC_E) {
             SEND_STRING("Jakob Weickmann");
         }
