@@ -90,20 +90,6 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-// logical variable to differentiate between the German and the English input mode
-bool de_layout_active  = false; 
-
-// declaring several logical variables
-bool is_alt_tab_active = false;
-bool is_ctl_tab_active = false;
-bool win_unicode_enable= false;
-bool tap_hold_active   = false;
-
-#ifdef NAGINATA_ENABLE
-bool naginata_active   = false;
-bool come_from_naginata = false;
-#endif
-
 uint8_t mod_state;
 uint8_t osmod_state;
 static uint16_t key_timer;
@@ -279,13 +265,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
             break;
-        case X(DE_SZ): 
+        case DE_SZ: 
             if (record->event.pressed) {
                 if (de_layout_active) {
                     register_code(DE_SS);
                     layer_off(_LOWER);
                     return false;
-                } else if (!win_unicode_enable) {
+                } else {
                     clear_mods();
                     add_mods(MOD_BIT(KC_LALT));
                     tap_code(KC_P0);
@@ -306,12 +292,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return false;
                 }
             } 
-        case XP(DE_ae, DE_AE):
+        case DE_ae:
             if (record->event.pressed) {
                 if (de_layout_active) {
                     register_code16(DE_ADIA);
                     return false;
-                } else if (!win_unicode_enable) {
+                } else {
                     if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
                         clear_oneshot_mods();
                         clear_mods();
@@ -338,12 +324,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_code16(DE_ADIA);
                 return false;
             }
-        case X(DE_AE):
+        case DE_AE:
             if (record->event.pressed) {
                 if (de_layout_active) {
                     register_code16(S(DE_ADIA));
                     return false;
-                } else if (!win_unicode_enable) {
+                } else {
                     clear_oneshot_mods();
                     clear_mods();
                     add_mods(MOD_BIT(KC_LALT));
@@ -363,12 +349,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return false;
                 }
             }
-        case XP(DE_oe, DE_OE):
+        case DE_oe:
             if (record->event.pressed) {
                 if (de_layout_active) {
                     register_code16(DE_ODIA);
                     return false;
-                } else if (!win_unicode_enable) {
+                } else {
                     if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
                         clear_oneshot_mods();
                         clear_mods();
@@ -397,12 +383,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return false;
                 }
             }
-        case X(DE_OE):
+        case DE_OE:
             if (record->event.pressed) {
                 if (de_layout_active) {
                     register_code16(S(DE_ODIA));
                     return false;
-                } else if (!win_unicode_enable) {
+                } else {
                     clear_oneshot_mods();
                     clear_mods();
                     add_mods(MOD_BIT(KC_LALT));
@@ -428,73 +414,55 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (de_layout_active) {
                     return true;
                 } else {
-                    if (!win_unicode_enable) {
-                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            clear_oneshot_mods();
-                            clear_mods();
-                            add_mods(MOD_BIT(KC_LALT));
-                            tap_code(KC_P0);
-                            tap_code(KC_P2);
-                            tap_code(KC_P2);
-                            tap_code(KC_P0);  // Ü
-                        } else {
-                            clear_mods();
-                            add_mods(MOD_BIT(KC_LALT));
-                            tap_code(KC_P0);
-                            tap_code(KC_P2);
-                            tap_code(KC_P5);
-                            tap_code(KC_P2);  // ü
-                        }
-                        unregister_mods(MOD_LALT);
-                        set_mods(mod_state);
-                        return false;
+                    if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
+                        clear_oneshot_mods();
+                        clear_mods();
+                        add_mods(MOD_BIT(KC_LALT));
+                        tap_code(KC_P0);
+                        tap_code(KC_P2);
+                        tap_code(KC_P2);
+                        tap_code(KC_P0);  // Ü
                     } else {
-                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            send_unicode_string("Ü");
-                        } else {
-                            send_unicode_string("ü");
-                        }
-                        return false;
+                        clear_mods();
+                        add_mods(MOD_BIT(KC_LALT));
+                        tap_code(KC_P0);
+                        tap_code(KC_P2);
+                        tap_code(KC_P5);
+                        tap_code(KC_P2);  // ü
                     }
+                    unregister_mods(MOD_LALT);
+                    set_mods(mod_state);
+                    return false;
                 }
             } else if (record->event.pressed) {
                 if (de_layout_active) {
                     tap_code16(DE_ODIA);
                     return false;
                 } else {
-                    if (!win_unicode_enable) {
-                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            clear_oneshot_mods();
-                            clear_mods();
-                            add_mods(MOD_BIT(KC_LALT));
-                            tap_code(KC_P0);
-                            tap_code(KC_P2);
-                            tap_code(KC_P1);
-                            tap_code(KC_P4);  // Ö
-                        } else {
-                            clear_mods();
-                            add_mods(MOD_BIT(KC_LALT));
-                            tap_code(KC_P0);
-                            tap_code(KC_P2);
-                            tap_code(KC_P4);
-                            tap_code(KC_P6);  // ö
-                        }
-                        unregister_mods(MOD_LALT);
-                        set_mods(mod_state);
-                        return false;
+                    if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
+                        clear_oneshot_mods();
+                        clear_mods();
+                        add_mods(MOD_BIT(KC_LALT));
+                        tap_code(KC_P0);
+                        tap_code(KC_P2);
+                        tap_code(KC_P1);
+                        tap_code(KC_P4);  // Ö
                     } else {
-                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            send_unicode_string("Ö");
-                        } else {
-                            send_unicode_string("ö");
-                        }
-                        return false;
+                        clear_mods();
+                        add_mods(MOD_BIT(KC_LALT));
+                        tap_code(KC_P0);
+                        tap_code(KC_P2);
+                        tap_code(KC_P4);
+                        tap_code(KC_P6);  // ö
                     }
+                    unregister_mods(MOD_LALT);
+                    set_mods(mod_state);
+                    return false;
                 }
             } else {
                 return true;
             }
-//        case XP(DE_ue, DE_UE):
+//        case DE_ue:
 //            if (record->event.pressed) {
 //                if (de_layout_active) {
 //                    register_code16(DE_UDIA);
@@ -527,12 +495,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 //                    return false;
 //                }
 //            }
-        case X(DE_UE):
+        case DE_UE:
             if (record->event.pressed) {
                 if (de_layout_active) {
                     register_code16(S(DE_UDIA));
                     return false;
-                } else if (!win_unicode_enable) {
+                } else {
                     clear_oneshot_mods();
                     clear_mods();
                     add_mods(MOD_BIT(KC_LALT));
@@ -586,7 +554,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return true;
             } else if (record->event.pressed) {
                 if (de_layout_active) {
-                    tap_code16(DE_SZ);
+                    tap_code16(DE_SS);
                 } else {
                     clear_oneshot_mods();
                     clear_mods();
@@ -778,34 +746,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     tap_code16(DE_ADIA);
                     return false;
                 } else {
-                    if (!win_unicode_enable) {
-                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            clear_oneshot_mods();
-                            clear_mods();
-                            add_mods(MOD_BIT(KC_LALT));
-                            tap_code(KC_P0);
-                            tap_code(KC_P1);
-                            tap_code(KC_P9);
-                            tap_code(KC_P6);  // Ä
-                        } else {
-                            clear_mods();
-                            add_mods(MOD_BIT(KC_LALT));
-                            tap_code(KC_P0);
-                            tap_code(KC_P2);
-                            tap_code(KC_P2);
-                            tap_code(KC_P8);  // ä
-                        }
-                        unregister_mods(MOD_LALT);
-                        set_mods(mod_state);
-                        return false;
+                    if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
+                        clear_oneshot_mods();
+                        clear_mods();
+                        add_mods(MOD_BIT(KC_LALT));
+                        tap_code(KC_P0);
+                        tap_code(KC_P1);
+                        tap_code(KC_P9);
+                        tap_code(KC_P6);  // Ä
                     } else {
-                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            send_unicode_string("Ä");
-                        } else {
-                            send_unicode_string("ä");
-                        }
-                        return false;
+                        clear_mods();
+                        add_mods(MOD_BIT(KC_LALT));
+                        tap_code(KC_P0);
+                        tap_code(KC_P2);
+                        tap_code(KC_P2);
+                        tap_code(KC_P8);  // ä
                     }
+                    unregister_mods(MOD_LALT);
+                    set_mods(mod_state);
+                    return false;
                 }
             } else {
                 if (de_layout_active) {

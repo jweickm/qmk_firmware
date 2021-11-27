@@ -74,6 +74,13 @@ enum planck_keycodes {
     KC_DE_SWITCH,
     LANG_SWITCH,
     UNICODE_ALT_SW,
+    DE_UE,  // Ü
+    DE_OE,  // Ö
+    DE_AE,  // Ä
+    DE_ue,  // ü
+    DE_oe,  // ö
+    DE_ae,  // ä
+    DE_SZ,   // ß
 };
 
 // Tap Dance declarations
@@ -85,27 +92,47 @@ enum tap_dance_codes {
     TD_F4       // double tap F4 to alt-F4
 };
 
-#ifdef UNICODE_SELECTED_MODES
-// unicodemap table
-enum unicode_names {
-    DE_ae,
-    DE_AE,
-    DE_oe,
-    DE_OE,
-    DE_ue,
-    DE_UE,
-    DE_SZ,
-};
-const uint32_t PROGMEM unicode_map[] = {
-    [DE_ae]    = 0xE4, // ä
-    [DE_AE]    = 0xC4, // Ä
-    [DE_oe]    = 0xF6, // ö
-    [DE_OE]    = 0xD6, // Ö
-    [DE_ue]    = 0xFC, // ü
-    [DE_UE]    = 0xDC, // Ü
-    [DE_SZ]    = 0xDF, // ß
-};
+// logical variable to differentiate between the German and the English input mode
+bool de_layout_active  = false; 
+
+// declaring several logical variables
+bool is_alt_tab_active = false;
+bool is_ctl_tab_active = false;
+bool win_unicode_enable= false;
+bool tap_hold_active   = false;
+
+#ifdef NAGINATA_ENABLE
+bool naginata_active   = false;
+bool come_from_naginata = false;
 #endif
+
+bool     muse_mode      = false;
+uint8_t  last_muse_note = 0;
+uint16_t muse_counter   = 0;
+uint8_t  muse_offset    = 70;
+uint16_t muse_tempo     = 50;
+
+//#ifdef UNICODE_SELECTED_MODES
+//// unicodemap table
+//enum unicode_names {
+//    DE_ae,
+//    DE_AE,
+//    DE_oe,
+//    DE_OE,
+//    DE_ue,
+//    DE_UE,
+//    DE_SZ,
+//};
+//const uint32_t PROGMEM unicode_map[] = {
+//    [DE_ae]    = 0xE4, // ä
+//    [DE_AE]    = 0xC4, // Ä
+//    [DE_oe]    = 0xF6, // ö
+//    [DE_OE]    = 0xD6, // Ö
+//    [DE_ue]    = 0xFC, // ü
+//    [DE_UE]    = 0xDC, // Ü
+//    [DE_SZ]    = 0xDF, // ß
+//};
+//#endif
 
 #ifdef AUDIO_ENABLE
 float macro_on_song[][2]        = SONG(SCROLL_LOCK_ON_SOUND);

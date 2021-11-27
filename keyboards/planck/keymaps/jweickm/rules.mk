@@ -11,5 +11,5 @@ SRC += naginata_v14.c
 #endif
 
 #ifdef UNICODE_SELECTED_MODES 
-UNICODEMAP_ENABLE = yes 	# Enables unicode map
+#UNICODEMAP_ENABLE = yes 	# Enables unicode map
 #endif

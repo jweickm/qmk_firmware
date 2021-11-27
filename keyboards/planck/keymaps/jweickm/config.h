@@ -81,4 +81,4 @@
 //#define NAGINATA_ENABLE // requires 10,560 bytes
 
 // for unicode support in windows using wincompose
-#define UNICODE_SELECTED_MODES UC_WINC
+// #define UNICODE_SELECTED_MODES UC_WINC

@@ -97,8 +97,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */ 
     [_LOWER] = LAYOUT_planck_grid(
-        KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC, KC_TILD, KC_CIRC, KC_AMPR, KC_ASTR, TD(TD_PRN), KC_RPRN, X(DE_OE),
-        ALT_TAB, KC_LALT, X(DE_SZ), KC_LSFT, KC_NO, KC_NO, X(DE_SZ), KC_UNDS, KC_PLUS, TD(TD_CBR), KC_RCBR, X(DE_AE), 
+        KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC, KC_TILD, KC_CIRC, KC_AMPR, KC_ASTR, TD(TD_PRN), KC_RPRN, DE_OE,
+        ALT_TAB, KC_LALT, DE_SZ, KC_LSFT, KC_NO, KC_NO, DE_SZ, KC_UNDS, KC_PLUS, TD(TD_CBR), KC_RCBR, DE_AE, 
         CTL_TAB, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, S(KC_DOT), S(KC_QUOT), KC_NUBS, KC_PIPE, KC_BSLS, DE_ACC_GRV, 
     #if layout == 1
         TG(_MOUSE), OSL(_ADJUST), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, MO(_ADJUST), KC_TRNS, KC_TRNS, KC_TRNS, TG(_NUM)
@@ -120,8 +120,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_RAISE] = LAYOUT_planck_grid(
-        LT(0, KC_1), LT(0, KC_2), LT(0, KC_3), LT(0, KC_4), LT(0, KC_5), KC_GRV, LT(0, KC_6), LT(0, KC_7), LT(0, KC_8), LT(0, KC_9), LT(0, KC_0), XP(DE_oe, DE_OE), 
-        KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, X(DE_SZ), KC_MINS, KC_EQL, TD(TD_BRC), KC_RBRC, XP(DE_ae, DE_AE), 
+        LT(0, KC_1), LT(0, KC_2), LT(0, KC_3), LT(0, KC_4), LT(0, KC_5), KC_GRV, LT(0, KC_6), LT(0, KC_7), LT(0, KC_8), LT(0, KC_9), LT(0, KC_0), DE_oe, 
+        KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, DE_SZ, KC_MINS, KC_EQL, TD(TD_BRC), KC_RBRC, DE_ae, 
         KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, S(KC_COMM), KC_QUOT, KC_COMM, KC_DOT, KC_PIPE, DE_ACC_ACUT, 
     #if layout == 1
         TG(_MOUSE), KC_TRNS, KC_TRNS, MO(_ADJUST), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, OSL(_ADJUST), KC_TRNS, TG(_NUM)
@@ -190,7 +190,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_NAV] = LAYOUT_planck_grid(
         ALT_TAB, C(KC_RGHT), KC_NO, S(KC_INS), C(KC_LEFT), KC_MAIL, C(KC_X), REDO, UNDO, C(KC_INS), S(KC_INS), KC_BSPC, 
-        KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, TD(TD_VIM_GG), KC_MPLY, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, KC_INS, 
+        CTL_TAB, KC_LALT, KC_LSFT, KC_LCTL, TD(TD_VIM_GG), KC_MPLY, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, KC_INS, 
         KC_LSFT, C(G(KC_LEFT)), KC_PGUP, KC_PGDN, C(G(KC_RGHT)), KC_MUTE, KC_HOME, KC_PGDN, KC_PGUP, KC_END, C(KC_F), KC_TRNS, 
     #if layout == 1
         KC_TRNS, KC_TRNS, KC_TRNS, KC_ESC, KC_TRNS, NAVSPACE, NAVSPACE, KC_ENT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS 
