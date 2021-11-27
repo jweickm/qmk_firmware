@@ -316,7 +316,7 @@ combo_t key_combos[] = {
     [OLOWER]        = COMBO(olower_combo, KC_RCBR),
     [QUOTLOWER]     = COMBO(quotlower_combo, X(DE_AE)),
     [HLOWER]        = COMBO(hlower_combo, S(KC_QUOT)),
-    [SLOWER]        = COMBO(slower_combo, DE_SZ),
+    [SLOWER]        = COMBO(slower_combo, X(DE_SZ)),
 
     [QRAISE]        = COMBO(qraise_combo, KC_1),
     [WRAISE]        = COMBO(wraise_combo, KC_2),
