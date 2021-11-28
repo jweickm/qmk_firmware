@@ -258,7 +258,7 @@ const uint16_t PROGMEM llower_combo[]       = {LOWER, RCTL_T(KC_L),        COMBO
 const uint16_t PROGMEM ulower_combo[]       = {LOWER, RSFT_T(KC_U),        COMBO_END};
 const uint16_t PROGMEM ylower_combo[]       = {LOWER, LALT_T(KC_Y),        COMBO_END};
 const uint16_t PROGMEM sclnlower_combo[]    = {LOWER, RGUI_T(KC_SCLN),     COMBO_END};
-const uint16_t PROGMEM uelower_combo[]      = {LOWER, XP(DE_ue, DE_UE),    COMBO_END};
+const uint16_t PROGMEM uelower_combo[]      = {LOWER, DE_ue,    COMBO_END};
 
 const uint16_t PROGMEM mlower_combo[]       = {LOWER, KC_M,                COMBO_END};
 const uint16_t PROGMEM nlower_combo[]       = {LOWER, KC_N,                COMBO_END};
@@ -280,7 +280,7 @@ const uint16_t PROGMEM lraise_combo[]       = {RAISE, RCTL_T(KC_L),        COMBO
 const uint16_t PROGMEM uraise_combo[]       = {RAISE, RSFT_T(KC_U),        COMBO_END};
 const uint16_t PROGMEM yraise_combo[]       = {RAISE, LALT_T(KC_Y),        COMBO_END};
 const uint16_t PROGMEM sclnraise_combo[]    = {RAISE, RGUI_T(KC_SCLN),     COMBO_END};
-const uint16_t PROGMEM ueraise_combo[]      = {RAISE, XP(DE_ue, DE_UE),    COMBO_END};
+const uint16_t PROGMEM ueraise_combo[]      = {RAISE, DE_ue,    COMBO_END};
 
 const uint16_t PROGMEM mraise_combo[]       = {RAISE, KC_M,                COMBO_END};
 const uint16_t PROGMEM nraise_combo[]       = {RAISE, KC_N,                COMBO_END};
@@ -306,7 +306,7 @@ combo_t key_combos[] = {
     [XC_CAPS]       = COMBO(xc_combo, KC_CAPS),
     [COMMDOT_LEAD]  = COMBO(commdot_combo, KC_LEAD),
     [XS_TAB]        = COMBO(xs_combo, KC_TAB),      
-    [ZS_SZ]         = COMBO(zs_combo, X(DE_SZ)),      
+    [ZS_SZ]         = COMBO(zs_combo, DE_SZ),      
     [EDOT_BSPC]     = COMBO(edot_combo, KC_BSPC),
 
     [DH_ROW]        = COMBO_ACTION(dh_combo),
@@ -314,13 +314,13 @@ combo_t key_combos[] = {
 
 //    [NRAISE]        = COMBO(nraise_combo, OSL(_RAISE)),
 //    [TLOWER]        = COMBO(tlower_combo, OSL(_LOWER)),
-//    [EO_OE]         = COMBO(oe_combo, XP(DE_oe, DE_OE)),
-//    [EA_AE]         = COMBO(ae_combo, XP(DE_ae, DE_AE)),
-//    [EU_UE]         = COMBO(ue_combo, XP(DE_ue, DE_UE)),
-//    [SPC_U]         = COMBO(spcu_combo, XP(DE_ue, DE_UE)),
-//    [SPC_O]         = COMBO(spco_combo, XP(DE_oe, DE_OE)),
-//    [SPC_A]         = COMBO(spca_combo, XP(DE_ae, DE_AE)),
-//    [SPC_S]         = COMBO(spcs_combo, X(DE_SZ)),
+//    [EO_OE]         = COMBO(oe_combo, DE_oe),
+//    [EA_AE]         = COMBO(ae_combo, DE_ae),
+//    [EU_UE]         = COMBO(ue_combo, DE_ue),
+//    [SPC_U]         = COMBO(spcu_combo, DE_ue),
+//    [SPC_O]         = COMBO(spco_combo, DE_oe),
+//    [SPC_A]         = COMBO(spca_combo, DE_ae),
+//    [SPC_S]         = COMBO(spcs_combo, DE_SZ),
 
     // combos for the lower and raise keys
     [QLOWER]        = COMBO(qlower_combo, KC_EXLM),
@@ -334,15 +334,15 @@ combo_t key_combos[] = {
     [ULOWER]        = COMBO(ulower_combo, KC_ASTR),
     [YLOWER]        = COMBO(ylower_combo, KC_LPRN),
     [SCLNLOWER]     = COMBO(sclnlower_combo, KC_RPRN),
-    [UELOWER]       = COMBO(uelower_combo, X(DE_OE)),
-    [MLOWER]        = COMBO(mlower_combo, X(DE_SZ)),
+    [UELOWER]       = COMBO(uelower_combo, DE_OE),
+    [MLOWER]        = COMBO(mlower_combo, DE_SZ),
     [NLOWER]        = COMBO(nlower_combo, KC_UNDS),
     [ELOWER]        = COMBO(elower_combo, KC_PLUS),
     [ILOWER]        = COMBO(ilower_combo, KC_LCBR),
     [OLOWER]        = COMBO(olower_combo, KC_RCBR),
-    [QUOTLOWER]     = COMBO(quotlower_combo, X(DE_AE)),
+    [QUOTLOWER]     = COMBO(quotlower_combo, DE_AE),
     [HLOWER]        = COMBO(hlower_combo, S(KC_QUOT)),
-    [SLOWER]        = COMBO(slower_combo, X(DE_SZ)),
+    [SLOWER]        = COMBO(slower_combo, DE_SZ),
 
     [QRAISE]        = COMBO(qraise_combo, KC_1),
     [WRAISE]        = COMBO(wraise_combo, KC_2),
@@ -355,13 +355,13 @@ combo_t key_combos[] = {
     [URAISE]        = COMBO(uraise_combo, KC_8),
     [YRAISE]        = COMBO(yraise_combo, KC_9),
     [SCLNRAISE]     = COMBO(sclnraise_combo, KC_0),
-    [UERAISE]       = COMBO(ueraise_combo, XP(DE_oe, DE_OE)),
-    [MRAISE]        = COMBO(mraise_combo, X(DE_SZ)),
+    [UERAISE]       = COMBO(ueraise_combo, DE_oe),
+    [MRAISE]        = COMBO(mraise_combo, DE_SZ),
     [NRAISE]        = COMBO(nraise_combo, KC_MINS),
     [ERAISE]        = COMBO(eraise_combo, KC_EQL),
     [IRAISE]        = COMBO(iraise_combo, KC_LBRC),
     [ORAISE]        = COMBO(oraise_combo, KC_RBRC),
-    [QUOTRAISE]     = COMBO(quotraise_combo, XP(DE_ae, DE_AE)),
+    [QUOTRAISE]     = COMBO(quotraise_combo, DE_ae),
     [HRAISE]        = COMBO(hraise_combo, KC_QUOT),
 
 #ifdef NAGINATA_ENABLE
