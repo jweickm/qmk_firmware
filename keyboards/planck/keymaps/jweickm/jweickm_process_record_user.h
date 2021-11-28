@@ -1125,7 +1125,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return true;
                 } else {
                     unregister_code(DE_Y);
-                    return false;
+                    return true;
                 }
             } else {
                 return true;
@@ -1145,7 +1145,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 } else {
                     unregister_code16(DE_COLN);
                     unregister_code16(DE_SCLN);
-                    return false;
+                    return true;
                 }
             } else {
                 return true;
