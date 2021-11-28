@@ -835,11 +835,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     }
                 }
                 return true;
-            } else if (record->event.pressed) {
+            } else if (record->event.pressed) { // add underscore as a shifted key
                 if (de_layout_active) {
-                    tap_code16(DE_SCLN);
+                    tap_code16(DE_UNDS);
                 } else {
-                    tap_code(KC_SCLN);
+                    tap_code16(KC_UNDS);
                 }
                 return false;
             } else {
@@ -850,25 +850,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 return true;
             }
-        case KC_COMM:
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                        clear_mods();
-                        clear_oneshot_mods();
-                        register_code16(DE_LABK);  // < left angle bracket
-                        set_mods(mod_state);
-                    } else {
-                        register_code16(DE_COMM);  // ,
-                    }
-                } else {
-                    unregister_code16(DE_LABK);
-                    unregister_code16(DE_COMM);
-                }
-                return false;
-            } else {
-                return true;
-            }
+//        case KC_COMM:
+//            if (de_layout_active) {
+//                if (record->event.pressed) {
+//                    if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
+//                        clear_mods();
+//                        clear_oneshot_mods();
+//                        register_code16(DE_LABK);  // < left angle bracket
+//                        set_mods(mod_state);
+//                    } else {
+//                        register_code16(DE_COMM);  // ,
+//                    }
+//                } else {
+//                    unregister_code16(DE_LABK);
+//                    unregister_code16(DE_COMM);
+//                }
+//                return false;
+//            } else {
+//                return true;
+//            }
         case S(KC_COMM): // <
             if (de_layout_active) {
                 if (record->event.pressed) {
@@ -1100,11 +1100,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return false;
                 } // process the key normally when English layout is active
                     return true;
-            } else if (record->event.pressed) { // add shifted version on hold
+            } else if (record->event.pressed) { // add minus on hold
                 if (de_layout_active) {
-                    tap_code16(DE_QUES); // register ?
-                } else { // register ?
-                    tap_code16(S(KC_SLSH));
+                    tap_code(DE_MINS); // -
+                } else { // -
+                    tap_code(KC_MINS);
                 }
                 return false;
             } else {
