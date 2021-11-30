@@ -830,16 +830,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 if (de_layout_active) {
                     if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
+                        clear_mods();
+                        clear_oneshot_mods();
                         register_code16(DE_LABK);  // < left angle bracket 
+                        set_mods(mod_state);
                     return false;
                     }
                 }
                 return true;
             } else if (record->event.pressed) { // add underscore as a shifted key
                 if (de_layout_active) {
-                    tap_code16(DE_UNDS);
+                    tap_code16(DE_SCLN);
                 } else {
-                    tap_code16(KC_UNDS);
+                    tap_code16(KC_SCLN);
                 }
                 return false;
             } else {
