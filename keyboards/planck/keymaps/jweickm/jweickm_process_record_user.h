@@ -544,13 +544,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case LT(0, KC_Z): // Z - ß
             if (record->tap.count && record->event.pressed) {
                 if (de_layout_active) {
-                    register_code(DE_Z);  // \"
+                    register_code(DE_Z);  // Z
                     return false;
                 }
                 return true;
             } else if (record->event.pressed) {
                 if (de_layout_active) {
-                    tap_code16(DE_SS);
+                    tap_code16(DE_SS); // ß
                 } else {
                     clear_oneshot_mods();
                     clear_mods();
@@ -810,22 +810,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 return true;
             }
-        case KC_DOT:
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                        register_code16(DE_RABK);  // > right angle bracket 
-                    } else {
-                        register_code16(DE_DOT);  // .
-                    }
-                } else {
-                    unregister_code16(DE_RABK);
-                    unregister_code16(DE_DOT);
-                }
-                return false;
-            } else {
-                return true;
-            }
+//        case KC_DOT:
+//            if (de_layout_active) {
+//                if (record->event.pressed) {
+//                    if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
+//                        register_code16(DE_RABK);  // > right angle bracket 
+//                    } else {
+//                        register_code16(DE_DOT);  // .
+//                    }
+//                } else {
+//                    unregister_code16(DE_RABK);
+//                    unregister_code16(DE_DOT);
+//                }
+//                return false;
+//            } else {
+//                return true;
+//            }
         case LT(0, KC_COMM):
             if (record->tap.count && record->event.pressed) {
                 if (de_layout_active) {
