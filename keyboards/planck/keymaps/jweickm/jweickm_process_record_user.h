@@ -1105,9 +1105,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return true;
             } else if (record->event.pressed) { // add minus on hold
                 if (de_layout_active) {
-                    tap_code(DE_MINS); // -
-                } else { // -
-                    tap_code(KC_MINS);
+                    tap_code16(DE_QUES); // ?
+                } else { // ?
+                    tap_code16(KC_QUES);
                 }
                 return false;
             } else {
