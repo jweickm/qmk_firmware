@@ -15,11 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "jweickm_header.h"
-#include "jweickm_process_record_user.h"
 #if hand_position == 1
     #include "semi_wide_layout.h"
 #elif hand_position == 2
     #include "wide_layout.h"
+#elif hand_position == 3
+    #include "narrow_layout.h"
 #endif
 
 // =========================================================================================
@@ -109,6 +110,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_VIM_GG] = ACTION_TAP_DANCE_FN(vim_gg),
     [TD_F4] = ACTION_TAP_DANCE_DOUBLE(KC_F4, A(KC_F4)),
 };
+
+#include "jweickm_process_record_user.c"
 
 bool encoder_update_user(uint8_t index, bool clockwise) {
     if (muse_mode) {

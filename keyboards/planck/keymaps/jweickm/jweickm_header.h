@@ -28,11 +28,13 @@ enum planck_layers {
 };
 
 // IMPORTANT: DEFINE THE LAYOUT FOR THE KEYBOARD HERE
-#define hand_position 1 // 1: semi-wide, 2: wide
+#define hand_position 1 // 1: semi-wide, 2: wide, 3: narrow
 #if hand_position == 1
     #define layout 1 // 1: with OSM, 2: with OSL
 #elif hand_position == 2
     #define layout 1 // 1: 1x2uC, 2: 2x2u, 3: grid
+#elif hand_position == 3 
+    #define layout 1 // 1: 1x2uC, 2: grid
 #endif
 
 // define the secondary function of the lower and raise keys here
