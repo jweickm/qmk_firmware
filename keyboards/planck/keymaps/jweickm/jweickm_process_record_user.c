@@ -52,10 +52,13 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case LSFT_T(KC_Z):
         case LT(0, KC_Z):
         case LT(0, KC_SLSH):
+        case LT(0, KC_MINS):
             return TAPPING_TERM * pinky_factor;
         case RSFT_T(KC_RALT):
         case LCTL_T(KC_CAPS):
-            return TAPPING_TERM; // prefer this one to be shorter
+        case LT(0, DE_UDIA):
+        case LT(0, KC_QUOT):
+            return TAPPING_TERM; // prefer these ones to be shorter
 
         // tap-dance actions
         case TD(TD_PRN):
@@ -827,13 +830,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
                         clear_mods();
                         clear_oneshot_mods();
-                        register_code16(DE_LABK);  // < left angle bracket 
+                        register_code16(DE_LABK);  // < left angle bracket when shifted
                         set_mods(mod_state);
                     return false;
                     }
                 }
                 return true;
-            } else if (record->event.pressed) { // add underscore as a shifted key
+            } else if (record->event.pressed) { // add semicolon as a held key
                 if (de_layout_active) {
                     tap_code16(DE_SCLN);
                 } else {
@@ -844,6 +847,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (de_layout_active) {
                     unregister_code16(DE_LABK);
                     unregister_code(DE_COMM);
+                    return false;
+                }
+                return true;
+            }
+        case LT(0, KC_MINS):
+            if (record->tap.count && record->event.pressed) {
+                if (de_layout_active) {
+                    register_code(DE_MINS);  // - Bindestrich 
+                    return false;
+                }
+                return true;
+            } else if (record->event.pressed) { // add underscore as a shifted key
+                if (de_layout_active) {
+                    tap_code16(DE_UNDS);
+                } else {
+                    tap_code16(KC_UNDS);
+                }
+                return false;
+            } else {
+                if (de_layout_active) {
+                    unregister_code(DE_MINS);
                     return false;
                 }
                 return true;
