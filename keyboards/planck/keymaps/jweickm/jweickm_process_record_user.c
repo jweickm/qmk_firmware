@@ -728,7 +728,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (!de_layout_active) {
                     return true;
                 } else {
-                    if (mod_state & MOD_MASK_SHIFT) {
+                    if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
                         register_code16(DE_DQUO);  // \"
                     } else {
                         register_code16(DE_QUOT);  // /'
