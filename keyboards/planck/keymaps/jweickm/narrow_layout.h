@@ -91,7 +91,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |ALTTAB| LALT |   ß  | LSTF | XXXX | XXXX |   "  |   _  |   +  |   {  |   }  |   Ä  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |CTLTAB| XXXX | XXXX | XXXX | XXXX | XXXX | XXXX |   `  |   \  |   |  |   \  |   `  |
+     * |CTLTAB| XXXX | XXXX | XXXX | XXXX | XXXX |   ~  |   `  |   \  |   |  |   \  |   `  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |!MOUSE|ADJUST| ____ | ____ | ____ |     ____    |ADJUST| ____ | ____ | ____ | !NUM | 1x2uC
      * `-----------------------------------------------------------------------------------'
@@ -99,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_LOWER] = LAYOUT_planck_grid(
         KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC, KC_TILD, KC_CIRC, KC_AMPR, KC_ASTR, TD(TD_PRN), KC_RPRN, DE_OE,
         ALT_TAB, KC_LALT, DE_SZ, KC_LSFT, KC_NO, KC_NO, S(KC_QUOT), KC_UNDS, KC_PLUS, TD(TD_CBR), KC_RCBR, DE_AE, 
-        CTL_TAB, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_GRV, KC_NUBS, KC_PIPE, KC_BSLS, DE_ACC_GRV, 
+        CTL_TAB, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_TILD, KC_GRV, KC_NUBS, KC_PIPE, KC_BSLS, DE_ACC_GRV, 
     #if layout == 1
         TG(_MOUSE), OSL(_ADJUST), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, MO(_ADJUST), KC_TRNS, KC_TRNS, KC_TRNS, TG(_NUM)
     #elif layout == 2
@@ -114,19 +114,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   <  |   -  |   =  |   [  |   ]  |   ä  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 | XXXX |   >  |   ,  |   .  |   |  |   ´  |
+     * |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |   ~  |   >  |   ,  |   .  |   |  |   ´  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |!MOUSE| ____ | ____ |ADJUST| ____ |     ____    | ____ | ____ |ADJUST| ____ | !NUM | 1x2uC
+     * |!MOUSE| ____ | ____ | BSPC | ____ |     ____    | ____ | ____ |ADJUST| ____ | !NUM | 1x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_RAISE] = LAYOUT_planck_grid(
         KC_1, KC_2, KC_3, KC_4, KC_5, KC_GRV, KC_6, KC_7, KC_8, KC_9, KC_0, DE_oe, 
         KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, S(KC_COMM), KC_MINS, KC_EQL, TD(TD_BRC), KC_RBRC, DE_ae, 
-        KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_NO, S(KC_DOT), KC_COMM, KC_DOT, KC_PIPE, DE_ACC_ACUT, 
+        KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_TILD, S(KC_DOT), KC_COMM, KC_DOT, KC_PIPE, DE_ACC_ACUT, 
     #if layout == 1
-        TG(_MOUSE), KC_TRNS, KC_TRNS, MO(_ADJUST), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, OSL(_ADJUST), KC_TRNS, TG(_NUM)
+        TG(_MOUSE), KC_TRNS, KC_TRNS, KC_BSPC, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, OSL(_ADJUST), KC_TRNS, TG(_NUM)
     #elif layout == 2
-        TG(_MOUSE), KC_TRNS, KC_TRNS, MO(_ADJUST), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, OSL(_ADJUST), KC_TRNS, TG(_NUM)
+        TG(_MOUSE), KC_TRNS, KC_TRNS, KC_BSPC, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, OSL(_ADJUST), KC_TRNS, TG(_NUM)
     #endif
     ),
 
@@ -185,7 +185,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | LSFT |DESK<-| PGUP | PGDN |DESK->| MUTE | HOME | PGDN | PGUP |  END | C(F) | ____ |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ | ____ |  ESC | ____ |    _____    |  ENT | ____ | ____ | ____ | ____ | 1x2uC
+     * | ____ | ____ | ____ | BSPC | ____ |    _____    |  ENT | ____ | ____ | ____ | ____ | 1x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_NAV] = LAYOUT_planck_grid(
@@ -193,9 +193,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         CTL_TAB, KC_LALT, KC_LSFT, KC_LCTL, TD(TD_VIM_GG), KC_MPLY, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, KC_INS, 
         KC_LSFT, C(G(KC_LEFT)), KC_PGUP, KC_PGDN, C(G(KC_RGHT)), KC_MUTE, KC_HOME, KC_PGDN, KC_PGUP, KC_END, C(KC_F), KC_TRNS, 
     #if layout == 1
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_ESC, KC_TRNS, NAVSPACE, NAVSPACE, KC_ENT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS 
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC, KC_TRNS, NAVSPACE, NAVSPACE, KC_ENT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS 
     #elif layout == 2
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_ESC, KC_TRNS, NAVSPACE, NAVSPACE, KC_ENT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS 
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC, KC_TRNS, NAVSPACE, NAVSPACE, KC_ENT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS 
     #endif
     ),
 
