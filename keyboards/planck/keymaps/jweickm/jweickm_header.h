@@ -157,7 +157,7 @@ enum combos {
     HDOT_RALT,
     XD_APP,
     BJ_NUM,
-    LOWER_RAISE_ADJUST,
+    LR_ADJ,
     VOLUTAB_MNXT,
     VOLDTAB_MPRV,
     DH_ROW,
@@ -223,22 +223,22 @@ enum combos {
 #endif
 };
 
-const uint16_t PROGMEM hcomm_combo[]        = {KC_H, LT(0, KC_COMM),              COMBO_END}; 
+const uint16_t PROGMEM hcomm_combo[]        = {KC_H, LT(0, KC_COMM),       COMBO_END}; 
 const uint16_t PROGMEM cd_combo[]           = {COPY_C, KC_D,               COMBO_END}; 
-const uint16_t PROGMEM hdot_combo[]         = {KC_H, LT(0, KC_DOT),               COMBO_END}; 
+const uint16_t PROGMEM hdot_combo[]         = {KC_H, LT(0, KC_DOT),        COMBO_END}; 
 const uint16_t PROGMEM xd_combo[]           = {CUT_X, KC_D,                COMBO_END};
 const uint16_t PROGMEM num_combo[]          = {LT(_NUM, KC_B), LT(_NUM, KC_J), COMBO_END};
-const uint16_t PROGMEM adj_combo[]          = {LOWER, LT(_RAISE, KC_DEL),  COMBO_END};
+const uint16_t PROGMEM adj_combo[]          = {LOWER, RAISE,               COMBO_END};
 const uint16_t PROGMEM mnxt_combo[]         = {LT(_MOUSE, KC_VOLU), KC_TAB,COMBO_END};
 const uint16_t PROGMEM mprv_combo[]         = {LT(_MOUSE, KC_VOLD), KC_TAB,COMBO_END};
 const uint16_t PROGMEM dh_combo[]           = {KC_D, KC_H,                 COMBO_END};
 const uint16_t PROGMEM xc_combo[]           = {CUT_X, COPY_C,              COMBO_END};
-const uint16_t PROGMEM commdot_combo[]      = {LT(0, KC_COMM), LT(0, KC_DOT),            COMBO_END};
+const uint16_t PROGMEM commdot_combo[]      = {LT(0, KC_COMM), LT(0, KC_DOT), COMBO_END};
 const uint16_t PROGMEM xs_combo[]           = {CUT_X, KC_S,                COMBO_END};
-const uint16_t PROGMEM zs_combo[]           = {LT(0, KC_Z), KC_S,                 COMBO_END};
-const uint16_t PROGMEM edot_combo[]         = {KC_E, LT(0, KC_DOT),               COMBO_END};
+const uint16_t PROGMEM zs_combo[]           = {LT(0, KC_Z), KC_S,          COMBO_END};
+const uint16_t PROGMEM edot_combo[]         = {KC_E, LT(0, KC_DOT),        COMBO_END};
 
-//const uint16_t PROGMEM nraise_combo[]       = {KC_N, LT(_RAISE, KC_DEL), COMBO_END};
+//const uint16_t PROGMEM nraise_combo[]       = {KC_N, RAISE, COMBO_END};
 const uint16_t PROGMEM tlower_combo[]       = {LOWER, KC_T,                COMBO_END};
 const uint16_t PROGMEM ae_combo[]           = {KC_E, KC_A,                 COMBO_END};
 const uint16_t PROGMEM oe_combo[]           = {KC_E, KC_O,                 COMBO_END};
@@ -260,7 +260,7 @@ const uint16_t PROGMEM llower_combo[]       = {LOWER, RCTL_T(KC_L),        COMBO
 const uint16_t PROGMEM ulower_combo[]       = {LOWER, RSFT_T(KC_U),        COMBO_END};
 const uint16_t PROGMEM ylower_combo[]       = {LOWER, LALT_T(KC_Y),        COMBO_END};
 const uint16_t PROGMEM sclnlower_combo[]    = {LOWER, RGUI_T(KC_SCLN),     COMBO_END};
-const uint16_t PROGMEM uelower_combo[]      = {LOWER, DE_ue,    COMBO_END};
+const uint16_t PROGMEM uelower_combo[]      = {LOWER, DE_ue,               COMBO_END};
 
 const uint16_t PROGMEM mlower_combo[]       = {LOWER, KC_M,                COMBO_END};
 const uint16_t PROGMEM nlower_combo[]       = {LOWER, KC_N,                COMBO_END};
@@ -282,7 +282,7 @@ const uint16_t PROGMEM lraise_combo[]       = {RAISE, RCTL_T(KC_L),        COMBO
 const uint16_t PROGMEM uraise_combo[]       = {RAISE, RSFT_T(KC_U),        COMBO_END};
 const uint16_t PROGMEM yraise_combo[]       = {RAISE, LALT_T(KC_Y),        COMBO_END};
 const uint16_t PROGMEM sclnraise_combo[]    = {RAISE, RGUI_T(KC_SCLN),     COMBO_END};
-const uint16_t PROGMEM ueraise_combo[]      = {RAISE, DE_ue,    COMBO_END};
+const uint16_t PROGMEM ueraise_combo[]      = {RAISE, DE_ue,               COMBO_END};
 
 const uint16_t PROGMEM mraise_combo[]       = {RAISE, KC_M,                COMBO_END};
 const uint16_t PROGMEM nraise_combo[]       = {RAISE, KC_N,                COMBO_END};
@@ -302,7 +302,7 @@ combo_t key_combos[] = {
     [CD_ESC]        = COMBO(cd_combo, KC_ESC),  
     [HDOT_RALT]     = COMBO(hdot_combo, KC_RALT),  
     [XD_APP]        = COMBO(xd_combo, KC_APP),
-    [LOWER_RAISE_ADJUST] = COMBO(adj_combo, MO(_ADJUST)),
+    [LR_ADJ]        = COMBO(adj_combo, MO(_ADJUST)),
     [VOLUTAB_MNXT]  = COMBO(mnxt_combo, KC_MNXT),
     [VOLDTAB_MPRV]  = COMBO(mprv_combo, KC_MPRV),
     [XC_CAPS]       = COMBO(xc_combo, KC_CAPS),
