@@ -272,6 +272,11 @@ void keyboard_post_init_user(void) {
 bool led_update_user(led_t led_state) {
     rgblight_set_layer_state(6, led_state.caps_lock);
     rgblight_set_layer_state(1, de_layout_active);
+    if (led_state.caps_lock) {
+        caps_lock_on = TRUE;
+    } else {
+        caps_lock_on = FALSE;
+    }
     return true;
 }
 

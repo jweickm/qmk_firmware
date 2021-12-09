@@ -25,8 +25,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_COLEMAK] = LAYOUT_planck_grid(
+#if homerow_mods == 1
         LGUI_T(KC_Q), LALT_T(KC_W), LSFT_T(KC_F), LCTL_T(KC_P), KC_B, LT(_MOUSE, KC_VOLU), KC_J, RCTL_T(KC_L), RSFT_T(KC_U), LALT_T(KC_Y), RGUI_T(KC_SCLN), LT(0, DE_UDIA), //XP(DE_ue, DE_UE),  
-        KC_A, KC_R, KC_S, KC_T, KC_G, KC_TAB, KC_M, KC_N, KC_E, KC_I, KC_O, LT(0, KC_QUOT), //KC_QUOT, 
+        KC_A, KC_R, LSFT_T(KC_S), KC_T, KC_G, KC_TAB, KC_M, KC_N, RSFT_T(KC_E), KC_I, KC_O, LT(0, KC_QUOT), //KC_QUOT, 
+#elif homerow_mods == 2
+        KC_Q, KC_W, KC_F, KC_P, KC_B, LT(_MOUSE, KC_VOLU), KC_J, KC_L, KC_U, KC_Y, LT(0, KC_SCLN), LT(0, DE_UDIA), //XP(DE_ue, DE_UE),  
+        LGUI_T(KC_A), LALT_T(KC_R), LSFT_T(KC_S), LCTL_T(KC_T), KC_G, KC_TAB, KC_M, RCTL_T(KC_N), RSFT_T(KC_E), LALT_T(KC_I), RGUI_T(KC_O), LT(0, KC_QUOT), //KC_QUOT,
+#endif
         LT(0, KC_Z), CUT_X, COPY_C, KC_D, PASTE_V, LT(_MOUSE, KC_VOLD), KC_K, KC_H, LT(0, KC_COMM), LT(0, KC_DOT), LT(0, KC_SLSH), LT(0, KC_MINS), 
     #if layout == 1
         LCTL_T(KC_CAPS), KC_LGUI, LT(_NUM, KC_ESC), LOWER, OSM(MOD_LSFT), NAVSPACE, NAVSPACE, RAISE, LT(_MOUSE, KC_DEL), LT(_MOUSE, KC_DOWN), LT(_MOUSE, KC_UP), RSFT_T(KC_RALT)
@@ -122,7 +127,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_RAISE] = LAYOUT_planck_grid(
         KC_1, KC_2, KC_3, KC_4, KC_5, KC_GRV, KC_6, KC_7, KC_8, KC_9, KC_0, DE_oe, 
         KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, S(KC_COMM), KC_MINS, KC_EQL, TD(TD_BRC), KC_RBRC, DE_ae, 
-        KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_TILD, S(KC_DOT), KC_COMM, KC_DOT, KC_PIPE, DE_ACC_ACUT, 
+        KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_TILD, S(KC_DOT), LT(0, KC_COMM), LT(0, KC_DOT), KC_PIPE, DE_ACC_ACUT, 
     #if layout == 1
         TG(_MOUSE), KC_TRNS, KC_TRNS, KC_BSPC, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, OSL(_ADJUST), KC_TRNS, TG(_NUM)
     #elif layout == 2
@@ -167,12 +172,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_NUM] = LAYOUT_planck_grid(
         KC_ESC, KC_TAB, KC_LSFT, KC_ENT, KC_TRNS, KC_NO, KC_ENT, LT(0, KC_7), LT(0, KC_8), LT(0, KC_9), KC_MINS, KC_BSPC,
-        KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_END, KC_TAB, KC_ASTR, LT(0, KC_4), LT(0, KC_5), LT(0, KC_6), KC_PLUS, KC_DOT,
-        KC_NO, KC_NO, KC_NO, KC_ENT, KC_NO, KC_MUTE, KC_EQL, LT(0, KC_1), LT(0, KC_2), LT(0, KC_3), KC_SLSH, KC_COMM,
+        KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_END, KC_TAB, KC_ASTR, LT(0, KC_4), LT(0, KC_5), LT(0, KC_6), KC_PLUS, LT(0, KC_DOT),
+        KC_NO, KC_NO, KC_NO, KC_ENT, KC_NO, KC_MUTE, KC_EQL, LT(0, KC_1), LT(0, KC_2), LT(0, KC_3), KC_SLSH, LT(0, KC_COMM),
     #if layout == 1
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LT(0, KC_0), KC_DOT, KC_COMM, KC_EQL, TG(_NUM)
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LT(0, KC_0), LT(0, KC_DOT), KC_COMM, KC_EQL, TG(_NUM)
     #elif layout == 2
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LT(0, KC_0), KC_DOT, KC_COMM, KC_EQL, TG(_NUM)
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LT(0, KC_0), LT(0, KC_DOT), KC_COMM, KC_EQL, TG(_NUM)
     #endif
     ),
 

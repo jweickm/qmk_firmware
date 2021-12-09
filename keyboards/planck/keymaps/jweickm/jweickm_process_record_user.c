@@ -31,14 +31,18 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
         // middle finger keys
         case LSFT_T(KC_F):
+        case LSFT_T(KC_R):
         case RSFT_T(KC_U):
+        case RSFT_T(KC_E):
         case LT(0, KC_COMM):
         case COPY_C:
             return TAPPING_TERM * middle_factor;
 
         // ring finger keys
         case LALT_T(KC_W):
+        case LALT_T(KC_R):
         case LALT_T(KC_Y):
+        case LALT_T(KC_I):
         case LGUI_T(KC_TAB):
         case LT(0, KC_DOT):
         case CUT_X:
@@ -46,13 +50,16 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
         // pinky keys
         case LGUI_T(KC_Q):
+        case LGUI_T(KC_A):
         case RGUI_T(KC_SCLN):
+        case RGUI_T(KC_O):
         case LT(_MOUSE, KC_Z):
         case LT(_MOUSE, KC_SLSH):
         case LSFT_T(KC_Z):
         case LT(0, KC_Z):
         case LT(0, KC_SLSH):
         case LT(0, KC_MINS):
+        case LT(0, KC_SCLN):
             return TAPPING_TERM * pinky_factor;
         case RSFT_T(KC_RALT):
         case LCTL_T(KC_CAPS):
@@ -75,9 +82,10 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LSFT_T(KC_F):
-            return true;
-        case RSFT_T(KC_U):
+//      case LSFT_T(KC_F):
+//      case RSFT_T(KC_U):
+        case LSFT_T(KC_S):
+        case RSFT_T(KC_E):
             return true;
 //      case LOWER:
 //            return true;
@@ -251,6 +259,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 is_ctl_tab_active = false;
             }
             return true;
+        // this esc turns off caps lock, if it was active
+        case KC_ESC:
+            if (record->event.pressed && caps_lock_on) {
+                tap_code(KC_CAPS);
+            }
+            return true;
+
 
 // ------------------------- UNICODE ----------------------------------------- 
         case UNICODE_ALT_SW:
@@ -589,6 +604,34 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             } else {
                 return true;
+            }
+        case LT(0, KC_SCLN): // this key behaves as a gui mod tap for both german and english layout
+            if (record->tap.count && record->event.pressed) {
+                if (de_layout_active) {
+                    if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
+                        register_code16(DE_COLN); // register :
+                    } else {
+                        register_code16(DE_SCLN); // register ;
+                    }
+                    return false;
+                } else {
+                    return true;
+                }
+            } else if (record->event.pressed) {
+                if (de_layout_active) {
+                    tap_code16(DE_COLN); // :
+                } else {
+                    tap_code16(KC_COLN); // :
+                }
+                return false;
+            } else {
+                if (de_layout_active) {
+                    unregister_code16(DE_COLN);
+                    unregister_code16(DE_SCLN);
+                    return false;
+                } else {
+                    return true;
+                }
             }
         case KC_AT: // @
             if (de_layout_active) {
