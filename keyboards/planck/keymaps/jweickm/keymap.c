@@ -218,20 +218,21 @@ bool music_mask_user(uint16_t keycode) {
 
 // Set RGB to change with layer changes
 #define HSV_DARKORANGE 10, 255, 255
-#define HSV_DARKPINK 150, 100, 255
-#define HSV_GRASS 57, 255, 255
-#define HSV_OCEAN 148, 255, 255
+#define HSV_GRASS 57, 255, 100
+#define HSV_OCEAN 148, 255, 100
+#define HSV_DARKMAGENTA 201, 255, 255
+#define HSV_DARKRED 0, 255, 100
 
 // Light LEDs 1 to 10 in green when COLEMAK is active
 const rgblight_segment_t PROGMEM my_layer0_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_OCEAN});
 // Light LEDs 1 to 10 in green when de_layout_active is true
 const rgblight_segment_t PROGMEM my_layer1_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_GRASS});
 // Light LEDs 1 to 10 in red when GAMING layer is active
-const rgblight_segment_t PROGMEM my_layer2_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_RED});
+const rgblight_segment_t PROGMEM my_layer2_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_DARKRED});
 // Light LEDs 1 to 10 in darkorange when NAGINATA is active
 const rgblight_segment_t PROGMEM my_layer3_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_DARKORANGE});
 // Light bottom LEDs in purple when ADJUST layer is active
-const rgblight_segment_t PROGMEM my_layer4_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 2, HSV_MAGENTA}, {7, 3, HSV_MAGENTA});
+const rgblight_segment_t PROGMEM my_layer4_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 2, HSV_DARKMAGENTA}, {7, 3, HSV_DARKMAGENTA});
 // Light LEDs 1 to 10 in white when ... is active
 const rgblight_segment_t PROGMEM my_layer5_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_WHITE});
 // Light bottom LEDs in darkorange when caps lock is active. Hard to ignore!
