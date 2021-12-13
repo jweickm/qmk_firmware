@@ -104,7 +104,7 @@ bool de_layout_active  = false;
 bool is_alt_tab_active = false;
 bool is_ctl_tab_active = false;
 bool win_unicode_enable= false;
-bool caps_lock_on      = false;
+bool caps_lock_on = false;
 
 #ifdef NAGINATA_ENABLE
 bool naginata_active   = false;
@@ -361,7 +361,7 @@ combo_t key_combos[] = {
     [URAISE]        = COMBO(uraise_combo, KC_8),
     [YRAISE]        = COMBO(yraise_combo, KC_9),
     [SCLNRAISE]     = COMBO(sclnraise_combo, KC_0),
-    [UERAISE]       = COMBO(ueraise_combo, LT(0, DE_UDIA)),
+    [UERAISE]       = COMBO(ueraise_combo, DE_oe),
     [MRAISE]        = COMBO(mraise_combo, S(KC_COMM)),
     [NRAISE]        = COMBO(nraise_combo, KC_MINS),
     [ERAISE]        = COMBO(eraise_combo, KC_EQL),
