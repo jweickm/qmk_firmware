@@ -28,7 +28,7 @@ enum planck_layers {
 };
 
 // IMPORTANT: DEFINE THE LAYOUT FOR THE KEYBOARD HERE
-#define hand_position 1 // 1: semi-wide, 2: wide, 3: narrow
+#define hand_position 3 // 1: semi-wide, 2: wide, 3: narrow
 #if hand_position == 1
     #define layout 1 // 1: with OSM, 2: with OSL
 #elif hand_position == 2
@@ -164,6 +164,8 @@ enum combos {
     LR_ADJ,
     VOLUTAB_MNXT,
     VOLDTAB_MPRV,
+    DOWNRALT_MPRV,
+    UPRALT_MNXT,
     DH_ROW,
     XC_CAPS,
     COMMDOT_LEAD,
@@ -235,6 +237,8 @@ const uint16_t PROGMEM num_combo[]          = {LT(_NUM, KC_B), LT(_NUM, KC_J), C
 const uint16_t PROGMEM adj_combo[]          = {LOWER, RAISE,               COMBO_END};
 const uint16_t PROGMEM mnxt_combo[]         = {LT(_MOUSE, KC_VOLU), KC_TAB,COMBO_END};
 const uint16_t PROGMEM mprv_combo[]         = {LT(_MOUSE, KC_VOLD), KC_TAB,COMBO_END};
+const uint16_t PROGMEM upmnxt_combo[]       = {LT(_NAV, KC_RALT), LT(_MOUSE, KC_UP),COMBO_END};
+const uint16_t PROGMEM downmprv_combo[]     = {LT(_NAV, KC_RALT), LT(_MOUSE, KC_DOWN),COMBO_END};
 const uint16_t PROGMEM dh_combo[]           = {KC_D, KC_H,                 COMBO_END};
 const uint16_t PROGMEM xc_combo[]           = {CUT_X, COPY_C,              COMBO_END};
 const uint16_t PROGMEM commdot_combo[]      = {LT(0, KC_COMM), LT(0, KC_DOT), COMBO_END};
@@ -309,11 +313,13 @@ combo_t key_combos[] = {
     [LR_ADJ]        = COMBO(adj_combo, MO(_ADJUST)),
     [VOLUTAB_MNXT]  = COMBO(mnxt_combo, KC_MNXT),
     [VOLDTAB_MPRV]  = COMBO(mprv_combo, KC_MPRV),
+    [DOWNRALT_MPRV] = COMBO(downmprv_combo, KC_MPRV),
+    [UPRALT_MNXT]   = COMBO(upmnxt_combo, KC_MNXT),
     [XC_CAPS]       = COMBO(xc_combo, KC_CAPS),
     [COMMDOT_LEAD]  = COMBO(commdot_combo, KC_LEAD),
     [XS_TAB]        = COMBO(xs_combo, KC_TAB),      
     [ZS_SZ]         = COMBO(zs_combo, DE_SZ),      
-    [EDOT_BSPC]     = COMBO(edot_combo, KC_BSPC),
+    [EDOT_BSPC]     = COMBO(edot_combo, C(KC_BSPC)),
 
     [DH_ROW]        = COMBO_ACTION(dh_combo),
     [BJ_NUM]        = COMBO_ACTION(num_combo),

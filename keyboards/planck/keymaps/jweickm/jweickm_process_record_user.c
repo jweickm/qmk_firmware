@@ -31,7 +31,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
         // middle finger keys
         case LSFT_T(KC_F):
-        case LSFT_T(KC_R):
+        case LSFT_T(KC_S):
         case RSFT_T(KC_U):
         case RSFT_T(KC_E):
         case LT(0, KC_COMM):
@@ -272,6 +272,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
         // this esc turns off caps lock, if it was active
+        case LT(_NUM, KC_ESC):
         case KC_ESC:
             if (record->event.pressed && caps_lock_on) {
                 tap_code(KC_CAPS);
