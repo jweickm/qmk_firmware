@@ -121,7 +121,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |  F12 |  F7  |  F8  |  F9  |  F10 |  F11 |   ~  |   >  |   ,  |   .  |   |  |   ´  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |!MOUSE| ____ | ____ | ____ | BSPC |     ____    | ____ | ____ |ADJUST| ____ | !NUM | 1x2uC
+     * |!MOUSE| ____ | ____ | ____ | BSPC |     ____    | ____ | MPLY | BRI- | BRI+ | MUTE | 1x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_RAISE] = LAYOUT_planck_grid(
@@ -131,7 +131,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     #if layout == 1
         TG(_MOUSE), KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, OSL(_ADJUST), KC_TRNS, TG(_NUM)
     #elif layout == 2
-        TG(_MOUSE), KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, OSL(_ADJUST), KC_TRNS, TG(_NUM)
+        TG(_MOUSE), KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC, KC_TRNS, KC_TRNS, KC_TRNS, KC_MPLY, KC_BRID, KC_BRIU, KC_MUTE
     #endif
     ),
 
@@ -190,7 +190,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | XXXX |DESK<-| PGUP | PGDN |DESK->| HOME | PGDN | PGUP |  END | C(F) | ____ |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ | ____ | ____ | BSPC |    _____    |  ENT | ____ | VOL- | VOL+ | ____ | 1x2uC
+     * | ____ | ____ | ____ | ____ | BSPC |    _____    |  ENT | MPLY | VOL- | VOL+ | ____ | 1x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_NAV] = LAYOUT_planck_grid(
@@ -198,7 +198,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         CTL_TAB, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, TD(TD_VIM_GG), KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, KC_INS, 
         KC_TRNS, KC_NO, C(G(KC_LEFT)), KC_PGUP, KC_PGDN, C(G(KC_RGHT)), KC_HOME, KC_PGDN, KC_PGUP, KC_END, C(KC_F), KC_TRNS, 
     #if layout == 1
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC, NAVSPACE, NAVSPACE, KC_ENT, KC_TRNS, KC_VOLD, KC_VOLU, KC_TRNS 
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC, NAVSPACE, NAVSPACE, KC_ENT, KC_MPLY, KC_VOLD, KC_VOLU, KC_TRNS 
     #elif layout == 2
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BSPC, NAVSPACE, NAVSPACE, KC_ENT, KC_TRNS, KC_VOLD, KC_VOLU, KC_TRNS 
     #endif
