@@ -10,6 +10,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // thumb keys
         case LT(_NUM, KC_ESC):
+        case LT(_NUM, KC_BSPC):
         case LOWER: 
         case LSFT_T(KC_BSPC):
         case RAISE:
@@ -56,10 +57,13 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case LT(_MOUSE, KC_Z):
         case LT(_MOUSE, KC_SLSH):
         case LSFT_T(KC_Z):
+        case RSFT_T(KC_ENT):
         case LT(0, KC_Z):
         case LT(0, KC_SLSH):
         case LT(0, KC_MINS):
         case LT(0, KC_SCLN):
+        case LT(0, KC_A):
+        case LT(0, KC_O):
             return TAPPING_TERM * pinky_factor;
         case RSFT_T(KC_RALT):
         case LCTL_T(KC_CAPS):
@@ -86,9 +90,8 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
 //      case RSFT_T(KC_U):
         case LSFT_T(KC_S):
         case RSFT_T(KC_E):
+//        case LOWER:
             return true;
-//      case LOWER:
-//            return true;
 //      case LT(_LOWER, KC_BSPC):
 //            return true;
         default:
@@ -263,7 +266,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // the next case allows us to use alt_tab without a timer
         case NAVSPACE: 
         case NAVENT:
-        case LOWER:
             if (!record->event.pressed && (is_alt_tab_active || is_ctl_tab_active)) {
                 del_mods(MOD_BIT(KC_LALT));
                 del_mods(MOD_BIT(KC_LCTL));
@@ -271,6 +273,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 is_ctl_tab_active = false;
             }
             return true;
+#if left_thumb == 2
+        case LOWER:
+            if (record->tap.count && record->event.pressed) {
+                if (osmod_state & MOD_MASK_SHIFT) {
+                    clear_oneshot_mods();
+                } else {
+                    set_oneshot_mods(MOD_BIT(KC_LSFT));
+                }
+                return false;
+            } else if (record->event.pressed) {
+                return true;
+            } else {
+                return true;
+            }
+#endif
         // this esc turns off caps lock, if it was active
         case LT(_NUM, KC_ESC):
         case KC_ESC:
@@ -278,7 +295,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code(KC_CAPS);
             }
             return true;
-
 
 // ------------------------- UNICODE ----------------------------------------- 
         case UNICODE_ALT_SW:
@@ -343,8 +359,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 return true;
             } else {
-                unregister_code16(DE_ADIA);
-                return false;
+                if (de_layout_active) {
+                    unregister_code16(DE_ADIA);
+                    return false;
+                }
             }
         case DE_AE:
             if (record->event.pressed) {
@@ -369,6 +387,78 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (de_layout_active) {
                     unregister_code16(DE_ADIA);
                     return false;
+                }
+            }
+        case LT(0, KC_A):
+            if (record->tap.count && record->event.pressed) {
+                return true;
+            } else if (record->event.pressed) {
+                if (de_layout_active) {
+                    register_code16(DE_ADIA);
+                    return false;
+                } else {
+                    if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
+                        clear_oneshot_mods();
+                        clear_mods();
+                        add_mods(MOD_BIT(KC_LALT));
+                        tap_code(KC_P0);
+                        tap_code(KC_P1);
+                        tap_code(KC_P9);
+                        tap_code(KC_P6);  // Ä
+                    } else {
+                        clear_mods();
+                        add_mods(MOD_BIT(KC_LALT));
+                        tap_code(KC_P0);
+                        tap_code(KC_P2);
+                        tap_code(KC_P2);
+                        tap_code(KC_P8);  // ä
+                    }
+                    unregister_mods(MOD_LALT);
+                    set_mods(mod_state);
+                    return false;
+                    break;
+                }
+                return true;
+            } else {
+                if (de_layout_active) {
+                    unregister_code16(DE_ADIA);
+                    return true;
+                }
+            }
+        case LT(0, KC_O):
+            if (record->tap.count && record->event.pressed) {
+                return true;
+            } else if (record->event.pressed) {
+                if (de_layout_active) {
+                    register_code16(DE_ODIA);
+                    return false;
+                } else {
+                    if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
+                        clear_oneshot_mods();
+                        clear_mods();
+                        add_mods(MOD_BIT(KC_LALT));
+                        tap_code(KC_P0);
+                        tap_code(KC_P2);
+                        tap_code(KC_P1);
+                        tap_code(KC_P4);  // Ö
+                    } else {
+                        clear_mods();
+                        add_mods(MOD_BIT(KC_LALT));
+                        tap_code(KC_P0);
+                        tap_code(KC_P2);
+                        tap_code(KC_P4);
+                        tap_code(KC_P6);  // ö
+                    }
+                    unregister_mods(MOD_LALT);
+                    set_mods(mod_state);
+                    return false;
+                    break;
+                }
+                return true;
+            } else {
+                if (de_layout_active) {
+                    unregister_code16(DE_ODIA);
+                    return true;
                 }
             }
         case DE_oe:

@@ -35,6 +35,7 @@ enum planck_layers {
     #define layout 1 // 1: 1x2uC, 2: 2x2u, 3: grid
 #elif hand_position == 3 
     #define layout 1 // 1: 1x2uC, 2: grid
+    #define left_thumb 1 // 1: backspace, 2: osm_shift
 #endif
 
 // define the position of the homerow_mods: 1-top row, 2-mod row, 3-bottom row

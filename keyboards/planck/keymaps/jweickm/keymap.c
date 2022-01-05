@@ -234,7 +234,7 @@ const rgblight_segment_t PROGMEM my_layer2_layer[] = RGBLIGHT_LAYER_SEGMENTS({0,
 // Light LEDs 1 to 10 in darkorange when NAGINATA is active
 const rgblight_segment_t PROGMEM my_layer3_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_DARKORANGE});
 // Light bottom LEDs in purple when ADJUST layer is active
-const rgblight_segment_t PROGMEM my_layer4_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 2, HSV_DARKMAGENTA}, {7, 3, HSV_DARKMAGENTA});
+const rgblight_segment_t PROGMEM my_layer4_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 2, HSV_WHITE}, {7, 3, HSV_WHITE});
 // Light LEDs 1 to 10 in white when ... is active
 const rgblight_segment_t PROGMEM my_layer5_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_WHITE});
 // Light bottom LEDs in darkorange when caps lock is active. Hard to ignore!
