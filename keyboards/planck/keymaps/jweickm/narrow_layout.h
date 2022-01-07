@@ -148,7 +148,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | XXXX |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 | XXXX | XXXX | XXXX | XXXX | UC_SW|
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |EEPRST| ____ | ____ | ____ | ____ |     ____    | ____ | MPLY | VOLD | VOLU | ____ | 1x2uC
+     * |EEPRST| ____ | ____ | ____ | ____ |     ____    | MUTE | MPLY | VOLD | VOLU | ____ | 1x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_ADJUST] = LAYOUT_planck_grid(
@@ -156,9 +156,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO, KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, KC_RCTL, KC_RSFT, KC_LALT, KC_RGUI, GAMING, 
         KC_NO, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_NO, KC_NO, KC_NO, KC_NO, UNICODE_ALT_SW,
     #if layout == 1
-        EEPROM_RESET, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MPLY, KC_VOLD, KC_VOLU, KC_TRNS
+        EEPROM_RESET, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MUTE, KC_MPLY, KC_VOLD, KC_VOLU, KC_TRNS
     #elif layout == 2
-        EEPROM_RESET, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
+        EEPROM_RESET, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MUTE, KC_MPLY, KC_VOLD, KC_VOLU, KC_TRNS
     #endif
     ),
 
