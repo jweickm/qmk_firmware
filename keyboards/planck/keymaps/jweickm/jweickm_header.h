@@ -163,8 +163,6 @@ enum combos {
     XD_APP,
     BJ_NUM,
     LR_ADJ,
-    VOLUTAB_MNXT,
-    VOLDTAB_MPRV,
     DOWNRALT_MPRV,
     UPRALT_MNXT,
     DH_ROW,
@@ -236,10 +234,8 @@ const uint16_t PROGMEM hdot_combo[]         = {KC_H, LT(0, KC_DOT),        COMBO
 const uint16_t PROGMEM xd_combo[]           = {CUT_X, KC_D,                COMBO_END};
 const uint16_t PROGMEM num_combo[]          = {LT(_NUM, KC_B), LT(_NUM, KC_J), COMBO_END};
 const uint16_t PROGMEM adj_combo[]          = {LOWER, RAISE,               COMBO_END};
-const uint16_t PROGMEM mnxt_combo[]         = {LT(_MOUSE, KC_VOLU), KC_TAB,COMBO_END};
-const uint16_t PROGMEM mprv_combo[]         = {LT(_MOUSE, KC_VOLD), KC_TAB,COMBO_END};
-const uint16_t PROGMEM upmnxt_combo[]       = {LT(_NAV, KC_RALT), LT(_MOUSE, KC_UP),COMBO_END};
-const uint16_t PROGMEM downmprv_combo[]     = {LT(_NAV, KC_RALT), LT(_MOUSE, KC_DOWN),COMBO_END};
+const uint16_t PROGMEM upmnxt_combo[]       = {LT(_ADJUST, KC_RALT), LT(_NAV, KC_UP),COMBO_END};
+const uint16_t PROGMEM downmprv_combo[]     = {LT(_ADJUST, KC_RALT), LT(_NAV, KC_DOWN),COMBO_END};
 const uint16_t PROGMEM dh_combo[]           = {KC_D, KC_H,                 COMBO_END};
 const uint16_t PROGMEM xc_combo[]           = {CUT_X, COPY_C,              COMBO_END};
 const uint16_t PROGMEM commdot_combo[]      = {LT(0, KC_COMM), LT(0, KC_DOT), COMBO_END};
@@ -312,8 +308,6 @@ combo_t key_combos[] = {
     [HDOT_RALT]     = COMBO(hdot_combo, KC_RALT),  
     [XD_APP]        = COMBO(xd_combo, KC_APP),
     [LR_ADJ]        = COMBO(adj_combo, MO(_ADJUST)),
-    [VOLUTAB_MNXT]  = COMBO(mnxt_combo, KC_MNXT),
-    [VOLDTAB_MPRV]  = COMBO(mprv_combo, KC_MPRV),
     [DOWNRALT_MPRV] = COMBO(downmprv_combo, KC_MPRV),
     [UPRALT_MNXT]   = COMBO(upmnxt_combo, KC_MNXT),
     [XC_CAPS]       = COMBO(xc_combo, KC_CAPS),
