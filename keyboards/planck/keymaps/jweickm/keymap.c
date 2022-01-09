@@ -177,9 +177,6 @@ bool dip_switch_update_user(uint8_t index, bool active) {
     const key_override_t combo_ctl_delete_key_override = ko_make_basic(MOD_MASK_SHIFT, C(KC_BSPC), C(KC_DEL));
 // This globally defines all key overrides to be used
 const key_override_t **key_overrides = (const key_override_t *[]){
-    &combo_delete_key_override,
-    &combo_delete_num_key_override,
-    &combo_ctl_delete_key_override,
     NULL // Null terminate the array of overrides!
 };
 #endif
