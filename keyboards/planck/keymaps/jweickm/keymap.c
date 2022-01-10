@@ -229,22 +229,25 @@ const rgblight_segment_t PROGMEM my_layer0_layer[] = RGBLIGHT_LAYER_SEGMENTS({0,
 const rgblight_segment_t PROGMEM my_layer1_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_GRASS});
 // Light LEDs 1 to 10 in red when GAMING layer is active
 const rgblight_segment_t PROGMEM my_layer2_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_DARKRED});
-// Light LEDs 1 to 10 in darkorange when NAGINATA is active
-const rgblight_segment_t PROGMEM my_layer3_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_DARKORANGE});
-// Light bottom LEDs in purple when ADJUST layer is active
-const rgblight_segment_t PROGMEM my_layer4_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 2, HSV_WHITE}, {7, 3, HSV_WHITE});
-// Light LEDs 1 to 10 in white when ... is active
-const rgblight_segment_t PROGMEM my_layer5_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_WHITE});
-// Light bottom LEDs in darkorange when caps lock is active. Hard to ignore!
-const rgblight_segment_t PROGMEM my_capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 3, HSV_DARKORANGE}, {7, 3, HSV_DARKORANGE});
+// Light LEDs 1 to 10 in white when _LOWER is active
+const rgblight_segment_t PROGMEM my_layer3_layer[] = RGBLIGHT_LAYER_SEGMENTS({6, 4, HSV_GRASS});
+// Light LEDs 1 to 10 in darkorange when _RAISE layer is active
+const rgblight_segment_t PROGMEM my_layer4_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 4, HSV_DARKRED});
+// Light LEDs 1 to 10 in white when _NUM is active
+const rgblight_segment_t PROGMEM my_layer5_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 4, HSV_GRASS});
+// Light bottom LEDs in purple when _ADJUST layer is active
+const rgblight_segment_t PROGMEM my_layer6_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 2, HSV_WHITE}, {7, 3, HSV_WHITE});
+// Light bottom LEDs and corner LEDs in darkorange when caps lock is active. Hard to ignore!
+const rgblight_segment_t PROGMEM my_capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 4, HSV_DARKORANGE}, {6, 3, HSV_DARKORANGE});
 
 // Now define the array of layers. Later layers take precedence
 const rgblight_segment_t *const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(my_layer0_layer,   // hrwidecolemak
                                                                                my_layer1_layer,   // de_layout
                                                                                my_layer2_layer,   // gaming
-                                                                               my_layer3_layer,   // naginata
-                                                                               my_layer4_layer,   // adjust
-                                                                               my_layer5_layer,   // ...
+                                                                               my_layer3_layer,   // lower
+                                                                               my_layer4_layer,   // raise
+                                                                               my_layer5_layer,   // _num
+                                                                               my_layer6_layer,   // adjust
                                                                                my_capslock_layer  // capslock
 );
 
@@ -271,7 +274,7 @@ void keyboard_post_init_user(void) {
 #endif
 
 bool led_update_user(led_t led_state) {
-    rgblight_set_layer_state(6, led_state.caps_lock);
+    rgblight_set_layer_state(7, led_state.caps_lock);
     rgblight_set_layer_state(1, de_layout_active);
     if (led_state.caps_lock) {
         caps_lock_on = TRUE;
@@ -283,9 +286,12 @@ bool led_update_user(led_t led_state) {
 
 layer_state_t layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(2, layer_state_cmp(state, _GAMING));
-    rgblight_set_layer_state(4, layer_state_cmp(state, _ADJUST));
+    rgblight_set_layer_state(3, layer_state_cmp(state, _LOWER));
+    rgblight_set_layer_state(4, layer_state_cmp(state, _RAISE));
+    rgblight_set_layer_state(6, layer_state_cmp(state, _ADJUST));
+    rgblight_set_layer_state(1, de_layout_active);
 #ifdef NAGINATA_ENABLE
-    rgblight_set_layer_state(3, layer_state_cmp(state, _NAGINATA));
+    rgblight_set_layer_state(6, layer_state_cmp(state, _NAGINATA));
     if (layer_state_cmp(state, _NAGINATA)) {
         naginata_active = true;
     } else {
