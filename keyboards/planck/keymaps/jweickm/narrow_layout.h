@@ -100,7 +100,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | LGUI | LALT | LSFT | LCTL | XXXX |   "  |   _  |   +  |   {  |   }  |   Ä  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ |CTLTAB| MIC  | MPLY | MUTE | XXXX |   `  |   '  |   \  |   |  |   \  |   `  |
+     * | ____ |CTLTAB| MIC  | MPLY | MUTE | XXXX |   `  |   '  |   <  |   >  |   \  |   `  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |!MOUSE| ____ |ADJUST| ____ | ____ |     ____    |  DEL |C-DEL | Bri- | Bri+ | !NUM | 1x2uC
      * `-----------------------------------------------------------------------------------'
@@ -108,7 +108,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_LOWER] = LAYOUT_planck_grid(
         KC_GRV, KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, TD(TD_PRN), KC_RPRN, DE_OE,
         KC_TRNS, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_NO, S(KC_QUOT), KC_UNDS, KC_PLUS, TD(TD_CBR), KC_RCBR, DE_AE, 
-        KC_TRNS, CTL_TAB, KC_MAIL, KC_MPLY, KC_MUTE, KC_NO, KC_GRV, KC_QUOT, KC_NUBS, KC_PIPE, KC_BSLS, DE_ACC_GRV, 
+        KC_TRNS, CTL_TAB, KC_MAIL, KC_MPLY, KC_MUTE, KC_NO, KC_GRV, KC_QUOT, S(KC_COMM), S(KC_DOT), KC_BSLS, DE_ACC_GRV, 
     #if layout == 1
         TG(_MOUSE), KC_TRNS, OSL(_ADJUST), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_DEL, C(KC_DEL), KC_BRID, KC_BRIU, TG(_NUM)
     #elif layout == 2
