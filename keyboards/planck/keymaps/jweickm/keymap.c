@@ -257,22 +257,26 @@ void keyboard_post_init_user(void) {
     rgblight_layers = my_rgb_layers;
 }
 
+void led_set_user(uint8_t usb_led) {
 #ifdef AUDIO_ENABLE
-    void led_set_user(uint8_t usb_led) {
-        static uint8_t old_usb_led = 0;
-
-        if (!is_playing_notes()) {
-            if ((usb_led & (1<<USB_LED_CAPS_LOCK)) && !(old_usb_led & (1<<USB_LED_CAPS_LOCK))) { 
-                    // If CAPS LK LED is turning on...
-                    PLAY_SONG(tone_caps_on);
-            } else if (!(usb_led & (1<<USB_LED_CAPS_LOCK)) && (old_usb_led & (1<<USB_LED_CAPS_LOCK))) {
-                    // If CAPS LK LED is turning off...
-                    PLAY_SONG(tone_caps_off);
-            }
+    static uint8_t old_usb_led = 0;
+    if (!is_playing_notes()) {
+        if ((usb_led & (1<<USB_LED_CAPS_LOCK)) && !(old_usb_led & (1<<USB_LED_CAPS_LOCK))) { 
+                // If CAPS LK LED is turning on...
+                PLAY_SONG(tone_caps_on);
+        } else if (!(usb_led & (1<<USB_LED_CAPS_LOCK)) && (old_usb_led & (1<<USB_LED_CAPS_LOCK))) {
+                // If CAPS LK LED is turning off...
+                PLAY_SONG(tone_caps_off);
         }
-        old_usb_led = usb_led;
     }
+    old_usb_led = usb_led;
 #endif
+
+    // keep numlock turned on, i.e. turn it off everytime it is turned on
+    if (!(usb_led & (1<<USB_LED_NUM_LOCK))) {
+        tap_code(KC_NUMLOCK);
+    }
+}
 
 bool led_update_user(led_t led_state) {
     rgblight_set_layer_state(7, led_state.caps_lock);
