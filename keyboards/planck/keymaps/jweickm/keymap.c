@@ -223,6 +223,7 @@ bool music_mask_user(uint16_t keycode) {
 #define HSV_OCEAN 148, 255, 100
 #define HSV_DARKMAGENTA 201, 255, 255
 #define HSV_DARKRED 0, 255, 100
+#define HSV_EGGSHELL 30, 10, 255
 
 // Light LEDs 1 to 10 in green when COLEMAK is active
 const rgblight_segment_t PROGMEM my_layer0_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_OCEAN});
@@ -235,9 +236,9 @@ const rgblight_segment_t PROGMEM my_layer3_layer[] = RGBLIGHT_LAYER_SEGMENTS({6,
 // Light LEDs 1 to 10 in darkorange when _RAISE layer is active
 const rgblight_segment_t PROGMEM my_layer4_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 4, HSV_DARKRED});
 // Light LEDs 1 to 10 in white when _NUM is active
-const rgblight_segment_t PROGMEM my_layer5_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 4, HSV_GRASS});
+const rgblight_segment_t PROGMEM my_layer5_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_DARKMAGENTA});
 // Light bottom LEDs in purple when _ADJUST layer is active
-const rgblight_segment_t PROGMEM my_layer6_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 2, HSV_WHITE}, {7, 3, HSV_WHITE});
+const rgblight_segment_t PROGMEM my_layer6_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 2, HSV_EGGSHELL}, {7, 3, HSV_EGGSHELL});
 // Light bottom LEDs and corner LEDs in darkorange when caps lock is active. Hard to ignore!
 const rgblight_segment_t PROGMEM my_capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 4, HSV_DARKORANGE}, {6, 3, HSV_DARKORANGE});
 
@@ -293,6 +294,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(2, layer_state_cmp(state, _GAMING));
     rgblight_set_layer_state(3, layer_state_cmp(state, _LOWER));
     rgblight_set_layer_state(4, layer_state_cmp(state, _RAISE));
+    rgblight_set_layer_state(5, layer_state_cmp(state, _NUM));
     rgblight_set_layer_state(6, layer_state_cmp(state, _ADJUST));
     rgblight_set_layer_state(1, de_layout_active);
 #ifdef NAGINATA_ENABLE
