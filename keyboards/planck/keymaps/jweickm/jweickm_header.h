@@ -41,6 +41,14 @@ enum planck_layers {
 // define the position of the homerow_mods: 1-top row, 2-mod row, 3-bottom row
 #define homerow_mods 1
 
+#if homerow_mods == 1
+    #define E_KEY KC_E
+    #define S_KEY KC_S
+#else 
+    #define E_KEY RSFT_T(KC_E)
+    #define S_KEY LSFT_T(KC_S)
+#endif
+
 // define the secondary function of the lower and raise keys here
 #if hand_position == 1 && layout == 2
     #define LOWER OSL(_LOWER)
@@ -241,19 +249,11 @@ const uint16_t PROGMEM downmprv_combo[]     = {LT(_ADJUST, KC_RALT), LT(_NAV, KC
 const uint16_t PROGMEM dh_combo[]           = {KC_D, KC_H,                 COMBO_END};
 const uint16_t PROGMEM xc_combo[]           = {CUT_X, COPY_C,              COMBO_END};
 const uint16_t PROGMEM commdot_combo[]      = {LT(0, KC_COMM), LT(0, KC_DOT), COMBO_END};
-const uint16_t PROGMEM xs_combo[]           = {CUT_X, LSFT_T(KC_S),        COMBO_END};
-const uint16_t PROGMEM zs_combo[]           = {LT(0, KC_Z), LSFT_T(KC_S),  COMBO_END};
-const uint16_t PROGMEM edot_combo[]         = {RSFT_T(KC_E), LT(0, KC_DOT),COMBO_END};
+const uint16_t PROGMEM xs_combo[]           = {CUT_X, S_KEY,        COMBO_END};
+const uint16_t PROGMEM zs_combo[]           = {LT(0, KC_Z), S_KEY,  COMBO_END};
+const uint16_t PROGMEM edot_combo[]         = {E_KEY, LT(0, KC_DOT),COMBO_END};
 
 //const uint16_t PROGMEM nraise_combo[]       = {KC_N, RAISE, COMBO_END};
-const uint16_t PROGMEM tlower_combo[]       = {LOWER, KC_T,                COMBO_END};
-const uint16_t PROGMEM ae_combo[]           = {KC_E, KC_A,                 COMBO_END};
-const uint16_t PROGMEM oe_combo[]           = {KC_E, KC_O,                 COMBO_END};
-const uint16_t PROGMEM ue_combo[]           = {KC_E, RSFT_T(KC_U),         COMBO_END};
-const uint16_t PROGMEM spcu_combo[]         = {LT(_NAV, KC_SPC), RSFT_T(KC_U), COMBO_END};
-const uint16_t PROGMEM spco_combo[]         = {LT(_NAV, KC_SPC), KC_O,     COMBO_END};
-const uint16_t PROGMEM spca_combo[]         = {LT(_NAV, KC_SPC), KC_A,     COMBO_END};
-const uint16_t PROGMEM spcs_combo[]         = {LT(_NAV, KC_SPC), LSFT_T(KC_S), COMBO_END};
 
 // combos for lower and raise
 const uint16_t PROGMEM qlower_combo[]       = {LOWER, LGUI_T(KC_Q),        COMBO_END};
@@ -271,12 +271,12 @@ const uint16_t PROGMEM uelower_combo[]      = {LOWER, LT(0, DE_UDIA),      COMBO
 
 const uint16_t PROGMEM mlower_combo[]       = {LOWER, KC_M,                COMBO_END};
 const uint16_t PROGMEM nlower_combo[]       = {LOWER, KC_N,                COMBO_END};
-const uint16_t PROGMEM elower_combo[]       = {LOWER, RSFT_T(KC_E),        COMBO_END};
+const uint16_t PROGMEM elower_combo[]       = {LOWER, E_KEY,               COMBO_END};
 const uint16_t PROGMEM ilower_combo[]       = {LOWER, KC_I,                COMBO_END};
 const uint16_t PROGMEM olower_combo[]       = {LOWER, KC_O,                COMBO_END};
 const uint16_t PROGMEM quotlower_combo[]    = {LOWER, LT(0, KC_QUOT),      COMBO_END};
 const uint16_t PROGMEM hlower_combo[]       = {LOWER, KC_H,                COMBO_END};
-const uint16_t PROGMEM slower_combo[]       = {LOWER, LSFT_T(KC_S),            COMBO_END};
+const uint16_t PROGMEM slower_combo[]       = {LOWER, S_KEY,               COMBO_END};
 
 const uint16_t PROGMEM qraise_combo[]       = {RAISE, LGUI_T(KC_Q),        COMBO_END};
 const uint16_t PROGMEM wraise_combo[]       = {RAISE, LALT_T(KC_W),        COMBO_END};
@@ -293,7 +293,7 @@ const uint16_t PROGMEM ueraise_combo[]      = {RAISE, LT(0, DE_UDIA),      COMBO
 
 const uint16_t PROGMEM mraise_combo[]       = {RAISE, KC_M,                COMBO_END};
 const uint16_t PROGMEM nraise_combo[]       = {RAISE, KC_N,                COMBO_END};
-const uint16_t PROGMEM eraise_combo[]       = {RAISE, RSFT_T(KC_E),            COMBO_END};
+const uint16_t PROGMEM eraise_combo[]       = {RAISE, E_KEY,               COMBO_END};
 const uint16_t PROGMEM iraise_combo[]       = {RAISE, KC_I,                COMBO_END};
 const uint16_t PROGMEM oraise_combo[]       = {RAISE, KC_O,                COMBO_END};
 const uint16_t PROGMEM quotraise_combo[]    = {RAISE, LT(0, KC_QUOT),      COMBO_END};
