@@ -40,14 +40,23 @@ void matrix_init_user(void) {
 void dance_prn(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         if (de_layout_active) {
-            tap_code16(DE_LPRN);
+            if (caps_lock_on) {
+                tap_code(DE_8);
+            } else {
+                tap_code16(DE_LPRN);
+            }
         } else {
             tap_code16(KC_LPRN);
         }
     } else {
         if (de_layout_active) {
-            tap_code16(DE_LPRN);
-            tap_code16(DE_RPRN);
+            if (caps_lock_on) {
+                tap_code(DE_8);
+                tap_code(DE_9);
+            } else {
+                tap_code16(DE_LPRN);
+                tap_code16(DE_RPRN);
+            }
             tap_code(KC_LEFT);
         } else {
             tap_code16(KC_LPRN);
@@ -292,8 +301,6 @@ bool led_update_user(led_t led_state) {
 
 layer_state_t layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(2, layer_state_cmp(state, _GAMING));
-    rgblight_set_layer_state(3, layer_state_cmp(state, _LOWER));
-    rgblight_set_layer_state(4, layer_state_cmp(state, _RAISE));
     rgblight_set_layer_state(5, layer_state_cmp(state, _NUM));
     rgblight_set_layer_state(6, layer_state_cmp(state, _ADJUST));
     rgblight_set_layer_state(1, de_layout_active);

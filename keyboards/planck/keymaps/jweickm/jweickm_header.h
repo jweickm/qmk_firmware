@@ -87,7 +87,8 @@ enum planck_keycodes {
     DE_ACC_ACUT,
     KC_DE_SWITCH,
     LANG_SWITCH,
-    UNICODE_ALT_SW,
+    UMLAUT_SW,
+    CODING_SW,
     DE_UE,  // Ü
     DE_OE,  // Ö
     DE_AE,  // Ä
@@ -110,13 +111,17 @@ enum tap_dance_codes {
 bool de_layout_active  = false; 
 
 // declaring several logical variables
-bool is_alt_tab_active = false;
-bool is_ctl_tab_active = false;
-bool win_unicode_enable= false;
-bool caps_lock_on = false;
+bool is_alt_tab_active  = false;
+bool is_ctl_tab_active  = false;
+// controls, whether long pressing A, O, Z results in Ä, Ö, ß
+bool umlaut_enable      = false; 
+// controls which of the two languages (en/ge) is used for coding and which is used for typing German
+// English by default
+bool de_coding_active   = false; 
+bool caps_lock_on       = false;
 
 #ifdef NAGINATA_ENABLE
-bool naginata_active   = false;
+bool naginata_active    = false;
 bool come_from_naginata = false;
 #endif
 
@@ -157,6 +162,12 @@ float colemak_de_song[][2]      = SONG(PLANCK_SOUND);
 float colemak_en_song[][2]      = SONG(COLEMAK_SOUND);
 float gaming_song[][2]          = SONG(CHROMATIC_SOUND);
 float chat_song[][2]            = SONG(VOICE_CHANGE_SOUND);
+
+float coding_de_song[][2]       = SONG(PLOVER_SOUND);
+float coding_en_song[][2]       = SONG(PLOVER_GOODBYE_SOUND);
+float umlaut_on_song[][2]       = SONG(DVORAK_SOUND);
+float umlaut_off_song[][2]      = SONG(WORKMAN_SOUND);
+
 #ifdef NAGINATA_ENABLE
 float naginata_on_sound[][2]    = SONG(PLOVER_SOUND);
 float naginata_off_sound[][2]   = SONG(PLOVER_GOODBYE_SOUND);
