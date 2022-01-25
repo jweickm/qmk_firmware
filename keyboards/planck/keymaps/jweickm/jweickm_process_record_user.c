@@ -721,7 +721,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         unregister_code16(DE_PIPE);
                         unregister_code16(DE_BSLS);
                     }
-                    return false;
                 } else if (!de_layout_active) {
                     unregister_code(KC_BSLS);
                 }
@@ -1234,7 +1233,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         unregister_code16(DE_QUOT);
                         unregister_code16(DE_DQUO);
                     }
-                    return false;
                 } else if (!de_layout_active) {
                     unregister_code(KC_QUOT);
                 }
