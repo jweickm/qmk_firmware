@@ -1282,7 +1282,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
                 if (de_layout_active) {
                     unregister_code16(DE_RABK);
-                    return false;
                 }
                 return true;
             }
