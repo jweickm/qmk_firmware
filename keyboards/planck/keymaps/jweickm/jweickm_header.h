@@ -390,7 +390,7 @@ combo_t key_combos[] = {
     [QUOTRAISE]     = COMBO(quotraise_combo, DE_ae),
     [HRAISE]        = COMBO(hraise_combo, S(KC_DOT)), 
 
-    [RST_OS]        = COMBO(rst_combo, OSM(_NAV)),
+    [RST_OS]        = COMBO(rst_combo, OSL(_RAISE)),
     [NEI_OS]        = COMBO(nei_combo, TG(_NUM)),
 
 #ifdef NAGINATA_ENABLE
