@@ -67,6 +67,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 //        case RSFT_T(KC_RALT):
 //        case LT(0, DE_UDIA):
         case LCTL_T(KC_CAPS):
+        case OSM(MOD_LSFT):
         case LT(0, KC_BSLS):
         case LT(0, KC_QUOT):
             return TAPPING_TERM; // prefer these ones to be shorter
@@ -124,7 +125,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case GAMING:
             if (record->event.pressed) {
                 layer_invert(_GAMING);
-                combo_toggle(); // turns off combos when moving to _GAMING
+                combo_toggle(); // turns off combos when moving to _GAMING and 
+                // turn them back on when leaving the layer
 #ifdef AUDIO_ENABLE
                 PLAY_SONG(gaming_song);
 #endif
@@ -1642,7 +1644,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         }
                     } else {
                         if (caps_lock_on) { 
-                            register_code(DE_7); // register ?
+                            register_code(DE_7); // register /
                         } else {
                             register_code16(DE_SLSH); // register /
                         }
@@ -1652,7 +1654,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return true;
             } else if (record->event.pressed) { // register ? on hold
                 if (de_layout_active) {
-                    tap_code16(DE_QUES); // ?
+                    if (caps_lock_on) { 
+                        tap_code(DE_SS); // register ?
+                    } else {
+                        tap_code16(DE_QUES); // register ?
+                    }
                 } else { // ?
                     tap_code16(KC_QUES);
                 }

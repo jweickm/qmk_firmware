@@ -12,7 +12,7 @@ NGKEYS naginata_keys;
 #endif
 
 enum planck_layers {
-    _COLEMAK,
+    _COLEMAK = 0,
     _GAMING,
 #ifdef NAGINATA_ENABLE
     // 薙刀式
@@ -242,6 +242,8 @@ enum combos {
     ORAISE, 
     QUOTRAISE,
     HRAISE,
+    RST_OS, 
+    NEI_OS,
 
 #ifdef NAGINATA_ENABLE
     ST_NAV,
@@ -309,6 +311,9 @@ const uint16_t PROGMEM iraise_combo[]       = {RAISE, KC_I,                COMBO
 const uint16_t PROGMEM oraise_combo[]       = {RAISE, KC_O,                COMBO_END};
 const uint16_t PROGMEM quotraise_combo[]    = {RAISE, LT(0, KC_QUOT),      COMBO_END};
 const uint16_t PROGMEM hraise_combo[]       = {RAISE, KC_H,                COMBO_END};
+
+const uint16_t PROGMEM rst_combo[]          = {KC_R, KC_S, KC_T,           COMBO_END};
+const uint16_t PROGMEM nei_combo[]          = {KC_N, KC_E, KC_I,           COMBO_END};
 
 #ifdef NAGINATA_ENABLE
 const uint16_t PROGMEM stnav_combo[] = {NG_D, NG_F, COMBO_END};
@@ -384,6 +389,9 @@ combo_t key_combos[] = {
     [ORAISE]        = COMBO(oraise_combo, KC_RBRC),
     [QUOTRAISE]     = COMBO(quotraise_combo, DE_ae),
     [HRAISE]        = COMBO(hraise_combo, S(KC_DOT)), 
+
+    [RST_OS]        = COMBO(rst_combo, OSM(_NAV)),
+    [NEI_OS]        = COMBO(nei_combo, TG(_NUM)),
 
 #ifdef NAGINATA_ENABLE
     [ST_NAV]    = COMBO(stnav_combo, MO(_NAV)),

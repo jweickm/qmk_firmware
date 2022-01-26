@@ -74,6 +74,9 @@
 
 // settings for COMBOS
 #define COMBO_TERM 40
+// always checks for the combos on the base layer, even when using another layer
+#define COMBO_ONLY_FROM_LAYER 0
+
 
 #define RGBLIGHT_SLEEP // RGB lighting will switch off when the host goes to sleep
 #define RGBLIGHT_LAYERS
