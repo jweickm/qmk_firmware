@@ -229,18 +229,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case UNDO:
             if (record->event.pressed) {
                 if (de_layout_active) {
-                    tap_code16(C(KC_Y));
+                    register_code16(C(KC_Y));
                 } else {
-                    tap_code16(C(KC_Z));
+                    register_code16(C(KC_Z));
+                }
+            } else {
+                if (de_layout_active) {
+                    unregister_code16(C(KC_Y));
+                } else {
+                    unregister_code16(C(KC_Z));
                 }
             }
             return false;
         case REDO:
             if (record->event.pressed) {
                 if (de_layout_active) {
-                    tap_code16(C(KC_Z));
+                    register_code16(C(KC_Z));
                 } else {
-                    tap_code16(C(KC_Y));
+                    register_code16(C(KC_Y));
+                }
+            } else {
+                if (de_layout_active) {
+                    unregister_code16(C(KC_Z));
+                } else {
+                    unregister_code16(C(KC_Y));
                 }
             }
             return false;
