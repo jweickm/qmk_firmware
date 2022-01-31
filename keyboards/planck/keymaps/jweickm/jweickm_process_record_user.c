@@ -322,6 +322,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed && caps_lock_on) {
                 tap_code(KC_CAPS);
             }
+            if (IS_LAYER_ON(_NUM)) {
+                layer_off(_NUM);
+            }
             return true;
 
 // ------------------------- UNICODE ----------------------------------------- 
