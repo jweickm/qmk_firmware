@@ -590,54 +590,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 //              }
 //          }
 
-//      case LT(0, KC_BSLS):
-//          if (record->tap.count && record->event.pressed) {
-//              // tap
-//              if (!de_layout_active) {
-//                  return true;
-//              } else {
-//                  if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-//                      clear_oneshot_mods();
-//                      clear_mods();
-//                      register_code16(DE_PIPE);
-//                  } else {
-//                      register_code16(DE_BSLS);
-//                  }
-//                  set_mods(mod_state);
-//                  return false;
-//              }
-//          } else if (record->event.pressed) {
-//              if (de_layout_active) {
-//                  tap_code16(DE_UDIA);
-//                  return false;
-//              } else {
-//                  if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-//                      clear_oneshot_mods();
-//                      clear_mods();
-//                      add_mods(MOD_BIT(KC_LALT));
-//                      tap_code(KC_P0);
-//                      tap_code(KC_P2);
-//                      tap_code(KC_P2);
-//                      tap_code(KC_P0);  // Ü
-//                  } else {
-//                      clear_mods();
-//                      add_mods(MOD_BIT(KC_LALT));
-//                      tap_code(KC_P0);
-//                      tap_code(KC_P2);
-//                      tap_code(KC_P5);
-//                      tap_code(KC_P2);  // ü
-//                  }
-//                  unregister_mods(MOD_LALT);
-//                  set_mods(mod_state);
-//                  return false;
-//              }
-//          } else {
-//              if (de_layout_active) {
-//                  unregister_code16(DE_PIPE);
-//                  unregister_code16(DE_BSLS);
-//              }
-//              return true;
-//          }
         case LT(0, KC_BSLS):
             if (record->tap.count && record->event.pressed) {
                 // tap
@@ -725,7 +677,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     set_mods(mod_state);
                     return false;
                 } else if (!de_coding_active && !umlaut_enable) {
-                    register_code(KC_BSLS);
+                    tap_code16(KC_UNDS);
                 } else {
                     tap_code(KC_BSLS);
                 }
@@ -739,7 +691,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         unregister_code16(DE_BSLS);
                     }
                 } else if (!de_layout_active) {
-                    unregister_code(KC_BSLS);
+                    //unregister_code(KC_BSLS);
                 }
                 return true;
             }
@@ -1237,7 +1189,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     set_mods(mod_state);
                     return false ;
                 } else if (!de_coding_active && !umlaut_enable) {
-                    register_code(KC_QUOT);
+                    tap_code(KC_MINS);
                 } else {
                     tap_code(KC_QUOT);
                 }
@@ -1251,7 +1203,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         unregister_code16(DE_DQUO);
                     }
                 } else if (!de_layout_active) {
-                    unregister_code(KC_QUOT);
+                    //unregister_code(KC_QUOT);
                 }
                 return true;
             }
