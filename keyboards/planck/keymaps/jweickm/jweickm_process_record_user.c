@@ -1116,7 +1116,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     if (de_layout_active) {
                         if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
                             if (caps_lock_on) {
+                                clear_oneshot_mods();
+                                clear_mods();
                                 register_code(DE_2); // \"
+                                set_mods(mod_state);
                             } else {
                                 register_code16(DE_DQUO);  // \"
                             }
@@ -1150,21 +1153,43 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return false;
                 }
                 return false;
-            } else if (record->event.pressed) {
+            } else if (record->event.pressed) { // long press
                 if (de_layout_active) {
                     if (!de_coding_active) {
                         if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            tap_code16(DE_DQUO);  // \"
+                            if (caps_lock_on) {
+                                clear_oneshot_mods();
+                                clear_mods();
+                                tap_code(KC_2); 
+                                set_mods(mod_state);
+                            } else {
+                                tap_code16(DE_DQUO);  // \"
+                            }
                         } else {
-                            tap_code16(DE_QUOT);  // /'
+                            if (caps_lock_on) {
+                                tap_code(DE_HASH);
+                            } else {
+                                tap_code16(DE_QUOT);  // /'
+                            }
                         }
                     } else if (umlaut_enable) {
                         tap_code(DE_ADIA);
                     } else {
                         if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            register_code16(DE_DQUO);  // \"
+                            if (caps_lock_on) {
+                                clear_oneshot_mods();
+                                clear_mods();
+                                register_code(KC_2); // \"
+                                set_mods(mod_state);
+                            } else {
+                                register_code16(DE_DQUO);  // \"
+                            } 
                         } else {
-                            register_code16(DE_QUOT);  // /'
+                            if (caps_lock_on) {
+                                register_code(DE_HASH); // \'
+                            } else {
+                                register_code16(DE_QUOT);  // /'
+                            }
                         }
                     }
                     return false;
@@ -1199,6 +1224,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     if (!de_coding_active) {
                         unregister_mods(DE_ADIA);
                     } else if (de_coding_active) {
+                        if (caps_lock_on) {
+                            unregister_code(KC_2);
+                            unregister_code(DE_HASH);
+                        }
                         unregister_code16(DE_QUOT);
                         unregister_code16(DE_DQUO);
                     }
@@ -1212,11 +1241,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
               if (de_layout_active) {
                   if (record->event.pressed) {
                       if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                          register_code16(DE_DQUO);  // \"
+                          if (caps_lock_on) {
+                              clear_oneshot_mods();
+                              clear_mods();
+                              register_code(DE_2); // \"
+                              set_mods(mod_state);
+                          } else {
+                              register_code16(DE_DQUO);  // \"
+                          } 
                       } else {
-                          register_code16(DE_QUOT);  // /'
+                          if (caps_lock_on) {
+                              clear_mods();
+                              register_code(DE_HASH); // \'
+                          } else {
+                              register_code16(DE_QUOT);  // /'
+                          }
                       }
                   } else {
+                      if (caps_lock_on) {
+                          unregister_code(KC_2);
+                          unregister_code(DE_HASH);
+                      }
                       unregister_code16(DE_DQUO);
                       unregister_code16(DE_QUOT);
                   }
@@ -1371,9 +1416,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case S(KC_QUOT): // "
             if (de_layout_active) {
                 if (record->event.pressed) {
-                    register_code16(DE_DQUO);
+                    if (caps_lock_on) {
+                        clear_oneshot_mods();
+                        clear_mods();
+                        register_code(DE_2); // \"
+                        set_mods(mod_state);
+                    } else {
+                        register_code16(DE_DQUO);
+                    }
                 } else {
-                    unregister_code16(DE_DQUO);
+                    if (caps_lock_on) {
+                        unregister_code(KC_2);
+                    } else {
+                        unregister_code16(DE_DQUO);
+                    }
                 }
                 return false;
             } else {

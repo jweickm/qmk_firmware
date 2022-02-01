@@ -240,13 +240,13 @@ const rgblight_segment_t PROGMEM my_layer0_layer[] = RGBLIGHT_LAYER_SEGMENTS({0,
 const rgblight_segment_t PROGMEM my_layer1_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_GRASS});
 // Light LEDs 1 to 10 in red when GAMING layer is active
 const rgblight_segment_t PROGMEM my_layer2_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_DARKRED});
-// Light LEDs 1 to 10 in white when _LOWER is active
-const rgblight_segment_t PROGMEM my_layer3_layer[] = RGBLIGHT_LAYER_SEGMENTS({6, 4, HSV_GRASS});
+// Light LEDs 1 to 10 in goldenrod when _MOUSE is active
+const rgblight_segment_t PROGMEM my_layer3_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_YELLOW});
 // Light LEDs 1 to 10 in darkorange when _RAISE layer is active
 const rgblight_segment_t PROGMEM my_layer4_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 4, HSV_DARKRED});
 // Light LEDs 1 to 10 in white when _NUM is active
 const rgblight_segment_t PROGMEM my_layer5_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_DARKMAGENTA});
-// Light bottom LEDs in purple when _ADJUST layer is active
+// Light bottom LEDs in eggshell when _ADJUST layer is active
 const rgblight_segment_t PROGMEM my_layer6_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 2, HSV_EGGSHELL}, {7, 3, HSV_EGGSHELL});
 // Light bottom LEDs and corner LEDs in darkorange when caps lock is active. Hard to ignore!
 const rgblight_segment_t PROGMEM my_capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 4, HSV_DARKORANGE}, {6, 3, HSV_DARKORANGE});
@@ -255,7 +255,7 @@ const rgblight_segment_t PROGMEM my_capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS({
 const rgblight_segment_t *const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(my_layer0_layer,   // hrwidecolemak
                                                                                my_layer1_layer,   // de_layout
                                                                                my_layer2_layer,   // gaming
-                                                                               my_layer3_layer,   // lower
+                                                                               my_layer3_layer,   // mouse
                                                                                my_layer4_layer,   // raise
                                                                                my_layer5_layer,   // _num
                                                                                my_layer6_layer,   // adjust
@@ -302,6 +302,7 @@ bool led_update_user(led_t led_state) {
 layer_state_t layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(2, layer_state_cmp(state, _GAMING));
     rgblight_set_layer_state(5, layer_state_cmp(state, _NUM));
+    rgblight_set_layer_state(3, layer_state_cmp(state, _MOUSE));
     rgblight_set_layer_state(6, layer_state_cmp(state, _ADJUST));
     rgblight_set_layer_state(1, de_layout_active);
 #ifdef NAGINATA_ENABLE
