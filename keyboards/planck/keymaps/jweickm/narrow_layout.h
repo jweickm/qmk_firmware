@@ -60,9 +60,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_M, KC_N, KC_J, KC_I, KC_O, KC_QUOT, 
         KC_LSFT, KC_A, KC_S, KC_D, KC_F, KC_G, KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH, KC_TRNS, 
     #if layout == 1
-        KC_LCTL, KC_C, KC_B, KC_X, KC_LALT, KC_SPC, KC_SPC, KC_ENT, KC_RALT, KC_DOWN, KC_UP, MO(_ADJUST)
+        KC_LCTL, KC_C, KC_B, KC_X, KC_LALT, KC_SPC, KC_SPC, KC_ENT, KC_RALT, LT(_NAV, KC_DOWN), LT(_NAV, KC_UP), MO(_ADJUST)
     #elif layout == 2
-        KC_LCTL, KC_C, KC_B, KC_X, KC_LALT, KC_SPC, KC_SPC, KC_ENT, KC_RALT, KC_DOWN, KC_UP, MO(_ADJUST)
+        KC_LCTL, KC_C, KC_B, KC_X, KC_LALT, KC_SPC, KC_SPC, KC_ENT, KC_RALT, LT(_NAV, KC_DOWN), LT(_NAV, KC_UP), MO(_ADJUST)
     #endif
     ),
 
