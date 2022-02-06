@@ -326,6 +326,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 layer_off(_NUM);
             }
             return true;
+        case RAISE:
+        case KC_ENT:
+        case KC_SFTENT:
+            if (record->event.pressed && caps_lock_on) {
+                tap_code(KC_CAPS);
+            }
+            return true;
 
 // ------------------------- UNICODE ----------------------------------------- 
         case UMLAUT_SW:
