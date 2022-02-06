@@ -333,6 +333,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } 
             return true;
         case KC_ENT:
+        case KC_LEAD:
             if (record->event.pressed && caps_lock_on) {
                 tap_code(KC_CAPS);
             }
@@ -366,33 +367,33 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
             break;
 
-//      case DE_SZ: 
-//          if (record->event.pressed) {
-//              if (de_layout_active) {
-//                  register_code(DE_SS);
-//                  layer_off(_LOWER);
-//                  return false;
-//              } else {
-//                  clear_mods();
-//                  add_mods(MOD_BIT(KC_LALT));
-//                  tap_code(KC_P0);
-//                  tap_code(KC_P2);
-//                  tap_code(KC_P2);
-//                  tap_code(KC_P3);  // ß
-//                  unregister_mods(MOD_LALT);
-//                  set_mods(mod_state);
-//                  layer_off(_LOWER);
-//                  return false;
-//                  break;
-//              }
-//              layer_off(_LOWER);
-//              return true;
-//          } else {
-//              if (de_layout_active) {
-//                  unregister_code(DE_SS);
-//                  return false;
-//              }
-//          } 
+        case DE_SZ: 
+            if (record->event.pressed) {
+                if (de_layout_active) {
+                    register_code(DE_SS);
+                    layer_off(_LOWER);
+                    return false;
+                } else {
+                    clear_mods();
+                    add_mods(MOD_BIT(KC_LALT));
+                    tap_code(KC_P0);
+                    tap_code(KC_P2);
+                    tap_code(KC_P2);
+                    tap_code(KC_P3);  // ß
+                    unregister_mods(MOD_LALT);
+                    set_mods(mod_state);
+                    layer_off(_LOWER);
+                    return false;
+                    break;
+                }
+                layer_off(_LOWER);
+                return true;
+            } else {
+                if (de_layout_active) {
+                    unregister_code(DE_SS);
+                    return false;
+                }
+            } 
 
 //      case DE_ae:
 //          if (record->event.pressed) {
