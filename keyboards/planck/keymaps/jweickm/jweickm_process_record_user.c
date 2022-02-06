@@ -928,36 +928,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 //                  return true;
 //              }
 //          }
-        case KC_EXLM: 
-            if (de_layout_active && caps_lock_on) {
-                if (record->event.pressed) {
-                    register_code(DE_1);
-                    return false;
-                }
-                return true;
-            } else {
-                return true;
-            }
-        case KC_DLR: 
-            if (de_layout_active && caps_lock_on) {
-                if (record->event.pressed) {
-                    register_code(DE_4);
-                    return false;
-                }
-                return true;
-            } else {
-                return true;
-            }
-        case KC_PERC:
-            if (de_layout_active && caps_lock_on) {
-                if (record->event.pressed) {
-                    register_code(DE_5);
-                    return false;
-                }
-                return true;
-            } else {
-                return true;
-            }
+//      case KC_EXLM: 
+//          if (de_layout_active && caps_lock_on) {
+//              if (record->event.pressed) {
+//                  register_code(DE_1);
+//                  return false;
+//              }
+//              return true;
+//          } else {
+//              return true;
+//          }
+//      case KC_DLR: 
+//          if (de_layout_active && caps_lock_on) {
+//              if (record->event.pressed) {
+//                  register_code(DE_4);
+//                  return false;
+//              }
+//              return true;
+//          } else {
+//              return true;
+//          }
+//      case KC_PERC:
+//          if (de_layout_active && caps_lock_on) {
+//              if (record->event.pressed) {
+//                  register_code(DE_5);
+//                  return false;
+//              }
+//              return true;
+//          } else {
+//              return true;
+//          }
         case KC_AT: // @
             if (de_layout_active) {
                 if (record->event.pressed) {
@@ -972,11 +972,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_HASH: // #
             if (de_layout_active) {
                 if (record->event.pressed) {
-                    if (caps_lock_on) {
-                        register_code16(S(DE_HASH));
-                    } else {
+//                  if (caps_lock_on) {
+//                      register_code16(S(DE_HASH));
+//                  } else {
                         register_code(DE_HASH);
-                    }
+//                  }
                 } else {
                     unregister_code(DE_HASH);
                 }
@@ -1009,11 +1009,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_AMPR: // &
             if (de_layout_active) {
                 if (record->event.pressed) {
-                    if (caps_lock_on) {
-                        register_code(DE_6);
-                    } else {
+//                  if (caps_lock_on) {
+//                      register_code(DE_6);
+//                  } else {
                         register_code16(DE_AMPR);
-                    }
+//                  }
                 } else {
                     unregister_code16(DE_AMPR);
                 }
@@ -1024,11 +1024,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_ASTR: // *
             if (de_layout_active) {
                 if (record->event.pressed) {
-                    if (caps_lock_on) {
-                        register_code(DE_PLUS);
-                    } else {
+ //                 if (caps_lock_on) {
+ //                     register_code(DE_PLUS);
+ //                 } else {
                         register_code16(DE_ASTR);
-                    }
+ //                 }
                 } else {
                     unregister_code16(DE_ASTR);
                 }
@@ -1039,11 +1039,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_LPRN: // (
             if (de_layout_active) {
                 if (record->event.pressed) {
-                    if (caps_lock_on) {
-                        register_code(DE_8);
-                    } else {
+//                  if (caps_lock_on) {
+//                      register_code(DE_8);
+//                  } else {
                         register_code16(DE_LPRN);
-                    }
+//                  }
                 } else {
                     unregister_code16(DE_LPRN);
                 }
@@ -1054,11 +1054,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_RPRN: // )
             if (de_layout_active) {
                 if (record->event.pressed) {
-                    if (caps_lock_on) {
-                        register_code(DE_9);
-                    } else {
+ //                 if (caps_lock_on) {
+ //                     register_code(DE_9);
+ //                 } else {
                         register_code16(DE_RPRN);
-                    }
+ //                 }
                 } else {
                     unregister_code16(DE_RPRN);
                 }
@@ -1080,11 +1080,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_PLUS: // +
             if (de_layout_active) {
                 if (record->event.pressed) {
-                    if (caps_lock_on) {
-                        register_code16(S(DE_PLUS));
-                    } else {
+//                  if (caps_lock_on) {
+//                      register_code16(S(DE_PLUS));
+//                  } else {
                         register_code16(DE_PLUS);
-                    }
+//                  }
                 } else {
                     unregister_code16(DE_PLUS);
                 }
@@ -1122,20 +1122,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 } else if (de_coding_active) {
                     if (de_layout_active) {
                         if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            if (caps_lock_on) {
-                                clear_oneshot_mods();
-                                clear_mods();
-                                register_code(DE_2); // \"
-                                set_mods(mod_state);
-                            } else {
+//                          if (caps_lock_on) {
+//                              clear_oneshot_mods();
+//                              clear_mods();
+//                              register_code(DE_2); // \"
+//                              set_mods(mod_state);
+//                          } else {
                                 register_code16(DE_DQUO);  // \"
-                            }
+//                          }
                         } else {
-                            if (caps_lock_on) {
-                                register_code(DE_HASH); // \'
-                            } else {
+//                          if (caps_lock_on) {
+//                              register_code(DE_HASH); // \'
+//                          } else {
                                 register_code16(DE_QUOT);  // /'
-                            }
+//                          }
                         }
                     } else if (!de_layout_active) {
                         if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
@@ -1164,39 +1164,39 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (de_layout_active) {
                     if (!de_coding_active) {
                         if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            if (caps_lock_on) {
-                                clear_oneshot_mods();
-                                clear_mods();
-                                tap_code(KC_2); 
-                                set_mods(mod_state);
-                            } else {
+//                          if (caps_lock_on) {
+//                              clear_oneshot_mods();
+//                              clear_mods();
+//                              tap_code(KC_2); 
+//                              set_mods(mod_state);
+//                          } else {
                                 tap_code16(DE_DQUO);  // \"
-                            }
+//                          }
                         } else {
-                            if (caps_lock_on) {
-                                tap_code(DE_HASH);
-                            } else {
+ //                         if (caps_lock_on) {
+ //                             tap_code(DE_HASH);
+ //                         } else {
                                 tap_code16(DE_QUOT);  // /'
-                            }
+ //                         }
                         }
                     } else if (umlaut_enable) {
                         tap_code(DE_ADIA);
                     } else {
                         if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            if (caps_lock_on) {
-                                clear_oneshot_mods();
-                                clear_mods();
-                                register_code(KC_2); // \"
-                                set_mods(mod_state);
-                            } else {
+//                          if (caps_lock_on) {
+//                              clear_oneshot_mods();
+//                              clear_mods();
+//                              register_code(KC_2); // \"
+//                              set_mods(mod_state);
+//                          } else {
                                 register_code16(DE_DQUO);  // \"
-                            } 
+//                          } 
                         } else {
-                            if (caps_lock_on) {
-                                register_code(DE_HASH); // \'
-                            } else {
+ //                         if (caps_lock_on) {
+ //                             register_code(DE_HASH); // \'
+ //                         } else {
                                 register_code16(DE_QUOT);  // /'
-                            }
+ //                         }
                         }
                     }
                     return false;
@@ -1231,10 +1231,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     if (!de_coding_active) {
                         unregister_mods(DE_ADIA);
                     } else if (de_coding_active) {
-                        if (caps_lock_on) {
-                            unregister_code(KC_2);
-                            unregister_code(DE_HASH);
-                        }
+//                      if (caps_lock_on) {
+//                          unregister_code(KC_2);
+//                          unregister_code(DE_HASH);
+//                      }
                         unregister_code16(DE_QUOT);
                         unregister_code16(DE_DQUO);
                     }
@@ -1248,27 +1248,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
               if (de_layout_active) {
                   if (record->event.pressed) {
                       if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                          if (caps_lock_on) {
-                              clear_oneshot_mods();
-                              clear_mods();
-                              register_code(DE_2); // \"
-                              set_mods(mod_state);
-                          } else {
+//                        if (caps_lock_on) {
+//                            clear_oneshot_mods();
+//                            clear_mods();
+//                            register_code(DE_2); // \"
+//                            set_mods(mod_state);
+//                        } else {
                               register_code16(DE_DQUO);  // \"
-                          } 
+//                        } 
                       } else {
-                          if (caps_lock_on) {
-                              clear_mods();
-                              register_code(DE_HASH); // \'
-                          } else {
+ //                       if (caps_lock_on) {
+ //                           clear_mods();
+ //                           register_code(DE_HASH); // \'
+ //                       } else {
                               register_code16(DE_QUOT);  // /'
-                          }
+ //                       }
                       }
                   } else {
-                      if (caps_lock_on) {
-                          unregister_code(KC_2);
-                          unregister_code(DE_HASH);
-                      }
+//                    if (caps_lock_on) {
+//                        unregister_code(KC_2);
+//                        unregister_code(DE_HASH);
+//                    }
                       unregister_code16(DE_DQUO);
                       unregister_code16(DE_QUOT);
                   }
@@ -1281,8 +1281,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (de_layout_active) {
                     if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
                         register_code16(DE_RABK);  // > right angle bracket 
-                    } else if (caps_lock_on) {
-                        register_code16(S(KC_DOT));
+//                  } else if (caps_lock_on) {
+//                      register_code16(S(KC_DOT));
                     } else {
                         return true;
                     }
@@ -1291,11 +1291,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return true;
             } else if (record->event.pressed) {
                 if (de_layout_active) {
-                    if (caps_lock_on) {
-                        tap_code16(S(DE_COLN));
-                    } else {
+//                  if (caps_lock_on) {
+//                      tap_code16(S(DE_COLN));
+//                  } else {
                         tap_code16(DE_COLN);
-                    }
+//                  }
                 } else {
                     tap_code16(KC_COLN);
                 }
@@ -1331,8 +1331,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         clear_oneshot_mods();
                         register_code16(DE_LABK);  // < left angle bracket when shifted
                         set_mods(mod_state);
-                    } else if (caps_lock_on) {
-                        register_code16(S(KC_COMM));
+//                  } else if (caps_lock_on) {
+//                      register_code16(S(KC_COMM));
                     } else {
                         return true;
                     }
@@ -1341,11 +1341,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return true;
             } else if (record->event.pressed) { // add semicolon as a held key
                 if (de_layout_active) {
-                    if (caps_lock_on) {
-                        tap_code16(S(DE_SCLN));
-                    } else {
+//                  if (caps_lock_on) {
+//                      tap_code16(S(DE_SCLN));
+//                  } else {
                         tap_code16(DE_SCLN);
-                    }
+//                  }
                 } else {
                     tap_code16(KC_SCLN);
                 }
@@ -1423,20 +1423,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case S(KC_QUOT): // "
             if (de_layout_active) {
                 if (record->event.pressed) {
-                    if (caps_lock_on) {
-                        clear_oneshot_mods();
-                        clear_mods();
-                        register_code(DE_2); // \"
-                        set_mods(mod_state);
-                    } else {
+//                  if (caps_lock_on) {
+//                      clear_oneshot_mods();
+//                      clear_mods();
+//                      register_code(DE_2); // \"
+//                      set_mods(mod_state);
+//                  } else {
                         register_code16(DE_DQUO);
-                    }
+//                  }
                 } else {
-                    if (caps_lock_on) {
-                        unregister_code(KC_2);
-                    } else {
+ //                 if (caps_lock_on) {
+ //                     unregister_code(KC_2);
+ //                 } else {
                         unregister_code16(DE_DQUO);
-                    }
+ //                 }
                 }
                 return false;
             } else {
@@ -1446,17 +1446,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (de_layout_active) {
                 if (record->event.pressed) {
                     if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                        if (caps_lock_on) {
-                            register_code(DE_SS);
-                        } else {
+//                      if (caps_lock_on) {
+//                          register_code(DE_SS);
+//                      } else {
                             register_code16(DE_QUES); // register ?
-                        }
+//                      }
                     } else {
-                        if (caps_lock_on) {
-                            register_code(DE_7); // register /
-                        } else {
+//                      if (caps_lock_on) {
+//                          register_code(DE_7); // register /
+//                      } else {
                             register_code16(DE_SLSH); // register /
-                        }
+//                      }
                     }
                     return false;
                 } else {
@@ -1525,11 +1525,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_EQL: // =
             if (de_layout_active) {
                 if (record->event.pressed) {
-                    if (caps_lock_on) {
-                        register_code16(DE_0);
-                    } else {
+//                  if (caps_lock_on) {
+//                      register_code16(DE_0);
+//                  } else {
                         register_code16(DE_EQL);
-                    } 
+//                  } 
                 } else {
                     unregister_code16(DE_EQL);
                 }
@@ -1561,26 +1561,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
 
 // ------------------------- NUMBERS CAPS IMMUNITY----------------------------
-        case KC_0:
-        case KC_1:
-        case KC_2:
-        case KC_3:
-        case KC_4:
-        case KC_5:
-        case KC_6:
-        case KC_7:
-        case KC_8:
-        case KC_9:
-            if (record->event.pressed) {
-                if (de_layout_active && caps_lock_on) {
-                    register_code16(S(keycode));
-                    return false;
-                } else {
-                    return true;
-                }
-            } else {
-                return true;
-            }
+//      case KC_0:
+//      case KC_1:
+//      case KC_2:
+//      case KC_3:
+//      case KC_4:
+//      case KC_5:
+//      case KC_6:
+//      case KC_7:
+//      case KC_8:
+//      case KC_9:
+//          if (record->event.pressed) {
+//              if (de_layout_active && caps_lock_on) {
+//                  register_code16(S(keycode));
+//                  return false;
+//              } else {
+//                  return true;
+//              }
+//          } else {
+//              return true;
+//          }
 // ------------------------- NUMBERS AUTOSHIFT -------------------------------
 //      case LT(0, KC_1): 
 //          if (record->tap.count && record->event.pressed) {
@@ -1667,28 +1667,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 if (de_layout_active) {
                     if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                        if (caps_lock_on) { 
-                            register_code(DE_SS); // register ?
-                        } else {
+//                      if (caps_lock_on) { 
+//                          register_code(DE_SS); // register ?
+//                      } else {
                             register_code16(DE_QUES); // register ?
-                        }
+//                      }
                     } else {
-                        if (caps_lock_on) { 
-                            register_code(DE_7); // register /
-                        } else {
+//                      if (caps_lock_on) { 
+//                          register_code(DE_7); // register /
+//                      } else {
                             register_code16(DE_SLSH); // register /
-                        }
+//                      }
                     }
                     return false;
                 } // process the key normally when English layout is active
                     return true;
             } else if (record->event.pressed) { // register ? on hold
                 if (de_layout_active) {
-                    if (caps_lock_on) { 
-                        tap_code(DE_SS); // register ?
-                    } else {
+//                  if (caps_lock_on) { 
+//                      tap_code(DE_SS); // register ?
+//                  } else {
                         tap_code16(DE_QUES); // register ?
-                    }
+//                  }
                 } else { // ?
                     tap_code16(KC_QUES);
                 }
