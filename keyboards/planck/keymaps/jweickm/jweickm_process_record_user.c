@@ -326,9 +326,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 layer_off(_NUM);
             }
             return true;
+        case RSFT_T(KC_ENT):
         case RAISE:
+            if (record->tap.count && record->event.pressed) {
+                tap_code(KC_CAPS);
+            } 
+            return true;
         case KC_ENT:
-        case KC_SFTENT:
             if (record->event.pressed && caps_lock_on) {
                 tap_code(KC_CAPS);
             }
