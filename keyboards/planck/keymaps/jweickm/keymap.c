@@ -40,23 +40,23 @@ void matrix_init_user(void) {
 void dance_prn(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         if (de_layout_active) {
-            if (caps_lock_on) {
-                tap_code(DE_8);
-            } else {
+//          if (caps_lock_on) {
+//              tap_code(DE_8);
+//          } else {
                 tap_code16(DE_LPRN);
-            }
+//          }
         } else {
             tap_code16(KC_LPRN);
         }
     } else {
         if (de_layout_active) {
-            if (caps_lock_on) {
-                tap_code(DE_8);
-                tap_code(DE_9);
-            } else {
+//          if (caps_lock_on) {
+//              tap_code(DE_8);
+//              tap_code(DE_9);
+//          } else {
                 tap_code16(DE_LPRN);
                 tap_code16(DE_RPRN);
-            }
+//          }
             tap_code(KC_LEFT);
         } else {
             tap_code16(KC_LPRN);
