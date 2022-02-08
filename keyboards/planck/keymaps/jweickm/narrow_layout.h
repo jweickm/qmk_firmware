@@ -52,7 +52,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | LSFT |   A  |   S  |   D  |   F  |   G  |   K  |   H  |   ,  |   .  |   /  | ____ |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | LCTL |   C  | LALT |   B  |   C  |    SPACE    | ENT  | RALT | DOWN |  UP  |ADJUST| 1x2uC
+     * | LCTL |   C  | LALT |   B  |   P  |    SPACE    | ____ | RALT | DOWN |  UP  |ADJUST| 1x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_GAMING] = LAYOUT_planck_grid(
@@ -60,9 +60,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_M, KC_N, KC_J, KC_I, KC_O, KC_QUOT, 
         KC_LSFT, KC_A, KC_S, KC_D, KC_F, KC_G, KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH, KC_TRNS, 
     #if layout == 1
-        KC_LCTL, KC_C, KC_LALT, KC_B, KC_C, KC_SPC, KC_SPC, KC_ENT, KC_RALT, LT(_NAV, KC_DOWN), LT(_NAV, KC_UP), MO(_ADJUST)
+        KC_LCTL, KC_C, KC_LALT, KC_B, KC_P, KC_SPC, KC_SPC, KC_TRNS, KC_RALT, LT(_NAV, KC_DOWN), LT(_NAV, KC_UP), MO(_ADJUST)
     #elif layout == 2
-        KC_LCTL, KC_C, KC_LALT, KC_B, KC_C, KC_SPC, KC_SPC, KC_ENT, KC_RALT, LT(_NAV, KC_DOWN), LT(_NAV, KC_UP), MO(_ADJUST)
+        KC_LCTL, KC_C, KC_LALT, KC_B, KC_P, KC_SPC, KC_SPC, KC_TRNS, KC_RALT, LT(_NAV, KC_DOWN), LT(_NAV, KC_UP), MO(_ADJUST)
     #endif
     ),
 
@@ -70,23 +70,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #ifdef NAGINATA_ENABLE
 /* 薙刀式
      * ,----------------------------------------------------------------------------------.
-     * |　小　|き　ぬ|て　り|し　む|　<-  | ____ |  ->  |　さ　|る　よ|す　え|へ　ゆ| EISU |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |ろ　せ|け　め|と　に|か゛ま|っ　ち| ____ |く　や|あ゛の|い　も|う　わ|ー　つ| KOTI |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |  ほ　|  ひ　|は　を|こ゜、|そ　み| ____ |た　お|な゜。|ん　ね|ら　ふ|  れ　| TATE |
+     * | ____ |　小　|き　ぬ|て　り|し　む|　<-  |  ->  |　さ　|る　よ|す　え|へ　ゆ| EISU |
+     * +------|------+------+------+------+------+------+------+------+------+------+------|
+     * | ____ |ろ　せ|け　め|と　に|か゛ま|っ　ち|く　や|あ゛の|い　も|う　わ|ー　つ| KOTI |
+     * +------|------+------+------+------+------+------+------+------+------+------+------|
+     * | ____ |  ほ　|  ひ　|は　を|こ゜、|そ　み|た　お|な゜。|ん　ね|ら　ふ|  れ　| TATE |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | ____ | ____ | ____ |ENSHFT|   NGSHFT    | ____ | ____ | ____ | ____ | ____ | 1x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_NAGINATA] = LAYOUT_planck_grid(
-        NG_Q, NG_W, NG_E, NG_R, KC_LEFT, KC_TRNS, KC_RGHT, NG_U, NG_I, NG_O, NG_P, EISU,
-        NG_A, NG_S, NG_D, NG_F, NG_G, KC_TRNS, NG_H, NG_J, NG_K, NG_L, NG_SCLN, NG_KOTI,
-        NG_Z, NG_X, NG_C, NG_V, NG_B, KC_TRNS, NG_N, NG_M, NG_COMM, NG_DOT, NG_SLSH, NG_TAYO,
+       KC_TRNS, NG_Q, NG_W, NG_E, NG_R, NG_T, NG_Y, NG_U, NG_I, NG_O, NG_P, EISU,
+       KC_TRNS, NG_A, NG_S, NG_D, NG_F, NG_G, NG_H, NG_J, NG_K, NG_L, NG_SCLN, NG_KOTI,
+       KC_TRNS, NG_Z, NG_X, NG_C, NG_V, NG_B, NG_N, NG_M, NG_COMM, NG_DOT, NG_SLSH, NG_TAYO,
     #if layout == 1
-        KC_TRNS, KC_LGUI, LALT_T(KC_ESC), KC_TRNS, NG_SHFT2, NG_SHFT, NG_SHFT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, NG_SHFT2, NG_SHFT, NG_SHFT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
     #elif layout == 2
-        KC_TRNS, KC_LGUI, LALT_T(KC_ESC), KC_TRNS, NG_SHFT2, NG_SHFT, NG_SHFT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, NG_SHFT2, NG_SHFT, NG_SHFT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
     #endif
     ),
 // 薙刀式
