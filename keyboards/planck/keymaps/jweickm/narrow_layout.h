@@ -43,6 +43,36 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     #endif
     ),
 
+/* _QWERTY
+     * ,-----------------------------------------------------------------------------------.
+     * | ESC  |  G-Q |  A-W |  S-F |  C-P |   B  |   J  |  C-L |  S-U |  A-Y | G-; Ö| \| Ü |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | TAB  |   A  |   R  |   S  |   T  |   G  |   M  |   N  |   E  |   I  |   O  | '" Ä |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | LSFT |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  |SFTENT|
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * |C-CAPS|  WIN |  LALT|  ESC |LOWER |   NAV-SPC   | RAISE|  DEL | Mo ↓ | Mo ↑ |A_RALT| 1x2uC 
+     * `-----------------------------------------------------------------------------------'
+     */
+    [_QWERTY] = LAYOUT_planck_grid(
+        KC_ESC, LGUI_T(KC_Q), LALT_T(KC_W), LSFT_T(KC_E), LCTL_T(KC_R), KC_T, KC_Y, RCTL_T(KC_U), RSFT_T(KC_I), LALT_T(KC_O), RGUI_T(KC_P), LT(0, KC_BSLS), // LT(0, DE_UDIA), 
+#if homerow_mods == 1
+        KC_TAB, LT(0, KC_A), KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, LT(0, KC_SCLN), LT(0, KC_QUOT), // KC_QUOT, 
+#elif homerow_mods == 2
+        KC_TAB, LT(0, KC_A), KC_S, LSFT_T(KC_D), KC_F, KC_G, KC_H, KC_J, RSFT_T(KC_K), KC_L, LT(0, KC_SCLN), LT(0, KC_QUOT), // KC_QUOT, 
+#endif
+        OSM(MOD_LSFT), LT(0, KC_Z), CUT_X, COPY_C, PASTE_V, KC_B, KC_N, KC_M, LT(0, KC_COMM), LT(0, KC_DOT), LT(0, KC_SLSH), RSFT_T(KC_ENT), 
+    #if layout == 1
+        #if thumb == 1
+        LCTL_T(KC_CAPS), KC_LGUI, KC_LALT, LT(_NUM, KC_ESC), LOWER, OSM(MOD_LSFT), NAVSPACE, RAISE, LT(_MOUSE, KC_DEL), LT(_NAV, KC_DOWN), LT(_NAV, KC_UP), LT(_ADJUST, KC_RALT)
+        #elif thumb == 2
+        LCTL_T(KC_CAPS), KC_LGUI, KC_LALT, LT(_NUM, KC_BSPC), LOWER, OSM(MOD_LSFT), NAVSPACE, RAISE, LT(_MOUSE, KC_DEL), LT(_NAV, KC_DOWN), LT(_NAV, KC_UP), LT(_ADJUST, KC_RALT)
+        #endif
+    #elif layout == 2
+        LCTL_T(KC_CAPS), KC_LGUI, KC_LALT, LT(_NUM, KC_ESC), LOWER, OSM(MOD_LSFT), NAVSPACE, RAISE, LT(_MOUSE, KC_DEL), LT(_NAV, KC_DOWN), LT(_NAV, KC_UP), RSFT_T(KC_RALT)
+    #endif
+    ),
+
 /* ----------------------------------------------------------------------------------------
 * _GAMING
      * ,-----------------------------------------------------------------------------------.
@@ -145,7 +175,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |  F6  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  | RCTL | RSFT | LALT | RGUI | !GAME|
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |  F12 |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 | XXXX | XXXX | XXXX | CD_SW| UC_SW|
+     * |  F12 |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 | XXXX |QWERTY| XXXX | CD_SW| UC_SW|
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |EEPRST| ____ | ____ | ____ | ____ |     ____    | MUTE | MPLY | VOLD | VOLU | ____ | 1x2uC
      * `-----------------------------------------------------------------------------------'
@@ -153,7 +183,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_ADJUST] = LAYOUT_planck_grid(
         KC_SYSTEM_POWER, RESET, KC_NO, RGB_TOG, AU_ON, AU_OFF, KC_NO, A(KC_GRV), LANG_SWITCH, KC_DE_SWITCH, A(KC_LSFT), KC_SLEP, 
         KC_F6, KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, KC_F6, KC_RCTL, KC_RSFT, KC_LALT, KC_RGUI, GAMING, 
-        KC_F12, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_NO, KC_NO, KC_NO, CODING_SW, UMLAUT_SW,
+        KC_F12, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_NO, QWERTY, KC_NO, CODING_SW, UMLAUT_SW,
     #if layout == 1
         EEPROM_RESET, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MUTE, KC_MPLY, KC_VOLD, KC_VOLU, KC_TRNS
     #elif layout == 2

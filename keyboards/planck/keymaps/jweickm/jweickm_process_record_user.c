@@ -122,6 +122,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
 
 // ------------------------------- LANGUAGES & LAYERS --------------------------
+        case QWERTY:
+            if (record->event.pressed) {
+                layer_invert(_QWERTY);
+                // turn them back on when leaving the layer
+#ifdef AUDIO_ENABLE
+                PLAY_SONG(gaming_song);
+#endif
+            }
+            return false;
+            break;
         case GAMING:
             if (record->event.pressed) {
                 layer_invert(_GAMING);

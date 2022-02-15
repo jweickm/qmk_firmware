@@ -13,6 +13,7 @@ NGKEYS naginata_keys;
 
 enum planck_layers {
     _COLEMAK = 0,
+    _QWERTY,
     _GAMING,
 #ifdef NAGINATA_ENABLE
     // 薙刀式
@@ -77,6 +78,7 @@ enum planck_keycodes {
     COLEMAK = SAFE_RANGE,
 #endif
     GAMING,
+    QWERTY,
     VIM_O,
     VIM_V,
     ALT_TAB,
