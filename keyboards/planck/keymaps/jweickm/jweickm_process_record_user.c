@@ -21,15 +21,18 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
         // index finger keys
         case P_KEY:
+        case T_KEY:
         case PASTE_V:
         case B_KEY:
         case J_KEY:
-            return TAPPING_TERM * index_factor;
         case L_KEY:
-            return TAPPING_TERM * (index_factor + 0.1);
-        case LT(_MOUSE, KC_VOLU):
-        case LT(_MOUSE, KC_VOLD):
-            return TAPPING_TERM * td_factor;
+        case N_KEY:
+            return TAPPING_TERM * index_factor;
+        case KANA_K:
+            return TAPPING_TERM * (index_factor + 0.15);
+ //     case LT(_MOUSE, KC_VOLU):
+ //     case LT(_MOUSE, KC_VOLD):
+ //         return TAPPING_TERM * td_factor;
 
         // middle finger keys
         case F_KEY:
@@ -41,7 +44,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM * middle_factor;
 
         // ring finger keys
- //       case LGUI_T(KC_TAB):
         case W_KEY:
         case R_KEY:
         case CUT_X:
@@ -64,8 +66,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case RSFT_T(KC_ENT):
         case LT(0, KC_MINS):
             return TAPPING_TERM * pinky_factor;
-//        case RSFT_T(KC_RALT):
-//        case LT(0, DE_UDIA):
         case LCTL_T(KC_CAPS):
         case OSM(MOD_LSFT):
         case LT(0, KC_BSLS):
@@ -214,7 +214,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return true;         // Return true for normal processing of tap keycode
                 break;
             } else if (record->event.pressed) {
-                tap_code16(C(KC_X)); // Intercept hold function to send CTL-C
+                tap_code16(C(KC_X)); // Intercept hold function to send CTL-X
                 return false;
             }
             return true;
@@ -233,6 +233,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 break;
             } else if (record->event.pressed) {
                 tap_code16(S(KC_INS)); // Intercept hold function to send SHIFT-INSERT
+                return false;
+            }
+            return true;
+        case KANA_K:
+            if (record->tap.count && record->event.pressed) {
+                return true;         // Return true for normal processing of tap keycode
+                break;
+            } else if (record->event.pressed) {
+                tap_code16(A(KC_GRV)); // Switch between Kana and Romaji
                 return false;
             }
             return true;

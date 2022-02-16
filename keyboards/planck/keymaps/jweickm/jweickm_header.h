@@ -96,6 +96,7 @@ enum planck_layers {
 #define CUT_X LT(0, KC_X)
 #define COPY_C LT(0, KC_C)
 #define PASTE_V LT(0, KC_V)
+#define KANA_K LT(0, KC_K)
 
 enum planck_keycodes { 
 #ifdef NAGINATA_ENABLE
