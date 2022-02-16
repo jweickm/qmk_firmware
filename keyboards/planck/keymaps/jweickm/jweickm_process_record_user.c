@@ -473,7 +473,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 //                  return false;
 //              }
 //          }
-
+#if homerow_mods == 1
         case LT(0, KC_A):
             if (record->tap.count && record->event.pressed) {
                 return true;
@@ -560,6 +560,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 return true;
             }
+#endif
 //      case DE_oe:
 //          if (record->event.pressed) {
 //              if (de_layout_active) {
@@ -1721,7 +1722,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case T_KEY: // nullifies the effect of lsft when rolling from s to t
             if (record->tap.count && record->event.pressed) {
                 if (mod_state & MOD_BIT(KC_LSFT)) {
-                    unregister_mods(MOD_BIT(KC_LSFT));
+                    del_mods(MOD_BIT(KC_LSFT));
                     tap_code(KC_S);
                     tap_code(KC_T);
                     return false;
@@ -1731,7 +1732,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case R_KEY: // nullifies the effect of lgui when rolling from a to r
             if (record->tap.count && record->event.pressed) {
                 if (mod_state & MOD_BIT(KC_LGUI)) {
-                    unregister_mods(MOD_BIT(KC_LGUI));
+                    del_mods(MOD_BIT(KC_LGUI));
                     tap_code(KC_A);
                     tap_code(KC_R);
                     return false;
@@ -1741,7 +1742,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case N_KEY: // nullifies the effect of rsft when rolling from e to n
             if (record->tap.count && record->event.pressed) {
                 if (mod_state & MOD_BIT(KC_RSFT)) {
-                    unregister_mods(MOD_BIT(KC_RSFT));
+                    del_mods(MOD_BIT(KC_RSFT));
                     tap_code(KC_E);
                     tap_code(KC_N);
                     // restore the mod state
@@ -1753,8 +1754,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case I_KEY: // nullifies the effect of rsft when rolling from e to i
             if (record->tap.count && record->event.pressed) {
                 if (mod_state & MOD_BIT(KC_RSFT)) {
-                    unregister_mods(MOD_BIT(KC_RSFT));
+                    del_mods(MOD_BIT(KC_RSFT));
                     tap_code(KC_E);
+                    tap_code(KC_I);
+                    // restore the mod state
+                    //add_mods(MOD_BIT(KC_RSFT));
+                    return false;
+                } else if (mod_state & MOD_BIT(KC_RGUI)) {
+                    del_mods(MOD_BIT(KC_RGUI));
+                    tap_code(KC_O);
                     tap_code(KC_I);
                     // restore the mod state
                     //add_mods(MOD_BIT(KC_RSFT));
