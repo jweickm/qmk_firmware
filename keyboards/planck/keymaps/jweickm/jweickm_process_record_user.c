@@ -667,6 +667,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         set_mods(mod_state);
                     } else if (umlaut_enable) {
                         tap_code(DE_UDIA);
+                    } else if (de_coding_active && !umlaut_enable) {
+                        tap_code16(DE_UNDS);
                     } else {
                         if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
                             clear_oneshot_mods();
@@ -1196,6 +1198,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         }
                     } else if (umlaut_enable) {
                         tap_code(DE_ADIA);
+                    } else if (de_coding_active && !umlaut_enable) {
+                        tap_code(DE_MINS);
                     } else {
                         if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
 //                          if (caps_lock_on) {
@@ -1642,21 +1646,68 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
         case Y_KEY:
-            if (record->tap.count && record->event.pressed) {
-                return true;
-            } else if (record->event.pressed) {
+            if (de_layout_active) {
+                if (record->tap.count && record->event.pressed) {
+                    register_code(DE_Y); // tap Y
+                    return false;
+                } else if (record->event.pressed) {
+                } else {
+                    unregister_code(DE_Y);
+                    return false;
+                }
+            } else {
+                if (record->tap.count && record->event.pressed) {
+                    return true;
+                } 
+            }
+            if (record->event.pressed) {
                 tap_code(KC_9);
                 return false;
             }
             return true;
         case SCLN_KEY:
             if (record->tap.count && record->event.pressed) {
-                return true;
+                if (!de_coding_active) {
+                    return true;
+                } else if (de_coding_active) {
+                    if (de_layout_active) {
+                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
+                            register_code16(DE_COLN); // register :
+                        } else {
+                            register_code16(DE_SCLN); // register ;
+                        }
+                    } else if (!de_layout_active) {
+                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
+                            clear_oneshot_mods();
+                            clear_mods();
+                            add_mods(MOD_BIT(KC_LALT));
+                            tap_code(KC_P0);
+                            tap_code(KC_P2);
+                            tap_code(KC_P1);
+                            tap_code(KC_P4);  // Ö
+                        } else {
+                            clear_mods();
+                            add_mods(MOD_BIT(KC_LALT));
+                            tap_code(KC_P0);
+                            tap_code(KC_P2);
+                            tap_code(KC_P4);
+                            tap_code(KC_P6);  // ö
+                        }
+                        unregister_mods(MOD_LALT);
+                        set_mods(mod_state);
+                    }
+                    return false;
+                }
             } else if (record->event.pressed) {
                 tap_code(KC_0);
                 return false;
+            } else {
+                if (de_coding_active && de_layout_active) {
+                    unregister_code16(DE_COLN);
+                    unregister_code16(DE_SCLN);
+                }
+                return true;
             }
-            return true;
 #endif
 // ------------------------- NUMBERS CAPS IMMUNITY----------------------------
 //      case KC_0:
