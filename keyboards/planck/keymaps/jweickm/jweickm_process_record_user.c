@@ -89,8 +89,8 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
 //      case LSFT_T(KC_F):
 //      case RSFT_T(KC_U):
-        case LSFT_T(KC_S):
-        case RSFT_T(KC_E):
+        //case S_KEY:
+        //case E_KEY:
 //        case LOWER:
 //        case RAISE:
             return true;
