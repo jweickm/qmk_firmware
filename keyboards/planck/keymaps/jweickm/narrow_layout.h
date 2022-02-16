@@ -15,7 +15,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* _COLEMAK
      * ,-----------------------------------------------------------------------------------.
-     * | ESC  |  G-Q |  A-W |  S-F |  C-P |   B  |   J  |  C-L |  S-U |  A-Y | G-; Ö| \| Ü |
+     * | ESC  |   Q  |   W  |   F  |   P  |   B  |   J  |   L  |   U  |   Y  | ;: Ö | \| Ü |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | TAB  |   A  |   R  |   S  |   T  |   G  |   M  |   N  |   E  |   I  |   O  | '" Ä |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -25,13 +25,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_COLEMAK] = LAYOUT_planck_grid(
-        KC_ESC, LGUI_T(KC_Q), LALT_T(KC_W), LSFT_T(KC_F), LCTL_T(KC_P), KC_B, KC_J, RCTL_T(KC_L), RSFT_T(KC_U), LALT_T(KC_Y), RGUI_T(KC_SCLN), LT(0, KC_BSLS), // LT(0, DE_UDIA), 
-#if homerow_mods == 1
-        KC_TAB, LT(0, KC_A), KC_R, KC_S, KC_T, KC_G, KC_M, KC_N, KC_E, KC_I, LT(0, KC_O), LT(0, KC_QUOT), // KC_QUOT, 
-#elif homerow_mods == 2
-        KC_TAB, LT(0, KC_A), KC_R, LSFT_T(KC_S), KC_T, KC_G, KC_M, KC_N, RSFT_T(KC_E), KC_I, LT(0, KC_O), LT(0, KC_QUOT), // KC_QUOT, 
-#endif
-        OSM(MOD_LSFT), LT(0, KC_Z), CUT_X, COPY_C, KC_D, PASTE_V, KC_K, KC_H, LT(0, KC_COMM), LT(0, KC_DOT), LT(0, KC_SLSH), RSFT_T(KC_ENT), 
+        KC_ESC, Q_KEY, W_KEY, F_KEY, P_KEY, B_KEY, J_KEY, L_KEY, U_KEY, Y_KEY, SCLN_KEY, LT(0, KC_BSLS), // LT(0, DE_UDIA), 
+//        KC_ESC, LGUI_T(KC_Q), LALT_T(KC_W), LSFT_T(KC_F), LCTL_T(KC_P), KC_B, KC_J, RCTL_T(KC_L), RSFT_T(KC_U), LALT_T(KC_Y), RGUI_T(KC_SCLN), LT(0, KC_BSLS), // LT(0, DE_UDIA), 
+        KC_TAB, A_KEY, R_KEY, S_KEY, T_KEY, KC_G, KC_M, N_KEY, E_KEY, I_KEY, O_KEY, LT(0, KC_QUOT), // KC_QUOT, 
+//#if homerow_mods == 1
+//        KC_TAB, LT(0, KC_A), KC_R, KC_S, KC_T, KC_G, KC_M, KC_N, KC_E, KC_I, LT(0, KC_O), LT(0, KC_QUOT), // KC_QUOT, 
+//#elif homerow_mods == 2
+//        KC_TAB, LT(0, KC_A), KC_R, LSFT_T(KC_S), KC_T, KC_G, KC_M, KC_N, RSFT_T(KC_E), KC_I, LT(0, KC_O), LT(0, KC_QUOT), // KC_QUOT, 
+//#endif
+        OSM(MOD_LSFT), LT(0, KC_Z), CUT_X, COPY_C, KC_D, PASTE_V, KANA_K, KC_H, LT(0, KC_COMM), LT(0, KC_DOT), LT(0, KC_SLSH), RSFT_T(KC_ENT), 
     #if layout == 1
         #if thumb == 1
         LCTL_T(KC_CAPS), KC_LGUI, KC_LALT, LT(_NUM, KC_ESC), LOWER, OSM(MOD_LSFT), NAVSPACE, RAISE, LT(_MOUSE, KC_DEL), LT(_NAV, KC_DOWN), LT(_NAV, KC_UP), LT(_ADJUST, KC_RALT)

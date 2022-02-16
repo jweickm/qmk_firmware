@@ -20,32 +20,36 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM * thumb_factor;
 
         // index finger keys
+        case P_KEY:
+        case T_KEY:
         case PASTE_V:
-        case LCTL_T(KC_P):
+        case B_KEY:
+        case J_KEY:
+        case L_KEY:
+        case N_KEY:
             return TAPPING_TERM * index_factor;
-        case RCTL_T(KC_L):
-            return TAPPING_TERM * (index_factor + 0.1);
-        case LT(_MOUSE, KC_VOLU):
-        case LT(_MOUSE, KC_VOLD):
-            return TAPPING_TERM * td_factor;
+        case KANA_K:
+            return TAPPING_TERM * (index_factor + 0.15);
+ //     case LT(_MOUSE, KC_VOLU):
+ //     case LT(_MOUSE, KC_VOLD):
+ //         return TAPPING_TERM * td_factor;
 
         // middle finger keys
-        case LSFT_T(KC_F):
-        case LSFT_T(KC_S):
-        case RSFT_T(KC_U):
-        case RSFT_T(KC_E):
-        case LT(0, KC_COMM):
+        case F_KEY:
+        case S_KEY:
         case COPY_C:
+        case U_KEY:
+        case E_KEY:
+        case LT(0, KC_COMM):
             return TAPPING_TERM * middle_factor;
 
         // ring finger keys
- //       case LGUI_T(KC_TAB):
-        case LALT_T(KC_W):
-        case LALT_T(KC_R):
-        case LALT_T(KC_Y):
-        case LALT_T(KC_I):
-        case LT(0, KC_DOT):
+        case W_KEY:
+        case R_KEY:
         case CUT_X:
+        case Y_KEY:
+        case I_KEY:
+        case LT(0, KC_DOT):
             return TAPPING_TERM * ring_factor;
 
         // pinky keys
@@ -53,19 +57,15 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 //        case LT(_MOUSE, KC_SLSH):
 //        case LSFT_T(KC_Z):
 //        case LT(0, KC_SCLN):
-        case LGUI_T(KC_Q):
-        case LGUI_T(KC_A):
-        case RGUI_T(KC_SCLN):
-        case RGUI_T(KC_O):
-        case RSFT_T(KC_ENT):
+        case Q_KEY:
+        case A_KEY:
         case LT(0, KC_Z):
+        case SCLN_KEY:
+        case O_KEY:
         case LT(0, KC_SLSH):
+        case RSFT_T(KC_ENT):
         case LT(0, KC_MINS):
-        case LT(0, KC_A):
-        case LT(0, KC_O):
             return TAPPING_TERM * pinky_factor;
-//        case RSFT_T(KC_RALT):
-//        case LT(0, DE_UDIA):
         case LCTL_T(KC_CAPS):
         case OSM(MOD_LSFT):
         case LT(0, KC_BSLS):
@@ -214,7 +214,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return true;         // Return true for normal processing of tap keycode
                 break;
             } else if (record->event.pressed) {
-                tap_code16(C(KC_X)); // Intercept hold function to send CTL-C
+                tap_code16(C(KC_X)); // Intercept hold function to send CTL-X
                 return false;
             }
             return true;
@@ -233,6 +233,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 break;
             } else if (record->event.pressed) {
                 tap_code16(S(KC_INS)); // Intercept hold function to send SHIFT-INSERT
+                return false;
+            }
+            return true;
+        case KANA_K:
+            if (record->tap.count && record->event.pressed) {
+                return true;         // Return true for normal processing of tap keycode
+                break;
+            } else if (record->event.pressed) {
+                tap_code16(A(KC_GRV)); // Switch between Kana and Romaji
                 return false;
             }
             return true;
@@ -667,6 +676,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         set_mods(mod_state);
                     } else if (umlaut_enable) {
                         tap_code(DE_UDIA);
+                    } else if (de_coding_active && !umlaut_enable) {
+                        tap_code16(DE_UNDS);
                     } else {
                         if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
                             clear_oneshot_mods();
@@ -1196,6 +1207,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         }
                     } else if (umlaut_enable) {
                         tap_code(DE_ADIA);
+                    } else if (de_coding_active && !umlaut_enable) {
+                        tap_code(DE_MINS);
                     } else {
                         if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
 //                          if (caps_lock_on) {
@@ -1575,6 +1588,181 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return true;
             }
 
+// ------------------------- TOP ROW NUMBERS ---------------------------------
+#if homerow_mods == 2
+        case Q_KEY:
+            if (record->tap.count && record->event.pressed) {
+                return true;
+            } else if (record->event.pressed) {
+                tap_code(KC_1);
+                return false;
+            }
+            return true;
+        case W_KEY:
+            if (record->tap.count && record->event.pressed) {
+                return true;
+            } else if (record->event.pressed) {
+                tap_code(KC_2);
+                return false;
+            }
+            return true;
+        case F_KEY:
+            if (record->tap.count && record->event.pressed) {
+                return true;
+            } else if (record->event.pressed) {
+                tap_code(KC_3);
+                return false;
+            }
+            return true;
+        case P_KEY:
+            if (record->tap.count && record->event.pressed) {
+                return true;
+            } else if (record->event.pressed) {
+                tap_code(KC_4);
+                return false;
+            }
+            return true;
+        case B_KEY:
+            if (record->tap.count && record->event.pressed) {
+                return true;
+            } else if (record->event.pressed) {
+                tap_code(KC_5);
+                return false;
+            }
+            return true;
+        case J_KEY:
+            if (record->tap.count && record->event.pressed) {
+                return true;
+            } else if (record->event.pressed) {
+                tap_code(KC_6);
+                return false;
+            }
+            return true;
+        case L_KEY:
+            if (record->tap.count && record->event.pressed) {
+                return true;
+            } else if (record->event.pressed) {
+                tap_code(KC_7);
+                return false;
+            }
+            return true;
+        case U_KEY:
+            if (record->tap.count && record->event.pressed) {
+                return true;
+            } else if (record->event.pressed) {
+                tap_code(KC_8);
+                return false;
+            }
+            return true;
+        case Y_KEY:
+            if (de_layout_active) {
+                if (record->tap.count && record->event.pressed) {
+                    register_code(DE_Y); // tap Y
+                    return false;
+                } else if (record->event.pressed) {
+                } else {
+                    unregister_code(DE_Y);
+                    return false;
+                }
+            } else {
+                if (record->tap.count && record->event.pressed) {
+                    return true;
+                } 
+            }
+            if (record->event.pressed) {
+                tap_code(KC_9);
+                return false;
+            }
+            return true;
+        case SCLN_KEY:
+            if (record->tap.count && record->event.pressed) {
+                if (!de_coding_active) {
+                    return true;
+                } else if (de_coding_active) {
+                    if (de_layout_active) {
+                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
+                            register_code16(DE_COLN); // register :
+                        } else {
+                            register_code16(DE_SCLN); // register ;
+                        }
+                    } else if (!de_layout_active) {
+                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
+                            clear_oneshot_mods();
+                            clear_mods();
+                            add_mods(MOD_BIT(KC_LALT));
+                            tap_code(KC_P0);
+                            tap_code(KC_P2);
+                            tap_code(KC_P1);
+                            tap_code(KC_P4);  // Ö
+                        } else {
+                            clear_mods();
+                            add_mods(MOD_BIT(KC_LALT));
+                            tap_code(KC_P0);
+                            tap_code(KC_P2);
+                            tap_code(KC_P4);
+                            tap_code(KC_P6);  // ö
+                        }
+                        unregister_mods(MOD_LALT);
+                        set_mods(mod_state);
+                    }
+                    return false;
+                }
+            } else if (record->event.pressed) {
+                tap_code(KC_0);
+                return false;
+            } else {
+                if (de_coding_active && de_layout_active) {
+                    unregister_code16(DE_COLN);
+                    unregister_code16(DE_SCLN);
+                }
+                return true;
+            }
+// ------------------------- IMPROVED ROLLS ON THE HOMEROW -------------------
+        case T_KEY: // nullifies the effect of lsft when rolling from s to t
+            if (record->tap.count && record->event.pressed) {
+                if (mod_state & MOD_BIT(KC_LSFT)) {
+                    unregister_mods(MOD_BIT(KC_LSFT));
+                    tap_code(KC_S);
+                    tap_code(KC_T);
+                    return false;
+                }
+            }
+            return true;
+        case R_KEY: // nullifies the effect of lgui when rolling from a to r
+            if (record->tap.count && record->event.pressed) {
+                if (mod_state & MOD_BIT(KC_LGUI)) {
+                    unregister_mods(MOD_BIT(KC_LGUI));
+                    tap_code(KC_A);
+                    tap_code(KC_R);
+                    return false;
+                }
+            }
+            return true;
+        case N_KEY: // nullifies the effect of rsft when rolling from e to n
+            if (record->tap.count && record->event.pressed) {
+                if (mod_state & MOD_BIT(KC_RSFT)) {
+                    unregister_mods(MOD_BIT(KC_RSFT));
+                    tap_code(KC_E);
+                    tap_code(KC_N);
+                    // restore the mod state
+                    //add_mods(MOD_BIT(KC_RSFT));
+                    return false;
+                }
+            }
+            return true;
+        case I_KEY: // nullifies the effect of rsft when rolling from e to i
+            if (record->tap.count && record->event.pressed) {
+                if (mod_state & MOD_BIT(KC_RSFT)) {
+                    unregister_mods(MOD_BIT(KC_RSFT));
+                    tap_code(KC_E);
+                    tap_code(KC_I);
+                    // restore the mod state
+                    //add_mods(MOD_BIT(KC_RSFT));
+                    return false;
+                }
+            }
+            return true;
+#endif
 // ------------------------- NUMBERS CAPS IMMUNITY----------------------------
 //      case KC_0:
 //      case KC_1:
