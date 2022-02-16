@@ -1708,6 +1708,51 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 return true;
             }
+// ------------------------- IMPROVED ROLLS ON THE HOMEROW -------------------
+        case T_KEY: // nullifies the effect of lsft when rolling from s to t
+            if (record->tap.count && record->event.pressed) {
+                if (mod_state & MOD_BIT(KC_LSFT)) {
+                    unregister_mods(MOD_BIT(KC_LSFT));
+                    tap_code(KC_S);
+                    tap_code(KC_T);
+                    return false;
+                }
+            }
+            return true;
+        case R_KEY: // nullifies the effect of lgui when rolling from a to r
+            if (record->tap.count && record->event.pressed) {
+                if (mod_state & MOD_BIT(KC_LGUI)) {
+                    unregister_mods(MOD_BIT(KC_LGUI));
+                    tap_code(KC_A);
+                    tap_code(KC_R);
+                    return false;
+                }
+            }
+            return true;
+        case N_KEY: // nullifies the effect of rsft when rolling from e to n
+            if (record->tap.count && record->event.pressed) {
+                if (mod_state & MOD_BIT(KC_RSFT)) {
+                    unregister_mods(MOD_BIT(KC_RSFT));
+                    tap_code(KC_E);
+                    tap_code(KC_N);
+                    // restore the mod state
+                    //add_mods(MOD_BIT(KC_RSFT));
+                    return false;
+                }
+            }
+            return true;
+        case I_KEY: // nullifies the effect of rsft when rolling from e to i
+            if (record->tap.count && record->event.pressed) {
+                if (mod_state & MOD_BIT(KC_RSFT)) {
+                    unregister_mods(MOD_BIT(KC_RSFT));
+                    tap_code(KC_E);
+                    tap_code(KC_I);
+                    // restore the mod state
+                    //add_mods(MOD_BIT(KC_RSFT));
+                    return false;
+                }
+            }
+            return true;
 #endif
 // ------------------------- NUMBERS CAPS IMMUNITY----------------------------
 //      case KC_0:

@@ -278,6 +278,8 @@ enum combos {
     HRAISE,
     RST_OS, 
     NEI_OS,
+    WFP_OS, 
+    LUY_OS,
 
 #ifdef NAGINATA_ENABLE
     ST_NAV,
@@ -348,6 +350,8 @@ const uint16_t PROGMEM hraise_combo[]       = {RAISE, KC_H,                COMBO
 
 const uint16_t PROGMEM rst_combo[]          = {R_KEY, S_KEY, T_KEY,           COMBO_END};
 const uint16_t PROGMEM nei_combo[]          = {N_KEY, E_KEY, I_KEY,           COMBO_END};
+const uint16_t PROGMEM wfp_combo[]          = {W_KEY, F_KEY, P_KEY,           COMBO_END};
+const uint16_t PROGMEM luy_combo[]          = {L_KEY, U_KEY, Y_KEY,           COMBO_END};
 
 #ifdef NAGINATA_ENABLE
 const uint16_t PROGMEM stnav_combo[] = {NG_D, NG_F, COMBO_END};
@@ -424,8 +428,10 @@ combo_t key_combos[] = {
     [QUOTRAISE]     = COMBO(quotraise_combo, DE_ae),
     [HRAISE]        = COMBO(hraise_combo, S(KC_DOT)), 
 
-    [RST_OS]        = COMBO(rst_combo, TG(_MOUSE)),
-    [NEI_OS]        = COMBO(nei_combo, TG(_NUM)),
+//  [RST_OS]        = COMBO(rst_combo, TG(_MOUSE)),
+//  [NEI_OS]        = COMBO(nei_combo, TG(_NUM)),
+    [WFP_OS]        = COMBO(wfp_combo, TG(_MOUSE)),
+    [LUY_OS]        = COMBO(luy_combo, TG(_NUM)),
 
 #ifdef NAGINATA_ENABLE
     [ST_NAV]    = COMBO(stnav_combo, MO(_NAV)),
@@ -436,11 +442,11 @@ uint16_t COMBO_LEN = sizeof(key_combos) / sizeof(key_combos[0]);
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
     switch(combo_index) {
-        case BJ_NUM:
-            if (pressed) {
-                layer_invert(_NUM);
-            }
-            break;
+//      case BJ_NUM:
+//          if (pressed) {
+//              layer_invert(_NUM);
+//          }
+//          break;
         case DH_ROW:
             if (pressed) {
                 tap_code(KC_END);
