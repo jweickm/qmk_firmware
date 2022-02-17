@@ -115,6 +115,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record){
 
 uint8_t mod_state;
 uint8_t osmod_state;
+bool shift_pressed;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     mod_state = get_mods();
@@ -1725,34 +1726,34 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return true;
             }
 // ------------------------- IMPROVED ROLLS ON THE HOMEROW -------------------
-            // add the opposite shift as well, so that it is unaffected by the
             // roll compensation for the homerow modifiers
         case OSM(MOD_LSFT):
             if (record->tap.count && record->event.pressed) {
-            } else if (record->event.pressed) {
-                add_mods(MOD_BIT(KC_RSFT));
+            } else if (record->event.pressed){
+                shift_pressed = true;
             } else {
-                del_mods(MOD_BIT(KC_RSFT));
+                shift_pressed = false;
             }
             return true;
         case RSFT_T(KC_ENT):
             if (record->tap.count && record->event.pressed) {
                 if (caps_lock_on) {
                     tap_code(KC_CAPS);
-                } 
-            } else if (record->event.pressed) {
-                add_mods(MOD_BIT(KC_LSFT));
+                }
+            } else if (record->event.pressed){
+                shift_pressed = true;
             } else {
-                del_mods(MOD_BIT(KC_LSFT));
+                shift_pressed = false;
             }
             return true;
-
         case T_KEY: // nullifies the effect of lsft when rolling from s to t
-            if (record->tap.count && record->event.pressed) {
+            if (record->tap.count && record->event.pressed && !shift_pressed) {
                 if (mod_state & MOD_BIT(KC_LSFT)) {
                     del_mods(MOD_BIT(KC_LSFT));
                     tap_code(KC_S);
                     tap_code(KC_T);
+                    //restore the mod state
+                    //set_mods(mod_state);
                     return false;
                 }
             }
@@ -1763,30 +1764,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     del_mods(MOD_BIT(KC_LGUI));
                     tap_code(KC_A);
                     tap_code(KC_R);
+                    //restore the mod state
+                    //set_mods(mod_state);
                     return false;
                 }
             }
             return true;
         case N_KEY: // nullifies the effect of rsft when rolling from e to n
-            if (record->tap.count && record->event.pressed) {
+            if (record->tap.count && record->event.pressed && !shift_pressed) {
                 if (mod_state & MOD_BIT(KC_RSFT)) {
                     del_mods(MOD_BIT(KC_RSFT));
                     tap_code(KC_E);
                     tap_code(KC_N);
-                    // restore the mod state
-                    //add_mods(MOD_BIT(KC_RSFT));
+                    //restore the mod state
+                    //set_mods(mod_state);
                     return false;
                 }
             }
             return true;
         case I_KEY: // nullifies the effect of rsft when rolling from e to i
-            if (record->tap.count && record->event.pressed) {
+            if (record->tap.count && record->event.pressed && !shift_pressed) {
                 if (mod_state & MOD_BIT(KC_RSFT)) {
                     del_mods(MOD_BIT(KC_RSFT));
                     tap_code(KC_E);
                     tap_code(KC_I);
-                    // restore the mod state
-                    //add_mods(MOD_BIT(KC_RSFT));
+                    //restore the mod state
+                    //set_mods(mod_state);
                     return false;
                 } else if (mod_state & MOD_BIT(KC_RGUI)) {
                     del_mods(MOD_BIT(KC_RGUI));
