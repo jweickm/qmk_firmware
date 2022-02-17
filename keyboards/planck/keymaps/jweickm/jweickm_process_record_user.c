@@ -345,7 +345,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 layer_off(_NUM);
             }
             return true;
+#if homerow_mods == 1
         case RSFT_T(KC_ENT):
+#endif
         case RAISE:
             if (record->tap.count && record->event.pressed && caps_lock_on) {
                 tap_code(KC_CAPS);
@@ -473,7 +475,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 //                  return false;
 //              }
 //          }
-
+#if homerow_mods == 1
         case LT(0, KC_A):
             if (record->tap.count && record->event.pressed) {
                 return true;
@@ -560,6 +562,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 return true;
             }
+#endif
 //      case DE_oe:
 //          if (record->event.pressed) {
 //              if (de_layout_active) {
@@ -1590,6 +1593,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 // ------------------------- TOP ROW NUMBERS ---------------------------------
 #if homerow_mods == 2
+
         case Q_KEY:
             if (record->tap.count && record->event.pressed) {
                 return true;
@@ -1718,6 +1722,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return true;
             }
 // ------------------------- IMPROVED ROLLS ON THE HOMEROW -------------------
+            // add the opposite shift as well, so that it is unaffected by the
+            // roll compensation for the homerow modifiers
+        case OSM(MOD_LSFT):
+            if (record->tap.count && record->event.pressed) {
+            } else if (record->event.pressed) {
+                add_mods(MOD_BIT(KC_RSFT));
+            } else {
+                del_mods(MOD_BIT(KC_RSFT));
+            }
+            return true;
+        case RSFT_T(KC_ENT):
+            if (record->tap.count && record->event.pressed) {
+                if (caps_lock_on) {
+                    tap_code(KC_CAPS);
+                } 
+            } else if (record->event.pressed) {
+                add_mods(MOD_BIT(KC_LSFT));
+            } else {
+                del_mods(MOD_BIT(KC_LSFT));
+            }
+            return true;
+
         case T_KEY: // nullifies the effect of lsft when rolling from s to t
             if (record->tap.count && record->event.pressed) {
                 if (mod_state & MOD_BIT(KC_LSFT)) {
