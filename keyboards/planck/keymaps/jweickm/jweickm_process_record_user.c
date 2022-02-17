@@ -28,8 +28,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case L_KEY:
         case N_KEY:
             return TAPPING_TERM * index_factor;
-        case KANA_K:
-            return TAPPING_TERM * (index_factor + 0.15);
+//      case KANA_K:
+//          return TAPPING_TERM * (index_factor + 0.15);
  //     case LT(_MOUSE, KC_VOLU):
  //     case LT(_MOUSE, KC_VOLD):
  //         return TAPPING_TERM * td_factor;
@@ -165,9 +165,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 PLAY_SONG(colemak_de_song);
 #endif
                 }
-                return false;
+                layer_off(_GAMING);
             }
-            break;
+            return false;
         case LANG_SWITCH: // switches both system lang and kb lang
             if (record->event.pressed) {
                 if (de_layout_active) {
@@ -198,6 +198,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     naginata_on();
                 }
 #endif
+                // "turn off" gaming layer to update the layer state and show
+                // the led change
+                layer_off(_GAMING);
             }
             return false;
 
@@ -236,15 +239,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             return true;
-        case KANA_K:
-            if (record->tap.count && record->event.pressed) {
-                return true;         // Return true for normal processing of tap keycode
-                break;
-            } else if (record->event.pressed) {
-                tap_code16(A(KC_GRV)); // Switch between Kana and Romaji
-                return false;
-            }
-            return true;
+//      case KANA_K:
+//          if (record->tap.count && record->event.pressed) {
+//              return true;         // Return true for normal processing of tap keycode
+//              break;
+//          } else if (record->event.pressed) {
+//              tap_code16(A(KC_GRV)); // Switch between Kana and Romaji
+//              return false;
+//          }
+//          return true;
         case UNDO:
             if (record->event.pressed) {
                 if (de_layout_active) {

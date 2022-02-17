@@ -212,20 +212,24 @@ float naginata_off_sound[][2]   = SONG(PLOVER_GOODBYE_SOUND);
 // Combo Declarations
 enum combos {
     HCOMM_ENT,
+    KH_KANA,
+    JL_LANG,
     CD_ESC,
     HDOT_RALT,
     XD_APP,
-    BJ_NUM,
     LR_ADJ,
     BSR_ADJ,
     DOWNRALT_MPRV,
     UPRALT_MNXT,
     DH_ROW,
+    ESCQ_ALTF4,
     XC_CAPS,
     COMMDOT_LEAD,
     XS_TAB, 
+    WF_TAB, 
     ZS_SZ,
     EDOT_BSPC,
+    SCLNBSLS_BSPC,
 //    NRAISE,
     TLOWER, 
     EO_OE,
@@ -287,22 +291,26 @@ enum combos {
 #endif
 };
 
-const uint16_t PROGMEM hcomm_combo[]        = {KC_H, LT(0, KC_COMM),       COMBO_END}; 
-const uint16_t PROGMEM cd_combo[]           = {COPY_C, KC_D,               COMBO_END}; 
-const uint16_t PROGMEM hdot_combo[]         = {KC_H, LT(0, KC_DOT),        COMBO_END}; 
-const uint16_t PROGMEM xd_combo[]           = {CUT_X, KC_D,                COMBO_END};
+const uint16_t PROGMEM hcomm_combo[]        = {KC_H, LT(0, KC_COMM), 	    COMBO_END}; 
+const uint16_t PROGMEM kh_combo[]           = {KC_K, KC_H,  	            COMBO_END}; 
+const uint16_t PROGMEM jl_combo[]           = {J_KEY, L_KEY,  	            COMBO_END}; 
+const uint16_t PROGMEM cd_combo[]           = {COPY_C, KC_D,         	    COMBO_END}; 
+const uint16_t PROGMEM hdot_combo[]         = {KC_H, LT(0, KC_DOT),  	    COMBO_END}; 
+const uint16_t PROGMEM xd_combo[]           = {CUT_X, KC_D,          	    COMBO_END};
 const uint16_t PROGMEM num_combo[]          = {B_KEY, J_KEY, COMBO_END};
-const uint16_t PROGMEM adj_combo[]          = {LOWER, RAISE,               COMBO_END};
-const uint16_t PROGMEM bs_adj_combo[]       = {LT(_NUM, KC_BSPC), RAISE,   COMBO_END};
+const uint16_t PROGMEM adj_combo[]          = {LOWER, RAISE,                COMBO_END};
+const uint16_t PROGMEM bs_adj_combo[]       = {LT(_NUM, KC_BSPC), RAISE,    COMBO_END};
 const uint16_t PROGMEM upmnxt_combo[]       = {LT(_ADJUST, KC_RALT), LT(_NAV, KC_UP),COMBO_END};
 const uint16_t PROGMEM downmprv_combo[]     = {LT(_ADJUST, KC_RALT), LT(_NAV, KC_DOWN),COMBO_END};
-const uint16_t PROGMEM dh_combo[]           = {KC_D, KC_H,                 COMBO_END};
-const uint16_t PROGMEM xc_combo[]           = {CUT_X, COPY_C,              COMBO_END};
+const uint16_t PROGMEM dh_combo[]           = {KC_D, KC_H,                  COMBO_END};
+const uint16_t PROGMEM escq_combo[]         = {KC_ESC, Q_KEY,                  COMBO_END};
+const uint16_t PROGMEM xc_combo[]           = {CUT_X, COPY_C,               COMBO_END};
 const uint16_t PROGMEM commdot_combo[]      = {LT(0, KC_COMM), LT(0, KC_DOT), COMBO_END};
-const uint16_t PROGMEM xs_combo[]           = {CUT_X, S_KEY,        COMBO_END};
+const uint16_t PROGMEM xs_combo[]           = {CUT_X, S_KEY,                COMBO_END};
+const uint16_t PROGMEM wf_combo[]           = {W_KEY, F_KEY,                COMBO_END};
 const uint16_t PROGMEM zs_combo[]           = {LT(0, KC_Z), S_KEY,  COMBO_END};
 const uint16_t PROGMEM edot_combo[]         = {E_KEY, LT(0, KC_DOT),COMBO_END};
-
+const uint16_t PROGMEM sclnbsls_combo[]     = {SCLN_KEY, LT(0, KC_BSLS),    COMBO_END};
 //const uint16_t PROGMEM nraise_combo[]       = {KC_N, RAISE, COMBO_END};
 
 // combos for lower and raise
@@ -361,21 +369,25 @@ const uint16_t PROGMEM stnav_combo[] = {NG_D, NG_F, COMBO_END};
 combo_t key_combos[] = {  
 //    [HCOMM_ENT]     = COMBO(hcomm_combo, KC_ENT),  
     [HCOMM_ENT]     = COMBO(hcomm_combo, KC_ENT),  
+    [KH_KANA]       = COMBO(kh_combo, A(KC_GRV)),  
     [CD_ESC]        = COMBO(cd_combo, KC_ESC),  
     [HDOT_RALT]     = COMBO(hdot_combo, KC_RALT),  
     [XD_APP]        = COMBO(xd_combo, KC_APP),
     [LR_ADJ]        = COMBO(adj_combo, MO(_ADJUST)),
-    [BSR_ADJ]        = COMBO(bs_adj_combo, MO(_ADJUST)),
+    [BSR_ADJ]       = COMBO(bs_adj_combo, MO(_ADJUST)),
     [DOWNRALT_MPRV] = COMBO(downmprv_combo, KC_MPRV),
     [UPRALT_MNXT]   = COMBO(upmnxt_combo, KC_MNXT),
     [XC_CAPS]       = COMBO(xc_combo, KC_CAPS),
     [COMMDOT_LEAD]  = COMBO(commdot_combo, KC_LEAD),
     [XS_TAB]        = COMBO(xs_combo, KC_TAB),      
+    [WF_TAB]        = COMBO(wf_combo, KC_TAB),      
     [ZS_SZ]         = COMBO(zs_combo, DE_SZ),      
     [EDOT_BSPC]     = COMBO(edot_combo, C(KC_BSPC)),
+    [SCLNBSLS_BSPC] = COMBO(sclnbsls_combo, KC_BSPC),
 
     [DH_ROW]        = COMBO_ACTION(dh_combo),
-    [BJ_NUM]        = COMBO_ACTION(num_combo),
+    [ESCQ_ALTF4]    = COMBO_ACTION(escq_combo),
+    [JL_LANG]       = COMBO(jl_combo, KC_DE_SWITCH),  
 
 //    [NRAISE]        = COMBO(nraise_combo, OSL(_RAISE)),
 //    [TLOWER]        = COMBO(tlower_combo, OSL(_LOWER)),
@@ -453,6 +465,11 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
                 tap_code(KC_END);
                 tap_code(KC_RIGHT);
                 tap_code16(S(KC_UP));
+            }
+            break;
+        case ESCQ_ALTF4:
+            if (pressed) {
+                tap_code16(A(KC_F4));
             }
             break;
     }
