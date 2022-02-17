@@ -33,7 +33,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //#elif homerow_mods == 2
 //        KC_TAB, LT(0, KC_A), KC_R, LSFT_T(KC_S), KC_T, KC_G, KC_M, KC_N, RSFT_T(KC_E), KC_I, LT(0, KC_O), LT(0, KC_QUOT), // KC_QUOT, 
 //#endif
-        OSM(MOD_LSFT), LT(0, KC_Z), CUT_X, COPY_C, KC_D, PASTE_V, KANA_K, KC_H, LT(0, KC_COMM), LT(0, KC_DOT), LT(0, KC_SLSH), RSFT_T(KC_ENT), 
+        OSM(MOD_LSFT), LT(0, KC_Z), CUT_X, COPY_C, KC_D, PASTE_V, KC_K, KC_H, LT(0, KC_COMM), LT(0, KC_DOT), LT(0, KC_SLSH), RSFT_T(KC_ENT), 
     #if layout == 1
         #if thumb == 1
         LCTL_T(KC_CAPS), KC_LGUI, KC_LALT, LT(_NUM, KC_ESC), LOWER, OSM(MOD_LSFT), NAVSPACE, RAISE, LT(_MOUSE, KC_DEL), LT(_NAV, KC_DOWN), LT(_NAV, KC_UP), LT(_ADJUST, KC_RALT)

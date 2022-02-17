@@ -28,8 +28,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case L_KEY:
         case N_KEY:
             return TAPPING_TERM * index_factor;
-        case KANA_K:
-            return TAPPING_TERM * (index_factor + 0.15);
+//      case KANA_K:
+//          return TAPPING_TERM * (index_factor + 0.15);
  //     case LT(_MOUSE, KC_VOLU):
  //     case LT(_MOUSE, KC_VOLD):
  //         return TAPPING_TERM * td_factor;
@@ -89,8 +89,8 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
 //      case LSFT_T(KC_F):
 //      case RSFT_T(KC_U):
-        case LSFT_T(KC_S):
-        case RSFT_T(KC_E):
+        //case S_KEY:
+        //case E_KEY:
 //        case LOWER:
 //        case RAISE:
             return true;
@@ -165,9 +165,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 PLAY_SONG(colemak_de_song);
 #endif
                 }
-                return false;
+                layer_off(_GAMING);
             }
-            break;
+            return false;
         case LANG_SWITCH: // switches both system lang and kb lang
             if (record->event.pressed) {
                 if (de_layout_active) {
@@ -198,6 +198,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     naginata_on();
                 }
 #endif
+                // "turn off" gaming layer to update the layer state and show
+                // the led change
+                layer_off(_GAMING);
             }
             return false;
 
@@ -236,15 +239,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             return true;
-        case KANA_K:
-            if (record->tap.count && record->event.pressed) {
-                return true;         // Return true for normal processing of tap keycode
-                break;
-            } else if (record->event.pressed) {
-                tap_code16(A(KC_GRV)); // Switch between Kana and Romaji
-                return false;
-            }
-            return true;
+//      case KANA_K:
+//          if (record->tap.count && record->event.pressed) {
+//              return true;         // Return true for normal processing of tap keycode
+//              break;
+//          } else if (record->event.pressed) {
+//              tap_code16(A(KC_GRV)); // Switch between Kana and Romaji
+//              return false;
+//          }
+//          return true;
         case UNDO:
             if (record->event.pressed) {
                 if (de_layout_active) {
@@ -1747,7 +1750,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case T_KEY: // nullifies the effect of lsft when rolling from s to t
             if (record->tap.count && record->event.pressed) {
                 if (mod_state & MOD_BIT(KC_LSFT)) {
-                    unregister_mods(MOD_BIT(KC_LSFT));
+                    del_mods(MOD_BIT(KC_LSFT));
                     tap_code(KC_S);
                     tap_code(KC_T);
                     return false;
@@ -1757,7 +1760,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case R_KEY: // nullifies the effect of lgui when rolling from a to r
             if (record->tap.count && record->event.pressed) {
                 if (mod_state & MOD_BIT(KC_LGUI)) {
-                    unregister_mods(MOD_BIT(KC_LGUI));
+                    del_mods(MOD_BIT(KC_LGUI));
                     tap_code(KC_A);
                     tap_code(KC_R);
                     return false;
@@ -1767,7 +1770,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case N_KEY: // nullifies the effect of rsft when rolling from e to n
             if (record->tap.count && record->event.pressed) {
                 if (mod_state & MOD_BIT(KC_RSFT)) {
-                    unregister_mods(MOD_BIT(KC_RSFT));
+                    del_mods(MOD_BIT(KC_RSFT));
                     tap_code(KC_E);
                     tap_code(KC_N);
                     // restore the mod state
@@ -1779,8 +1782,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case I_KEY: // nullifies the effect of rsft when rolling from e to i
             if (record->tap.count && record->event.pressed) {
                 if (mod_state & MOD_BIT(KC_RSFT)) {
-                    unregister_mods(MOD_BIT(KC_RSFT));
+                    del_mods(MOD_BIT(KC_RSFT));
                     tap_code(KC_E);
+                    tap_code(KC_I);
+                    // restore the mod state
+                    //add_mods(MOD_BIT(KC_RSFT));
+                    return false;
+                } else if (mod_state & MOD_BIT(KC_RGUI)) {
+                    del_mods(MOD_BIT(KC_RGUI));
+                    tap_code(KC_O);
                     tap_code(KC_I);
                     // restore the mod state
                     //add_mods(MOD_BIT(KC_RSFT));
