@@ -115,7 +115,10 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record){
 
 uint8_t mod_state;
 uint8_t osmod_state;
-bool shift_pressed;
+bool gui_pressed;
+bool alt_pressed;
+bool sft_pressed;
+bool ctl_pressed;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     mod_state = get_mods();
@@ -1608,6 +1611,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
         case W_KEY:
             if (record->tap.count && record->event.pressed) {
+                if ((mod_state & MOD_BIT(KC_LGUI)) && !gui_pressed) {
+                    del_mods(MOD_BIT(KC_LGUI));
+                    tap_code(KC_A);
+                    tap_code(KC_W);
+                    //restore the mod state
+                    //set_mods(mod_state);
+                    return false;
+                }
                 return true;
             } else if (record->event.pressed) {
                 tap_code(KC_2);
@@ -1656,6 +1667,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
         case U_KEY:
             if (record->tap.count && record->event.pressed) {
+                if ((mod_state & MOD_BIT(KC_RGUI)) && !gui_pressed) {
+                    del_mods(MOD_BIT(KC_RGUI));
+                    tap_code(KC_O);
+                    tap_code(KC_U);
+                    //restore the mod state
+                    //set_mods(mod_state);
+                    return false;
+                }
                 return true;
             } else if (record->event.pressed) {
                 tap_code(KC_8);
@@ -1730,9 +1749,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case OSM(MOD_LSFT):
             if (record->tap.count && record->event.pressed) {
             } else if (record->event.pressed){
-                shift_pressed = true;
+                sft_pressed = true;
             } else {
-                shift_pressed = false;
+                sft_pressed = false;
             }
             return true;
         case RSFT_T(KC_ENT):
@@ -1741,13 +1760,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     tap_code(KC_CAPS);
                 }
             } else if (record->event.pressed){
-                shift_pressed = true;
+                sft_pressed = true;
             } else {
-                shift_pressed = false;
+                sft_pressed = false;
+            }
+            return true;
+        case KC_LGUI:
+            if (record->event.pressed) {
+                gui_pressed = true;
+            } else {
+                gui_pressed = false;
             }
             return true;
         case T_KEY: // nullifies the effect of lsft when rolling from s to t
-            if (record->tap.count && record->event.pressed && !shift_pressed) {
+            if (record->tap.count && record->event.pressed && !sft_pressed) {
                 if (mod_state & MOD_BIT(KC_LSFT)) {
                     del_mods(MOD_BIT(KC_LSFT));
                     tap_code(KC_S);
@@ -1760,7 +1786,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
         case R_KEY: // nullifies the effect of lgui when rolling from a to r
             if (record->tap.count && record->event.pressed) {
-                if (mod_state & MOD_BIT(KC_LGUI)) {
+                if ((mod_state & MOD_BIT(KC_LGUI)) && !gui_pressed) {
                     del_mods(MOD_BIT(KC_LGUI));
                     tap_code(KC_A);
                     tap_code(KC_R);
@@ -1770,8 +1796,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return true;
+        case S_KEY: // nullifies the effect of lalt when rolling from R to S
+            if (record->tap.count && record->event.pressed) {
+                if ((mod_state & MOD_BIT(KC_LALT)) && !alt_pressed) {
+                    del_mods(MOD_BIT(KC_LALT));
+                    tap_code(KC_R);
+                    tap_code(KC_S);
+                    //restore the mod state
+                    //set_mods(mod_state);
+                    return false;
+                }
+            }
+            return true;
         case N_KEY: // nullifies the effect of rsft when rolling from e to n
-            if (record->tap.count && record->event.pressed && !shift_pressed) {
+            if (record->tap.count && record->event.pressed && !sft_pressed) {
                 if (mod_state & MOD_BIT(KC_RSFT)) {
                     del_mods(MOD_BIT(KC_RSFT));
                     tap_code(KC_E);
@@ -1782,8 +1820,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return true;
+        case E_KEY: // nullifies the effect of alt when rolling from i to e, and the effect from shift when rolling from n to e
+            if (record->tap.count && record->event.pressed && !ctl_pressed) {
+                if (mod_state & MOD_BIT(KC_RCTL)) {
+                    del_mods(MOD_BIT(KC_RCTL));
+                    tap_code(KC_N);
+                    tap_code(KC_E);
+                    //restore the mod state
+                    //set_mods(mod_state);
+                    return false;
+                }
+            } 
+            if (record->tap.count && record->event.pressed && !alt_pressed) {
+                if (mod_state & MOD_BIT(KC_LALT)) {
+                    del_mods(MOD_BIT(KC_LALT));
+                    tap_code(KC_I);
+                    tap_code(KC_E);
+                    //restore the mod state
+                    //set_mods(mod_state);
+                    return false;
+                }
+            }
+            return true;
         case I_KEY: // nullifies the effect of rsft when rolling from e to i
-            if (record->tap.count && record->event.pressed && !shift_pressed) {
+            if (record->tap.count && record->event.pressed && !sft_pressed) {
                 if (mod_state & MOD_BIT(KC_RSFT)) {
                     del_mods(MOD_BIT(KC_RSFT));
                     tap_code(KC_E);
@@ -1797,6 +1857,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     tap_code(KC_I);
                     // restore the mod state
                     //add_mods(MOD_BIT(KC_RSFT));
+                    return false;
+                }
+            }
+            return true;
+        case O_KEY:
+            if (record->tap.count && record->event.pressed && !alt_pressed) {
+                if (mod_state & MOD_BIT(KC_LALT)) {
+                    del_mods(MOD_BIT(KC_LALT));
+                    tap_code(KC_I);
+                    tap_code(KC_O);
+                    //restore the mod state
+                    //set_mods(mod_state);
                     return false;
                 }
             }
