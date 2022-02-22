@@ -206,7 +206,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */ 
     [_NUM] = LAYOUT_planck_grid(
-        KC_TRNS, KC_A, KC_B, KC_C, KC_D, KC_E, KC_F, KC_7, KC_8, KC_9, KC_SCLN, KC_BSPC,
+        KC_TRNS, KC_A, KC_B, KC_C, KC_D, KC_E, KC_F, KC_7, KC_8, KC_9, KC_0, KC_BSPC,
         KC_TRNS, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_END, KC_ASTR, KC_4, KC_5, KC_6, KC_PLUS, KC_MINS,
         KC_TRNS, KC_NO, KC_NO, KC_NO, KC_ENT, KC_NO, KC_UNDS, KC_1, KC_2, KC_3, KC_SLSH, KC_TRNS,
     #if layout == 1
