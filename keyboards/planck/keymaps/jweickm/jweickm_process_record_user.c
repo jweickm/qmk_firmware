@@ -2111,12 +2111,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
             break;
+
         case NAGINATA_SWITCH:
             if (record->event.pressed) {
                 if (naginata_active) {
                     tap_code(KC_MHEN);
                     naginata_off();
                 } else if (!de_layout_active){
+                    if (caps_lock_on) {
+                        tap_code(KC_CAPS);
+                    }
                     naginata_on();
                     tap_code(KC_HENK);
                 }

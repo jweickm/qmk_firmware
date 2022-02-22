@@ -4,13 +4,6 @@
 #include "muse.h"
 #include "keymap_german.h"
 
-#ifdef NAGINATA_ENABLE
-// 薙刀式
-#include "naginata.h"
-NGKEYS naginata_keys;
-// 薙刀式
-#endif
-
 enum planck_layers {
     _COLEMAK = 0,
     _QWERTY,
@@ -27,6 +20,13 @@ enum planck_layers {
     _NAV,
     _MOUSE,
 };
+
+#ifdef NAGINATA_ENABLE
+// 薙刀式
+#include "naginata.h"
+NGKEYS naginata_keys;
+// 薙刀式
+#endif
 
 // IMPORTANT: DEFINE THE LAYOUT FOR THE KEYBOARD HERE
 #define hand_position 3 // 1: semi-wide, 2: wide, 3: narrow
@@ -221,7 +221,8 @@ enum combos {
     BSR_ADJ,
     DOWNRALT_MPRV,
     UPRALT_MNXT,
-    DH_ROW,
+    DH_NAV,
+    BJ_ROW,
     ESCQ_ALTF4,
     XC_CAPS,
     COMMDOT_LEAD,
@@ -288,6 +289,8 @@ enum combos {
 
 #ifdef NAGINATA_ENABLE
     ST_NAV,
+    NE_NAV,
+    WP_NAGINATA, 
 #endif
 };
 
@@ -303,6 +306,7 @@ const uint16_t PROGMEM bs_adj_combo[]       = {LT(_NUM, KC_BSPC), RAISE,    COMB
 const uint16_t PROGMEM upmnxt_combo[]       = {LT(_ADJUST, KC_RALT), LT(_NAV, KC_UP),COMBO_END};
 const uint16_t PROGMEM downmprv_combo[]     = {LT(_ADJUST, KC_RALT), LT(_NAV, KC_DOWN),COMBO_END};
 const uint16_t PROGMEM dh_combo[]           = {KC_D, KC_H,                  COMBO_END};
+const uint16_t PROGMEM bj_combo[]           = {KC_B, KC_J,                  COMBO_END};
 const uint16_t PROGMEM escq_combo[]         = {KC_ESC, Q_KEY,                  COMBO_END};
 const uint16_t PROGMEM xc_combo[]           = {CUT_X, COPY_C,               COMBO_END};
 const uint16_t PROGMEM commdot_combo[]      = {LT(0, KC_COMM), LT(0, KC_DOT), COMBO_END};
@@ -364,6 +368,9 @@ const uint16_t PROGMEM luy_combo[]          = {L_KEY, U_KEY, Y_KEY,           CO
 
 #ifdef NAGINATA_ENABLE
 const uint16_t PROGMEM stnav_combo[] = {NG_D, NG_F, COMBO_END};
+const uint16_t PROGMEM nenav_combo[] = {NG_J, NG_K, COMBO_END};
+const uint16_t PROGMEM wpnaginata_combo[] = {W_KEY, P_KEY, COMBO_END};
+
 #endif
 
 combo_t key_combos[] = {  
@@ -385,7 +392,8 @@ combo_t key_combos[] = {
     [EDOT_BSPC]     = COMBO(edot_combo, C(KC_BSPC)),
     [SCLNBSLS_BSPC] = COMBO(sclnbsls_combo, KC_BSPC),
 
-    [DH_ROW]        = COMBO_ACTION(dh_combo),
+    [DH_NAV]        = COMBO(dh_combo, TG(_NAV)),
+    [BJ_ROW]        = COMBO_ACTION(bj_combo),
     [ESCQ_ALTF4]    = COMBO_ACTION(escq_combo),
     [JL_LANG]       = COMBO(jl_combo, KC_DE_SWITCH),  
 
@@ -447,7 +455,7 @@ combo_t key_combos[] = {
     [LUY_OS]        = COMBO(luy_combo, TG(_NUM)),
 
 #ifdef NAGINATA_ENABLE
-    [ST_NAV]    = COMBO(stnav_combo, MO(_NAV)),
+    [WP_NAGINATA] = COMBO(wpnaginata_combo, NAGINATA_SWITCH),
 #endif
 };
 
@@ -455,18 +463,20 @@ uint16_t COMBO_LEN = sizeof(key_combos) / sizeof(key_combos[0]);
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
     switch(combo_index) {
-//      case BJ_NUM:
-//          if (pressed) {
-//              layer_invert(_NUM);
-//          }
-//          break;
-        case DH_ROW:
+     case BJ_ROW:
             if (pressed) {
                 tap_code(KC_END);
                 tap_code(KC_RIGHT);
                 tap_code16(S(KC_UP));
             }
             break;
+        // case DH_ROW:
+        //     if (pressed) {
+        //         tap_code(KC_END);
+        //         tap_code(KC_RIGHT);
+        //         tap_code16(S(KC_UP));
+        //     }
+        //     break;
         case ESCQ_ALTF4:
             if (pressed) {
                 tap_code16(A(KC_F4));

@@ -1,3 +1,4 @@
+// This is a backup of the original naginata_v14.c
 /* Copyright 2018-2019 eswai <@eswai>
  *
  * This program is free software: you can redistribute it and/or modify
