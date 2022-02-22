@@ -1,4 +1,5 @@
 /* Copyright 2018-2019 eswai <@eswai>
+ * THIS HAS BEEN EDITED TO FIT MY NEEDS (jweickm)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
