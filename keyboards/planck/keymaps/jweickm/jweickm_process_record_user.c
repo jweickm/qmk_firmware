@@ -103,8 +103,8 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record){
     switch (keycode){
 #if thumb != 2
         case LOWER:
-#endif
         case RAISE:
+#endif
             // Immediately select the hold action when another key is pressed.
             return true;
         default:
@@ -316,31 +316,39 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
 #if thumb == 2
         case LOWER:
-            if (record->tap.count && record->event.pressed) {
-                if (osmod_state & MOD_MASK_SHIFT) {
-                    clear_oneshot_mods();
-                } else {
-                    set_oneshot_mods(MOD_BIT(KC_LSFT));
-                }
-                return false;
-            } else if (record->event.pressed) {
+            if (naginata_active) {
                 return true;
             } else {
-                return true;
+                if (record->tap.count && record->event.pressed) {
+                    if (osmod_state & MOD_MASK_SHIFT) {
+                        clear_oneshot_mods();
+                    } else {
+                        set_oneshot_mods(MOD_BIT(KC_LSFT));
+                    }
+                    return false;
+                } else if (record->event.pressed) {
+                    return true;
+                } else {
+                    return true;
+                }
             }
-//      case RAISE:
-//          if (record->tap.count && record->event.pressed) {
-//              if (osmod_state & MOD_MASK_SHIFT) {
-//                  clear_oneshot_mods();
-//              } else {
-//                  set_oneshot_mods(MOD_BIT(KC_LSFT));
-//              }
-//              return false;
-//          } else if (record->event.pressed) {
-//              return true;
-//          } else {
-//              return true;
-//          }
+        case RAISE:
+            if (naginata_active) {
+                return true;
+            } else {
+                if (record->tap.count && record->event.pressed) {
+                    if (osmod_state & MOD_MASK_SHIFT) {
+                        clear_oneshot_mods();
+                    } else {
+                        set_oneshot_mods(MOD_BIT(KC_RSFT));
+                    }
+                    return false;
+                } else if (record->event.pressed) {
+                    return true;
+                } else {
+                    return true;
+                }
+            }
 #endif
         // this esc turns off caps lock, if it was active
         case LT(_NUM, KC_ESC):
@@ -355,11 +363,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #if homerow_mods == 1
         case RSFT_T(KC_ENT):
 #endif
+#if thumb == 1
         case RAISE:
             if (record->tap.count && record->event.pressed && caps_lock_on) {
                 tap_code(KC_CAPS);
             } 
             return true;
+#endif
         case KC_ENT:
         case KC_LEAD:
             if (record->event.pressed && caps_lock_on) {
