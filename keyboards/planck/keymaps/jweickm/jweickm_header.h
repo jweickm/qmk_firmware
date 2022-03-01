@@ -213,7 +213,7 @@ float naginata_off_sound[][2]   = SONG(PLOVER_GOODBYE_SOUND);
 enum combos {
     HCOMM_ENT,
     KH_KANA,
-    JL_LANG,
+//    JL_LANG,
     CD_ESC,
     HDOT_RALT,
     XD_APP,
@@ -296,7 +296,7 @@ enum combos {
 
 const uint16_t PROGMEM hcomm_combo[]        = {KC_H, LT(0, KC_COMM), 	    COMBO_END}; 
 const uint16_t PROGMEM kh_combo[]           = {KC_K, KC_H,  	            COMBO_END}; 
-const uint16_t PROGMEM jl_combo[]           = {J_KEY, L_KEY,  	            COMBO_END}; 
+//const uint16_t PROGMEM jl_combo[]           = {J_KEY, L_KEY,  	            COMBO_END}; 
 const uint16_t PROGMEM cd_combo[]           = {COPY_C, KC_D,         	    COMBO_END}; 
 const uint16_t PROGMEM hdot_combo[]         = {KC_H, LT(0, KC_DOT),  	    COMBO_END}; 
 const uint16_t PROGMEM xd_combo[]           = {CUT_X, KC_D,          	    COMBO_END};
@@ -395,7 +395,7 @@ combo_t key_combos[] = {
     [DH_NAV]        = COMBO(dh_combo, TG(_NAV)),
     [BJ_ROW]        = COMBO_ACTION(bj_combo),
     [ESCQ_ALTF4]    = COMBO_ACTION(escq_combo),
-    [JL_LANG]       = COMBO(jl_combo, KC_DE_SWITCH),  
+//    [JL_LANG]       = COMBO(jl_combo, KC_DE_SWITCH),  
 
 //    [NRAISE]        = COMBO(nraise_combo, OSL(_RAISE)),
 //    [TLOWER]        = COMBO(tlower_combo, OSL(_LOWER)),
