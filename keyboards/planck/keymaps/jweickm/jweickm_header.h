@@ -230,7 +230,7 @@ enum combos {
     WF_TAB, 
     ZS_SZ,
     EDOT_BSPC,
-    SCLNBSLS_BSPC,
+    SCLNBSLS_DEL,
     YSCLN_BSPC,
 //    NRAISE,
     TLOWER, 
@@ -392,7 +392,7 @@ combo_t key_combos[] = {
     [WF_TAB]        = COMBO(wf_combo, KC_TAB),      
     [ZS_SZ]         = COMBO(zs_combo, DE_SZ),      
     [EDOT_BSPC]     = COMBO(edot_combo, C(KC_BSPC)),
-    [SCLNBSLS_BSPC] = COMBO(sclnbsls_combo, KC_BSPC),
+    [SCLNBSLS_DEL]  = COMBO(sclnbsls_combo, KC_DEL),
     [YSCLN_BSPC]    = COMBO(yscln_combo, KC_BSPC),
 
     [DH_NAV]        = COMBO(dh_combo, TG(_NAV)),
