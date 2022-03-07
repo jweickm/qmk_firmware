@@ -288,7 +288,24 @@ void led_set_user(uint8_t usb_led) {
     }
 }
 
+#ifdef DYNAMIC_MACRO_ENABLE
+    #ifdef AUDIO_ENABLE
+bool isRecording = false;
+void dynamic_macro_record_start_user(void) {
+    isRecording = true;
+    PLAY_SONG(macro_on_song);
+}
+void dynamic_macro_record_end_user(int8_t direction) {
+    isRecording = false;
+    PLAY_SONG(macro_off_song);
+}
+    #endif
+#endif
+
 bool led_update_user(led_t led_state) {
+#ifdef DYNAMIC_MACRO_ENABLE
+    rgblight_set_layer_state(6, isRecording); // turn on the adjust layer when recording otf macros
+#endif
     rgblight_set_layer_state(7, led_state.caps_lock);
     rgblight_set_layer_state(1, de_layout_active);
     if (led_state.caps_lock) {
@@ -328,15 +345,4 @@ layer_state_t default_layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(0, layer_state_cmp(state, _COLEMAK));
     return state;
 }
-
-#ifdef DYNAMIC_MACRO_ENABLE
-    #ifdef AUDIO_ENABLE
-        void dynamic_macro_record_start_user(void) {
-            PLAY_SONG(macro_on_song);
-        }
-        void dynamic_macro_record_end_user(int8_t direction) {
-            PLAY_SONG(macro_off_song);
-        }
-    #endif
-#endif
 
