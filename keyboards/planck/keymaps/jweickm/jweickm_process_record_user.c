@@ -1829,8 +1829,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     }
                 }
                 if (!alt_pressed) {
-                    if (mod_state & MOD_BIT(KC_LALT)) {
-                    del_mods(MOD_BIT(KC_LALT));
+                    if (mod_state & MOD_BIT(KC_RALT)) {
+                    del_mods(MOD_BIT(KC_RALT));
                     tap_code(KC_I);
                     tap_code(KC_N);
                     //restore the mod state
@@ -1862,8 +1862,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             } 
             if (record->tap.count && record->event.pressed && !alt_pressed) {
-                if (mod_state & MOD_BIT(KC_LALT)) {
-                    del_mods(MOD_BIT(KC_LALT));
+                if (mod_state & MOD_BIT(KC_RALT)) {
+                    del_mods(MOD_BIT(KC_RALT));
                     tap_code(KC_I);
                     tap_code(KC_E);
                     //restore the mod state
@@ -1893,8 +1893,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
         case O_KEY:
             if (record->tap.count && record->event.pressed && !alt_pressed) {
-                if (mod_state & MOD_BIT(KC_LALT)) {
-                    del_mods(MOD_BIT(KC_LALT));
+                if (mod_state & MOD_BIT(KC_RALT)) {
+                    del_mods(MOD_BIT(KC_RALT));
                     tap_code(KC_I);
                     tap_code(KC_O);
                     //restore the mod state
