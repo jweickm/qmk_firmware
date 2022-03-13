@@ -182,11 +182,12 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, LSFT_T(KC_BSPC), KC_DEL);
 #endif
     const key_override_t combo_delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
-    const key_override_t combo_delete_num_key_override = ko_make_basic(MOD_MASK_SHIFT, LT(_NUM, KC_BSPC), KC_DEL);
-    const key_override_t combo_ctl_delete_key_override = ko_make_basic(MOD_MASK_SHIFT, C(KC_BSPC), C(KC_DEL));
+    // this override allows us to switch kana by pressing ralt and esc
+    const key_override_t alt_esc_kana_override     = ko_make_basic(MOD_BIT(KC_RALT), KC_ESC, A(KC_GRV));
 // This globally defines all key overrides to be used
 const key_override_t **key_overrides = (const key_override_t *[]){
     &combo_delete_key_override,
+    &alt_esc_kana_override,
     NULL // Null terminate the array of overrides!
 };
 #endif

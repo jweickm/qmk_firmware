@@ -22,10 +22,12 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         // index finger keys
         case P_KEY:
         case T_KEY:
+        case G_KEY:
         case PASTE_V:
         case B_KEY:
         case J_KEY:
         case L_KEY:
+        case M_KEY:
         case N_KEY:
             return TAPPING_TERM * index_factor;
 //      case KANA_K:
