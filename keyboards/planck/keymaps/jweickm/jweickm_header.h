@@ -15,10 +15,10 @@ enum planck_layers {
 #endif
     _LOWER,
     _RAISE,
-    _ADJUST,
     _NUM,
     _NAV,
     _MOUSE,
+    _ADJUST,
 };
 
 #ifdef NAGINATA_ENABLE
@@ -213,6 +213,7 @@ float naginata_off_sound[][2]   = SONG(PLOVER_GOODBYE_SOUND);
 enum combos {
     HCOMM_ENT,
     KH_KANA,
+    LARROW,
 //    JL_LANG,
     CD_ESC,
     HDOT_RALT,
@@ -297,6 +298,7 @@ enum combos {
 
 const uint16_t PROGMEM hcomm_combo[]        = {KC_H, LT(0, KC_COMM), 	    COMBO_END}; 
 const uint16_t PROGMEM kh_combo[]           = {KC_K, KC_H,  	            COMBO_END}; 
+const uint16_t PROGMEM larr_combo[]         = {KC_MINS, KC_EQL,             COMBO_END}; 
 //const uint16_t PROGMEM jl_combo[]           = {J_KEY, L_KEY,  	            COMBO_END}; 
 const uint16_t PROGMEM cd_combo[]           = {COPY_C, KC_D,         	    COMBO_END}; 
 const uint16_t PROGMEM hdot_combo[]         = {KC_H, LT(0, KC_DOT),  	    COMBO_END}; 
@@ -398,6 +400,7 @@ combo_t key_combos[] = {
     [DH_NAV]        = COMBO(dh_combo, TG(_NAV)),
     [BJ_ROW]        = COMBO_ACTION(bj_combo),
     [ESCQ_ALTF4]    = COMBO_ACTION(escq_combo),
+    [LARROW]        = COMBO_ACTION(larr_combo),  
 //    [JL_LANG]       = COMBO(jl_combo, KC_DE_SWITCH),  
 
 //    [NRAISE]        = COMBO(nraise_combo, OSL(_RAISE)),
@@ -473,6 +476,12 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
                 tap_code16(S(KC_UP));
             }
             break;
+     case LARROW:
+            if (pressed) {
+                tap_code16(S(KC_COMM));
+                tap_code16(KC_MINS);
+            }
+            break;
         // case DH_ROW:
         //     if (pressed) {
         //         tap_code(KC_END);
@@ -480,10 +489,10 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
         //         tap_code16(S(KC_UP));
         //     }
         //     break;
-        case ESCQ_ALTF4:
-            if (pressed) {
-                tap_code16(A(KC_F4));
-            }
-            break;
+    case ESCQ_ALTF4:
+        if (pressed) {
+            tap_code16(A(KC_F4));
+        }
+        break;
     }
 }

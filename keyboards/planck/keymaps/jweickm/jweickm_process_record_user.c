@@ -1404,27 +1404,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 return true;
             }
-        case LT(0, KC_MINS):
-            if (record->tap.count && record->event.pressed) {
-                if (de_layout_active) {
-                    register_code(DE_MINS);  // - Bindestrich 
-                    return false;
-                }
-                return true;
-            } else if (record->event.pressed) { // add underscore as a shifted key
-                if (de_layout_active) {
-                    tap_code16(DE_UNDS);
-                } else {
-                    tap_code16(KC_UNDS);
-                }
-                return false;
-            } else {
-                if (de_layout_active) {
-                    unregister_code(DE_MINS);
-                    return false;
-                }
-                return true;
-            }
+//      case LT(0, KC_MINS):
+//          if (record->tap.count && record->event.pressed) {
+//              if (de_layout_active) {
+//                  register_code(DE_MINS);  // - Bindestrich 
+//                  return false;
+//              }
+//              return true;
+//          } else if (record->event.pressed) { // add underscore as a shifted key
+//              if (de_layout_active) {
+//                  tap_code16(DE_UNDS);
+//              } else {
+//                  tap_code16(KC_UNDS);
+//              }
+//              return false;
+//          } else {
+//              if (de_layout_active) {
+//                  unregister_code(DE_MINS);
+//                  return false;
+//              }
+//              return true;
+//          }
 //        case KC_COMM:
 //            if (de_layout_active) {
 //                if (record->event.pressed) {
