@@ -17,10 +17,11 @@
 #pragma once
 
 #ifdef AUDIO_ENABLE
-    #define STARTUP_SONG SONG(PLANCK_SOUND)
+    #define STARTUP_SONG SONG(STARTUP_SOUND)
     // #define STARTUP_SONG SONG(NO_SOUND)
 
-    #define DEFAULT_LAYER_SONGS { SONG(QWERTY_SOUND), \
+    #define DEFAULT_LAYER_SONGS { SONG(PLANCK_SOUND),\
+                                  SONG(QWERTY_SOUND), \
                                   SONG(COLEMAK_SOUND), \
                                   SONG(DVORAK_SOUND), \
                                   SONG(WORKMAN_SOUND), \
@@ -29,6 +30,8 @@
                                   SONG(PREONIC_SOUND), \
                                   SONG(GOODBYE_SOUND), \
                                 }
+    #define AUDIO_DAC_SAMPLE_WAVEFORM_SQUARE
+    #define AUDIO_DAC_SAMPLE_MAX 423U // define the volume: 65535U is standard
 #endif
 
 /*
@@ -49,6 +52,8 @@
 */
 //#define MIDI_ADVANCED
 
+/* override number of MIDI tone keycodes (each octave adds 12 keycodes and allocates 12 bytes) */
+//#define MIDI_TONE_KEYCODE_OCTAVES 2
 
 // Most tactile encoders have detents every 4 stages
 #define ENCODER_RESOLUTION 4
@@ -57,13 +62,27 @@
 #define TAPPING_TERM 160 // 200 ms is the default value
 #define TAPPING_TERM_PER_KEY
 //#define PERMISSIVE_HOLD
-#define IGNORE_MOD_TAP_INTERRUPT
 #define TAPPING_FORCE_HOLD_PER_KEY
+#define IGNORE_MOD_TAP_INTERRUPT
+//#define IGNORE_MOD_TAP_INTERRUPT_PER_KEY
+#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
 // settings for LEADER key
 #define LEADER_PER_KEY_TIMING
-#define LEADER_TIMEOUT 250
+#define LEADER_TIMEOUT 280
 #define LEADER_NO_TIMEOUT
+
+// settings for COMBOS
+#define COMBO_TERM 40
+// always checks for the combos on the base layer, even when using another layer
+#define COMBO_ONLY_FROM_LAYER 0
+
 
 #define RGBLIGHT_SLEEP // RGB lighting will switch off when the host goes to sleep
 #define RGBLIGHT_LAYERS
+
+// 薙刀式の設定
+//#define NAGINATA_ENABLE // requires 10,560 bytes
+
+// for unicode support in windows using wincompose
+// #define UNICODE_SELECTED_MODES UC_WINC
