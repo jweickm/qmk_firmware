@@ -41,6 +41,8 @@ NGKEYS naginata_keys;
 
 // define the position of the homerow_mods: 1-top row, 2-middle row, 3-bottom row
 #define homerow_mods 2
+// define whether we want to use custom home row roll modifications
+# define home_rolls 0
 
 #if homerow_mods == 1
     #define Q_KEY LGUI_T(KC_Q)
@@ -74,16 +76,28 @@ NGKEYS naginata_keys;
     #define U_KEY LT(0, KC_U)
     #define Y_KEY LT(0, KC_Y)
     #define SCLN_KEY LT(0, KC_SCLN)
+
+    #define G_KEY LT(_NUM, KC_G)
+    #define M_KEY LT(_MOUSE, KC_M)
+#if home_rolls == 0
     #define A_KEY LGUI_T(KC_A)
     #define R_KEY LALT_T(KC_R)
     #define S_KEY LSFT_T(KC_S)
     #define T_KEY LCTL_T(KC_T)
-    #define G_KEY LT(_NUM, KC_G)
-    #define M_KEY LT(_MOUSE, KC_M)
     #define N_KEY RCTL_T(KC_N)
     #define E_KEY RSFT_T(KC_E)
     #define I_KEY RALT_T(KC_I)
     #define O_KEY RGUI_T(KC_O)
+#elif home_rolls == 1
+    #define A_KEY LT(0, KC_A)
+    #define R_KEY LT(0, KC_R)
+    #define S_KEY LT(0, KC_S)
+    #define T_KEY LT(0, KC_T)
+    #define N_KEY LT(0, KC_N)
+    #define E_KEY LT(0, KC_E)
+    #define I_KEY LT(0, KC_I)
+    #define O_KEY LT(0, KC_O)
+#endif
 #endif
 
 // define the secondary function of the lower and raise keys here
