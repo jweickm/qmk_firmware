@@ -122,38 +122,38 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 #include "jweickm_process_record_user.c"
 
-bool encoder_update_user(uint8_t index, bool clockwise) {
-    if (muse_mode) {
-        if (IS_LAYER_ON(_RAISE)) {
-            if (clockwise) {
-                muse_offset++;
-            } else {
-                muse_offset--;
-            }
-        } else {
-            if (clockwise) {
-                muse_tempo += 1;
-            } else {
-                muse_tempo -= 1;
-            }
-        }
-    } else {
-        if (clockwise) {
-#ifdef MOUSEKEY_ENABLE
-            tap_code(KC_MS_WH_DOWN);
-#else
-            tap_code(KC_PGDN);
-#endif
-        } else {
-#ifdef MOUSEKEY_ENABLE
-            tap_code(KC_MS_WH_UP);
-#else
-            tap_code(KC_PGUP);
-#endif
-        }
-    }
-    return true;
-}
+// bool encoder_update_user(uint8_t index, bool clockwise) {
+//     if (muse_mode) {
+//         if (IS_LAYER_ON(_RAISE)) {
+//             if (clockwise) {
+//                 muse_offset++;
+//             } else {
+//                 muse_offset--;
+//             }
+//         } else {
+//             if (clockwise) {
+//                 muse_tempo += 1;
+//             } else {
+//                 muse_tempo -= 1;
+//             }
+//         }
+//     } else {
+//         if (clockwise) {
+// #ifdef MOUSEKEY_ENABLE
+//             tap_code(KC_MS_WH_DOWN);
+// #else
+//             tap_code(KC_PGDN);
+// #endif
+//         } else {
+// #ifdef MOUSEKEY_ENABLE
+//             tap_code(KC_MS_WH_UP);
+// #else
+//             tap_code(KC_PGUP);
+// #endif
+//         }
+//     }
+//     return true;
+// }
 
 // bool dip_switch_update_user(uint8_t index, bool active) {
 //     switch (index) {
@@ -182,12 +182,12 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, LSFT_T(KC_BSPC), KC_DEL);
 #endif
     const key_override_t combo_delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
-    // this override allows us to switch kana by pressing ralt and esc
-    const key_override_t alt_esc_kana_override     = ko_make_basic(MOD_BIT(KC_RALT), KC_ESC, A(KC_GRV));
+    const key_override_t ralt_esc_kana_override    = ko_make_basic(MOD_BIT(KC_RALT), KC_ESC, A(KC_GRV)); // this override allows us to switch kana by pressing ralt and esc
+
 // This globally defines all key overrides to be used
 const key_override_t **key_overrides = (const key_override_t *[]){
     &combo_delete_key_override,
-    &alt_esc_kana_override,
+    &ralt_esc_kana_override,
     NULL // Null terminate the array of overrides!
 };
 #endif

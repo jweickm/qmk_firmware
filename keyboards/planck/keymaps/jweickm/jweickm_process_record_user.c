@@ -3,7 +3,7 @@ float index_factor  = 1.15;
 float middle_factor = 1.2;
 float ring_factor   = 1.25;
 float pinky_factor  = 1.15;
-float td_factor     = 1.3;
+float td_factor     = 1.2;
 
 // define the per_key_tapping_term
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
@@ -16,8 +16,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case RAISE:
         case LT(_MOUSE, KC_DEL):
         case NAVSPACE:
-        case NAVENT:
             return TAPPING_TERM * thumb_factor;
+        /* case NAVENT: */
 
         // index finger keys
         case P_KEY:
@@ -307,9 +307,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         // the next case allows us to use alt_tab without a timer
+        /* case NAVENT: */
         case NAVSPACE: 
-        case NAVENT:
-            if (!record->event.pressed && (is_alt_tab_active || is_ctl_tab_active)) {
+            if (record->tap.count && record->event.pressed) {
+                if (mod_state & MOD_BIT(KC_RALT)) {
+                    del_mods(MOD_BIT(KC_RALT));
+                    tap_code16(A(KC_SPC));
+                    add_mods(MOD_BIT(KC_RALT));
+                    return false;
+                }
+            } else if (!record->event.pressed && (is_alt_tab_active || is_ctl_tab_active)) {
                 del_mods(MOD_BIT(KC_LALT));
                 del_mods(MOD_BIT(KC_LCTL));
                 is_alt_tab_active = false;
