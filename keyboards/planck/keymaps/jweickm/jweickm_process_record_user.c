@@ -316,6 +316,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 is_ctl_tab_active = false;
             }
             return true;
+        case NAVSFT: 
+            if (record->event.pressed) {
+                register_mods(MOD_BIT(KC_LSFT));
+            } else {
+                del_mods(MOD_BIT(KC_LSFT));
+            }
+            return false;
 #if thumb == 2
         case LOWER:
 #ifdef NAGINATA_ENABLE

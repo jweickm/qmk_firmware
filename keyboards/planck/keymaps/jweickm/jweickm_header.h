@@ -134,6 +134,7 @@ enum planck_keycodes {
     DE_oe,  // ö
     DE_ae,  // ä
     DE_SZ,   // ß
+    NAVSFT,
 };
 
 // Tap Dance declarations
