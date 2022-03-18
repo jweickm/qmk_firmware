@@ -112,4 +112,3 @@ user_config_t naginata_config;
 #define NG_WIN 1
 #define NG_MAC 2
 #define NG_LINUX 3
-

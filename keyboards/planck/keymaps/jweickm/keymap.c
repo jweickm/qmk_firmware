@@ -122,58 +122,58 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 #include "jweickm_process_record_user.c"
 
-bool encoder_update_user(uint8_t index, bool clockwise) {
-    if (muse_mode) {
-        if (IS_LAYER_ON(_RAISE)) {
-            if (clockwise) {
-                muse_offset++;
-            } else {
-                muse_offset--;
-            }
-        } else {
-            if (clockwise) {
-                muse_tempo += 1;
-            } else {
-                muse_tempo -= 1;
-            }
-        }
-    } else {
-        if (clockwise) {
-#ifdef MOUSEKEY_ENABLE
-            tap_code(KC_MS_WH_DOWN);
-#else
-            tap_code(KC_PGDN);
-#endif
-        } else {
-#ifdef MOUSEKEY_ENABLE
-            tap_code(KC_MS_WH_UP);
-#else
-            tap_code(KC_PGUP);
-#endif
-        }
-    }
-    return true;
-}
+// bool encoder_update_user(uint8_t index, bool clockwise) {
+//     if (muse_mode) {
+//         if (IS_LAYER_ON(_RAISE)) {
+//             if (clockwise) {
+//                 muse_offset++;
+//             } else {
+//                 muse_offset--;
+//             }
+//         } else {
+//             if (clockwise) {
+//                 muse_tempo += 1;
+//             } else {
+//                 muse_tempo -= 1;
+//             }
+//         }
+//     } else {
+//         if (clockwise) {
+// #ifdef MOUSEKEY_ENABLE
+//             tap_code(KC_MS_WH_DOWN);
+// #else
+//             tap_code(KC_PGDN);
+// #endif
+//         } else {
+// #ifdef MOUSEKEY_ENABLE
+//             tap_code(KC_MS_WH_UP);
+// #else
+//             tap_code(KC_PGUP);
+// #endif
+//         }
+//     }
+//     return true;
+// }
 
-bool dip_switch_update_user(uint8_t index, bool active) {
-    switch (index) {
-        case 0: {
-            if (active) {
-                layer_on(_ADJUST);
-            } else {
-                layer_off(_ADJUST);
-            }
-            break;
-        }
-        case 1:
-            if (active) {
-                muse_mode = true;
-            } else {
-                muse_mode = false;
-            }
-    }
-    return true;
-}
+// bool dip_switch_update_user(uint8_t index, bool active) {
+//     switch (index) {
+//         case 0: {
+//             if (active) {
+//                 layer_on(_ADJUST);
+//             } else {
+//                 layer_off(_ADJUST);
+//             }
+//             break;
+//         }
+//         case 1:
+//             if (active) {
+//                 muse_mode = true;
+//             } else {
+//                 muse_mode = false;
+//             }
+//     }
+//     return true;
+// }
 
 #ifdef KEY_OVERRIDE_ENABLE
 #if layout == 1 // OSM_SHIFT
@@ -182,11 +182,12 @@ bool dip_switch_update_user(uint8_t index, bool active) {
     const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, LSFT_T(KC_BSPC), KC_DEL);
 #endif
     const key_override_t combo_delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
-    const key_override_t combo_delete_num_key_override = ko_make_basic(MOD_MASK_SHIFT, LT(_NUM, KC_BSPC), KC_DEL);
-    const key_override_t combo_ctl_delete_key_override = ko_make_basic(MOD_MASK_SHIFT, C(KC_BSPC), C(KC_DEL));
+    const key_override_t ralt_esc_kana_override    = ko_make_basic(MOD_BIT(KC_RALT), KC_ESC, A(KC_GRV)); // this override allows us to switch kana by pressing ralt and esc
+
 // This globally defines all key overrides to be used
 const key_override_t **key_overrides = (const key_override_t *[]){
     &combo_delete_key_override,
+    &ralt_esc_kana_override,
     NULL // Null terminate the array of overrides!
 };
 #endif
@@ -238,28 +239,31 @@ bool music_mask_user(uint16_t keycode) {
 const rgblight_segment_t PROGMEM my_layer0_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_OCEAN});
 // Light LEDs 1 to 10 in green when de_layout_active is true
 const rgblight_segment_t PROGMEM my_layer1_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_GRASS});
+// Light LEDs 1 to 10 in darkorange when QWERTY layer is active
+const rgblight_segment_t PROGMEM my_layer2_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_DARKORANGE});
 // Light LEDs 1 to 10 in red when GAMING layer is active
-const rgblight_segment_t PROGMEM my_layer2_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_DARKRED});
+const rgblight_segment_t PROGMEM my_layer3_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_DARKRED});
 // Light LEDs 1 to 10 in goldenrod when _MOUSE is active
-const rgblight_segment_t PROGMEM my_layer3_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_YELLOW});
-// Light LEDs 1 to 10 in green when _QWERTY layer is active
-const rgblight_segment_t PROGMEM my_layer4_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 4, HSV_GREEN});
+const rgblight_segment_t PROGMEM my_layer4_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_ORANGE});
 // Light LEDs 1 to 10 in white when _NUM is active
 const rgblight_segment_t PROGMEM my_layer5_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_DARKMAGENTA});
 // Light bottom LEDs in eggshell when _ADJUST layer is active
 const rgblight_segment_t PROGMEM my_layer6_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 2, HSV_EGGSHELL}, {7, 3, HSV_EGGSHELL});
 // Light bottom LEDs and corner LEDs in darkorange when caps lock is active. Hard to ignore!
 const rgblight_segment_t PROGMEM my_capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 4, HSV_DARKORANGE}, {6, 3, HSV_DARKORANGE});
+// Light LEDs 1 to 10 in green when recording a macro 
+const rgblight_segment_t PROGMEM my_macro_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 4, HSV_GREEN}, {6, 3, HSV_GREEN});
 
 // Now define the array of layers. Later layers take precedence
-const rgblight_segment_t *const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(my_layer0_layer,   // colemak
-                                                                               my_layer1_layer,   // de_layout
-                                                                               my_layer2_layer,   // gaming
-                                                                               my_layer3_layer,   // mouse
-                                                                               my_layer4_layer,   // qwerty
-                                                                               my_layer5_layer,   // _num
-                                                                               my_layer6_layer,   // adjust
-                                                                               my_capslock_layer  // capslock
+const rgblight_segment_t *const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(my_layer0_layer,   // 1 colemak 
+                                                                               my_layer1_layer,   // 2 de_layout
+                                                                               my_layer2_layer,   // 3 qwerty
+                                                                               my_layer3_layer,   // 4 gaming
+                                                                               my_layer4_layer,   // 5 mouse
+                                                                               my_layer5_layer,   // 6 _num
+                                                                               my_layer6_layer,   // 7 adjust
+                                                                               my_capslock_layer, // 8 capslock
+                                                                               my_macro_layer     // 9 recording macro
 );
 
 void keyboard_post_init_user(void) {
@@ -288,7 +292,24 @@ void led_set_user(uint8_t usb_led) {
     }
 }
 
+#ifdef DYNAMIC_MACRO_ENABLE
+    #ifdef AUDIO_ENABLE
+bool isRecording = false;
+void dynamic_macro_record_start_user(void) {
+    isRecording = true;
+    PLAY_SONG(macro_on_song);
+}
+void dynamic_macro_record_end_user(int8_t direction) {
+    isRecording = false;
+    PLAY_SONG(macro_off_song);
+}
+    #endif
+#endif
+
 bool led_update_user(led_t led_state) {
+#ifdef DYNAMIC_MACRO_ENABLE
+    rgblight_set_layer_state(8, isRecording); // turn on the adjust layer when recording otf macros
+#endif
     rgblight_set_layer_state(7, led_state.caps_lock);
     rgblight_set_layer_state(1, de_layout_active);
     if (led_state.caps_lock) {
@@ -301,13 +322,13 @@ bool led_update_user(led_t led_state) {
 
 layer_state_t layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(1, de_layout_active);
-    rgblight_set_layer_state(2, layer_state_cmp(state, _GAMING));
-    rgblight_set_layer_state(3, layer_state_cmp(state, _MOUSE));
-    rgblight_set_layer_state(4, layer_state_cmp(state, _QWERTY));
+    rgblight_set_layer_state(2, layer_state_cmp(state, _QWERTY));
+    rgblight_set_layer_state(3, layer_state_cmp(state, _GAMING));
+    rgblight_set_layer_state(4, layer_state_cmp(state, _MOUSE));
     rgblight_set_layer_state(5, layer_state_cmp(state, _NUM));
     rgblight_set_layer_state(6, layer_state_cmp(state, _ADJUST));
 #ifdef NAGINATA_ENABLE
-    rgblight_set_layer_state(6, layer_state_cmp(state, _NAGINATA));
+    rgblight_set_layer_state(2, layer_state_cmp(state, _NAGINATA));
     if (layer_state_cmp(state, _NAGINATA)) {
         naginata_active = true;
     } else {
@@ -328,15 +349,4 @@ layer_state_t default_layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(0, layer_state_cmp(state, _COLEMAK));
     return state;
 }
-
-#ifdef DYNAMIC_MACRO_ENABLE
-    #ifdef AUDIO_ENABLE
-        void dynamic_macro_record_start_user(void) {
-            PLAY_SONG(macro_on_song);
-        }
-        void dynamic_macro_record_end_user(int8_t direction) {
-            PLAY_SONG(macro_off_song);
-        }
-    #endif
-#endif
 

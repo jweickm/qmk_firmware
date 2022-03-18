@@ -5,7 +5,7 @@ DYNAMIC_MACRO_ENABLE = yes 	# QMK support for temporary macros
 SRC += muse.c
 COMBO_ENABLE = yes 			# Enable Keyboard Combos 1,764 bytes
 KEY_OVERRIDE_ENABLE = yes 	# Enable key override functionality
-#NKRO = yes 					# Enable n-key rollover
+NKRO = yes 					# Enable n-key rollover
 
 #ifdef NAGINATA_ENABLE 		# enabled in config.h
 SRC += naginata_v14.c
