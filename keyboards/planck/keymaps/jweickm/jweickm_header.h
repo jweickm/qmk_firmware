@@ -155,11 +155,15 @@ bool de_layout_active  = false;
 // declaring several logical variables
 bool is_alt_tab_active  = false;
 bool is_ctl_tab_active  = false;
+
+#if homerow_mods == 1
 // controls, whether long pressing A, O, Z results in Ä, Ö, ß
 bool umlaut_enable      = false; 
+#endif
+
 // controls which of the two languages (en/ge) is used for coding and which is used for typing German
 // English by default
-bool de_coding_active   = false; 
+bool de_en_switched     = false; 
 bool caps_lock_on       = false;
 
 #ifdef NAGINATA_ENABLE
