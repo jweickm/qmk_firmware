@@ -136,18 +136,24 @@ bool ralt_roll;
 bool rgui_roll;
 #endif
 
+// this function converts the internal home row mod state variables (xxxx_held) 
+// into registered mods for all keys, except those on the same hand that might 
+// be affected by accidental rolls
 bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+        // left hand keys
         case A_KEY:
         case R_KEY:
         case S_KEY:
         case T_KEY:
             if (record->tap.count && record->event.pressed) {
-                /* disable triggers on the same hand side */
-                if (lgui_held && !(get_mods() & MOD_BIT(KC_LGUI))) {
+                /* when tapped and a home row state variable is active,
+                 * tap the respective key instead of the corresponding mod
+                 * this disables triggers on the same hand side */
+                if (lgui_held) {
                     tap_code(KC_A);
                 }
-                if (lalt_held && !(get_mods() & MOD_BIT(KC_LALT))) {
+                if (lalt_held) {
                     tap_code(KC_R);
                 }
                 /* but allow triggers for the other hand side */
@@ -161,16 +167,18 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
             } else {
             }
             return true;
+        // right hand keys
         case N_KEY:
         case E_KEY:
         case I_KEY:
         case O_KEY:
+        case U_KEY:
             if (record->tap.count && record->event.pressed) {
                 /* disable triggers on the same hand side */
-                if (ralt_held && !(get_mods() & MOD_BIT(KC_LALT))) {
+                if (ralt_held) {
                     tap_code(KC_I);
                 }
-                if (rgui_held && !(get_mods() & MOD_BIT(KC_RGUI))) {
+                if (rgui_held) {
                     tap_code(KC_O);
                 }
                 /* but allow triggers for the other hand side */
@@ -185,6 +193,8 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
         default:
+            // for all other keys, register the respective mod just before
+            // the key is processed in process_record_user
             if (record->event.pressed) {
                 if (lgui_held && !(get_mods() & MOD_BIT(KC_LGUI))) {
                     register_mods(MOD_BIT(KC_LGUI));
