@@ -101,7 +101,7 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record){
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode){
 #if thumb != 2
         case LOWER:
@@ -121,6 +121,10 @@ bool gui_pressed;
 bool alt_pressed;
 bool sft_pressed;
 bool ctl_pressed;
+bool rgui_held;
+bool lgui_held;
+bool ralt_held;
+bool lalt_held;
 #if home_rolls == 1
 bool lgui_roll;
 bool lalt_roll;
@@ -132,9 +136,81 @@ bool ralt_roll;
 bool rgui_roll;
 #endif
 
+bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case A_KEY:
+        case R_KEY:
+        case S_KEY:
+        case T_KEY:
+            if (record->tap.count && record->event.pressed) {
+                /* disable triggers on the same hand side */
+                if (lgui_held && !(get_mods() & MOD_BIT(KC_LGUI))) {
+                    tap_code(KC_A);
+                }
+                if (lalt_held && !(get_mods() & MOD_BIT(KC_LALT))) {
+                    tap_code(KC_R);
+                }
+                /* but allow triggers for the other hand side */
+                if (ralt_held && !(get_mods() & MOD_BIT(KC_LALT))) {
+                    register_mods(MOD_BIT(KC_LALT));
+                }
+                if (rgui_held && !(get_mods() & MOD_BIT(KC_RGUI))) {
+                    register_mods(MOD_BIT(KC_RGUI));
+                }
+            } else if (record->event.pressed) {
+            } else {
+            }
+            return true;
+        case N_KEY:
+        case E_KEY:
+        case I_KEY:
+        case O_KEY:
+            if (record->tap.count && record->event.pressed) {
+                /* disable triggers on the same hand side */
+                if (ralt_held && !(get_mods() & MOD_BIT(KC_LALT))) {
+                    tap_code(KC_I);
+                }
+                if (rgui_held && !(get_mods() & MOD_BIT(KC_RGUI))) {
+                    tap_code(KC_O);
+                }
+                /* but allow triggers for the other hand side */
+                if (lgui_held && !(get_mods() & MOD_BIT(KC_LGUI))) {
+                    register_mods(MOD_BIT(KC_LGUI));
+                }
+                if (lalt_held && !(get_mods() & MOD_BIT(KC_LALT))) {
+                    register_mods(MOD_BIT(KC_LALT));
+                }
+            } else if (record->event.pressed) {
+            } else {
+            }
+            return true;
+        default:
+            if (record->event.pressed) {
+                if (lgui_held && !(get_mods() & MOD_BIT(KC_LGUI))) {
+                    register_mods(MOD_BIT(KC_LGUI));
+                }
+                if (lalt_held && !(get_mods() & MOD_BIT(KC_LALT))) {
+                    register_mods(MOD_BIT(KC_LALT));
+                }
+                if (ralt_held && !(get_mods() & MOD_BIT(KC_LALT))) {
+                    register_mods(MOD_BIT(KC_LALT));
+                }
+                if (rgui_held && !(get_mods() & MOD_BIT(KC_RGUI))) {
+                    register_mods(MOD_BIT(KC_RGUI));
+                }
+            }
+            return true;
+    }
+    return true;
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     mod_state = get_mods();
     osmod_state = get_oneshot_mods();
+    /* process the home row mod tags before anything else */
+    if (!process_homerow_mods(keycode, record)) {
+        return false;
+    }
     switch (keycode) {
 
 // ------------------------------- LANGUAGES & LAYERS --------------------------
@@ -1853,32 +1929,48 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
 
+        case A_KEY: 
+            if (record->tap.count && record->event.pressed) {
+            } else if (record->event.pressed) {
+                lgui_held = true;
+                return false;
+            } else {
+                lgui_held = false;
+                unregister_mods(MOD_BIT(KC_LGUI));
+            }
+            return true;
         case R_KEY: // nullifies the effect of lgui when rolling from a to r
             if (record->tap.count && record->event.pressed) {
-                if (mod_state & MOD_BIT(KC_LGUI)) {
-                    if (!gui_pressed) {
-                        del_mods(MOD_BIT(KC_LGUI));
-                        tap_code(KC_A);
-                        tap_code(KC_R);
-                        //restore the mod state
-                        //set_mods(mod_state);
-                        return false;
-                    }
-                }
+                /* if (mod_state & MOD_BIT(KC_LGUI)) { */
+                /*     if (!gui_pressed) { */
+                /*         del_mods(MOD_BIT(KC_LGUI)); */
+                /*         tap_code(KC_A); */
+                /*         tap_code(KC_R); */
+                /*         //restore the mod state */
+                /*         //set_mods(mod_state); */
+                /*         return false; */
+                /*     } */
+                /* } */
+            } else if (record->event.pressed) {
+                lalt_held = true;
+                return false;
+            } else {
+                lalt_held = false;
+                unregister_mods(MOD_BIT(KC_LALT));
             }
             return true;
         case S_KEY: // nullifies the effect of lalt when rolling from R to S
             if (record->tap.count && record->event.pressed) {
-                if (mod_state & MOD_BIT(KC_LALT)) {
-                    if (!alt_pressed) {
-                        del_mods(MOD_BIT(KC_LALT));
-                        tap_code(KC_R);
-                        tap_code(KC_S);
-                        //restore the mod state
-                        //set_mods(mod_state);
-                        return false;
-                    }
-                }
+                /* if (mod_state & MOD_BIT(KC_LALT)) { */
+                /*     if (!alt_pressed) { */
+                /*         del_mods(MOD_BIT(KC_LALT)); */
+                /*         tap_code(KC_R); */
+                /*         tap_code(KC_S); */
+                /*         //restore the mod state */
+                /*         //set_mods(mod_state); */
+                /*         return false; */
+                /*     } */
+                /* } */
             }
             return true;
         case T_KEY: // nullifies the effect of lsft when rolling from s to t
@@ -1893,16 +1985,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         return false;
                     }
                 }
-                if (mod_state & MOD_BIT(KC_LALT)) {
-                    if (!alt_pressed) {
-                        del_mods(MOD_BIT(KC_LALT));
-                        tap_code(KC_R);
-                        tap_code(KC_T);
-                        //restore the mod state
-                        //set_mods(mod_state);
-                        return false;
-                    }
-                }
+                /* if (mod_state & MOD_BIT(KC_LALT)) { */
+                /*     if (!alt_pressed) { */
+                /*         del_mods(MOD_BIT(KC_LALT)); */
+                /*         tap_code(KC_R); */
+                /*         tap_code(KC_T); */
+                /*         //restore the mod state */
+                /*         //set_mods(mod_state); */
+                /*         return false; */
+                /*     } */
+                /* } */
             }
             return true;
         case N_KEY: // nullifies the effect of rsft when rolling from e to n
@@ -1917,26 +2009,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         return false;
                     }
                 }
-                if (mod_state & MOD_BIT(KC_RALT)) {
-                    if (!alt_pressed) {
-                        del_mods(MOD_BIT(KC_RALT));
-                        tap_code(KC_I);
-                        tap_code(KC_N);
-                        //restore the mod state
-                        //set_mods(mod_state);
-                        return false;
-                    }
-                }
-                if (mod_state & MOD_BIT(KC_RGUI)) {
-                    if (!gui_pressed) {
-                        del_mods(MOD_BIT(KC_RGUI));
-                        tap_code(KC_O);
-                        tap_code(KC_N);
-                        //restore the mod state
-                        //set_mods(mod_state);
-                        return false;
-                    }
-                }
+                /* if (mod_state & MOD_BIT(KC_RALT)) { */
+                /*     if (!alt_pressed) { */
+                /*         del_mods(MOD_BIT(KC_RALT)); */
+                /*         tap_code(KC_I); */
+                /*         tap_code(KC_N); */
+                /*         //restore the mod state */
+                /*         //set_mods(mod_state); */
+                /*         return false; */
+                /*     } */
+                /* } */
+                /* if (mod_state & MOD_BIT(KC_RGUI)) { */
+                /*     if (!gui_pressed) { */
+                /*         del_mods(MOD_BIT(KC_RGUI)); */
+                /*         tap_code(KC_O); */
+                /*         tap_code(KC_N); */
+                /*         //restore the mod state */
+                /*         //set_mods(mod_state); */
+                /*         return false; */
+                /*     } */
+                /* } */
             }
             return true;
         case E_KEY: // nullifies the effect of alt when rolling from i to e, and the effect from ctrl when rolling from n to e
@@ -1951,16 +2043,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         return false; 
                     }
                 }
-                if (mod_state & MOD_BIT(KC_RALT)) {
-                    if (!alt_pressed) {
-                        del_mods(MOD_BIT(KC_RALT));
-                        tap_code(KC_I);
-                        tap_code(KC_E);
-                        //restore the mod state
-                        //set_mods(mod_state);
-                        return false;
-                    }
-                }
+                /* if (mod_state & MOD_BIT(KC_RALT)) { */
+                /*     if (!alt_pressed) { */
+                /*         del_mods(MOD_BIT(KC_RALT)); */
+                /*         tap_code(KC_I); */
+                /*         tap_code(KC_E); */
+                /*         //restore the mod state */
+                /*         //set_mods(mod_state); */
+                /*         return false; */
+                /*     } */
+                /* } */
             }
             return true;
         case I_KEY: // nullifies the effect of rsft when rolling from e to i
@@ -1975,30 +2067,42 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         return false;
                     }
                 }
-                if (mod_state & MOD_BIT(KC_RGUI)) {
-                    if (!gui_pressed) {
-                        del_mods(MOD_BIT(KC_RGUI));
-                        tap_code(KC_O);
-                        tap_code(KC_I);
-                        // restore the mod state
-                        //add_mods(MOD_BIT(KC_RSFT));
-                        return false;
-                    }
-                }
+                /* if (mod_state & MOD_BIT(KC_RGUI)) { */
+                /*     if (!gui_pressed) { */
+                /*         del_mods(MOD_BIT(KC_RGUI)); */
+                /*         tap_code(KC_O); */
+                /*         tap_code(KC_I); */
+                /*         // restore the mod state */
+                /*         //add_mods(MOD_BIT(KC_RSFT)); */
+                /*         return false; */
+                /*     } */
+                /* } */
+            } else if (record->event.pressed) {
+                ralt_held = true;
+                return false;
+            } else {
+                ralt_held = false;
+                unregister_mods(MOD_BIT(KC_LALT));
             }
             return true;
         case O_KEY:
             if (record->tap.count && record->event.pressed) {
-                if (mod_state & MOD_BIT(KC_RALT)) {
-                    if (!alt_pressed) {
-                        del_mods(MOD_BIT(KC_RALT));
-                        tap_code(KC_I);
-                        tap_code(KC_O);
-                        //restore the mod state
-                        //set_mods(mod_state);
-                        return false;
-                    }
-                }
+                /* if (mod_state & MOD_BIT(KC_RALT)) { */
+                /*     if (!alt_pressed) { */
+                /*         del_mods(MOD_BIT(KC_RALT)); */
+                /*         tap_code(KC_I); */
+                /*         tap_code(KC_O); */
+                /*         //restore the mod state */
+                /*         //set_mods(mod_state); */
+                /*         return false; */
+                /*     } */
+                /* } */
+            } else if (record->event.pressed) {
+                rgui_held = true;
+                return false;
+            } else {
+                rgui_held = false;
+                unregister_mods(MOD_BIT(KC_RGUI));
             }
             return true;
 #elif homerow_mods == 1
