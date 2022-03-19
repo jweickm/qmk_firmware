@@ -139,6 +139,11 @@ bool rgui_roll;
 // this function converts the internal home row mod state variables (xxxx_held) 
 // into registered mods for all keys, except those on the same hand that might 
 // be affected by accidental rolls
+/* TODO: */
+/* - [] record timing of key press (hold) and save that in some kind of array */
+/* - [] use this array to then reflect the order of key presses in the output */
+/* - [] convert LSFT_T(KC_S), etc. to the pseudo home row mods format (prevent "weird" behaviour) */
+
 bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // left hand keys
