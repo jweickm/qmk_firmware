@@ -115,84 +115,136 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
+// initialize the mod_state and the oneshotmod_state variables
 uint8_t mod_state;
 uint8_t osmod_state;
-bool gui_pressed;
-bool alt_pressed;
-bool sft_pressed;
-bool ctl_pressed;
-bool rgui_held;
-bool lgui_held;
-bool ralt_held;
-bool lalt_held;
-#if home_rolls == 1
-bool lgui_roll;
-bool lalt_roll;
-bool lsft_roll;
-bool lctl_roll;
-bool rctl_roll;
-bool rsft_roll;
-bool ralt_roll;
-bool rgui_roll;
-#endif
+
+// bools to show that the modifier that is NOT on the home row has been pressed
+// no longer necessary with current implementation
+/* bool gui_pressed; */
+/* bool alt_pressed; */
+/* bool sft_pressed; */
+/* bool ctl_pressed; */
+
+// bools to record which of the home row modifiers has been pressed
+bool lgui_held; // left gui     - A_KEY
+bool lalt_held; // left alt     - R_KEY
+bool lsft_held; // left shift   - S_KEY
+bool lctl_held; // left ctrl    - T_KEY
+bool rctl_held; // right ctrl   - N_KEY
+bool rsft_held; // right shift  - E_KEY
+bool ralt_held; // right alt    - I_KEY
+bool rgui_held; // right gui    - O_KEY
+
+// bool to see, whether a modifier has been activated on its own
+bool modifier_solo_activation;
+
+// pointers to the mod keys that have been pressed in the order
+// timers that record the key press timing of the home row mods to determine the order in which they were pressed
+/* uint16_t *first_mod_pressed = NULL; */
+/* uint16_t *second_mod_pressed = NULL; */
+/* uint16_t *third_mod_pressed = NULL; */
 
 // this function converts the internal home row mod state variables (xxxx_held) 
 // into registered mods for all keys, except those on the same hand that might 
 // be affected by accidental rolls
 /* TODO: */
-/* - [] record timing of key press (hold) and save that in some kind of array */
-/* - [] use this array to then reflect the order of key presses in the output */
-/* - [] convert LSFT_T(KC_S), etc. to the pseudo home row mods format (prevent "weird" behaviour) */
+/* - [ ] record timing of key press (hold) and save that in some kind of array */
+/* - [ ] use this array to then reflect the order of key presses in the output */
+/* - [x] convert LSFT_T(KC_S), etc. to the pseudo home row mods format (prevent "weird" behaviour) */
+/* - [x] add retro-tapping-like functionality to send the modifier on its own for home alt and home gui */
+
+/* [see here](https://gist.github.com/lazy/a4e65102672da396fbe43026f187706e) */
+/* [and here](https://github.com/qmk/qmk_firmware/blob/master/docs/custom_quantum_functions.md) */
+/* Note to self: calling the function void process_record(keyrecord_t *record) from anywhere, I can process a key event (key press or key release) and process it, e.g. */ 
+/* process_record(&(keyrecord_t){.tap = tapping_key.tap, .event.key = tapping_key.event.key, .event.time = event.time, .event.pressed = false}); */
 
 bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // left hand keys
+        // write keys that should not trigger left hand mods here
         case A_KEY:
         case R_KEY:
         case S_KEY:
         case T_KEY:
+        case W_KEY:
             if (record->tap.count && record->event.pressed) {
                 /* when tapped and a home row state variable is active,
                  * tap the respective key instead of the corresponding mod
                  * this disables triggers on the same hand side */
                 if (lgui_held) {
                     tap_code(KC_A);
+                    lgui_held = false;
                 }
                 if (lalt_held) {
                     tap_code(KC_R);
+                    lalt_held = false;
+                }
+                if (lsft_held) {
+                    tap_code(KC_S);
+                    lsft_held = false;
+                }
+                if (lctl_held) {
+                    tap_code(KC_T);
+                    lctl_held = false;
                 }
                 /* but allow triggers for the other hand side */
+                if (rctl_held && !(get_mods() & MOD_BIT(KC_RCTL))) {
+                    register_mods(MOD_BIT(KC_RCTL));
+                }
+                if (rsft_held && !(get_mods() & MOD_BIT(KC_RSFT))) {
+                    register_mods(MOD_BIT(KC_RSFT));
+                }
                 if (ralt_held && !(get_mods() & MOD_BIT(KC_LALT))) {
                     register_mods(MOD_BIT(KC_LALT));
                 }
                 if (rgui_held && !(get_mods() & MOD_BIT(KC_RGUI))) {
                     register_mods(MOD_BIT(KC_RGUI));
                 }
+                modifier_solo_activation = false;
             } else if (record->event.pressed) {
             } else {
             }
             return true;
-        // right hand keys
+        // write keys that should not trigger right hand mods here
         case N_KEY:
         case E_KEY:
         case I_KEY:
         case O_KEY:
         case U_KEY:
+        case Y_KEY:
             if (record->tap.count && record->event.pressed) {
                 /* disable triggers on the same hand side */
+                if (rctl_held) {
+                    tap_code(KC_N);
+                    rctl_held = false;
+                }
+                if (rsft_held) {
+                    tap_code(KC_E);
+                    rsft_held = false;
+                }
                 if (ralt_held) {
                     tap_code(KC_I);
+                    ralt_held = false;
                 }
                 if (rgui_held) {
                     tap_code(KC_O);
+                    rgui_held = false;
                 }
                 /* but allow triggers for the other hand side */
-                if (lgui_held && !(get_mods() & MOD_BIT(KC_LGUI))) {
-                    register_mods(MOD_BIT(KC_LGUI));
+                if (lctl_held && !(get_mods() & MOD_BIT(KC_LCTL))) {
+                    register_mods(MOD_BIT(KC_LCTL));
+                }
+                if (lsft_held && !(get_mods() & MOD_BIT(KC_LSFT))) {
+                    register_mods(MOD_BIT(KC_LSFT));
                 }
                 if (lalt_held && !(get_mods() & MOD_BIT(KC_LALT))) {
                     register_mods(MOD_BIT(KC_LALT));
                 }
+                if (lgui_held && !(get_mods() & MOD_BIT(KC_LGUI))) {
+                    register_mods(MOD_BIT(KC_LGUI));
+                }
+                modifier_solo_activation = false; // record that another key was pressed
+                                                  // (cannot trigger for the same key)
             } else if (record->event.pressed) {
             } else {
             }
@@ -201,17 +253,39 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
             // for all other keys, register the respective mod just before
             // the key is processed in process_record_user
             if (record->event.pressed) {
+                // gui mods
                 if (lgui_held && !(get_mods() & MOD_BIT(KC_LGUI))) {
                     register_mods(MOD_BIT(KC_LGUI));
-                }
-                if (lalt_held && !(get_mods() & MOD_BIT(KC_LALT))) {
-                    register_mods(MOD_BIT(KC_LALT));
-                }
-                if (ralt_held && !(get_mods() & MOD_BIT(KC_LALT))) {
-                    register_mods(MOD_BIT(KC_LALT));
+                    modifier_solo_activation = false;
                 }
                 if (rgui_held && !(get_mods() & MOD_BIT(KC_RGUI))) {
                     register_mods(MOD_BIT(KC_RGUI));
+                    modifier_solo_activation = false;
+                }
+                // alt mods
+                if (lalt_held || ralt_held) {
+                    if (!(get_mods() & MOD_BIT(KC_LALT))) { 
+                        register_mods(MOD_BIT(KC_LALT));
+                        modifier_solo_activation = false;
+                    }  
+                }
+                // shift mods
+                if (lsft_held && !(get_mods() & MOD_BIT(KC_LSFT))) {
+                    register_mods(MOD_BIT(KC_LSFT));
+                    modifier_solo_activation = false;
+                }
+                if (rsft_held && !(get_mods() & MOD_BIT(KC_RSFT))) {
+                    register_mods(MOD_BIT(KC_RSFT));
+                    modifier_solo_activation = false;
+                }
+                // ctrl mods
+                if (lctl_held && !(get_mods() & MOD_BIT(KC_LCTL))) {
+                    register_mods(MOD_BIT(KC_LCTL));
+                    modifier_solo_activation = false;
+                }
+                if (rctl_held && !(get_mods() & MOD_BIT(KC_RCTL))) {
+                    register_mods(MOD_BIT(KC_RCTL));
+                    modifier_solo_activation = false;
                 }
             }
             return true;
@@ -1042,28 +1116,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 return true;
             }
-        case KC_Z: // Z
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code(DE_Z);
-                } else {
-                    unregister_code(DE_Z);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        case KC_Y: // Y
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code(DE_Y);
-                } else {
-                    unregister_code(DE_Y);
-                }
-                return false;
-            } else {
-                return true;
-            }
+//      case KC_Z: // Z
+//          if (de_layout_active) {
+//              if (record->event.pressed) {
+//                  register_code(DE_Z);
+//              } else {
+//                  unregister_code(DE_Z);
+//              }
+//              return false;
+//          } else {
+//              return true;
+//          }
+//      case KC_Y: // Y
+//          if (de_layout_active) {
+//              if (record->event.pressed) {
+//                  register_code(DE_Y);
+//              } else {
+//                  unregister_code(DE_Y);
+//              }
+//              return false;
+//          } else {
+//              return true;
+//          }
+
 //      case LT(0, KC_SCLN): // this key behaves as a gui mod tap for both german and english layout
 //          if (record->tap.count && record->event.pressed) {
 //              if (de_layout_active) {
@@ -1767,14 +1842,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
         case W_KEY:
             if (record->tap.count && record->event.pressed) {
-                if ((mod_state & MOD_BIT(KC_LGUI)) && !gui_pressed) {
-                    del_mods(MOD_BIT(KC_LGUI));
-                    tap_code(KC_A);
-                    tap_code(KC_W);
-                    //restore the mod state
-                    //set_mods(mod_state);
-                    return false;
-                }
                 return true;
             } else if (record->event.pressed) {
                 tap_code(KC_2);
@@ -1823,14 +1890,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
         case U_KEY:
             if (record->tap.count && record->event.pressed) {
-                if ((mod_state & MOD_BIT(KC_RGUI)) && !gui_pressed) {
-                    del_mods(MOD_BIT(KC_RGUI));
-                    tap_code(KC_O);
-                    tap_code(KC_U);
-                    //restore the mod state
-                    //set_mods(mod_state);
-                    return false;
-                }
                 return true;
             } else if (record->event.pressed) {
                 tap_code(KC_8);
@@ -1902,56 +1961,64 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
 // ------------------------- IMPROVED ROLLS ON THE HOMEROW -------------------
             // roll compensation for the homerow modifiers
-        case LCTL_T(KC_CAPS):
-            if (record->tap.count && record->event.pressed) {
-            } else if (record->event.pressed){
-                ctl_pressed = true;
-            } else {
-                ctl_pressed = false;
-            }
-            return true;
-        case OSM(MOD_LSFT):
-            if (record->tap.count && record->event.pressed) {
-            } else if (record->event.pressed){
-                sft_pressed = true;
-            } else {
-                sft_pressed = false;
-            }
-            return true;
+        /* case LCTL_T(KC_CAPS): */
+        /*     if (record->tap.count && record->event.pressed) { */
+        /*     } else if (record->event.pressed){ */
+        /*         ctl_pressed = true; */
+        /*     } else { */
+        /*         ctl_pressed = false; */
+        /*     } */
+        /*     return true; */
+        /* case OSM(MOD_LSFT): */
+        /*     if (record->tap.count && record->event.pressed) { */
+        /*     } else if (record->event.pressed){ */
+        /*         sft_pressed = true; */
+        /*     } else { */
+        /*         sft_pressed = false; */
+        /*     } */
+        /*     return true; */
         case RSFT_T(KC_ENT):
             if (record->tap.count && record->event.pressed) {
                 if (caps_lock_on) {
                     tap_code(KC_CAPS);
                 }
-            } else if (record->event.pressed){
-                sft_pressed = true;
-            } else {
-                sft_pressed = false;
+            /* } else if (record->event.pressed){ */
+            /*     sft_pressed = true; */
+            /* } else { */
+            /*     sft_pressed = false; */
             }
             return true;
-        case KC_LGUI:
-            if (record->event.pressed) {
-                gui_pressed = true;
-            } else {
-                gui_pressed = false;
-            }
-            return true;
-        case KC_LALT:
-            if (record->event.pressed) {
-                alt_pressed = true;
-            } else {
-                alt_pressed = false;
-            }
-            return true;
+        /* case KC_LGUI: */
+        /*     if (record->event.pressed) { */
+        /*         gui_pressed = true; */
+        /*     } else { */
+        /*         gui_pressed = false; */
+        /*     } */
+        /*     return true; */
+        /* case KC_LALT: */
+        /*     if (record->event.pressed) { */
+        /*         alt_pressed = true; */
+        /*     } else { */
+        /*         alt_pressed = false; */
+        /*     } */
+        /*     return true; */
 
         case A_KEY: 
             if (record->tap.count && record->event.pressed) {
             } else if (record->event.pressed) {
                 lgui_held = true;
+                modifier_solo_activation = true;
                 return false;
             } else {
                 lgui_held = false;
                 unregister_mods(MOD_BIT(KC_LGUI));
+                // if no other key was pressed in the meantime
+                // send a tap of the modifier (to open windows
+                // startmenu or alt menu, etc.)
+                if (modifier_solo_activation) {
+                    tap_code(KC_LGUI);
+                    modifier_solo_activation = false;
+                }
             }
             return true;
         case R_KEY: // nullifies the effect of lgui when rolling from a to r
@@ -1968,10 +2035,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 /* } */
             } else if (record->event.pressed) {
                 lalt_held = true;
+                modifier_solo_activation = true;
                 return false;
             } else {
                 lalt_held = false;
                 unregister_mods(MOD_BIT(KC_LALT));
+                // if no other key was pressed in the meantime
+                // send a tap of the modifier (to open windows
+                // startmenu or alt menu, etc.)
+                if (modifier_solo_activation) {
+                    tap_code(KC_LALT);
+                    modifier_solo_activation = false;
+                }
             }
             return true;
         case S_KEY: // nullifies the effect of lalt when rolling from R to S
@@ -1986,20 +2061,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 /*         return false; */
                 /*     } */
                 /* } */
+            } else if (record->event.pressed) {
+                lsft_held = true;
+                modifier_solo_activation = true;
+                return false;
+            } else {
+                lsft_held = false;
+                unregister_mods(MOD_BIT(KC_LSFT));
+                if (modifier_solo_activation) {
+                    tap_code(KC_LSFT);
+                    modifier_solo_activation = false;
+                }
             }
             return true;
         case T_KEY: // nullifies the effect of lsft when rolling from s to t
             if (record->tap.count && record->event.pressed) {
-                if (mod_state & MOD_BIT(KC_LSFT)) {
-                    if (!sft_pressed) {
-                        del_mods(MOD_BIT(KC_LSFT));
-                        tap_code(KC_S);
-                        tap_code(KC_T);
-                        //restore the mod state
-                        //set_mods(mod_state);
-                        return false;
-                    }
-                }
+                /* if (mod_state & MOD_BIT(KC_LSFT)) { */
+                /*     if (!sft_pressed) { */
+                /*         del_mods(MOD_BIT(KC_LSFT)); */
+                /*         tap_code(KC_S); */
+                /*         tap_code(KC_T); */
+                /*         //restore the mod state */
+                /*         //set_mods(mod_state); */
+                /*         return false; */
+                /*     } */
+                /* } */
                 /* if (mod_state & MOD_BIT(KC_LALT)) { */
                 /*     if (!alt_pressed) { */
                 /*         del_mods(MOD_BIT(KC_LALT)); */
@@ -2010,20 +2096,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 /*         return false; */
                 /*     } */
                 /* } */
+            } else if (record->event.pressed) {
+                lctl_held = true;
+                modifier_solo_activation = true;
+                return false;
+            } else {
+                lctl_held = false;
+                unregister_mods(MOD_BIT(KC_LCTL));
+                if (modifier_solo_activation) {
+                    tap_code(KC_LCTL);
+                    modifier_solo_activation = false;
+                }
             }
             return true;
         case N_KEY: // nullifies the effect of rsft when rolling from e to n
             if (record->tap.count && record->event.pressed) {
-                if (mod_state & MOD_BIT(KC_RSFT)) {
-                    if (!sft_pressed) {
-                        del_mods(MOD_BIT(KC_RSFT));
-                        tap_code(KC_E);
-                        tap_code(KC_N);
-                        //restore the mod state
-                        //set_mods(mod_state);
-                        return false;
-                    }
-                }
+                /* if (mod_state & MOD_BIT(KC_RSFT)) { */
+                /*     if (!sft_pressed) { */
+                /*         del_mods(MOD_BIT(KC_RSFT)); */
+                /*         tap_code(KC_E); */
+                /*         tap_code(KC_N); */
+                /*         //restore the mod state */
+                /*         //set_mods(mod_state); */
+                /*         return false; */
+                /*     } */
+                /* } */
                 /* if (mod_state & MOD_BIT(KC_RALT)) { */
                 /*     if (!alt_pressed) { */
                 /*         del_mods(MOD_BIT(KC_RALT)); */
@@ -2044,20 +2141,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 /*         return false; */
                 /*     } */
                 /* } */
+            } else if (record->event.pressed) {
+                rctl_held = true;
+                modifier_solo_activation = true;
+                return false;
+            } else {
+                rctl_held = false;
+                unregister_mods(MOD_BIT(KC_RCTL));
+                if (modifier_solo_activation) {
+                    tap_code(KC_RCTL);
+                    modifier_solo_activation = false;
+                }
             }
             return true;
         case E_KEY: // nullifies the effect of alt when rolling from i to e, and the effect from ctrl when rolling from n to e
             if (record->tap.count && record->event.pressed) {
-                if (mod_state & MOD_BIT(KC_RCTL)) {
-                    if (!ctl_pressed) {
-                        del_mods(MOD_BIT(KC_RCTL));
-                        tap_code(KC_N);
-                        tap_code(KC_E);
-                        //restore the mod state
-                        //set_mods(mod_state);
-                        return false; 
-                    }
-                }
+                /* if (mod_state & MOD_BIT(KC_RCTL)) { */
+                /*     if (!ctl_pressed) { */
+                /*         del_mods(MOD_BIT(KC_RCTL)); */
+                /*         tap_code(KC_N); */
+                /*         tap_code(KC_E); */
+                /*         //restore the mod state */
+                /*         //set_mods(mod_state); */
+                /*         return false; */ 
+                /*     } */
+                /* } */
                 /* if (mod_state & MOD_BIT(KC_RALT)) { */
                 /*     if (!alt_pressed) { */
                 /*         del_mods(MOD_BIT(KC_RALT)); */
@@ -2068,20 +2176,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 /*         return false; */
                 /*     } */
                 /* } */
+            } else if (record->event.pressed) {
+                rsft_held = true;
+                modifier_solo_activation = true;
+                return false;
+            } else {
+                rsft_held = false;
+                unregister_mods(MOD_BIT(KC_RSFT));
+                if (modifier_solo_activation) {
+                    tap_code(KC_RSFT);
+                    modifier_solo_activation = false;
+                }
             }
             return true;
         case I_KEY: // nullifies the effect of rsft when rolling from e to i
             if (record->tap.count && record->event.pressed) {
-                if (mod_state & MOD_BIT(KC_RSFT)) {
-                    if (!sft_pressed) {
-                        del_mods(MOD_BIT(KC_RSFT));
-                        tap_code(KC_E);
-                        tap_code(KC_I);
-                        //restore the mod state
-                        //set_mods(mod_state);
-                        return false;
-                    }
-                }
+                /* if (mod_state & MOD_BIT(KC_RSFT)) { */
+                /*     if (!sft_pressed) { */
+                /*         del_mods(MOD_BIT(KC_RSFT)); */
+                /*         tap_code(KC_E); */
+                /*         tap_code(KC_I); */
+                /*         //restore the mod state */
+                /*         //set_mods(mod_state); */
+                /*         return false; */
+                /*     } */
+                /* } */
                 /* if (mod_state & MOD_BIT(KC_RGUI)) { */
                 /*     if (!gui_pressed) { */
                 /*         del_mods(MOD_BIT(KC_RGUI)); */
@@ -2094,10 +2213,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 /* } */
             } else if (record->event.pressed) {
                 ralt_held = true;
+                modifier_solo_activation = true;
                 return false;
             } else {
                 ralt_held = false;
                 unregister_mods(MOD_BIT(KC_LALT));
+                // if no other key was pressed in the meantime
+                // send a tap of the modifier (to open windows
+                // startmenu or alt menu, etc.)
+                if (modifier_solo_activation) {
+                    tap_code(KC_RALT);
+                    modifier_solo_activation = false;
+                }
             }
             return true;
         case O_KEY:
@@ -2114,10 +2241,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 /* } */
             } else if (record->event.pressed) {
                 rgui_held = true;
+                modifier_solo_activation = true;
                 return false;
             } else {
                 rgui_held = false;
                 unregister_mods(MOD_BIT(KC_RGUI));
+                // if no other key was pressed in the meantime
+                // send a tap of the modifier (to open windows
+                // startmenu or alt menu, etc.)
+                if (modifier_solo_activation) {
+                    tap_code(KC_RGUI);
+                    modifier_solo_activation = false;
+                }
             }
             return true;
 #elif homerow_mods == 1
