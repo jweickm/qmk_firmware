@@ -293,13 +293,14 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
+// +++++++++++++++++++ PROCESS RECORD USER +++++++++++++++++++++++++
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    mod_state = get_mods();
-    osmod_state = get_oneshot_mods();
     /* process the home row mod tags before anything else */
     if (!process_homerow_mods(keycode, record)) {
         return false;
     }
+    mod_state = get_mods();
+    osmod_state = get_oneshot_mods();
     switch (keycode) {
 
 // ------------------------------- LANGUAGES & LAYERS --------------------------

@@ -491,14 +491,23 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
     switch(combo_index) {
         case MN_LARROW:
             if (pressed) {
-                tap_code16(S(KC_COMM));
-                tap_code16(KC_MINS);
+                if (de_layout_active) {
+                    tap_code(DE_LABK);
+                    tap_code(DE_MINS);
+                } else {
+                    tap_code16(S(KC_COMM));
+                    tap_code16(KC_MINS);
+                }
             }
             break;
         case GM_PIPE:
             if (pressed) {
                 tap_code16(KC_PERC);
-                tap_code16(S(KC_DOT));
+                if (de_layout_active) {
+                    tap_code16(DE_RABK);
+                } else {
+                    tap_code16(S(KC_DOT));
+                }
                 tap_code16(KC_PERC);
             }
             break;
