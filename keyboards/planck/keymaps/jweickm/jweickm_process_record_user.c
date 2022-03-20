@@ -168,6 +168,19 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
         case T_KEY:
         case W_KEY:
             if (record->tap.count && record->event.pressed) {
+                /* allow triggers for the other hand side */
+                if (rctl_held && !(get_mods() & MOD_BIT(KC_RCTL))) {
+                    register_mods(MOD_BIT(KC_RCTL));
+                }
+                if (rsft_held && !(get_mods() & MOD_BIT(KC_RSFT))) {
+                    register_mods(MOD_BIT(KC_RSFT));
+                }
+                if (ralt_held && !(get_mods() & MOD_BIT(KC_LALT))) {
+                    register_mods(MOD_BIT(KC_LALT));
+                }
+                if (rgui_held && !(get_mods() & MOD_BIT(KC_RGUI))) {
+                    register_mods(MOD_BIT(KC_RGUI));
+                }
                 /* when tapped and a home row state variable is active,
                  * tap the respective key instead of the corresponding mod
                  * this disables triggers on the same hand side */
@@ -187,19 +200,6 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
                     tap_code(KC_T);
                     lctl_held = false;
                 }
-                /* but allow triggers for the other hand side */
-                if (rctl_held && !(get_mods() & MOD_BIT(KC_RCTL))) {
-                    register_mods(MOD_BIT(KC_RCTL));
-                }
-                if (rsft_held && !(get_mods() & MOD_BIT(KC_RSFT))) {
-                    register_mods(MOD_BIT(KC_RSFT));
-                }
-                if (ralt_held && !(get_mods() & MOD_BIT(KC_LALT))) {
-                    register_mods(MOD_BIT(KC_LALT));
-                }
-                if (rgui_held && !(get_mods() & MOD_BIT(KC_RGUI))) {
-                    register_mods(MOD_BIT(KC_RGUI));
-                }
                 modifier_solo_activation = false;
             } else if (record->event.pressed) {
             } else {
@@ -213,6 +213,19 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
         case U_KEY:
         case Y_KEY:
             if (record->tap.count && record->event.pressed) {
+                /* allow triggers for the other hand side */
+                if (lctl_held && !(get_mods() & MOD_BIT(KC_LCTL))) {
+                    register_mods(MOD_BIT(KC_LCTL));
+                }
+                if (lsft_held && !(get_mods() & MOD_BIT(KC_LSFT))) {
+                    register_mods(MOD_BIT(KC_LSFT));
+                }
+                if (lalt_held && !(get_mods() & MOD_BIT(KC_LALT))) {
+                    register_mods(MOD_BIT(KC_LALT));
+                }
+                if (lgui_held && !(get_mods() & MOD_BIT(KC_LGUI))) {
+                    register_mods(MOD_BIT(KC_LGUI));
+                }
                 /* disable triggers on the same hand side */
                 if (rctl_held) {
                     tap_code(KC_N);
@@ -229,19 +242,6 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
                 if (rgui_held) {
                     tap_code(KC_O);
                     rgui_held = false;
-                }
-                /* but allow triggers for the other hand side */
-                if (lctl_held && !(get_mods() & MOD_BIT(KC_LCTL))) {
-                    register_mods(MOD_BIT(KC_LCTL));
-                }
-                if (lsft_held && !(get_mods() & MOD_BIT(KC_LSFT))) {
-                    register_mods(MOD_BIT(KC_LSFT));
-                }
-                if (lalt_held && !(get_mods() & MOD_BIT(KC_LALT))) {
-                    register_mods(MOD_BIT(KC_LALT));
-                }
-                if (lgui_held && !(get_mods() & MOD_BIT(KC_LGUI))) {
-                    register_mods(MOD_BIT(KC_LGUI));
                 }
                 modifier_solo_activation = false; // record that another key was pressed
                                                   // (cannot trigger for the same key)
