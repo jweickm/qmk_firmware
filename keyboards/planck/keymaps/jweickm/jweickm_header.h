@@ -41,6 +41,10 @@ NGKEYS naginata_keys;
 
 // define the position of the homerow_mods: 1-top row, 2-middle row, 3-bottom row
 #define homerow_mods 2
+
+// define whether we want to be able to trigger the modifier tap on the home row by long-pressing and releasing without pressing any other keys in between
+#define MODIFIER_SOLO_ACTIVATION true
+
 // define whether we want to use custom home row roll modifications
 
 #if homerow_mods == 1
@@ -78,15 +82,6 @@ NGKEYS naginata_keys;
 
     #define G_KEY LT(_NUM, KC_G)
     #define M_KEY LT(_MOUSE, KC_M)
-
-    /* #define A_KEY LT(0, KC_A) */
-    /* #define R_KEY LT(0, KC_R) */
-    /* #define S_KEY LSFT_T(KC_S) */
-    /* #define T_KEY LCTL_T(KC_T) */
-    /* #define N_KEY RCTL_T(KC_N) */
-    /* #define E_KEY RSFT_T(KC_E) */
-    /* #define I_KEY LT(0, KC_I) */
-    /* #define O_KEY LT(0, KC_O) */
 
     #define A_KEY LGUI_T(KC_A)
     #define R_KEY LALT_T(KC_R)
