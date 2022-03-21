@@ -64,8 +64,9 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case LT(0, KC_Z):
         case SCLN_KEY:
         case O_KEY:
-        case LT(0, KC_SLSH):
+        case ESC_KEY:
         case RSFT_T(KC_ENT):
+        case LT(0, KC_SLSH):
         case LT(0, KC_MINS):
             return TAPPING_TERM * pinky_factor;
         case LCTL_T(KC_CAPS):
@@ -1978,6 +1979,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         /*         sft_pressed = false; */
         /*     } */
         /*     return true; */
+        case ESC_KEY:
+            if (record->tap.count && record->event.pressed) {
+                return true;
+            } else if (record->event.pressed) {
+                if (de_layout_active) {
+                    tap_code16(DE_TILD);
+                } else {
+                    tap_code16(KC_TILD);
+                }
+                return false;
+            } else {
+            }
+            return true;
         case RSFT_T(KC_ENT):
             if (record->tap.count && record->event.pressed) {
                 if (caps_lock_on) {

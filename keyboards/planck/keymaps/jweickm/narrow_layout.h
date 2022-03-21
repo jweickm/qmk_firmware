@@ -25,8 +25,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_COLEMAK] = LAYOUT_planck_grid(
-        KC_ESC, Q_KEY, W_KEY, F_KEY, P_KEY, B_KEY, J_KEY, L_KEY, U_KEY, Y_KEY, SCLN_KEY, LT(0, KC_BSLS), // LT(0, DE_UDIA), 
-//        KC_ESC, LGUI_T(KC_Q), LALT_T(KC_W), LSFT_T(KC_F), LCTL_T(KC_P), KC_B, KC_J, RCTL_T(KC_L), RSFT_T(KC_U), LALT_T(KC_Y), RGUI_T(KC_SCLN), LT(0, KC_BSLS), // LT(0, DE_UDIA), 
+        ESC_KEY, Q_KEY, W_KEY, F_KEY, P_KEY, B_KEY, J_KEY, L_KEY, U_KEY, Y_KEY, SCLN_KEY, LT(0, KC_BSLS), // LT(0, DE_UDIA), 
+//        ESC_KEY, LGUI_T(KC_Q), LALT_T(KC_W), LSFT_T(KC_F), LCTL_T(KC_P), KC_B, KC_J, RCTL_T(KC_L), RSFT_T(KC_U), LALT_T(KC_Y), RGUI_T(KC_SCLN), LT(0, KC_BSLS), // LT(0, DE_UDIA), 
         KC_TAB, A_KEY, R_KEY, S_KEY, T_KEY, G_KEY, M_KEY, N_KEY, E_KEY, I_KEY, O_KEY, LT(0, KC_QUOT), // KC_QUOT, 
 //#if homerow_mods == 1
 //        KC_TAB, LT(0, KC_A), KC_R, KC_S, KC_T, KC_G, KC_M, KC_N, KC_E, KC_I, LT(0, KC_O), LT(0, KC_QUOT), // KC_QUOT, 
@@ -57,7 +57,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_QWERTY] = LAYOUT_planck_grid(
-        KC_ESC, LGUI_T(KC_Q), LALT_T(KC_W), LSFT_T(KC_E), LCTL_T(KC_R), KC_T, KC_Y, RCTL_T(KC_U), RSFT_T(KC_I), LALT_T(KC_O), RGUI_T(KC_P), LT(0, KC_BSLS), // LT(0, DE_UDIA), 
+        ESC_KEY, LGUI_T(KC_Q), LALT_T(KC_W), LSFT_T(KC_E), LCTL_T(KC_R), KC_T, KC_Y, RCTL_T(KC_U), RSFT_T(KC_I), LALT_T(KC_O), RGUI_T(KC_P), LT(0, KC_BSLS), // LT(0, DE_UDIA), 
 #if homerow_mods == 1
         KC_TAB, LT(0, KC_A), KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, LT(0, KC_SCLN), LT(0, KC_QUOT), // KC_QUOT, 
 #elif homerow_mods == 2

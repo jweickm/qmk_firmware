@@ -107,6 +107,7 @@ NGKEYS naginata_keys;
     #define RAISE LT(_RAISE, KC_ENT)
 #endif
 
+#define ESC_KEY LT(0, KC_ESC)
 #define NAVSPACE LT(_NAV, KC_SPC)
 #define NAVENT LT(_NAV, KC_ENT)
 #define CUT_X LT(0, KC_X)
@@ -248,8 +249,10 @@ enum combos {
     XC_CAPS,
     COMMDOT_LEAD,
     XS_TAB, 
+    QW_KANA, 
     WF_TAB, 
     ZS_SZ,
+    ZX_LANG,
     EDOT_BSPC,
     SCLNBSLS_DEL,
     YSCLN_BSPC,
@@ -333,8 +336,10 @@ const uint16_t PROGMEM escq_combo[]         = {KC_ESC, Q_KEY,               COMB
 const uint16_t PROGMEM xc_combo[]           = {CUT_X, COPY_C,               COMBO_END};
 const uint16_t PROGMEM commdot_combo[]      = {LT(0, KC_COMM), LT(0, KC_DOT), COMBO_END};
 const uint16_t PROGMEM xs_combo[]           = {CUT_X, S_KEY,                COMBO_END};
+const uint16_t PROGMEM qw_combo[]           = {Q_KEY, W_KEY,                COMBO_END};
 const uint16_t PROGMEM wf_combo[]           = {W_KEY, F_KEY,                COMBO_END};
 const uint16_t PROGMEM zs_combo[]           = {LT(0, KC_Z), S_KEY,          COMBO_END};
+const uint16_t PROGMEM zx_combo[]           = {LT(0, KC_Z), CUT_X,          COMBO_END};
 const uint16_t PROGMEM edot_combo[]         = {E_KEY, LT(0, KC_DOT),        COMBO_END};
 const uint16_t PROGMEM sclnbsls_combo[]     = {SCLN_KEY, LT(0, KC_BSLS),    COMBO_END};
 const uint16_t PROGMEM yscln_combo[]        = {Y_KEY, SCLN_KEY,             COMBO_END};
@@ -410,8 +415,10 @@ combo_t key_combos[] = {
     [XC_CAPS]       = COMBO(xc_combo, KC_CAPS),
     [COMMDOT_LEAD]  = COMBO(commdot_combo, KC_LEAD),
     [XS_TAB]        = COMBO(xs_combo, KC_TAB),      
+    [QW_KANA]       = COMBO(qw_combo, A(KC_GRV)),      
     [WF_TAB]        = COMBO(wf_combo, KC_TAB),      
     [ZS_SZ]         = COMBO(zs_combo, DE_SZ),      
+    [ZX_LANG]       = COMBO(zx_combo, LANG_SWITCH),      
     [EDOT_BSPC]     = COMBO(edot_combo, C(KC_BSPC)),
     [SCLNBSLS_DEL]  = COMBO(sclnbsls_combo, KC_DEL),
     [YSCLN_BSPC]    = COMBO(yscln_combo, KC_BSPC),
