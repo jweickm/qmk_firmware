@@ -251,7 +251,7 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
                 // check whether the modifier has been held longer than the predefined SAME_HAND_DELAY
                 if (rctl_held) {
                     if (hold_duration > SAME_HAND_DELAY) {
-                        register_mods(MOD_BIT(KC_LCTL));
+                        register_mods(MOD_BIT(KC_RCTL));
                     } else {
                         tap_code(KC_N);
                         rctl_held = false;
