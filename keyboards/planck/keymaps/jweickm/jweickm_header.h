@@ -107,6 +107,19 @@ NGKEYS naginata_keys;
     #define RAISE LT(_RAISE, KC_ENT)
 #endif
 
+#define DIRECTIONAL_KEYS 0 // 0: arrow keys, 1: mouse wheel
+#if DIRECTIONAL_KEYS == 0
+#define DOWN_KEY LT(_NAV, KC_DOWN)
+#define UP_KEY LT(_NAV, KC_UP)
+#define LEFT_KEY KC_LEFT
+#define RIGHT_KEY KC_RIGHT
+#else 
+#define DOWN_KEY KC_MS_WH_DOWN
+#define UP_KEY KC_MS_WH_UP
+#define LEFT_KEY KC_MS_WH_LEFT
+#define RIGHT_KEY KC_MS_WH_RIGHT
+#endif
+
 #define ESC_KEY LT(0, KC_ESC)
 #define NAVSPACE LT(_NAV, KC_SPC)
 #define NAVENT LT(_NAV, KC_ENT)

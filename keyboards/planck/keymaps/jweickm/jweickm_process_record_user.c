@@ -213,6 +213,7 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
         case O_KEY:
         case U_KEY:
         case Y_KEY:
+        case M_KEY:
             if (record->tap.count && record->event.pressed) {
                 /* allow triggers for the other hand side */
                 if (lctl_held && !(get_mods() & MOD_BIT(KC_LCTL))) {
@@ -539,7 +540,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
         // this esc turns off caps lock, if it was active
         case LT(_NUM, KC_ESC):
-        case KC_ESC:
             if (record->event.pressed && caps_lock_on) {
                 tap_code(KC_CAPS);
             }
@@ -1981,6 +1981,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         /*     return true; */
         case ESC_KEY:
             if (record->tap.count && record->event.pressed) {
+                if (caps_lock_on) {
+                    tap_code(KC_CAPS);
+                }
+                if (IS_LAYER_ON(_NUM)) {
+                    layer_off(_NUM);
+                }
                 return true;
             } else if (record->event.pressed) {
                 if (de_layout_active) {
