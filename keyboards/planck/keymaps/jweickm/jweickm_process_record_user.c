@@ -119,6 +119,7 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 // initialize the mod_state and the oneshotmod_state variables
 uint8_t mod_state;
 uint8_t osmod_state;
+uint16_t hold_duration;
 
 // bools to show that the modifier that is NOT on the home row has been pressed
 // no longer necessary with current implementation
@@ -160,7 +161,10 @@ bool modifier_solo_activation;
 /* Note to self: calling the function void process_record(keyrecord_t *record) from anywhere, I can process a key event (key press or key release) and process it, e.g. */ 
 /* process_record(&(keyrecord_t){.tap = tapping_key.tap, .event.key = tapping_key.event.key, .event.time = event.time, .event.pressed = false}); */
 
+static uint16_t key_timer;
+
 bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
+    hold_duration = timer_elapsed(key_timer);
     switch (keycode) {
         // write keys that should not trigger left hand mods here
         case A_KEY:
@@ -182,27 +186,43 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
                 if (rgui_held && !(get_mods() & MOD_BIT(KC_RGUI))) {
                     register_mods(MOD_BIT(KC_RGUI));
                 }
-                /* when tapped and a home row state variable is active,
-                 * tap the respective key instead of the corresponding mod
-                 * this disables triggers on the same hand side */
+                // check whether the modifier has been held longer than the predefined SAME_HAND_DELAY
+                // when tapped and a home row state variable is active, tap the respective key instead of the corresponding mod this disables triggers on the same hand side
                 if (lgui_held) {
-                    tap_code(KC_A);
-                    lgui_held = false;
+                    if (hold_duration > SAME_HAND_DELAY) {
+                        register_mods(MOD_BIT(KC_LGUI));
+                    } else {
+                        tap_code(KC_A);
+                        lgui_held = false;
+                    }
                 }
                 if (lalt_held) {
-                    tap_code(KC_R);
-                    lalt_held = false;
+                    if (hold_duration > SAME_HAND_DELAY) {
+                        register_mods(MOD_BIT(KC_LALT));
+                    } else {
+                        tap_code(KC_R);
+                        lalt_held = false;
+                    }
                 }
                 if (lsft_held) {
-                    tap_code(KC_S);
-                    lsft_held = false;
+                    if (hold_duration > SAME_HAND_DELAY) {
+                        register_mods(MOD_BIT(KC_LSFT));
+                    } else {
+                        tap_code(KC_S);
+                        lsft_held = false;
+                    }
                 }
                 if (lctl_held) {
-                    tap_code(KC_T);
-                    lctl_held = false;
+                    if (hold_duration > SAME_HAND_DELAY) {
+                        register_mods(MOD_BIT(KC_LCTL));
+                    } else {
+                        tap_code(KC_T);
+                        lctl_held = false;
+                    }
                 }
                 modifier_solo_activation = false;
             } else if (record->event.pressed) {
+                key_timer = timer_read();
             } else {
             }
             return true;
@@ -228,26 +248,43 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
                 if (lgui_held && !(get_mods() & MOD_BIT(KC_LGUI))) {
                     register_mods(MOD_BIT(KC_LGUI));
                 }
-                /* disable triggers on the same hand side */
+                // check whether the modifier has been held longer than the predefined SAME_HAND_DELAY
                 if (rctl_held) {
-                    tap_code(KC_N);
-                    rctl_held = false;
+                    if (hold_duration > SAME_HAND_DELAY) {
+                        register_mods(MOD_BIT(KC_LCTL));
+                    } else {
+                        tap_code(KC_N);
+                        rctl_held = false;
+                    }
                 }
                 if (rsft_held) {
-                    tap_code(KC_E);
-                    rsft_held = false;
+                    if (hold_duration > SAME_HAND_DELAY) {
+                        register_mods(MOD_BIT(KC_RSFT));
+                    } else {
+                        tap_code(KC_E);
+                        rsft_held = false;
+                    }
                 }
                 if (ralt_held) {
-                    tap_code(KC_I);
-                    ralt_held = false;
+                    if (hold_duration > SAME_HAND_DELAY) {
+                        register_mods(MOD_BIT(KC_LALT));
+                    } else {
+                        tap_code(KC_I);
+                        ralt_held = false;
+                    }
                 }
                 if (rgui_held) {
-                    tap_code(KC_O);
-                    rgui_held = false;
+                    if (hold_duration > SAME_HAND_DELAY) {
+                        register_mods(MOD_BIT(KC_RGUI));
+                    } else {
+                        tap_code(KC_O);
+                        rgui_held = false;
+                    }
                 }
                 modifier_solo_activation = false; // record that another key was pressed
                                                   // (cannot trigger for the same key)
             } else if (record->event.pressed) {
+                key_timer = timer_read();
             } else {
             }
             return true;
@@ -540,6 +577,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
         // this esc turns off caps lock, if it was active
         case LT(_NUM, KC_ESC):
+        case KC_ESC:
             if (record->event.pressed && caps_lock_on) {
                 tap_code(KC_CAPS);
             }
@@ -1330,9 +1368,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     unregister_code16(DE_PLUS);
                 }
                 return false;
-            } else {
-                return true;
-            }
+            } else if (!de_layout_active) {
+                if (mod_state & MOD_BIT(KC_LCTL)) {
+                    if (record->event.pressed) {
+                        register_code(KC_EQL);
+                        return false;
+                    } else {
+                        unregister_code(KC_EQL);
+                        return false;
+                    }
+                } 
+            } 
+            return true;
         case KC_LCBR: // {
             if (de_layout_active) {
                 if (record->event.pressed) {

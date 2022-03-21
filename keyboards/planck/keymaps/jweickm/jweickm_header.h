@@ -42,9 +42,6 @@ NGKEYS naginata_keys;
 // define the position of the homerow_mods: 1-top row, 2-middle row, 3-bottom row
 #define homerow_mods 2
 
-// define whether we want to be able to trigger the modifier tap on the home row by long-pressing and releasing without pressing any other keys in between
-#define MODIFIER_SOLO_ACTIVATION true
-
 // define whether we want to use custom home row roll modifications
 
 #if homerow_mods == 1
@@ -413,7 +410,7 @@ combo_t key_combos[] = {
 //    [HCOMM_ENT]     = COMBO(hcomm_combo, KC_ENT),  
     [HCOMM_ENT]     = COMBO(hcomm_combo, KC_ENT),  
 //    [KH_KANA]       = COMBO(kh_combo, A(KC_GRV)),  
-    [CD_ESC]        = COMBO(cd_combo, ESC_KEY),  
+    [CD_ESC]        = COMBO(cd_combo, KC_ESC),  
     [HDOT_RALT]     = COMBO(hdot_combo, KC_RALT),  
     [XD_APP]        = COMBO(xd_combo, KC_APP),
     [LR_ADJ]        = COMBO(adj_combo, MO(_ADJUST)),
