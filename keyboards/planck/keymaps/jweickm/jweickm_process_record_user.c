@@ -172,7 +172,7 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
         case S_KEY:
         case T_KEY:
         case W_KEY:
-            if (record->tap.count && record->event.pressed) {
+            if (record->event.pressed) {
                 /* allow triggers for the other hand side */
                 if (rctl_held && !(get_mods() & MOD_BIT(KC_RCTL))) {
                     register_mods(MOD_BIT(KC_RCTL));
@@ -221,8 +221,6 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
                     }
                 }
                 modifier_solo_activation = false;
-            } else if (record->event.pressed) {
-                key_timer = timer_read();
             } else {
             }
             return true;
@@ -234,7 +232,7 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
         case U_KEY:
         case Y_KEY:
         case M_KEY:
-            if (record->tap.count && record->event.pressed) {
+            if (record->event.pressed) {
                 /* allow triggers for the other hand side */
                 if (lctl_held && !(get_mods() & MOD_BIT(KC_LCTL))) {
                     register_mods(MOD_BIT(KC_LCTL));
@@ -283,8 +281,6 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
                 }
                 modifier_solo_activation = false; // record that another key was pressed
                                                   // (cannot trigger for the same key)
-            } else if (record->event.pressed) {
-                key_timer = timer_read();
             } else {
             }
             return true;
@@ -2074,6 +2070,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case A_KEY: 
             if (record->tap.count && record->event.pressed) {
             } else if (record->event.pressed) {
+                key_timer = timer_read();
                 lgui_held = true;
                 modifier_solo_activation = true;
                 return false;
@@ -2106,6 +2103,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 /*     } */
                 /* } */
             } else if (record->event.pressed) {
+                key_timer = timer_read();
                 lalt_held = true;
                 modifier_solo_activation = true;
                 return false;
@@ -2138,6 +2136,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 /*     } */
                 /* } */
             } else if (record->event.pressed) {
+                key_timer = timer_read();
                 lsft_held = true;
                 modifier_solo_activation = true;
                 return false;
@@ -2177,6 +2176,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 /*     } */
                 /* } */
             } else if (record->event.pressed) {
+                key_timer = timer_read();
                 lctl_held = true;
                 modifier_solo_activation = true;
                 return false;
@@ -2226,6 +2226,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 /*     } */
                 /* } */
             } else if (record->event.pressed) {
+                key_timer = timer_read();
                 rctl_held = true;
                 modifier_solo_activation = true;
                 return false;
@@ -2263,6 +2264,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 /*     } */
                 /* } */
             } else if (record->event.pressed) {
+                key_timer = timer_read();
                 rsft_held = true;
                 modifier_solo_activation = true;
                 return false;
@@ -2300,6 +2302,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 /*     } */
                 /* } */
             } else if (record->event.pressed) {
+                key_timer = timer_read();
                 ralt_held = true;
                 modifier_solo_activation = true;
                 return false;
@@ -2332,6 +2335,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 /*     } */
                 /* } */
             } else if (record->event.pressed) {
+                key_timer = timer_read();
                 rgui_held = true;
                 modifier_solo_activation = true;
                 return false;

@@ -68,9 +68,9 @@
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
 // define whether we want to be able to trigger the modifier tap on the home row by long-pressing and releasing without pressing any other keys in between
-#define MODIFIER_SOLO_ACTIVATION true
+/* #define MODIFIER_SOLO_ACTIVATION */ 
 // set the hold duration necessary to be able to trigger same hand home row mods
-#define SAME_HAND_DELAY 230
+#define SAME_HAND_DELAY 200
 
 
 // settings for LEADER key
