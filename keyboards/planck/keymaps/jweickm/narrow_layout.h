@@ -33,7 +33,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //#elif homerow_mods == 2
 //        KC_TAB, LT(0, KC_A), KC_R, LSFT_T(KC_S), KC_T, KC_G, KC_M, KC_N, RSFT_T(KC_E), KC_I, LT(0, KC_O), LT(0, KC_QUOT), // KC_QUOT, 
 //#endif
-        OSM(MOD_LSFT), LT(0, KC_Z), CUT_X, COPY_C, KC_D, PASTE_V, KC_K, KC_H, LT(0, KC_COMM), LT(0, KC_DOT), LT(0, KC_SLSH), RSFT_T(KC_ENT), 
+        OSM(MOD_LSFT), LT(0, KC_Z), X_KEY, C_KEY, D_KEY, V_KEY, KC_K, H_KEY, LT(0, KC_COMM), LT(0, KC_DOT), LT(0, KC_SLSH), RSFT_T(KC_ENT), 
     #if layout == 1
         #if thumb == 1
         LCTL_T(KC_CAPS), KC_LGUI, KC_LALT, LT(_NUM, KC_ESC), LOWER, OSM(MOD_LSFT), NAVSPACE, RAISE, LT(_MOUSE, KC_DEL), DOWN_KEY, UP_KEY, LT(_ADJUST, KC_RALT)
@@ -59,11 +59,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT_planck_grid(
         ESC_KEY, LGUI_T(KC_Q), LALT_T(KC_W), LSFT_T(KC_E), LCTL_T(KC_R), KC_T, KC_Y, RCTL_T(KC_U), RSFT_T(KC_I), LALT_T(KC_O), RGUI_T(KC_P), LT(0, KC_BSLS), // LT(0, DE_UDIA), 
 #if homerow_mods == 1
-        KC_TAB, LT(0, KC_A), KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, LT(0, KC_SCLN), LT(0, KC_QUOT), // KC_QUOT, 
+        KC_TAB, LT(0, KC_A), KC_S, D_KEY, KC_F, KC_G, H_KEY, KC_J, KC_K, KC_L, LT(0, KC_SCLN), LT(0, KC_QUOT), // KC_QUOT, 
 #elif homerow_mods == 2
-        KC_TAB, LT(0, KC_A), KC_S, LSFT_T(KC_D), KC_F, KC_G, KC_H, KC_J, RSFT_T(KC_K), KC_L, LT(0, KC_SCLN), LT(0, KC_QUOT), // KC_QUOT, 
+        KC_TAB, LT(0, KC_A), KC_S, LSFT_T(KC_D), KC_F, KC_G, H_KEY, KC_J, RSFT_T(KC_K), KC_L, LT(0, KC_SCLN), LT(0, KC_QUOT), // KC_QUOT, 
 #endif
-        OSM(MOD_LSFT), LT(0, KC_Z), CUT_X, COPY_C, PASTE_V, KC_B, KC_N, KC_M, LT(0, KC_COMM), LT(0, KC_DOT), LT(0, KC_SLSH), RSFT_T(KC_ENT), 
+        OSM(MOD_LSFT), LT(0, KC_Z), X_KEY, C_KEY, V_KEY, KC_B, KC_N, KC_M, LT(0, KC_COMM), LT(0, KC_DOT), LT(0, KC_SLSH), RSFT_T(KC_ENT), 
     #if layout == 1
         #if thumb == 1
         LCTL_T(KC_CAPS), KC_LGUI, KC_LALT, LT(_NUM, KC_ESC), LOWER, OSM(MOD_LSFT), NAVSPACE, RAISE, LT(_MOUSE, KC_DEL), DOWN_KEY, UP_KEY, LT(_ADJUST, KC_RALT)
@@ -183,7 +183,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */ 
     [_NUM] = LAYOUT_planck_grid(
-        KC_TRNS, KC_A, KC_B, KC_C, KC_D, KC_E, KC_F, KC_7, KC_8, KC_9, KC_0, KC_BSPC,
+        KC_TRNS, KC_A, KC_B, KC_C, D_KEY, KC_E, KC_F, KC_7, KC_8, KC_9, KC_0, KC_BSPC,
         KC_TRNS, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_END, KC_ASTR, KC_4, KC_5, KC_6, KC_PLUS, KC_MINS,
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_UNDS, KC_1, KC_2, KC_3, KC_SLSH, KC_TRNS,
     #if layout == 1

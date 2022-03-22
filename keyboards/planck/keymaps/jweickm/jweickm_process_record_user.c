@@ -23,7 +23,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case P_KEY:
         case T_KEY:
         case G_KEY:
-        case PASTE_V:
+        case V_KEY:
         case B_KEY:
         case J_KEY:
         case L_KEY:
@@ -39,7 +39,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         // middle finger keys
         case F_KEY:
         case S_KEY:
-        case COPY_C:
+        case C_KEY:
         case U_KEY:
         case E_KEY:
         case LT(0, KC_COMM):
@@ -48,7 +48,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         // ring finger keys
         case W_KEY:
         case R_KEY:
-        case CUT_X:
+        case X_KEY:
         case Y_KEY:
         case I_KEY:
         case LT(0, KC_DOT):
@@ -444,7 +444,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
             break;
-        case CUT_X:
+        case X_KEY:
             if (record->tap.count && record->event.pressed) {
                 return true;         // Return true for normal processing of tap keycode
                 break;
@@ -453,7 +453,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             return true;
-        case COPY_C:
+        case C_KEY:
             if (record->tap.count && record->event.pressed) {
                 return true;         // Return true for normal processing of tap keycode
                 break;
@@ -462,7 +462,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             return true;
-        case PASTE_V:
+        case V_KEY:
             if (record->tap.count && record->event.pressed) {
                 return true;         // Return true for normal processing of tap keycode
                 break;
