@@ -173,10 +173,16 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
         case S_KEY:
         case T_KEY:
         case W_KEY:
-            if (keycode == (A_KEY || R_KEY || S_KEY || T_KEY)) {
-                key_filter = record->tap.count && record->event.pressed;
-            } else {
-                key_filter = record->event.pressed;
+            switch (keycode) {
+                case A_KEY:
+                case R_KEY:
+                case S_KEY:
+                case T_KEY:
+                    key_filter = record->tap.count && record->event.pressed;
+                    break;
+                default:
+                    key_filter = record->event.pressed;
+                    break;
             }
             if (key_filter) {
                 /* allow triggers for the other hand side */
@@ -240,10 +246,16 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
         case U_KEY:
         case Y_KEY:
         case M_KEY:
-            if (keycode == (O_KEY || I_KEY || E_KEY || N_KEY)) {
-                key_filter = record->tap.count && record->event.pressed;
-            } else {
-                key_filter = record->event.pressed;
+            switch (keycode) {
+                case O_KEY:
+                case I_KEY:
+                case E_KEY:
+                case N_KEY:
+                    key_filter = record->tap.count && record->event.pressed;
+                    break;
+                default:
+                    key_filter = record->event.pressed;
+                    break;
             }
             if (key_filter) {
                 /* allow triggers for the other hand side */
