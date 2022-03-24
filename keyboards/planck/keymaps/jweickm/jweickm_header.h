@@ -261,7 +261,7 @@ enum combos {
     DOWNRALT_MPRV,
     UPRALT_MNXT,
     DH_NAV,
-    ESCQ_ALTF4,
+    ESCW_ALTF4,
     XC_CAPS,
     COMMDOT_LEAD,
     XS_TAB, 
@@ -348,7 +348,7 @@ const uint16_t PROGMEM upmnxt_combo[]       = {LT(_ADJUST, KC_RALT), LT(_NAV, KC
 const uint16_t PROGMEM downmprv_combo[]     = {LT(_ADJUST, KC_RALT), LT(_NAV, KC_DOWN),COMBO_END};
 const uint16_t PROGMEM dh_combo[]           = {D_KEY, H_KEY,                  COMBO_END};
 const uint16_t PROGMEM bj_combo[]           = {B_KEY, J_KEY,                COMBO_END};
-const uint16_t PROGMEM escq_combo[]         = {ESC_KEY, Q_KEY,               COMBO_END};
+const uint16_t PROGMEM escw_combo[]         = {ESC_KEY, W_KEY,               COMBO_END};
 const uint16_t PROGMEM xc_combo[]           = {X_KEY, C_KEY,               COMBO_END};
 const uint16_t PROGMEM commdot_combo[]      = {LT(0, KC_COMM), LT(0, KC_DOT), COMBO_END};
 const uint16_t PROGMEM xs_combo[]           = {X_KEY, S_KEY,                COMBO_END};
@@ -441,7 +441,7 @@ combo_t key_combos[] = {
 
     [DH_NAV]        = COMBO(dh_combo, TG(_NAV)),
     [BJ_KANA]       = COMBO(bj_combo, A(KC_GRV)),
-    [ESCQ_ALTF4]    = COMBO_ACTION(escq_combo),
+    [ESCW_ALTF4]    = COMBO_ACTION(escw_combo),
     [MN_LARROW]     = COMBO_ACTION(larr_combo),  
     [GM_PIPE]       = COMBO_ACTION(pipe_combo),  
 //    [JL_LANG]       = COMBO(jl_combo, KC_DE_SWITCH),  
@@ -541,7 +541,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             //         tap_code16(S(KC_UP));
             //     }
             //     break;
-        case ESCQ_ALTF4:
+        case ESCW_ALTF4:
             if (pressed) {
                 tap_code16(A(KC_F4));
             }
