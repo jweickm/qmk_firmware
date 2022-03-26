@@ -1929,7 +1929,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 return true;
             } else if (record->event.pressed) {
-                if ((mod_state & MOD_MASK_SHIFT) == MOD_MASK_SHIFT) {
+                if ((mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_RSFT)) || (mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_LSFT))) {
                     del_mods(MOD_MASK_SHIFT);
                     tap_code(KC_1);
                     set_mods(mod_state);
@@ -1943,7 +1943,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 return true;
             } else if (record->event.pressed) {
-                if ((mod_state & MOD_MASK_SHIFT) == MOD_MASK_SHIFT) {
+                if ((mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_RSFT)) || (mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_LSFT))) {
                     del_mods(MOD_MASK_SHIFT);
                     tap_code(KC_2);
                     set_mods(mod_state);
@@ -1957,7 +1957,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 return true;
             } else if (record->event.pressed) {
-                if ((mod_state & MOD_MASK_SHIFT) == MOD_MASK_SHIFT) {
+                if ((mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_RSFT)) || (mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_LSFT))) {
                     del_mods(MOD_MASK_SHIFT);
                     tap_code(KC_3);
                     set_mods(mod_state);
@@ -1971,7 +1971,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 return true;
             } else if (record->event.pressed) {
-                if ((mod_state & MOD_MASK_SHIFT) == MOD_MASK_SHIFT) {
+                if ((mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_RSFT)) || (mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_LSFT))) {
                     del_mods(MOD_MASK_SHIFT);
                     tap_code(KC_4);
                     set_mods(mod_state);
@@ -1985,7 +1985,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 return true;
             } else if (record->event.pressed) {
-                if ((mod_state & MOD_MASK_SHIFT) == MOD_MASK_SHIFT) {
+                if ((mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_RSFT)) || (mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_LSFT))) {
                     del_mods(MOD_MASK_SHIFT);
                     tap_code(KC_5);
                     set_mods(mod_state);
@@ -1999,7 +1999,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 return true;
             } else if (record->event.pressed) {
-                if ((mod_state & MOD_MASK_SHIFT) == MOD_MASK_SHIFT) {
+                if ((mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_RSFT)) || (mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_LSFT))) {
                     del_mods(MOD_MASK_SHIFT);
                     tap_code(KC_6);
                     set_mods(mod_state);
@@ -2013,7 +2013,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 return true;
             } else if (record->event.pressed) {
-                if ((mod_state & MOD_MASK_SHIFT) == MOD_MASK_SHIFT) {
+                if ((mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_RSFT)) || (mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_LSFT))) {
                     del_mods(MOD_MASK_SHIFT);
                     tap_code(KC_7);
                     set_mods(mod_state);
@@ -2027,7 +2027,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 return true;
             } else if (record->event.pressed) {
-                if ((mod_state & MOD_MASK_SHIFT) == MOD_MASK_SHIFT) {
+                if ((mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_RSFT)) || (mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_LSFT))) {
                     del_mods(MOD_MASK_SHIFT);
                     tap_code(KC_8);
                     set_mods(mod_state);
@@ -2093,7 +2093,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return false;
                 }
             } else if (record->event.pressed) {
-                if ((mod_state & MOD_MASK_SHIFT) == MOD_MASK_SHIFT) {
+                if ((mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_RSFT)) || (mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_LSFT))) {
                     del_mods(MOD_MASK_SHIFT);
                     tap_code(KC_0);
                     set_mods(mod_state);
