@@ -6,6 +6,8 @@ SRC += muse.c
 COMBO_ENABLE = yes 			# Enable Keyboard Combos 1,764 bytes
 KEY_OVERRIDE_ENABLE = yes 	# Enable key override functionality
 NKRO = yes 					# Enable n-key rollover
+BOOTMAGIC_ENABLE = no		# Disable Bootmagic
+COMMAND_ENABLE = no			# Disable Command/Magic 
 
 #ifdef NAGINATA_ENABLE 		# enabled in config.h
 SRC += naginata_v14.c

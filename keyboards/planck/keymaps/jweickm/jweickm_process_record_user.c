@@ -183,19 +183,19 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
             }
             if (key_filter) {
                 /* allow triggers for the other hand side */
-                if (rctl_held && !(get_mods() & MOD_BIT(KC_RCTL))) {
+                if (rctl_held && !(mod_state & MOD_BIT(KC_RCTL))) {
                     register_mods(MOD_BIT(KC_RCTL));
                     rctl_held = false;
                 }
-                if (rsft_held && !(get_mods() & MOD_BIT(KC_RSFT))) {
+                if (rsft_held && !(mod_state & MOD_BIT(KC_RSFT))) {
                     register_mods(MOD_BIT(KC_RSFT));
                     rsft_held = false;
                 }
-                if (ralt_held && !(get_mods() & MOD_BIT(KC_LALT))) {
+                if (ralt_held && !(mod_state & MOD_BIT(KC_LALT))) {
                     register_mods(MOD_BIT(KC_LALT));
                     ralt_held = false;
                 }
-                if (rgui_held && !(get_mods() & MOD_BIT(KC_RGUI))) {
+                if (rgui_held && !(mod_state & MOD_BIT(KC_RGUI))) {
                     register_mods(MOD_BIT(KC_RGUI));
                     rgui_held = false;
                 }
@@ -264,19 +264,19 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
             }
             if (key_filter) {
                 /* allow triggers for the other hand side */
-                if (lctl_held && !(get_mods() & MOD_BIT(KC_LCTL))) {
+                if (lctl_held && !(mod_state & MOD_BIT(KC_LCTL))) {
                     register_mods(MOD_BIT(KC_LCTL));
                     lctl_held = false;
                 }
-                if (lsft_held && !(get_mods() & MOD_BIT(KC_LSFT))) {
+                if (lsft_held && !(mod_state & MOD_BIT(KC_LSFT))) {
                     register_mods(MOD_BIT(KC_LSFT));
                     lsft_held = false;
                 }
-                if (lalt_held && !(get_mods() & MOD_BIT(KC_LALT))) {
+                if (lalt_held && !(mod_state & MOD_BIT(KC_LALT))) {
                     register_mods(MOD_BIT(KC_LALT));
                     lalt_held = false;
                 }
-                if (lgui_held && !(get_mods() & MOD_BIT(KC_LGUI))) {
+                if (lgui_held && !(mod_state & MOD_BIT(KC_LGUI))) {
                     register_mods(MOD_BIT(KC_LGUI));
                     lgui_held = false;
                 }
@@ -329,19 +329,19 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
             // the key is processed in process_record_user
             if (record->event.pressed) {
                 // gui mods
-                if (lgui_held && !(get_mods() & MOD_BIT(KC_LGUI))) {
+                if (lgui_held && !(mod_state & MOD_BIT(KC_LGUI))) {
                     register_mods(MOD_BIT(KC_LGUI));
                     lgui_held = false;
                     modifier_solo_activation = false;
                 }
-                if (rgui_held && !(get_mods() & MOD_BIT(KC_RGUI))) {
+                if (rgui_held && !(mod_state & MOD_BIT(KC_RGUI))) {
                     register_mods(MOD_BIT(KC_RGUI));
                     rgui_held = false;
                     modifier_solo_activation = false;
                 }
                 // alt mods
                 if (lalt_held || ralt_held) {
-                    if (!(get_mods() & MOD_BIT(KC_LALT))) { 
+                    if (!(mod_state & MOD_BIT(KC_LALT))) { 
                         register_mods(MOD_BIT(KC_LALT));
                         lalt_held = false;
                         ralt_held = false;
@@ -349,23 +349,23 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
                     }  
                 }
                 // shift mods
-                if (lsft_held && !(get_mods() & MOD_BIT(KC_LSFT))) {
+                if (lsft_held && !(mod_state & MOD_BIT(KC_LSFT))) {
                     register_mods(MOD_BIT(KC_LSFT));
                     lsft_held = false;
                     modifier_solo_activation = false;
                 }
-                if (rsft_held && !(get_mods() & MOD_BIT(KC_RSFT))) {
+                if (rsft_held && !(mod_state & MOD_BIT(KC_RSFT))) {
                     register_mods(MOD_BIT(KC_RSFT));
                     rsft_held = false;
                     modifier_solo_activation = false;
                 }
                 // ctrl mods
-                if (lctl_held && !(get_mods() & MOD_BIT(KC_LCTL))) {
+                if (lctl_held && !(mod_state & MOD_BIT(KC_LCTL))) {
                     register_mods(MOD_BIT(KC_LCTL));
                     rctl_held = false;
                     modifier_solo_activation = false;
                 }
-                if (rctl_held && !(get_mods() & MOD_BIT(KC_RCTL))) {
+                if (rctl_held && !(mod_state & MOD_BIT(KC_RCTL))) {
                     register_mods(MOD_BIT(KC_RCTL));
                     rctl_held = false;
                     modifier_solo_activation = false;
@@ -379,6 +379,7 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
 // +++++++++++++++++++ PROCESS RECORD USER +++++++++++++++++++++++++
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     /* process the home row mod tags before anything else */
+    mod_state = get_mods();
     if (!process_homerow_mods(keycode, record)) {
         return false;
     }
@@ -1929,13 +1930,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 return true;
             } else if (record->event.pressed) {
-                if ((mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_RSFT)) || (mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_LSFT))) {
-                    del_mods(MOD_MASK_SHIFT);
-                    tap_code(KC_1);
-                    set_mods(mod_state);
-                } else {
-                    tap_code(KC_1);
-                }
+                tap_code(KC_1);
                 return false;
             }
             return true;
@@ -1943,13 +1938,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 return true;
             } else if (record->event.pressed) {
-                if ((mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_RSFT)) || (mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_LSFT))) {
-                    del_mods(MOD_MASK_SHIFT);
-                    tap_code(KC_2);
-                    set_mods(mod_state);
-                } else {
-                    tap_code(KC_2);
-                }
+                tap_code(KC_2);
                 return false;
             }
             return true;
@@ -1957,13 +1946,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 return true;
             } else if (record->event.pressed) {
-                if ((mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_RSFT)) || (mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_LSFT))) {
-                    del_mods(MOD_MASK_SHIFT);
-                    tap_code(KC_3);
-                    set_mods(mod_state);
-                } else {
-                    tap_code(KC_3);
-                }
+                tap_code(KC_3);
                 return false;
             }
             return true;
@@ -1971,13 +1954,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 return true;
             } else if (record->event.pressed) {
-                if ((mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_RSFT)) || (mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_LSFT))) {
-                    del_mods(MOD_MASK_SHIFT);
-                    tap_code(KC_4);
-                    set_mods(mod_state);
-                } else {
-                    tap_code(KC_4);
-                }
+                tap_code(KC_4);
                 return false;
             }
             return true;
@@ -1985,13 +1962,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 return true;
             } else if (record->event.pressed) {
-                if ((mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_RSFT)) || (mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_LSFT))) {
-                    del_mods(MOD_MASK_SHIFT);
-                    tap_code(KC_5);
-                    set_mods(mod_state);
-                } else {
-                    tap_code(KC_5);
-                }
+                tap_code(KC_5);
                 return false;
             }
             return true;
@@ -1999,13 +1970,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 return true;
             } else if (record->event.pressed) {
-                if ((mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_RSFT)) || (mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_LSFT))) {
-                    del_mods(MOD_MASK_SHIFT);
-                    tap_code(KC_6);
-                    set_mods(mod_state);
-                } else {
-                    tap_code(KC_6);
-                }
+                tap_code(KC_6);
                 return false;
             }
             return true;
@@ -2013,13 +1978,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 return true;
             } else if (record->event.pressed) {
-                if ((mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_RSFT)) || (mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_LSFT))) {
-                    del_mods(MOD_MASK_SHIFT);
-                    tap_code(KC_7);
-                    set_mods(mod_state);
-                } else {
-                    tap_code(KC_7);
-                }
+                tap_code(KC_7);
                 return false;
             }
             return true;
@@ -2027,13 +1986,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 return true;
             } else if (record->event.pressed) {
-                if ((mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_RSFT)) || (mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_LSFT))) {
-                    del_mods(MOD_MASK_SHIFT);
-                    tap_code(KC_8);
-                    set_mods(mod_state);
-                } else {
-                    tap_code(KC_8);
-                }
+                tap_code(KC_8);
                 return false;
             }
             return true;
@@ -2053,9 +2006,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 } 
             }
             if (record->event.pressed) {
-                del_mods(MOD_MASK_SHIFT);
                 tap_code(KC_9);
-                set_mods(mod_state);
                 return false;
             }
             return true;
@@ -2093,13 +2044,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return false;
                 }
             } else if (record->event.pressed) {
-                if ((mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_RSFT)) || (mod_state & MOD_MASK_SHIFT) == (MOD_BIT(KC_LSFT))) {
-                    del_mods(MOD_MASK_SHIFT);
-                    tap_code(KC_0);
-                    set_mods(mod_state);
-                } else {
-                    tap_code(KC_0);
-                }
+                tap_code(KC_0);
                 return false;
             } else {
                 if (de_en_switched && de_layout_active) {
