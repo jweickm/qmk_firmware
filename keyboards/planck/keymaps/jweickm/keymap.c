@@ -287,10 +287,9 @@ void led_set_user(uint8_t usb_led) {
 #endif
 
     // keep numlock turned on, i.e. turn it off everytime it is turned on
-    // not necessary as my keymap doesn't use numpad keys
-    /* if (!(usb_led & (1<<USB_LED_NUM_LOCK))) { */
-    /*     tap_code(KC_NUMLOCK); */
-    /* } */
+    if (!(usb_led & (1<<USB_LED_NUM_LOCK))) {
+        tap_code(KC_NUMLOCK);
+    }
 }
 
 #ifdef DYNAMIC_MACRO_ENABLE

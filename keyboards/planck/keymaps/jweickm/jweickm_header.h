@@ -262,6 +262,7 @@ enum combos {
     UPRALT_MNXT,
     DH_NAV,
     ESCW_ALTF4,
+    ESCBSLS_ALTF4,
     XC_CAPS,
     COMMDOT_LEAD,
     XS_TAB, 
@@ -349,6 +350,7 @@ const uint16_t PROGMEM downmprv_combo[]     = {LT(_ADJUST, KC_RALT), LT(_NAV, KC
 const uint16_t PROGMEM dh_combo[]           = {D_KEY, H_KEY,                  COMBO_END};
 const uint16_t PROGMEM bj_combo[]           = {B_KEY, J_KEY,                COMBO_END};
 const uint16_t PROGMEM escw_combo[]         = {ESC_KEY, W_KEY,               COMBO_END};
+const uint16_t PROGMEM escbsls_combo[]      = {ESC_KEY, KC_BSLS,               COMBO_END};
 const uint16_t PROGMEM xc_combo[]           = {X_KEY, C_KEY,               COMBO_END};
 const uint16_t PROGMEM commdot_combo[]      = {LT(0, KC_COMM), LT(0, KC_DOT), COMBO_END};
 const uint16_t PROGMEM xs_combo[]           = {X_KEY, S_KEY,                COMBO_END};
@@ -442,6 +444,7 @@ combo_t key_combos[] = {
     [DH_NAV]        = COMBO(dh_combo, TG(_NAV)),
     [BJ_KANA]       = COMBO(bj_combo, A(KC_GRV)),
     [ESCW_ALTF4]    = COMBO_ACTION(escw_combo),
+    [ESCBSLS_ALTF4] = COMBO_ACTION(escbsls_combo),
     [MN_LARROW]     = COMBO_ACTION(larr_combo),  
     [GM_PIPE]       = COMBO_ACTION(pipe_combo),  
 //    [JL_LANG]       = COMBO(jl_combo, KC_DE_SWITCH),  
