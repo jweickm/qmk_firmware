@@ -153,11 +153,6 @@ bool modifier_solo_activation;
 /* TODO: */
 /* - [ ] record timing of key press (hold) and save that in some kind of array */
 /* - [ ] use this array to then reflect the order of key presses in the output */
-/* - [x] convert LSFT_T(KC_S), etc. to the pseudo home row mods format (prevent "weird" behaviour) */
-/* - [x] add retro-tapping-like functionality to send the modifier on its own for home alt and home gui */
-/* - [x] after triggering any mod with the other hand, make it so that any key tapped with the same hand will also have the mod enabled */
-/* - [x] when sending longpress top-row numbers, disable shift beforehand so that the number always triggers */
-
 /* [see here](https://gist.github.com/lazy/a4e65102672da396fbe43026f187706e) */
 /* [and here](https://github.com/qmk/qmk_firmware/blob/master/docs/custom_quantum_functions.md) */
 /* Note to self: calling the function void process_record(keyrecord_t *record) from anywhere, I can process a key event (key press or key release) and process it, e.g. */ 
@@ -1934,9 +1929,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 return true;
             } else if (record->event.pressed) {
-                del_mods(MOD_MASK_SHIFT);
-                tap_code(KC_1);
-                set_mods(mod_state);
+                if ((mod_state & MOD_MASK_SHIFT) == MOD_MASK_SHIFT) {
+                    del_mods(MOD_MASK_SHIFT);
+                    tap_code(KC_1);
+                    set_mods(mod_state);
+                } else {
+                    tap_code(KC_1);
+                }
                 return false;
             }
             return true;
@@ -1944,9 +1943,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 return true;
             } else if (record->event.pressed) {
-                del_mods(MOD_MASK_SHIFT);
-                tap_code(KC_2);
-                set_mods(mod_state);
+                if ((mod_state & MOD_MASK_SHIFT) == MOD_MASK_SHIFT) {
+                    del_mods(MOD_MASK_SHIFT);
+                    tap_code(KC_2);
+                    set_mods(mod_state);
+                } else {
+                    tap_code(KC_2);
+                }
                 return false;
             }
             return true;
@@ -1954,9 +1957,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 return true;
             } else if (record->event.pressed) {
-                del_mods(MOD_MASK_SHIFT);
-                tap_code(KC_3);
-                set_mods(mod_state);
+                if ((mod_state & MOD_MASK_SHIFT) == MOD_MASK_SHIFT) {
+                    del_mods(MOD_MASK_SHIFT);
+                    tap_code(KC_3);
+                    set_mods(mod_state);
+                } else {
+                    tap_code(KC_3);
+                }
                 return false;
             }
             return true;
@@ -1964,9 +1971,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 return true;
             } else if (record->event.pressed) {
-                del_mods(MOD_MASK_SHIFT);
-                tap_code(KC_4);
-                set_mods(mod_state);
+                if ((mod_state & MOD_MASK_SHIFT) == MOD_MASK_SHIFT) {
+                    del_mods(MOD_MASK_SHIFT);
+                    tap_code(KC_4);
+                    set_mods(mod_state);
+                } else {
+                    tap_code(KC_4);
+                }
                 return false;
             }
             return true;
@@ -1974,9 +1985,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 return true;
             } else if (record->event.pressed) {
-                del_mods(MOD_MASK_SHIFT);
-                tap_code(KC_5);
-                set_mods(mod_state);
+                if ((mod_state & MOD_MASK_SHIFT) == MOD_MASK_SHIFT) {
+                    del_mods(MOD_MASK_SHIFT);
+                    tap_code(KC_5);
+                    set_mods(mod_state);
+                } else {
+                    tap_code(KC_5);
+                }
                 return false;
             }
             return true;
@@ -1984,9 +1999,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 return true;
             } else if (record->event.pressed) {
-                del_mods(MOD_MASK_SHIFT);
-                tap_code(KC_6);
-                set_mods(mod_state);
+                if ((mod_state & MOD_MASK_SHIFT) == MOD_MASK_SHIFT) {
+                    del_mods(MOD_MASK_SHIFT);
+                    tap_code(KC_6);
+                    set_mods(mod_state);
+                } else {
+                    tap_code(KC_6);
+                }
                 return false;
             }
             return true;
@@ -1994,9 +2013,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 return true;
             } else if (record->event.pressed) {
-                del_mods(MOD_MASK_SHIFT);
-                tap_code(KC_7);
-                set_mods(mod_state);
+                if ((mod_state & MOD_MASK_SHIFT) == MOD_MASK_SHIFT) {
+                    del_mods(MOD_MASK_SHIFT);
+                    tap_code(KC_7);
+                    set_mods(mod_state);
+                } else {
+                    tap_code(KC_7);
+                }
                 return false;
             }
             return true;
@@ -2004,9 +2027,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 return true;
             } else if (record->event.pressed) {
-                del_mods(MOD_MASK_SHIFT);
-                tap_code(KC_8);
-                set_mods(mod_state);
+                if ((mod_state & MOD_MASK_SHIFT) == MOD_MASK_SHIFT) {
+                    del_mods(MOD_MASK_SHIFT);
+                    tap_code(KC_8);
+                    set_mods(mod_state);
+                } else {
+                    tap_code(KC_8);
+                }
                 return false;
             }
             return true;
@@ -2066,9 +2093,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return false;
                 }
             } else if (record->event.pressed) {
-                del_mods(MOD_MASK_SHIFT);
-                tap_code(KC_0);
-                set_mods(mod_state);
+                if ((mod_state & MOD_MASK_SHIFT) == MOD_MASK_SHIFT) {
+                    del_mods(MOD_MASK_SHIFT);
+                    tap_code(KC_0);
+                    set_mods(mod_state);
+                } else {
+                    tap_code(KC_0);
+                }
                 return false;
             } else {
                 if (de_en_switched && de_layout_active) {

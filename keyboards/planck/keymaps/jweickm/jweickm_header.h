@@ -545,6 +545,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
             //     }
             //     break;
         case ESCW_ALTF4:
+        case ESCBSLS_ALTF4:
             if (pressed) {
                 tap_code16(A(KC_F4));
             }
