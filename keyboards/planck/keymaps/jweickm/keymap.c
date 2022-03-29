@@ -16,11 +16,11 @@
  */
 #include "jweickm_header.h"
 #if hand_position == 1
-    #include "semi_wide_layout.h"
+    #include "layouts/semi_wide_layout.h"
 #elif hand_position == 2
-    #include "wide_layout.h"
+    #include "layouts/wide_layout.h"
 #elif hand_position == 3
-    #include "narrow_layout.h"
+    #include "layouts/narrow_layout.h"
 #endif
 
 // =========================================================================================
@@ -120,7 +120,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_F4] = ACTION_TAP_DANCE_DOUBLE(KC_F4, A(KC_F4)),
 };
 
-#include "jweickm_process_record_user.c"
+#include "features/jweickm_process_record_user.c"
 
 // bool encoder_update_user(uint8_t index, bool clockwise) {
 //     if (muse_mode) {
