@@ -10,7 +10,7 @@ BOOTMAGIC_ENABLE = no		# Disable Bootmagic
 COMMAND_ENABLE = no			# Disable Command/Magic 
 
 #ifdef NAGINATA_ENABLE 		# enabled in config.h
-SRC += naginata_v14.c
+SRC += features/naginata/naginata_v14.c
 #endif
 
 #ifdef UNICODE_SELECTED_MODES 

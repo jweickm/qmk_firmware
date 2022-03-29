@@ -16,7 +16,7 @@
  */
 
 #include QMK_KEYBOARD_H
-#include "naginata.h"
+#include "features/naginata/naginata.h"
 
 #include <string.h>
 

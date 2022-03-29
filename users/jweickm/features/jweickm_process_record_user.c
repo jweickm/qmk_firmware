@@ -161,6 +161,7 @@ bool modifier_solo_activation;
 static uint16_t key_timer;
 bool key_filter;
 
+// ++++++++++++++++++++++++++++++ PROCESS_HOMEROW_MODS +++++++++++++++++++++++
 bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
     hold_duration = timer_elapsed(key_timer);
     switch (keycode) {
@@ -578,7 +579,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
         case NAVSFT: 
             if (record->event.pressed) {
-                register_mods(MOD_BIT(KC_LSFT));
+                add_mods(MOD_BIT(KC_LSFT));
             } else {
                 del_mods(MOD_BIT(KC_LSFT));
             }

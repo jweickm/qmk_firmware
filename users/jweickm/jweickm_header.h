@@ -23,7 +23,7 @@ enum planck_layers {
 
 #ifdef NAGINATA_ENABLE
 // 薙刀式
-#include "naginata.h"
+#include "features/naginata/naginata.h"
 NGKEYS naginata_keys;
 // 薙刀式
 #endif
