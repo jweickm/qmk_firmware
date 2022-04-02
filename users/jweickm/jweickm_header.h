@@ -269,8 +269,7 @@ enum combos {
     ZS_SZ,
     ZX_LANG,
     EDOT_BSPC,
-    SCLNBSLS_DEL,
-    YSCLN_BSPC,
+    SCLNBSLS_BSPC,
 //    NRAISE,
     TLOWER, 
     EO_OE,
@@ -358,7 +357,6 @@ const uint16_t PROGMEM zs_combo[]           = {LT(0, KC_Z), S_KEY,          COMB
 const uint16_t PROGMEM zx_combo[]           = {LT(0, KC_Z), X_KEY,          COMBO_END};
 const uint16_t PROGMEM edot_combo[]         = {E_KEY, LT(0, KC_DOT),        COMBO_END};
 const uint16_t PROGMEM sclnbsls_combo[]     = {SCLN_KEY, LT(0, KC_BSLS),    COMBO_END};
-const uint16_t PROGMEM yscln_combo[]        = {Y_KEY, SCLN_KEY,             COMBO_END};
 //const uint16_t PROGMEM nraise_combo[]       = {KC_N, RAISE, COMBO_END};
 
 // combos for lower and raise
@@ -436,8 +434,7 @@ combo_t key_combos[] = {
     [ZS_SZ]         = COMBO(zs_combo, DE_SZ),      
     [ZX_LANG]       = COMBO(zx_combo, LANG_SWITCH),      
     [EDOT_BSPC]     = COMBO(edot_combo, C(KC_BSPC)),
-    [SCLNBSLS_DEL]  = COMBO(sclnbsls_combo, KC_DEL),
-    [YSCLN_BSPC]    = COMBO(yscln_combo, KC_BSPC),
+    [SCLNBSLS_BSPC] = COMBO(sclnbsls_combo, KC_BSPC),
 
     [DH_NAV]        = COMBO(dh_combo, TG(_NAV)),
     [BJ_KANA]       = COMBO(bj_combo, A(KC_GRV)),

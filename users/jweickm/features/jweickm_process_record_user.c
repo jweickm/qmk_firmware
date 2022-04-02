@@ -235,6 +235,7 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
         case U_KEY:
         case Y_KEY:
         case M_KEY:
+        case L_KEY:
             switch (keycode) {
                 case O_KEY:
                 case I_KEY:
