@@ -121,8 +121,8 @@ uint8_t mod_state;
 uint8_t osmod_state;
 uint16_t hold_duration;
 
+#ifndef ACHORDION
 // bools to show that the modifier that is NOT on the home row has been pressed
-// no longer necessary with current implementation
 bool gui_pressed;
 bool alt_pressed;
 bool sft_pressed;
@@ -140,23 +140,6 @@ bool rgui_held; // right gui    - O_KEY
 
 // bool to see, whether a modifier has been activated on its own
 bool modifier_solo_activation;
-
-// pointers to the mod keys that have been pressed in the order
-// timers that record the key press timing of the home row mods to determine the order in which they were pressed
-/* uint16_t *first_mod_pressed = NULL; */
-/* uint16_t *second_mod_pressed = NULL; */
-/* uint16_t *third_mod_pressed = NULL; */
-
-// this function converts the internal home row mod state variables (xxxx_held) 
-// into registered mods for all keys, except those on the same hand that might 
-// be affected by accidental rolls
-/* TODO: */
-/* - [ ] record timing of key press (hold) and save that in some kind of array */
-/* - [ ] use this array to then reflect the order of key presses in the output */
-/* [see here](https://gist.github.com/lazy/a4e65102672da396fbe43026f187706e) */
-/* [and here](https://github.com/qmk/qmk_firmware/blob/master/docs/custom_quantum_functions.md) */
-/* Note to self: calling the function void process_record(keyrecord_t *record) from anywhere, I can process a key event (key press or key release) and process it, e.g. */ 
-/* process_record(&(keyrecord_t){.tap = tapping_key.tap, .event.key = tapping_key.event.key, .event.time = event.time, .event.pressed = false}); */
 
 static uint16_t key_timer;
 bool key_filter;
@@ -377,13 +360,23 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
+#else 
+#include "features/getreuer/achordion.h"
+#endif
+
 // +++++++++++++++++++ PROCESS RECORD USER +++++++++++++++++++++++++
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+
+#ifndef ACHORDION
     /* process the home row mod tags before anything else */
     mod_state = get_mods();
     if (!process_homerow_mods(keycode, record)) {
         return false;
     }
+#else 
+    // for the ACHORDION functionality
+    if (!process_achordion(keycode, record)) { return false; }
+#endif
     mod_state = get_mods();
     osmod_state = get_oneshot_mods();
     switch (keycode) {
@@ -471,6 +464,42 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
 
+// ------------------------------- ACTION COMBOS --------------------
+        case MN_LARROW:
+            if (record->event.pressed) {
+                if (de_layout_active) {
+                    tap_code(DE_LABK);
+                    tap_code(DE_MINS);
+                } else {
+                    tap_code16(S(KC_COMM));
+                    tap_code16(KC_MINS);
+                }
+            }
+            break;
+        case GM_PIPE:
+            if (record->event.pressed) {
+                tap_code16(KC_PERC);
+                if (de_layout_active) {
+                    tap_code16(DE_RABK);
+                } else {
+                    tap_code16(S(KC_DOT));
+                }
+                tap_code16(KC_PERC);
+            }
+            break;
+            // case DH_ROW:
+            //     if (pressed) {
+            //         tap_code(KC_END);
+            //         tap_code(KC_RIGHT);
+            //         tap_code16(S(KC_UP));
+            //     }
+            //     break;
+        case ESCW_ALTF4:
+        case ESCBSLS_ALTF4:
+            if (record->event.pressed) {
+                tap_code16(A(KC_F4));
+            }
+            break;
 // ------------------------ SPECIAL FUNCTION KEYS ------------------------------------
         case VIM_O:
             if (record->event.pressed) {

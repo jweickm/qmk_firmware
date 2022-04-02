@@ -67,11 +67,14 @@
 //#define IGNORE_MOD_TAP_INTERRUPT_PER_KEY
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
+/* #define ACHORDION */
+
+#ifndef ACHORDION
 // define whether we want to be able to trigger the modifier tap on the home row by long-pressing and releasing without pressing any other keys in between
 /* #define MODIFIER_SOLO_ACTIVATION */ 
 // set the hold duration necessary to be able to trigger same hand home row mods
 #define SAME_HAND_DELAY 200
-
+#endif
 
 // settings for LEADER key
 #define LEADER_PER_KEY_TIMING

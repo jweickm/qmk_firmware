@@ -42,8 +42,6 @@ NGKEYS naginata_keys;
 // define the position of the homerow_mods: 1-top row, 2-middle row, 3-bottom row
 #define homerow_mods 2
 
-// define whether we want to use custom home row roll modifications
-
 #if homerow_mods == 1
     #define Q_KEY LGUI_T(KC_Q)
     #define W_KEY LALT_T(KC_W)
@@ -443,10 +441,14 @@ combo_t key_combos[] = {
 
     [DH_NAV]        = COMBO(dh_combo, TG(_NAV)),
     [BJ_KANA]       = COMBO(bj_combo, A(KC_GRV)),
-    [ESCW_ALTF4]    = COMBO_ACTION(escw_combo),
-    [ESCBSLS_ALTF4] = COMBO_ACTION(escbsls_combo),
-    [MN_LARROW]     = COMBO_ACTION(larr_combo),  
-    [GM_PIPE]       = COMBO_ACTION(pipe_combo),  
+    /* [ESCW_ALTF4]    = COMBO_ACTION(escw_combo), */
+    /* [ESCBSLS_ALTF4] = COMBO_ACTION(escbsls_combo), */
+    /* [MN_LARROW]     = COMBO_ACTION(larr_combo), */  
+    /* [GM_PIPE]       = COMBO_ACTION(pipe_combo), */  
+    [ESCW_ALTF4]    = COMBO(escw_combo, ESCW_ALTF4),
+    [ESCBSLS_ALTF4] = COMBO(escbsls_combo, ESCBSLS_ALTF4),
+    [MN_LARROW]     = COMBO(larr_combo, MN_LARROW),  
+    [GM_PIPE]       = COMBO(pipe_combo, GM_PIPE),  
 //    [JL_LANG]       = COMBO(jl_combo, KC_DE_SWITCH),  
 
 //    [NRAISE]        = COMBO(nraise_combo, OSL(_RAISE)),
@@ -513,42 +515,3 @@ combo_t key_combos[] = {
 
 uint16_t COMBO_LEN = sizeof(key_combos) / sizeof(key_combos[0]);
 
-void process_combo_event(uint16_t combo_index, bool pressed) {
-    switch(combo_index) {
-        case MN_LARROW:
-            if (pressed) {
-                if (de_layout_active) {
-                    tap_code(DE_LABK);
-                    tap_code(DE_MINS);
-                } else {
-                    tap_code16(S(KC_COMM));
-                    tap_code16(KC_MINS);
-                }
-            }
-            break;
-        case GM_PIPE:
-            if (pressed) {
-                tap_code16(KC_PERC);
-                if (de_layout_active) {
-                    tap_code16(DE_RABK);
-                } else {
-                    tap_code16(S(KC_DOT));
-                }
-                tap_code16(KC_PERC);
-            }
-            break;
-            // case DH_ROW:
-            //     if (pressed) {
-            //         tap_code(KC_END);
-            //         tap_code(KC_RIGHT);
-            //         tap_code16(S(KC_UP));
-            //     }
-            //     break;
-        case ESCW_ALTF4:
-        case ESCBSLS_ALTF4:
-            if (pressed) {
-                tap_code16(A(KC_F4));
-            }
-            break;
-        }
-}
