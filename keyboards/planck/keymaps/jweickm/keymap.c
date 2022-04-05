@@ -1,5 +1,5 @@
 /* Copyright 2015-2017 Jack Humbert
- * Copyright 2021 Jakob Weickmann
+ * Copyright 2023 Jakob Weickmann
  *
  This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@
 #elif hand_position == 3
     #include "layouts/narrow_layout.h"
 #endif
+
+#include "g/keymap_combo.h"
 
 // =========================================================================================
 
@@ -120,7 +122,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_F4] = ACTION_TAP_DANCE_DOUBLE(KC_F4, A(KC_F4)),
 };
 
-#include "features/jweickm_process_record_user.c"
+#include "jweickm_process_record_user.c"
 
 // bool encoder_update_user(uint8_t index, bool clockwise) {
 //     if (muse_mode) {
@@ -176,11 +178,6 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 // }
 
 #ifdef KEY_OVERRIDE_ENABLE
-#if layout == 1 // OSM_SHIFT
-    const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, LOWER, KC_DEL);
-#elif layout == 2 // OSL
-    const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, LSFT_T(KC_BSPC), KC_DEL);
-#endif
     const key_override_t combo_delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
     const key_override_t ralt_esc_kana_override    = ko_make_basic(MOD_BIT(KC_RALT), KC_ESC, A(KC_GRV)); // this override allows us to switch kana by pressing ralt and esc
 
@@ -198,22 +195,22 @@ void matrix_scan_user(void) {
 
     #include "leader_dictionary.c"
 #ifdef AUDIO_ENABLE
-    if (muse_mode) {
-        if (muse_counter == 0) {
-            uint8_t muse_note = muse_offset + SCALE[muse_clock_pulse()];
-            if (muse_note != last_muse_note) {
-                stop_note(compute_freq_for_midi_note(last_muse_note));
-                play_note(compute_freq_for_midi_note(muse_note), 0xF);
-                last_muse_note = muse_note;
-            }
-        }
-        muse_counter = (muse_counter + 1) % muse_tempo;
-    } else {
-        if (muse_counter) {
-            stop_all_notes();
-            muse_counter = 0;
-        }
-    }
+    /* if (muse_mode) { */
+    /*     if (muse_counter == 0) { */
+    /*         uint8_t muse_note = muse_offset + SCALE[muse_clock_pulse()]; */
+    /*         if (muse_note != last_muse_note) { */
+    /*             stop_note(compute_freq_for_midi_note(last_muse_note)); */
+    /*             play_note(compute_freq_for_midi_note(muse_note), 0xF); */
+    /*             last_muse_note = muse_note; */
+    /*         } */
+    /*     } */
+    /*     muse_counter = (muse_counter + 1) % muse_tempo; */
+    /* } else { */
+    /*     if (muse_counter) { */
+    /*         stop_all_notes(); */
+    /*         muse_counter = 0; */
+    /*     } */
+    /* } */
 #endif
 }
 

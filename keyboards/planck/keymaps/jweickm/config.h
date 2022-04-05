@@ -32,7 +32,9 @@
                                 }
     #define AUDIO_DAC_SAMPLE_WAVEFORM_SQUARE
     #define AUDIO_DAC_SAMPLE_MAX 423U // define the volume: 65535U is standard
+    #define NO_MUSIC_MODE
 #endif
+
 
 /*
  * MIDI options
@@ -42,7 +44,7 @@
    - MIDI notes can be sent when in Music mode is on
 */
 
-#define MIDI_BASIC
+/* #define MIDI_BASIC */
 
 /* enable advanced MIDI features:
    - MIDI notes can be added to the keymap
@@ -56,7 +58,7 @@
 //#define MIDI_TONE_KEYCODE_OCTAVES 2
 
 // Most tactile encoders have detents every 4 stages
-#define ENCODER_RESOLUTION 4
+/* #define ENCODER_RESOLUTION 4 */
 
 // settings for HOME ROW MODS
 #define TAPPING_TERM 160 // 200 ms is the default value
@@ -67,11 +69,14 @@
 //#define IGNORE_MOD_TAP_INTERRUPT_PER_KEY
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
+/* #define ACHORDION */
+
+#ifndef ACHORDION
 // define whether we want to be able to trigger the modifier tap on the home row by long-pressing and releasing without pressing any other keys in between
 /* #define MODIFIER_SOLO_ACTIVATION */ 
 // set the hold duration necessary to be able to trigger same hand home row mods
 #define SAME_HAND_DELAY 200
-
+#endif
 
 // settings for LEADER key
 #define LEADER_PER_KEY_TIMING
@@ -82,6 +87,7 @@
 #define COMBO_TERM 40
 // always checks for the combos on the base layer, even when using another layer
 #define COMBO_ONLY_FROM_LAYER 0
+#define COMBO_VARIABLE_LEN // for gboard combos
 
 
 #define RGBLIGHT_SLEEP // RGB lighting will switch off when the host goes to sleep
@@ -93,3 +99,6 @@
 
 // for unicode support in windows using wincompose
 // #define UNICODE_SELECTED_MODES UC_WINC
+
+#define NO_ACTION_MACRO
+#define NO_ACTION_FUNCTION
