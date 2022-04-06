@@ -169,26 +169,26 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
                 /* allow triggers for the other hand side */
                 if (rctl_held && !(mod_state & MOD_BIT(KC_RCTL))) {
                     register_mods(MOD_BIT(KC_RCTL));
-                    rctl_held = false;
+                    /* rctl_held = false; */
                 }
                 if (rsft_held && !(mod_state & MOD_BIT(KC_RSFT))) {
                     register_mods(MOD_BIT(KC_RSFT));
-                    rsft_held = false;
+                    /* rsft_held = false; */
                 }
                 if (ralt_held && !(mod_state & MOD_BIT(KC_LALT))) {
                     register_mods(MOD_BIT(KC_LALT));
-                    ralt_held = false;
+                    /* ralt_held = false; */
                 }
                 if (rgui_held && !(mod_state & MOD_BIT(KC_RGUI))) {
                     register_mods(MOD_BIT(KC_RGUI));
-                    rgui_held = false;
+                    /* rgui_held = false; */
                 }
                 // check whether the modifier has been held longer than the predefined SAME_HAND_DELAY
                 // when tapped and a home row state variable is active, tap the respective key instead of the corresponding mod this disables triggers on the same hand side
                 if (lgui_held) {
                     if (hold_duration > SAME_HAND_DELAY) {
                         register_mods(MOD_BIT(KC_LGUI));
-                        lgui_held = false;
+                        /* lgui_held = false; */
                     } else {
                         tap_code(KC_A);
                         lgui_held = false;
@@ -197,7 +197,7 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
                 if (lalt_held) {
                     if (hold_duration > SAME_HAND_DELAY) {
                         register_mods(MOD_BIT(KC_LALT));
-                        lalt_held = false;
+                        /* lalt_held = false; */
                     } else {
                         tap_code(KC_R);
                         lalt_held = false;
@@ -206,7 +206,7 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
                 if (lsft_held) {
                     if (hold_duration > SAME_HAND_DELAY) {
                         register_mods(MOD_BIT(KC_LSFT));
-                        lsft_held = false;
+                        /* lsft_held = false; */
                     } else {
                         tap_code(KC_S);
                         lsft_held = false;
@@ -215,7 +215,7 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
                 if (lctl_held) {
                     if (hold_duration > SAME_HAND_DELAY) {
                         register_mods(MOD_BIT(KC_LCTL));
-                        lctl_held = false;
+                        /* lctl_held = false; */
                     } else {
                         tap_code(KC_T);
                         lctl_held = false;
@@ -251,25 +251,25 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
                 /* allow triggers for the other hand side */
                 if (lctl_held && !(mod_state & MOD_BIT(KC_LCTL))) {
                     register_mods(MOD_BIT(KC_LCTL));
-                    lctl_held = false;
+                    /* lctl_held = false; */
                 }
                 if (lsft_held && !(mod_state & MOD_BIT(KC_LSFT))) {
                     register_mods(MOD_BIT(KC_LSFT));
-                    lsft_held = false;
+                    /* lsft_held = false; */
                 }
                 if (lalt_held && !(mod_state & MOD_BIT(KC_LALT))) {
                     register_mods(MOD_BIT(KC_LALT));
-                    lalt_held = false;
+                    /* lalt_held = false; */
                 }
                 if (lgui_held && !(mod_state & MOD_BIT(KC_LGUI))) {
                     register_mods(MOD_BIT(KC_LGUI));
-                    lgui_held = false;
+                    /* lgui_held = false; */
                 }
                 // check whether the modifier has been held longer than the predefined SAME_HAND_DELAY
                 if (rctl_held) {
                     if (hold_duration > SAME_HAND_DELAY) {
                         register_mods(MOD_BIT(KC_RCTL));
-                        rctl_held = false;
+                        /* rctl_held = false; */
                     } else {
                         tap_code(KC_N);
                         rctl_held = false;
@@ -278,7 +278,7 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
                 if (rsft_held) {
                     if (hold_duration > SAME_HAND_DELAY) {
                         register_mods(MOD_BIT(KC_RSFT));
-                        rsft_held = false;
+                        /* rsft_held = false; */
                     } else {
                         tap_code(KC_E);
                         rsft_held = false;
@@ -287,7 +287,7 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
                 if (ralt_held) {
                     if (hold_duration > SAME_HAND_DELAY) {
                         register_mods(MOD_BIT(KC_LALT));
-                        ralt_held = false;
+                        /* ralt_held = false; */
                     } else {
                         tap_code(KC_I);
                         ralt_held = false;
@@ -296,7 +296,7 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
                 if (rgui_held) {
                     if (hold_duration > SAME_HAND_DELAY) {
                         register_mods(MOD_BIT(KC_RGUI));
-                        rgui_held = false;
+                        /* rgui_held = false; */
                     } else {
                         tap_code(KC_O);
                         rgui_held = false;
@@ -316,43 +316,43 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
                 // gui mods
                 if (lgui_held && !(mod_state & MOD_BIT(KC_LGUI))) {
                     register_mods(MOD_BIT(KC_LGUI));
-                    lgui_held = false;
+                    /* lgui_held = false; */
                     modifier_solo_activation = false;
                 }
                 if (rgui_held && !(mod_state & MOD_BIT(KC_RGUI))) {
                     register_mods(MOD_BIT(KC_RGUI));
-                    rgui_held = false;
+                    /* rgui_held = false; */
                     modifier_solo_activation = false;
                 }
                 // alt mods
                 if (lalt_held || ralt_held) {
                     if (!(mod_state & MOD_BIT(KC_LALT))) { 
                         register_mods(MOD_BIT(KC_LALT));
-                        lalt_held = false;
-                        ralt_held = false;
+                        /* lalt_held = false; */
+                        /* ralt_held = false; */
                         modifier_solo_activation = false;
                     }  
                 }
                 // shift mods
                 if (lsft_held && !(mod_state & MOD_BIT(KC_LSFT))) {
                     register_mods(MOD_BIT(KC_LSFT));
-                    lsft_held = false;
+                    /* lsft_held = false; */
                     modifier_solo_activation = false;
                 }
                 if (rsft_held && !(mod_state & MOD_BIT(KC_RSFT))) {
                     register_mods(MOD_BIT(KC_RSFT));
-                    rsft_held = false;
+                    /* rsft_held = false; */
                     modifier_solo_activation = false;
                 }
                 // ctrl mods
                 if (lctl_held && !(mod_state & MOD_BIT(KC_LCTL))) {
                     register_mods(MOD_BIT(KC_LCTL));
-                    rctl_held = false;
+                    /* rctl_held = false; */
                     modifier_solo_activation = false;
                 }
                 if (rctl_held && !(mod_state & MOD_BIT(KC_RCTL))) {
                     register_mods(MOD_BIT(KC_RCTL));
-                    rctl_held = false;
+                    /* rctl_held = false; */
                     modifier_solo_activation = false;
                 }
             }
@@ -2209,7 +2209,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             } else {
                 lalt_held = false;
-                if (!alt_pressed) { // check whether the non-homerow alt is also held
+                if (!alt_pressed && !ralt_held) { // check whether the non-homerow alt is also held
                     unregister_mods(MOD_BIT(KC_LALT));
                 }
                 // if no other key was pressed in the meantime
@@ -2403,7 +2403,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             } else {
                 ralt_held = false;
-                if (!alt_pressed) { // only unregister when the non-homerow mod is not held
+                if (!alt_pressed && !lalt_held) { // only unregister when the non-homerow mod is not held
                     unregister_mods(MOD_BIT(KC_LALT));
                 }
                 // if no other key was pressed in the meantime
