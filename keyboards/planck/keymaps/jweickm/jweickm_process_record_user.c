@@ -194,15 +194,6 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
                         lgui_held = false;
                     }
                 }
-                if (lalt_held) {
-                    if (hold_duration > SAME_HAND_DELAY) {
-                        register_mods(MOD_BIT(KC_LALT));
-                        /* lalt_held = false; */
-                    } else {
-                        tap_code(KC_R);
-                        lalt_held = false;
-                    }
-                }
                 if (lsft_held) {
                     if (hold_duration > SAME_HAND_DELAY) {
                         register_mods(MOD_BIT(KC_LSFT));
@@ -219,6 +210,15 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
                     } else {
                         tap_code(KC_T);
                         lctl_held = false;
+                    }
+                }
+                if (lalt_held) {
+                    if (hold_duration > SAME_HAND_DELAY) {
+                        register_mods(MOD_BIT(KC_LALT));
+                        /* lalt_held = false; */
+                    } else {
+                        tap_code(KC_R);
+                        lalt_held = false;
                     }
                 }
                 modifier_solo_activation = false;
@@ -322,14 +322,6 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
                     register_mods(MOD_BIT(KC_RGUI));
                     /* rgui_held = false; */
                 }
-                // alt mods
-                if (lalt_held || ralt_held) {
-                    if (!(mod_state & MOD_BIT(KC_LALT))) { 
-                        register_mods(MOD_BIT(KC_LALT));
-                        /* lalt_held = false; */
-                        /* ralt_held = false; */
-                    }  
-                }
                 // shift mods
                 if (lsft_held && !(mod_state & MOD_BIT(KC_LSFT))) {
                     register_mods(MOD_BIT(KC_LSFT));
@@ -347,6 +339,14 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
                 if (rctl_held && !(mod_state & MOD_BIT(KC_RCTL))) {
                     register_mods(MOD_BIT(KC_RCTL));
                     /* rctl_held = false; */
+                }
+                // alt mods
+                if (lalt_held || ralt_held) {
+                    if (!(mod_state & MOD_BIT(KC_LALT))) { 
+                        register_mods(MOD_BIT(KC_LALT));
+                        /* lalt_held = false; */
+                        /* ralt_held = false; */
+                    }  
                 }
                 modifier_solo_activation = false;
             }
