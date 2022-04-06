@@ -317,12 +317,10 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
                 if (lgui_held && !(mod_state & MOD_BIT(KC_LGUI))) {
                     register_mods(MOD_BIT(KC_LGUI));
                     /* lgui_held = false; */
-                    modifier_solo_activation = false;
                 }
                 if (rgui_held && !(mod_state & MOD_BIT(KC_RGUI))) {
                     register_mods(MOD_BIT(KC_RGUI));
                     /* rgui_held = false; */
-                    modifier_solo_activation = false;
                 }
                 // alt mods
                 if (lalt_held || ralt_held) {
@@ -330,31 +328,27 @@ bool process_homerow_mods(uint16_t keycode, keyrecord_t *record) {
                         register_mods(MOD_BIT(KC_LALT));
                         /* lalt_held = false; */
                         /* ralt_held = false; */
-                        modifier_solo_activation = false;
                     }  
                 }
                 // shift mods
                 if (lsft_held && !(mod_state & MOD_BIT(KC_LSFT))) {
                     register_mods(MOD_BIT(KC_LSFT));
                     /* lsft_held = false; */
-                    modifier_solo_activation = false;
                 }
                 if (rsft_held && !(mod_state & MOD_BIT(KC_RSFT))) {
                     register_mods(MOD_BIT(KC_RSFT));
                     /* rsft_held = false; */
-                    modifier_solo_activation = false;
                 }
                 // ctrl mods
                 if (lctl_held && !(mod_state & MOD_BIT(KC_LCTL))) {
                     register_mods(MOD_BIT(KC_LCTL));
                     /* rctl_held = false; */
-                    modifier_solo_activation = false;
                 }
                 if (rctl_held && !(mod_state & MOD_BIT(KC_RCTL))) {
                     register_mods(MOD_BIT(KC_RCTL));
                     /* rctl_held = false; */
-                    modifier_solo_activation = false;
                 }
+                modifier_solo_activation = false;
             }
             return true;
     }
