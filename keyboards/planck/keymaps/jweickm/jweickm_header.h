@@ -128,6 +128,9 @@ NGKEYS naginata_keys;
 #define NAVENT      LT(_NAV, KC_ENT)
 #define FN_KEY      LT(_ADJUST, KC_RALT)
 
+#define BS_KEY      KC_BSPC
+#define DEL_KEY     LT(_MOUSE, KC_DEL)
+
 enum planck_keycodes { 
 #ifdef NAGINATA_ENABLE
     // 薙刀式: SAFE_RANGE -> NG_SAFE_RANGE

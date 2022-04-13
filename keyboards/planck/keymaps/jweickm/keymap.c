@@ -194,6 +194,10 @@ LEADER_EXTERNS();
 void matrix_scan_user(void) {
 
     #include "leader_dictionary.c"
+
+#ifdef ACHORDION
+    achordion_task();
+#endif
 #ifdef AUDIO_ENABLE
     /* if (muse_mode) { */
     /*     if (muse_counter == 0) { */

@@ -361,17 +361,17 @@ bool achordion_chord(uint16_t tap_hold_keycode,
                      keyrecord_t* tap_hold_record,
                      uint16_t other_keycode,
                      keyrecord_t* other_record) {
-  // Exceptionally consider the following chords as holds, even though they
-  // are on the same hand in Colemak
-  switch (tap_hold_keycode) {
-    /* case HOME_A:  // A + U. */
-    /*   if (other_keycode == HOME_U) { return true; } */
-    /*   break; */
-
-    /* case HOME_S:  // S + H and S + G. */
-    /*   if (other_keycode == HOME_H || other_keycode == KC_G) { return true; } */
-    /*   break; */
-  }
+    // Exceptionally consider the following chords as holds, even though they
+    // are on the same hand in Colemak
+    switch (tap_hold_keycode) {
+        // define some exceptions here
+        /* case T_KEY: // T + A */
+        /*     if (other_keycode == A_KEY) { return true; } */
+        /*     break; */
+      /* case HOME_S:  // S + H and S + G. */
+      /*   if (other_keycode == HOME_H || other_keycode == KC_G) { return true; } */
+      /*   break; */
+    }
 
   // Also allow same-hand holds when the other key is in the rows below the
   // alphas.
@@ -380,6 +380,55 @@ bool achordion_chord(uint16_t tap_hold_keycode,
 
   // Otherwise, follow the opposite hands rule.
   return achordion_opposite_hands(tap_hold_record, other_record);
+}
+
+uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
+    switch (tap_hold_keycode) {
+        // add all keys here that should not be handled by ACHORDION
+        case NAVSFT:
+        case NAVSPACE:
+        case LOWER:
+        case RAISE:
+        case FN_KEY:
+        case DEL_KEY:
+        case BS_KEY:
+        case LCTL_T(KC_CAPS):
+        case OSM(MOD_LSFT):
+        case ESC_KEY:
+        case DOWN_KEY:
+        case UP_KEY:
+        case RSFT_T(KC_ENT):
+        case COMM_KEY:
+        case DOT_KEY:
+        case SLSH_KEY:
+        case SCLN_KEY:
+        case BSLS_KEY:
+        case QUOT_KEY:
+        case Q_KEY:
+        case W_KEY:
+        case F_KEY:
+        case P_KEY:
+        case B_KEY:
+        case J_KEY:
+        case L_KEY:
+        case U_KEY:
+        case Y_KEY:
+            return 0; // bypass Achordion for these keys
+    }
+    return 800; // otherwise use a timeout of 800 ms.
+}
+
+bool achordion_eager_mod(uint8_t mod) {
+    switch (mod) {
+        case MOD_LSFT:
+        case MOD_RSFT:
+        case MOD_LCTL:
+        case MOD_RCTL:
+            return true; // Eagerly apply Shift and Ctrl mods.
+
+        default:
+            return false; // Wait out the tapping term for the other mods.
+    }
 }
 
 #endif
@@ -2100,7 +2149,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 return true;
             }
-// ------------------------- IMPROVED ROLLS ON THE HOMEROW -------------------
         case ESC_KEY:
             if (record->tap.count && record->event.pressed) {
                 if (caps_lock_on) {
@@ -2120,6 +2168,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
             }
             return true;
+#ifndef ACHORDION
+
+// ------------------------- IMPROVED ROLLS ON THE HOMEROW ------------------- {{{
             // roll compensation for the homerow modifiers
         case LCTL_T(KC_CAPS):
             if (record->tap.count && record->event.pressed) {
@@ -2441,6 +2492,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
             }
             return true;
+// }}}
+#endif
+
 #elif homerow_mods == 1
 // ------------------------- NUMBERS CAPS IMMUNITY----------------------------
 //      case KC_0:
