@@ -92,7 +92,7 @@ NGKEYS naginata_keys;
     #define T_KEY LCTL_T(KC_T)
     #define N_KEY RCTL_T(KC_N)
     #define E_KEY RSFT_T(KC_E)
-    #define I_KEY RALT_T(KC_I)
+    #define I_KEY LALT_T(KC_I)
     #define O_KEY RGUI_T(KC_O)
 
     #define D_KEY LT(_NUM, KC_D)
