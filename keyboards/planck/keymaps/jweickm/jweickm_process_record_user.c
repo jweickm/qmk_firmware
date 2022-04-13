@@ -413,6 +413,10 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case L_KEY:
         case U_KEY:
         case Y_KEY:
+        case Z_KEY:
+        case X_KEY:
+        case C_KEY:
+        case V_KEY:
             return 0; // bypass Achordion for these keys
     }
     return 800; // otherwise use a timeout of 800 ms.
