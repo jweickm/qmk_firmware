@@ -183,8 +183,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 // This globally defines all key overrides to be used
 const key_override_t **key_overrides = (const key_override_t *[]){
-    &combo_delete_key_override,
-    &ralt_esc_kana_override,
+    /* &combo_delete_key_override, */
+    /* &ralt_esc_kana_override, */
     NULL // Null terminate the array of overrides!
 };
 #endif
