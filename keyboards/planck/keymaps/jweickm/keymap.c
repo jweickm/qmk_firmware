@@ -228,6 +228,7 @@ bool music_mask_user(uint16_t keycode) {
     }
 }
 
+#ifdef RGBLIGHT_ENABLE
 // Set RGB to change with layer changes
 #define HSV_DARKORANGE 10, 255, 255
 #define HSV_GRASS 57, 255, 100
@@ -272,40 +273,6 @@ void keyboard_post_init_user(void) {
     rgblight_layers = my_rgb_layers;
 }
 
-void led_set_user(uint8_t usb_led) {
-#ifdef AUDIO_ENABLE
-    static uint8_t old_usb_led = 0;
-    if (!is_playing_notes()) {
-        if ((usb_led & (1<<USB_LED_CAPS_LOCK)) && !(old_usb_led & (1<<USB_LED_CAPS_LOCK))) { 
-                // If CAPS LK LED is turning on...
-                PLAY_SONG(tone_caps_on);
-        } else if (!(usb_led & (1<<USB_LED_CAPS_LOCK)) && (old_usb_led & (1<<USB_LED_CAPS_LOCK))) {
-                // If CAPS LK LED is turning off...
-                PLAY_SONG(tone_caps_off);
-        }
-    }
-    old_usb_led = usb_led;
-#endif
-
-    // keep numlock turned on, i.e. turn it off everytime it is turned on
-    if (!(usb_led & (1<<USB_LED_NUM_LOCK))) {
-        tap_code(KC_NUMLOCK);
-    }
-}
-
-#ifdef DYNAMIC_MACRO_ENABLE
-    #ifdef AUDIO_ENABLE
-bool isRecording = false;
-void dynamic_macro_record_start_user(void) {
-    isRecording = true;
-    PLAY_SONG(macro_on_song);
-}
-void dynamic_macro_record_end_user(int8_t direction) {
-    isRecording = false;
-    PLAY_SONG(macro_off_song);
-}
-    #endif
-#endif
 
 bool led_update_user(led_t led_state) {
 #ifdef DYNAMIC_MACRO_ENABLE
@@ -350,4 +317,39 @@ layer_state_t default_layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(0, layer_state_cmp(state, _COLEMAK));
     return state;
 }
+#endif
 
+#ifdef DYNAMIC_MACRO_ENABLE
+    #ifdef AUDIO_ENABLE
+bool isRecording = false;
+void dynamic_macro_record_start_user(void) {
+    isRecording = true;
+    PLAY_SONG(macro_on_song);
+}
+void dynamic_macro_record_end_user(int8_t direction) {
+    isRecording = false;
+    PLAY_SONG(macro_off_song);
+}
+    #endif
+#endif
+
+void led_set_user(uint8_t usb_led) {
+#ifdef AUDIO_ENABLE
+    static uint8_t old_usb_led = 0;
+    if (!is_playing_notes()) {
+        if ((usb_led & (1<<USB_LED_CAPS_LOCK)) && !(old_usb_led & (1<<USB_LED_CAPS_LOCK))) { 
+                // If CAPS LK LED is turning on...
+                PLAY_SONG(tone_caps_on);
+        } else if (!(usb_led & (1<<USB_LED_CAPS_LOCK)) && (old_usb_led & (1<<USB_LED_CAPS_LOCK))) {
+                // If CAPS LK LED is turning off...
+                PLAY_SONG(tone_caps_off);
+        }
+    }
+    old_usb_led = usb_led;
+#endif
+
+    // keep numlock turned on, i.e. turn it off everytime it is turned on
+    if (!(usb_led & (1<<USB_LED_NUM_LOCK))) {
+        tap_code(KC_NUMLOCK);
+    }
+}

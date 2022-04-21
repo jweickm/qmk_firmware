@@ -5,10 +5,11 @@ DYNAMIC_MACRO_ENABLE = yes 	# QMK support for temporary macros
 KEY_OVERRIDE_ENABLE = yes 	# Enable key override functionality
 NKRO = yes 					# Enable n-key rollover
 BOOTMAGIC_ENABLE = no		# Enable Bootmagic
-COMMAND_ENABLE = no			# Disable Command/Magic 
+COMMAND_ENABLE = no			# Enable Command/Magic 
 UNICODE_ENABLE = no
-MIDI_ENABLE = no
-AUDIO_ENABLE = yes
+MIDI_ENABLE = no			# MIDI output
+AUDIO_ENABLE = no			# Enables audio features
+RGBLIGHT_ENABLE = no		# Enables RGB backlight
 SWAP_HANDS_ENABLE = no 		# Allow swapping hands of keyboard
 
 # SRC += muse.c

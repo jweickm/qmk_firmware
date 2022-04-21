@@ -16,8 +16,9 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case LSFT_T(KC_BSPC):
         case RAISE:
         case LT(_MOUSE, KC_DEL):
-        case NAVSPACE:
             return TAPPING_TERM * thumb_factor;
+        case NAVSPACE:
+            return TAPPING_TERM * (thumb_factor + 0.1);
 
         // index finger keys
         case P_KEY:
@@ -419,7 +420,7 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case V_KEY:
             return 0; // bypass Achordion for these keys
     }
-    return 800; // otherwise use a timeout of 800 ms.
+    return 500; // otherwise use a timeout of 800 ms.
 }
 
 bool achordion_eager_mod(uint8_t mod) {
