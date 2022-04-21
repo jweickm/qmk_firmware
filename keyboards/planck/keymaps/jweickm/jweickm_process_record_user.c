@@ -419,7 +419,7 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case X_KEY:
         case C_KEY:
         case V_KEY:
-            return 200; // return a shorter timeout for these keys
+            return 220; // return a shorter timeout for these keys
     }
     return 400; // otherwise use a timeout of 800 ms.
 }
