@@ -385,7 +385,7 @@ bool achordion_chord(uint16_t tap_hold_keycode,
 
 uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
     switch (tap_hold_keycode) {
-        // add all keys here that should not be handled by ACHORDION
+        // add all keys here that should NOT be handled by ACHORDION
         case NAVSFT:
         case NAVSPACE:
         case LOWER:
@@ -399,6 +399,7 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case DOWN_KEY:
         case UP_KEY:
         case RSFT_T(KC_ENT):
+            return 0; // bypass Achordion for these keys
         case COMM_KEY:
         case DOT_KEY:
         case SLSH_KEY:
@@ -418,9 +419,9 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case X_KEY:
         case C_KEY:
         case V_KEY:
-            return 0; // bypass Achordion for these keys
+            return 200; // return a shorter timeout for these keys
     }
-    return 500; // otherwise use a timeout of 800 ms.
+    return 400; // otherwise use a timeout of 800 ms.
 }
 
 bool achordion_eager_mod(uint8_t mod) {
