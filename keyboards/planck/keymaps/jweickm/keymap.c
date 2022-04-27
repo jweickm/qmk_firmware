@@ -273,21 +273,24 @@ void keyboard_post_init_user(void) {
     rgblight_layers = my_rgb_layers;
 }
 
-
+#endif
 bool led_update_user(led_t led_state) {
+#ifdef RGBLIGHT_ENABLE
 #ifdef DYNAMIC_MACRO_ENABLE
     rgblight_set_layer_state(8, isRecording); // turn on the adjust layer when recording otf macros
 #endif
     rgblight_set_layer_state(7, led_state.caps_lock);
     rgblight_set_layer_state(1, de_layout_active);
+#endif
     if (led_state.caps_lock) {
-        caps_lock_on = TRUE;
+        caps_lock_on = true;
     } else {
-        caps_lock_on = FALSE;
+        caps_lock_on = false;
     }
     return true;
 }
 
+#ifdef RGBLIGHT_ENABLE
 layer_state_t layer_state_set_user(layer_state_t state) {
     rgblight_set_layer_state(1, de_layout_active);
     rgblight_set_layer_state(2, layer_state_cmp(state, _QWERTY));

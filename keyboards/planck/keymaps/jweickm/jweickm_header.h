@@ -127,6 +127,7 @@ NGKEYS naginata_keys;
 #define NAVSPACE    LT(_NAV, KC_SPC)
 #define NAVENT      LT(_NAV, KC_ENT)
 #define FN_KEY      LT(_ADJUST, KC_RALT)
+#define ENT_KEY     RSFT_T(KC_ENT)
 
 #define BS_KEY      KC_BSPC
 #define DEL_KEY     LT(_MOUSE, KC_DEL)
