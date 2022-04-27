@@ -575,8 +575,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 // ------------------------ SPECIAL FUNCTION KEYS ------------------------------------
         case VIM_O:
             if (record->event.pressed) {
-                tap_code(KC_END);
-                tap_code(KC_ENT);
+                if (mod_state & MOD_MASK_SHIFT) {
+                    tap_code(KC_HOME);
+                    tap_code(KC_ENT);
+                    tap_code(KC_UP);
+                } else {
+                    tap_code(KC_END);
+                    tap_code(KC_ENT);
+                }
             }
             return false;
             break;
