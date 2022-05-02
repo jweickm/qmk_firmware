@@ -166,8 +166,9 @@ enum planck_keycodes {
     DE_ae,  // ä
     DE_SZ,   // ß
     NAVSFT,
-    MN_LARROW, 
-    GM_PIPE
+    UMLAUT_RALT
+    /* MN_LARROW, */ 
+    /* GM_PIPE, */ 
 };
 
 // Tap Dance declarations

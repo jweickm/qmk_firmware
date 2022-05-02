@@ -540,6 +540,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
 
 // ------------------------------- ACTION COMBOS --------------------
+        case UMLAUT_RALT:
+            if (record->event.pressed) {
+                tap_code16(KC_RALT);
+                if (!de_layout_active) {
+                    tap_code16(S(KC_QUOT));
+                }
+            }
+            return false;
+            break;
         /* case MN_LARROW: */
         /*     if (record->event.pressed) { */
         /*         if (de_layout_active) { */
@@ -1279,13 +1288,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 return true;
             } else if (record->event.pressed) {
-                if (de_layout_active && !de_en_switched) {
+                /* if (de_layout_active && !de_en_switched) { */
+                if (de_layout_active) {
                     tap_code16(DE_SS); // ß
                     return false;
-                } else if (de_layout_active && de_en_switched) {
-                    register_code(DE_Z);
-                    return false;
-                } else if (!de_layout_active && de_en_switched) {
+                /* } else if (de_layout_active && de_en_switched) { */
+                /*     register_code(DE_Z); */
+                /*     return false; */
+                } else if (!de_layout_active) {
+                /* } else if (!de_layout_active && de_en_switched) { */
                     clear_oneshot_mods();
                     clear_mods();
                     add_mods(MOD_BIT(KC_LALT));
@@ -1297,7 +1308,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     set_mods(mod_state);
                     return false;
                 } 
-                register_code(KC_Z);
+                /* register_code(KC_Z); */
                 return false;
             } else {
                 if (de_layout_active) {
