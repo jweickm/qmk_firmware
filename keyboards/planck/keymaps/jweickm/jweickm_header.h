@@ -176,7 +176,11 @@ enum tap_dance_codes {
     TD_BRC,     // square brackets
     TD_CBR,     // curly brackets
     TD_VIM_GG,  // single tap to scroll down, double tap to scroll up
-    TD_F4       // double tap F4 to alt-F4
+    TD_F4,      // double tap F4 to alt-F4
+    /* TD_QUOT,    // double tap KC_QUOT to type DBLQUOT; Edit: would be nice but doesn't play nicely with mod taps, same for the tap dances below*/
+    /* TD_A,       // double tap A to type Ä */
+    /* TD_U,       // double tap U to type Ü */
+    /* TD_O        // double tap O to type Ö */
 };
 
 // logical variable to differentiate between the German and the English input mode
