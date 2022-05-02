@@ -113,6 +113,36 @@ void vim_gg(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
+void dance_labrk(qk_tap_dance_state_t *state, void *user_data) {
+    if (de_layout_active) {
+        tap_code16(DE_LABK);
+    } else {
+        tap_code16(S(KC_COMM));
+    }
+    if (state->count == 1) {
+    } else {
+        if (de_layout_active) {
+            tap_code(DE_MINS);
+        } else {
+            tap_code16(KC_MINS);
+        }
+    }
+}
+void dance_rabrk(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count > 1) {
+        if (de_layout_active) {
+            tap_code(DE_MINS);
+        } else {
+            tap_code16(KC_MINS);
+        }
+    } 
+    if (de_layout_active) {
+        tap_code16(DE_RABK);
+    } else {
+        tap_code16(S(KC_DOT));
+    }
+}
+
 qk_tap_dance_action_t tap_dance_actions[] = {
     // declare tap dance actions here
     [TD_PRN] = ACTION_TAP_DANCE_FN(dance_prn), 
@@ -120,6 +150,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_CBR] = ACTION_TAP_DANCE_FN(dance_cbr), 
     [TD_VIM_GG] = ACTION_TAP_DANCE_FN(vim_gg),
     [TD_F4] = ACTION_TAP_DANCE_DOUBLE(KC_F4, A(KC_F4)),
+    [TD_LARROW] = ACTION_TAP_DANCE_FN(dance_labrk),
+    [TD_RARROW] = ACTION_TAP_DANCE_FN(dance_rabrk),
 };
 
 #include "jweickm_process_record_user.c"

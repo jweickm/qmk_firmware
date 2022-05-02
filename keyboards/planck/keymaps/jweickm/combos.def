@@ -29,8 +29,8 @@ COMB(LUY_OS,        TG(_NUM),       L_KEY, U_KEY, Y_KEY)
 
 // ---------------------- STRING COMBOS --------------------------
 //   name           result          combo keys
-COMB(MN_COMB,       MN_LARROW,      M_KEY, N_KEY)
-COMB(GM_COMB,       GM_PIPE,        G_KEY, M_KEY)
+/* COMB(MN_COMB,       MN_LARROW,      M_KEY, N_KEY) */
+/* COMB(GM_COMB,       GM_PIPE,        G_KEY, M_KEY) */
 
 // --------------------- OS COMBOS -------------------------------
 //   name           result          combo keys

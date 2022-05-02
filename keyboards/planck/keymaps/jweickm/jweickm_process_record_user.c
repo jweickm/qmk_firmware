@@ -540,30 +540,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
 
 // ------------------------------- ACTION COMBOS --------------------
-        case MN_LARROW:
-            if (record->event.pressed) {
-                if (de_layout_active) {
-                    tap_code(DE_LABK);
-                    tap_code(DE_MINS);
-                } else {
-                    tap_code16(S(KC_COMM));
-                    tap_code16(KC_MINS);
-                }
-            }
-            return false;
-            break;
-        case GM_PIPE:
-            if (record->event.pressed) {
-                tap_code16(KC_PERC);
-                if (de_layout_active) {
-                    tap_code16(DE_RABK);
-                } else {
-                    tap_code16(S(KC_DOT));
-                }
-                tap_code16(KC_PERC);
-            }
-            return false;
-            break;
+        /* case MN_LARROW: */
+        /*     if (record->event.pressed) { */
+        /*         if (de_layout_active) { */
+        /*             tap_code(DE_LABK); */
+        /*             tap_code(DE_MINS); */
+        /*         } else { */
+        /*             tap_code16(S(KC_COMM)); */
+        /*             tap_code16(KC_MINS); */
+        /*         } */
+        /*     } */
+        /*     return false; */
+        /*     break; */
+        /* case GM_PIPE: */
+        /*     if (record->event.pressed) { */
+        /*         tap_code16(KC_PERC); */
+        /*         if (de_layout_active) { */
+        /*             tap_code16(DE_RABK); */
+        /*         } else { */
+        /*             tap_code16(S(KC_DOT)); */
+        /*         } */
+        /*         tap_code16(KC_PERC); */
+        /*     } */
+        /*     return false; */
+        /*     break; */
         // now defined in combos.def
         /* case ESCW_ALTF4: */
         /* case ESCBSLS_ALTF4: */
