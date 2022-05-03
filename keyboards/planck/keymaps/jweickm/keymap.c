@@ -308,13 +308,13 @@ void SEND_UMLAUT(char umlaut) {
 // }
 
 #ifdef KEY_OVERRIDE_ENABLE
-    const key_override_t combo_delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
-    const key_override_t lalt_esc_kana_override    = ko_make_basic(MOD_BIT(KC_LALT), KC_ESC, A(KC_GRV)); // this override allows us to switch kana by pressing ralt and esc
+    const key_override_t combo_delete_key_override  = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
+    const key_override_t lalt_esc_kana_override     = ko_make_basic(MOD_BIT(KC_LALT), KC_ESC, A(KC_GRV)); // this override allows us to switch kana by pressing ralt and esc
 
 // This globally defines all key overrides to be used
 const key_override_t **key_overrides = (const key_override_t *[]){
     /* &combo_delete_key_override, */
-    /* &ralt_esc_kana_override, */
+    /* &lalt_esc_kana_override, */
     NULL // Null terminate the array of overrides!
 };
 #endif

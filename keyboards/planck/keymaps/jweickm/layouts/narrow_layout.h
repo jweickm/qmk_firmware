@@ -33,7 +33,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //#elif homerow_mods == 2
 //        KC_TAB, LT(0, KC_A), KC_R, LSFT_T(KC_S), KC_T, KC_G, KC_M, KC_N, RSFT_T(KC_E), KC_I, LT(0, KC_O), QUOT_KEY, // KC_QUOT, 
 //#endif
-        OSM(MOD_LSFT), Z_KEY, X_KEY, C_KEY, D_KEY, V_KEY, KC_K, H_KEY, COMM_KEY, DOT_KEY, SLSH_KEY, ENT_KEY, 
+        OSM(MOD_LSFT), Z_KEY, X_KEY, C_KEY, D_KEY, V_KEY, K_KEY, H_KEY, COMM_KEY, DOT_KEY, SLSH_KEY, ENT_KEY, 
     #if layout == 1
         #if thumb == 1
         LCTL_T(KC_CAPS), KC_LGUI, KC_LALT, LT(_NUM, KC_ESC), LOWER, OSM(MOD_LSFT), NAVSPACE, RAISE, DEL_KEY, DOWN_KEY, UP_KEY, FN_KEY

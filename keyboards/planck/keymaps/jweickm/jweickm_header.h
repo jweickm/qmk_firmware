@@ -13,6 +13,7 @@ enum planck_layers {
     _NAGINATA, // 薙刀式入力レイヤー
     // 薙刀式
 #endif
+    _UMLAUTS,
     _LOWER,
     _RAISE,
     _NUM,
@@ -71,6 +72,8 @@ NGKEYS naginata_keys;
     #define C_KEY LT(0, KC_C)
     #define V_KEY LT(0, KC_V)
 
+    #define K_KEY KC_K
+
 #elif homerow_mods == 2 
     #define Q_KEY LT(0, KC_Q)
     #define W_KEY LT(0, KC_W)
@@ -84,7 +87,7 @@ NGKEYS naginata_keys;
     #define SCLN_KEY LT(0, KC_SCLN)
 
     #define G_KEY KC_G
-    #define M_KEY KC_M
+    #define M_KEY LT(0, KC_M)
 
     #define A_KEY LGUI_T(KC_A)
     #define R_KEY LALT_T(KC_R)
@@ -102,6 +105,8 @@ NGKEYS naginata_keys;
     #define X_KEY LT(0, KC_X)
     #define C_KEY LT(0, KC_C)
     #define V_KEY LT(0, KC_V)
+    
+    #define K_KEY KC_K
 #endif
 
 // define the secondary function of the lower and raise keys here
@@ -166,7 +171,7 @@ enum planck_keycodes {
     DE_ae,  // ä
     DE_SZ,   // ß
     NAVSFT,
-    UMLAUT_RALT
+    UMLAUT_RALT 
     /* MN_LARROW, */ 
     /* GM_PIPE, */ 
 };
