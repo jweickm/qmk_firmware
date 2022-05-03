@@ -154,6 +154,104 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_RARROW] = ACTION_TAP_DANCE_FN(dance_rabrk),
 };
 
+// define custom function for sending special characters
+void SEND_SPECIAL(char key) {
+    switch (key) {
+        case '@':
+            if (de_layout_active) {
+                tap_code16(DE_AT);
+            } else {
+                tap_code16(KC_AT);
+            }
+            break;
+        case '+':
+            if (de_layout_active) {
+                tap_code(DE_PLUS);
+            } else {
+                tap_code16(KC_PLUS);
+            }
+            break;
+        case '-':
+            if (de_layout_active) {
+                tap_code(DE_MINS);
+            } else {
+                tap_code(KC_MINS);
+            }
+            break;
+        case '/':
+            if (de_layout_active) {
+                tap_code16(DE_SLSH);
+            } else {
+                tap_code(KC_SLSH);
+            }
+    }
+
+}
+// define custom function for tapping umlaut keys
+void SEND_UMLAUT(char umlaut) {
+    clear_mods();
+    clear_oneshot_mods();
+    add_mods(MOD_BIT(KC_LALT));
+    switch (umlaut) {
+        case 'a':
+            tap_code(KC_P0);
+            tap_code(KC_P2);
+            tap_code(KC_P2);
+            tap_code(KC_P8);  // ä
+            break;
+        case 'A':
+            tap_code(KC_P0);
+            tap_code(KC_P1);
+            tap_code(KC_P9);
+            tap_code(KC_P6);  // Ä
+            break;
+        case 'u':
+            tap_code(KC_P0);
+            tap_code(KC_P2);
+            tap_code(KC_P5);
+            tap_code(KC_P2);  // ü
+            break;
+        case 'U':
+            tap_code(KC_P0);
+            tap_code(KC_P2);
+            tap_code(KC_P2);
+            tap_code(KC_P0);  // Ü
+            break;
+        case 'o':
+            tap_code(KC_P0);
+            tap_code(KC_P2);
+            tap_code(KC_P4);
+            tap_code(KC_P6);  // ö
+            break;
+        case 'O':
+            tap_code(KC_P0);
+            tap_code(KC_P2);
+            tap_code(KC_P1);
+            tap_code(KC_P4);  // Ö
+            break;
+        case 's':
+            tap_code(KC_P0);
+            tap_code(KC_P2);
+            tap_code(KC_P2);
+            tap_code(KC_P3);  // ß
+            break;
+        case 'e':
+            tap_code(KC_P0);
+            tap_code(KC_P1);
+            tap_code(KC_P2);
+            tap_code(KC_P8);  // €
+            break;
+        case 'y':
+            tap_code(KC_P1);
+            tap_code(KC_P5);
+            tap_code(KC_P7);  // ¥
+            break;
+        default:
+            break; 
+    }
+    unregister_mods(MOD_LALT);
+}
+
 #include "jweickm_process_record_user.c"
 
 // bool encoder_update_user(uint8_t index, bool clockwise) {
@@ -211,7 +309,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 #ifdef KEY_OVERRIDE_ENABLE
     const key_override_t combo_delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
-    const key_override_t ralt_esc_kana_override    = ko_make_basic(MOD_BIT(KC_RALT), KC_ESC, A(KC_GRV)); // this override allows us to switch kana by pressing ralt and esc
+    const key_override_t lalt_esc_kana_override    = ko_make_basic(MOD_BIT(KC_LALT), KC_ESC, A(KC_GRV)); // this override allows us to switch kana by pressing ralt and esc
 
 // This globally defines all key overrides to be used
 const key_override_t **key_overrides = (const key_override_t *[]){
@@ -225,7 +323,7 @@ LEADER_EXTERNS();
 
 void matrix_scan_user(void) {
 
-    #include "leader_dictionary.c"
+#include "leader_dictionary.c"
 
 #ifdef ACHORDION
     achordion_task();
