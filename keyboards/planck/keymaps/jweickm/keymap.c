@@ -1,5 +1,5 @@
 /* Copyright 2015-2017 Jack Humbert
- * Copyright 2023 Jakob Weickmann
+ * Copyright 2022 Jakob Weickmann
  *
  This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

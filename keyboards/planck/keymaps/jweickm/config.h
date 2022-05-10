@@ -69,14 +69,6 @@
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
 #define ACHORDION
-#ifdef ACHORDION
-/* #define PERMISSIVE_HOLD */
-#else 
-// define whether we want to be able to trigger the modifier tap on the home row by long-pressing and releasing without pressing any other keys in between
-/* #define MODIFIER_SOLO_ACTIVATION */ 
-// set the hold duration necessary to be able to trigger same hand home row mods
-#define SAME_HAND_DELAY 200
-#endif
 
 // settings for LEADER key
 #define LEADER_PER_KEY_TIMING
@@ -84,7 +76,7 @@
 #define LEADER_NO_TIMEOUT
 
 // settings for COMBOS
-#define COMBO_TERM 40
+#define COMBO_TERM 35 
 // always checks for the combos on the base layer, even when using another layer
 #define COMBO_ONLY_FROM_LAYER 0
 #define COMBO_VARIABLE_LEN // for gboard combos

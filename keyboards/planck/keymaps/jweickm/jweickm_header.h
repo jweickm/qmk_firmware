@@ -166,9 +166,9 @@ enum planck_keycodes {
     DE_UE,  // Ü
     DE_OE,  // Ö
     DE_AE,  // Ä
-    DE_ue,  // ü
-    DE_oe,  // ö
-    DE_ae,  // ä
+    /* DE_ue,  // ü */
+    /* DE_oe,  // ö */
+    /* DE_ae,  // ä */
     DE_SZ,   // ß
     NAVSFT,
     UMLAUT_RALT 
