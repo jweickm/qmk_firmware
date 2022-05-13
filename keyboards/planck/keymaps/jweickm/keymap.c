@@ -42,23 +42,14 @@ void matrix_init_user(void) {
 void dance_prn(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         if (de_layout_active) {
-//          if (caps_lock_on) {
-//              tap_code(DE_8);
-//          } else {
                 tap_code16(DE_LPRN);
-//          }
         } else {
             tap_code16(KC_LPRN);
         }
     } else {
         if (de_layout_active) {
-//          if (caps_lock_on) {
-//              tap_code(DE_8);
-//              tap_code(DE_9);
-//          } else {
                 tap_code16(DE_LPRN);
                 tap_code16(DE_RPRN);
-//          }
             tap_code(KC_LEFT);
         } else {
             tap_code16(KC_LPRN);
@@ -142,6 +133,15 @@ void dance_rabrk(qk_tap_dance_state_t *state, void *user_data) {
         tap_code16(S(KC_DOT));
     }
 }
+void dance_caps(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count > 1) {
+        if (caps_lock_on) {
+            tap_code(KC_CAPS);
+        } 
+    } else {
+        tap_code(KC_CAPS);
+    }
+}
 
 qk_tap_dance_action_t tap_dance_actions[] = {
     // declare tap dance actions here
@@ -152,6 +152,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_F4] = ACTION_TAP_DANCE_DOUBLE(KC_F4, A(KC_F4)),
     [TD_LARROW] = ACTION_TAP_DANCE_FN(dance_labrk),
     [TD_RARROW] = ACTION_TAP_DANCE_FN(dance_rabrk),
+    [TD_CAPS]   = ACTION_TAP_DANCE_FN(dance_caps),
 };
 
 // define custom function for sending special characters

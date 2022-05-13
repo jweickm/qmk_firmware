@@ -30,6 +30,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case L_KEY:
         case M_KEY:
         case N_KEY:
+        case D_KEY:
+        case H_KEY:
             return TAPPING_TERM * index_factor;
 //      case KANA_K:
 //          return TAPPING_TERM * (index_factor + 0.15);
@@ -207,9 +209,10 @@ bool achordion_eager_mod(uint8_t mod) {
 static bool process_tap_long_press_key(keyrecord_t* record, uint16_t long_press_keycode) {
     if (record->tap.count < 1) { // Key is being held.
         if (record->event.pressed) {
-            register_code16(long_press_keycode);
-        } else {
-            unregister_code16(long_press_keycode);
+            tap_code16(long_press_keycode);
+            /* register_code16(long_press_keycode); */
+        /* } else { */
+            /* unregister_code16(long_press_keycode); */
         }
         return false; // Skip default handling.
     }
@@ -1256,13 +1259,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 //            } else {
 //                return true;
 //            }
-        case M_KEY:
-            if (record->tap.count && record->event.pressed) {
-            } else if (record->event.pressed) { // send '-' on long press
-                SEND_SPECIAL('-');
-                return false;
-            }
-            return true;
+        /* case M_KEY: */
+        /*     if (record->tap.count && record->event.pressed) { */
+        /*     } else if (record->event.pressed) { // send '-' on long press */
+        /*         SEND_SPECIAL('-'); */
+        /*         return false; */
+        /*     } */
+        /*     return true; */
         case COMM_KEY:
             if (record->tap.count && record->event.pressed) {
                 if (de_layout_active) {

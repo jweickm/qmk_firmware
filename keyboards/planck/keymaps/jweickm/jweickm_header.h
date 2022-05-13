@@ -86,8 +86,9 @@ NGKEYS naginata_keys;
     #define Y_KEY LT(0, KC_Y)
     #define SCLN_KEY LT(0, KC_SCLN)
 
-    #define G_KEY KC_G
-    #define M_KEY LT(0, KC_M)
+    #define G_KEY LT(_NUM, KC_G)
+    /* #define M_KEY LT(0, KC_M) */
+    #define M_KEY LT(_MOUSE, KC_M)
 
     #define A_KEY LGUI_T(KC_A)
     #define R_KEY LALT_T(KC_R)
@@ -98,8 +99,10 @@ NGKEYS naginata_keys;
     #define I_KEY LALT_T(KC_I)
     #define O_KEY LGUI_T(KC_O)
 
-    #define D_KEY LT(_NUM, KC_D)
-    #define H_KEY LT(_MOUSE, KC_H)
+    /* #define D_KEY LT(_NUM, KC_D) */
+    /* #define H_KEY LT(_MOUSE, KC_H) */
+    #define D_KEY LT(_LOWER, KC_D)
+    #define H_KEY LT(_RAISE, KC_H)
 
     #define Z_KEY LT(0, KC_Z)
     #define X_KEY LT(0, KC_X)
@@ -185,6 +188,7 @@ enum tap_dance_codes {
     TD_F4,      // double tap F4 to alt-F4
     TD_LARROW,  // double tap left-angling bracket to get left arrow 
     TD_RARROW,  // double tap right-angling bracket to get right arrow
+    TD_CAPS,    // double tap caps to turn it off regardless of state
     /* TD_QUOT,    // double tap KC_QUOT to type DBLQUOT; Edit: would be nice but doesn't play nicely with mod taps, same for the tap dances below*/
     /* TD_A,       // double tap A to type Ä */
     /* TD_U,       // double tap U to type Ü */
