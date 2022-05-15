@@ -3,24 +3,24 @@
 // LEFT HAND
 COMB(CD_ESC,        KC_ESC,         C_KEY, D_KEY)
 COMB(XD_APP,        KC_APP,         X_KEY, D_KEY)
-COMB(XS_DEL,        KC_DEL,         X_KEY, S_KEY)
+COMB(XS_DEL,        TD(TD_DEL),     X_KEY, S_KEY)
 COMB(WF_TAB,        KC_TAB,         W_KEY, F_KEY)
 COMB(XC_CAPS,       TD(TD_CAPS),    X_KEY, C_KEY)
 COMB(ZS_SZ,         DE_SZ,          Z_KEY, S_KEY)
-COMB(QW_HYPR,       KC_HYPR,        Q_KEY, W_KEY)
+COMB(QF_HYPR,       KC_HYPR,        Q_KEY, F_KEY)
 
 // RIGHT HAND
 COMB(HCOMM_ENT,     KC_ENT,         H_KEY, COMM_KEY)
 COMB(HDOT_RALT,     KC_RALT,        H_KEY, DOT_KEY)
 COMB(WP_RALT,       UMLAUT_RALT,    W_KEY, P_KEY)
-COMB(QF_UMLAUT,     OSL(_UMLAUTS),  Q_KEY, F_KEY)
+COMB(QP_UMLAUT,     OSL(_UMLAUTS),  Q_KEY, P_KEY)
 /* COMB(WP_UMLAUT,     OSL(_UMLAUTS),    W_KEY, P_KEY) */
 // disable the LY combo as it is a rather commonly typed bigram in English
 /* COMB(LY_RALT,       UMLAUT_RALT,    L_KEY, Y_KEY) */
 /* COMB(LY_UMLAUT,     OSL(_UMLAUTS),    L_KEY, Y_KEY) */
 COMB(COMMDOT_LEAD,  KC_LEAD,        COMM_KEY, DOT_KEY)
-COMB(EDOT_BSPC,     KC_BSPC,        E_KEY, DOT_KEY)
-COMB(SCLNBSLS_BSPC, KC_BSPC,        SCLN_KEY, BSLS_KEY)
+COMB(EDOT_BSPC,     TD(TD_BSPC),        E_KEY, DOT_KEY)
+COMB(SCLNBSLS_BSPC, TD(TD_BSPC),        SCLN_KEY, BSLS_KEY)
 
 // ---------------------- MEDIA COMBOS ---------------------------
 //   name           result          combo keys

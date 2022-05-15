@@ -153,6 +153,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_LARROW] = ACTION_TAP_DANCE_FN(dance_labrk),
     [TD_RARROW] = ACTION_TAP_DANCE_FN(dance_rabrk),
     [TD_CAPS]   = ACTION_TAP_DANCE_FN(dance_caps),
+    [TD_BSPC]   = ACTION_TAP_DANCE_DOUBLE(KC_BSPC, C(KC_BSPC)), 
+    [TD_DEL]   = ACTION_TAP_DANCE_DOUBLE(KC_DEL, C(KC_DEL)), 
 };
 
 // define custom function for sending special characters
