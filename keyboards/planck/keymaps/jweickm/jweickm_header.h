@@ -137,7 +137,7 @@ NGKEYS naginata_keys;
 #define FN_KEY      LT(_ADJUST, KC_RALT)
 #define ENT_KEY     RSFT_T(KC_ENT)
 
-#define BS_KEY      KC_BSPC
+#define BS_KEY      LT(_NUM, KC_BSPC)
 #define DEL_KEY     LT(_MOUSE, KC_DEL)
 
 enum planck_keycodes { 
