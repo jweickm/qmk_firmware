@@ -21,6 +21,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM * (thumb_factor + 0.1);
 
         // index finger keys
+        /* case TD(TD_BSPC): */
+        /* case TD(TD_DEL): */
         case P_KEY:
         case T_KEY:
         case G_KEY:
@@ -32,8 +34,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case N_KEY:
         case D_KEY:
         case H_KEY:
-        case TD(TD_BSPC):
-        case TD(TD_DEL):
             return TAPPING_TERM * index_factor;
 
         // middle finger keys
@@ -72,6 +72,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM; // prefer these ones to be shorter
 
         // tap-dance actions
+        /* case TD(TD_CAPS): */
         case TD(TD_PRN):
         case TD(TD_BRC):
         case TD(TD_CBR):
@@ -79,7 +80,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_F4):
         case TD(TD_LARROW):
         case TD(TD_RARROW):
-        case TD(TD_CAPS):
             return TAPPING_TERM * td_factor;
 
         default:
@@ -393,14 +393,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             /*     return false; */
             /* } */
             /* return true; */
-        case K_KEY:
-            if (record->event.pressed) {
-              if (!de_layout_active && ((mod_state & MOD_BIT(KC_LALT)) == MOD_BIT(KC_LALT))) {
-                  tap_code(KC_GRV);
-                  return false;
-              }
-            }
-            return true;
+        /* case K_KEY: */
+        /*     if (record->event.pressed) { */
+        /*       if (!de_layout_active && ((mod_state & MOD_BIT(KC_LALT)) == MOD_BIT(KC_LALT))) { */
+        /*           tap_code(KC_GRV); */
+        /*           return false; */
+        /*       } */
+        /*     } */
+        /*     return true; */
         case UNDO:
             if (record->event.pressed) {
                 if (de_layout_active) {
@@ -1190,27 +1190,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
               if (de_layout_active) {
                   if (record->event.pressed) {
                       if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-//                        if (caps_lock_on) {
-//                            clear_oneshot_mods();
-//                            clear_mods();
-//                            register_code(DE_2); // \"
-//                            set_mods(mod_state);
-//                        } else {
                               register_code16(DE_DQUO);  // \"
-//                        } 
                       } else {
- //                       if (caps_lock_on) {
- //                           clear_mods();
- //                           register_code(DE_HASH); // \'
- //                       } else {
                               register_code16(DE_QUOT);  // /'
- //                       }
                       }
                   } else {
-//                    if (caps_lock_on) {
-//                        unregister_code(KC_2);
-//                        unregister_code(DE_HASH);
-//                    }
                       unregister_code16(DE_DQUO);
                       unregister_code16(DE_QUOT);
                   }
@@ -1274,8 +1258,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         clear_oneshot_mods();
                         register_code16(DE_LABK);  // < left angle bracket when shifted
                         set_mods(mod_state);
-//                  } else if (caps_lock_on) {
-//                      register_code16(S(KC_COMM));
                     } else {
                         return true;
                     }
@@ -1284,11 +1266,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return true;
             } else if (record->event.pressed) { // add semicolon as a held key
                 if (de_layout_active) {
-//                  if (caps_lock_on) {
-//                      tap_code16(S(DE_SCLN));
-//                  } else {
                         tap_code16(DE_SCLN);
-//                  }
                 } else {
                     tap_code16(KC_SCLN);
                 }
@@ -1366,20 +1344,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case S(KC_QUOT): // "
             if (de_layout_active) {
                 if (record->event.pressed) {
-//                  if (caps_lock_on) {
-//                      clear_oneshot_mods();
-//                      clear_mods();
-//                      register_code(DE_2); // \"
-//                      set_mods(mod_state);
-//                  } else {
                         register_code16(DE_DQUO);
-//                  }
                 } else {
- //                 if (caps_lock_on) {
- //                     unregister_code(KC_2);
- //                 } else {
                         unregister_code16(DE_DQUO);
- //                 }
                 }
                 return false;
             } else {

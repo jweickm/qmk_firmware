@@ -133,15 +133,15 @@ void dance_rabrk(qk_tap_dance_state_t *state, void *user_data) {
         tap_code16(S(KC_DOT));
     }
 }
-void dance_caps(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count > 1) {
-        if (caps_lock_on) {
-            tap_code(KC_CAPS);
-        } 
-    } else {
-        tap_code(KC_CAPS);
-    }
-}
+/* void dance_caps(qk_tap_dance_state_t *state, void *user_data) { */
+/*     if (state->count > 1) { */
+/*         if (caps_lock_on) { */
+/*             tap_code(KC_CAPS); */
+/*         } */ 
+/*     } else { */
+/*         tap_code(KC_CAPS); */
+/*     } */
+/* } */
 
 qk_tap_dance_action_t tap_dance_actions[] = {
     // declare tap dance actions here
@@ -152,9 +152,9 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_F4] = ACTION_TAP_DANCE_DOUBLE(KC_F4, A(KC_F4)),
     [TD_LARROW] = ACTION_TAP_DANCE_FN(dance_labrk),
     [TD_RARROW] = ACTION_TAP_DANCE_FN(dance_rabrk),
-    [TD_CAPS]   = ACTION_TAP_DANCE_FN(dance_caps),
-    [TD_BSPC]   = ACTION_TAP_DANCE_DOUBLE(KC_BSPC, C(KC_BSPC)), 
-    [TD_DEL]   = ACTION_TAP_DANCE_DOUBLE(KC_DEL, C(KC_DEL)), 
+    /* [TD_CAPS]   = ACTION_TAP_DANCE_FN(dance_caps), */
+    /* [TD_BSPC]   = ACTION_TAP_DANCE_DOUBLE(KC_BSPC, C(KC_BSPC)), */ 
+    /* [TD_DEL]   = ACTION_TAP_DANCE_DOUBLE(KC_DEL, C(KC_DEL)), */ 
 };
 
 // define custom function for sending special characters
@@ -318,7 +318,13 @@ void SEND_UMLAUT(char umlaut) {
 
 #ifdef KEY_OVERRIDE_ENABLE
     const key_override_t combo_delete_key_override  = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
-    const key_override_t lalt_k_kana_override       = ko_make_basic(MOD_BIT(KC_LALT), K_KEY, A(KC_GRV)); // this override allows us to switch kana by pressing ralt and esc
+    const key_override_t lalt_k_kana_override       = ko_make_with_layers_and_negmods(
+            MOD_BIT(KC_LALT),   // Trigger mods: LALT
+            K_KEY,              // Trigger key: K
+            A(KC_GRV),          // Replacement key: A(KC_GRV)
+            ~0,                 // Activate on all layers
+            MOD_MASK_CSG        // Do not activate when Ctrl, Shift or GUI are pressed
+            ); // this override allows us to switch kana by pressing ralt and esc
 
 // This globally defines all key overrides to be used
 const key_override_t **key_overrides = (const key_override_t *[]){

@@ -188,9 +188,9 @@ enum tap_dance_codes {
     TD_F4,      // double tap F4 to alt-F4
     TD_LARROW,  // double tap left-angling bracket to get left arrow 
     TD_RARROW,  // double tap right-angling bracket to get right arrow
-    TD_CAPS,    // double tap caps to turn it off regardless of state
-    TD_BSPC,    // double tap backspace to send C(KC_BSPC)
-    TD_DEL,     // double tap delete to send C(KC_DEL)
+    /* TD_CAPS,    // double tap caps to turn it off regardless of state */
+    /* TD_BSPC,    // double tap backspace to send C(KC_BSPC) */
+    /* TD_DEL,     // double tap delete to send C(KC_DEL) */
     /* TD_QUOT,    // double tap KC_QUOT to type DBLQUOT; Edit: would be nice but doesn't play nicely with mod taps, same for the tap dances below*/
     /* TD_A,       // double tap A to type Ä */
     /* TD_U,       // double tap U to type Ü */
