@@ -32,12 +32,9 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case N_KEY:
         case D_KEY:
         case H_KEY:
+        case TD(TD_BSPC):
+        case TD(TD_DEL):
             return TAPPING_TERM * index_factor;
-//      case KANA_K:
-//          return TAPPING_TERM * (index_factor + 0.15);
- //     case LT(_MOUSE, KC_VOLU):
- //     case LT(_MOUSE, KC_VOLD):
- //         return TAPPING_TERM * td_factor;
 
         // middle finger keys
         case F_KEY:
@@ -58,10 +55,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM * ring_factor;
 
         // pinky keys
-//        case LT(_MOUSE, KC_Z):
-//        case LT(_MOUSE, KC_SLSH):
-//        case LSFT_T(KC_Z):
-//        case LT(0, KC_SCLN):
         case Q_KEY:
         case A_KEY:
         case Z_KEY:
@@ -84,6 +77,9 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case TD(TD_CBR):
         case TD(TD_VIM_GG):
         case TD(TD_F4):
+        case TD(TD_LARROW):
+        case TD(TD_RARROW):
+        case TD(TD_CAPS):
             return TAPPING_TERM * td_factor;
 
         default:
@@ -317,9 +313,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case UMLAUT_RALT:
             if (record->event.pressed) {
                 tap_code16(KC_RALT);
-                if (!de_layout_active) {
-                    tap_code16(S(KC_QUOT));
-                }
+                SEND_SPECIAL('"');
             }
             return false;
             break;
@@ -401,7 +395,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             /* return true; */
         case K_KEY:
             if (record->event.pressed) {
-              if (!de_layout_active && (mod_state & MOD_MASK_ALT)) {
+              if (!de_layout_active && ((mod_state & MOD_BIT(KC_LALT)) == MOD_BIT(KC_LALT))) {
                   tap_code(KC_GRV);
                   return false;
               }
@@ -490,11 +484,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     set_oneshot_mods(MOD_BIT(KC_LSFT));
                 }
                 return false;
-            } else if (record->event.pressed) {
-                return true;
-            } else {
-                return true;
             }
+            return true;
 //      case RAISE:
 //          if (naginata_active) {
 //              return true;
@@ -524,10 +515,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
         case RAISE:
-            if (record->tap.count && record->event.pressed && caps_lock_on) {
-                tap_code(KC_CAPS);
-            } 
+            if (record->tap.count && record->event.pressed) {
+                if (osmod_state & MOD_MASK_SHIFT) {
+                    clear_oneshot_mods();
+                } else {
+                    set_oneshot_mods(MOD_BIT(KC_RSFT));
+                }
+                return false;
+            }
             return true;
+            /* if (record->tap.count && record->event.pressed && caps_lock_on) { */
+            /*     tap_code(KC_CAPS); */
+            /* } */ 
+            /* return true; */
         case KC_ENT:
         case ENT_KEY:
         case KC_LEAD:
