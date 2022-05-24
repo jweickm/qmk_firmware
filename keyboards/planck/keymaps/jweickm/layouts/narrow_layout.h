@@ -58,11 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_QWERTY] = LAYOUT_planck_grid(
         ESC_KEY, LGUI_T(KC_Q), LALT_T(KC_W), LSFT_T(KC_E), LCTL_T(KC_R), KC_T, KC_Y, RCTL_T(KC_U), RSFT_T(KC_I), LALT_T(KC_O), RGUI_T(KC_P), BSLS_KEY, // LT(0, DE_UDIA), 
-#if homerow_mods == 1
         KC_TAB, LT(0, KC_A), KC_S, D_KEY, KC_F, KC_G, H_KEY, KC_J, KC_K, KC_L, LT(0, KC_SCLN), QUOT_KEY, // KC_QUOT, 
-#elif homerow_mods == 2
-        KC_TAB, LT(0, KC_A), KC_S, LSFT_T(KC_D), KC_F, KC_G, H_KEY, KC_J, RSFT_T(KC_K), KC_L, LT(0, KC_SCLN), QUOT_KEY, // KC_QUOT, 
-#endif
         OSM(MOD_LSFT), Z_KEY, X_KEY, C_KEY, V_KEY, KC_B, KC_N, KC_M, COMM_KEY, DOT_KEY, SLSH_KEY, ENT_KEY, 
     #if layout == 1
         #if thumb == 1
@@ -148,17 +144,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ,-----------------------------------------------------------------------------------.
      * |   `  |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  |   |  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |A-GRV | LGUI | LALT | LSFT | LCTL | PAUSE|   "  |   _  |   +  |   [  |   ]  |   "  |
+     * |A-GRV | VIM_O| LEFT |  UP  | DOWN | RIGHT|   "  |   _  |   +  |   [  |   ]  |   "  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |C-CAPS|CTLTAB| MIC  | MPLY | MUTE |A-CAPS|   ~  |   '  |   <  |   >  |   -  |   `  |
+     * |C-CAPS|CTLTAB| HOME | PGUP | PGDN |  END |   ~  |   '  |   <  |   >  |   -  |   `  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |!MOUSE| ____ |ADJUST| ____ | ____ |     ____    |ADJUST| ____ | Bri- | Bri+ | !NUM | 1x2uC
      * `-----------------------------------------------------------------------------------'
      */ 
     [_LOWER] = LAYOUT_planck_grid(
         KC_GRV, KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, TD(TD_PRN), KC_RPRN, KC_PIPE,
-        A(KC_GRV), KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_PAUSE, S(KC_QUOT), KC_UNDS, KC_PLUS, TD(TD_BRC), KC_RBRC, S(KC_QUOT), 
-        C(KC_CAPS), CTL_TAB, KC_MAIL, KC_MPLY, KC_MUTE, A(KC_CAPS), KC_TILD, KC_QUOT, TD(TD_LARROW), TD(TD_RARROW), KC_MINS, DE_ACC_GRV, 
+        A(KC_GRV), VIM_O, KC_LEFT, KC_UP, KC_DOWN, KC_RIGHT, S(KC_QUOT), KC_UNDS, KC_PLUS, TD(TD_BRC), KC_RBRC, S(KC_QUOT), 
+        C(KC_CAPS), CTL_TAB, KC_HOME, KC_PGUP, KC_PGDN, KC_END, KC_TILD, KC_QUOT, TD(TD_LARROW), TD(TD_RARROW), KC_MINS, DE_ACC_GRV, 
     #if layout == 1
         TG(_MOUSE), KC_TRNS, OSL(_ADJUST), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, MO(_ADJUST), KC_TRNS, KC_BRID, KC_BRIU, TG(_NUM)
     #elif layout == 2

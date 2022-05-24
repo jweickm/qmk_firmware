@@ -20,7 +20,11 @@
 #elif hand_position == 2
     #include "layouts/wide_layout.h"
 #elif hand_position == 3
-    #include "layouts/narrow_layout.h"
+    #if layout == 2 
+        #include "layouts/2x2u_layout.h"
+    #else 
+        #include "layouts/narrow_layout.h"
+    #endif
 #endif
 
 #include "g/keymap_combo.h"
@@ -187,12 +191,14 @@ void SEND_SPECIAL(char key) {
             } else {
                 tap_code(KC_SLSH);
             }
+            break;
         case '"':
             if (de_layout_active) {
                 tap_code16(DE_DQUO);
             } else {
                 tap_code16(S(KC_QUOT));
             }
+            break;
     }
 
 }

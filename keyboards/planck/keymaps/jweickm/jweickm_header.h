@@ -6,8 +6,8 @@
 
 enum planck_layers {
     _COLEMAK = 0,
-    _QWERTY,
-    _GAMING,
+    /* _QWERTY, */
+    /* _GAMING, */
 #ifdef NAGINATA_ENABLE
     // 薙刀式
     _NAGINATA, // 薙刀式入力レイヤー
@@ -36,45 +36,10 @@ NGKEYS naginata_keys;
 #elif hand_position == 2
     #define layout 1 // 1: 1x2uC, 2: 2x2u, 3: grid
 #elif hand_position == 3 
-    #define layout 1 // 1: 1x2uC, 2: grid
+    #define layout 2 // 1: 1x2uC, 2: 2x2u, 3: grid
     #define thumb 2 // 1: backspace, 2: osm_shift
 #endif
 
-// define the position of the homerow_mods: 1-top row, 2-middle row, 3-bottom row
-#define homerow_mods 2
-
-#if homerow_mods == 1
-    #define Q_KEY LGUI_T(KC_Q)
-    #define W_KEY LALT_T(KC_W)
-    #define F_KEY LSFT_T(KC_F)
-    #define P_KEY LCTL_T(KC_P)
-    #define B_KEY KC_B
-    #define J_KEY KC_J
-    #define L_KEY RCTL_T(KC_L)
-    #define U_KEY RSFT_T(KC_U)
-    #define Y_KEY LALT_T(KC_Y)
-    #define SCLN_KEY RGUI_T(KC_SCLN)
-    #define A_KEY LT(0, KC_A)
-    #define R_KEY KC_R
-    #define S_KEY KC_S
-    #define T_KEY KC_T
-    #define G_KEY KC_G
-    #define M_KEY KC_M
-    #define N_KEY KC_N
-    #define E_KEY KC_E
-    #define I_KEY KC_I
-    #define O_KEY LT(0, KC_O)
-
-    #define D_KEY LT(_NUM, KC_D)
-    #define H_KEY LT(_MOUSE, KC_H)
-    #define Z_KEY LT(0, KC_Z)
-    #define X_KEY LT(0, KC_X)
-    #define C_KEY LT(0, KC_C)
-    #define V_KEY LT(0, KC_V)
-
-    #define K_KEY KC_K
-
-#elif homerow_mods == 2 
     #define Q_KEY LT(0, KC_Q)
     #define W_KEY LT(0, KC_W)
     #define F_KEY LT(0, KC_F)
@@ -86,7 +51,7 @@ NGKEYS naginata_keys;
     #define Y_KEY LT(0, KC_Y)
     #define SCLN_KEY LT(0, KC_SCLN)
 
-    #define G_KEY LT(_LOWER, KC_G)
+    #define G_KEY LT(_NUM, KC_G)
     /* #define M_KEY LT(0, KC_M) */
     #define M_KEY LT(_RAISE, KC_M)
 
@@ -101,7 +66,7 @@ NGKEYS naginata_keys;
 
     /* #define D_KEY LT(_NUM, KC_D) */
     /* #define H_KEY LT(_MOUSE, KC_H) */
-    #define D_KEY LT(_NUM, KC_D)
+    #define D_KEY LT(_ADJUST, KC_D)
     #define H_KEY LT(_MOUSE, KC_H)
 
     #define Z_KEY LT(0, KC_Z)
@@ -110,19 +75,21 @@ NGKEYS naginata_keys;
     #define V_KEY LT(0, KC_V)
     
     #define K_KEY KC_K
-#endif
 
 // define the secondary function of the lower and raise keys here
 #if hand_position == 1 && layout == 2
     #define LOWER OSL(_LOWER)
     #define RAISE OSL(_RAISE)
+#elif hand_position == 3 && layout == 2
+    #define LOWER LT(_LOWER, KC_SPC)
+    #define RAISE LT(_RAISE, KC_SPC)
 #else
     #define LOWER LT(_LOWER, KC_BSPC)
     #define RAISE LT(_RAISE, KC_ENT)
 #endif
 
-#define DOWN_KEY LT(_NAV, KC_DOWN)
-#define UP_KEY LT(_NAV, KC_UP)
+#define DOWN_KEY LT(_MOUSE, KC_DOWN)
+#define UP_KEY LT(_MOUSE, KC_UP)
 #define LEFT_KEY KC_LEFT
 #define RIGHT_KEY KC_RIGHT
 
@@ -137,6 +104,7 @@ NGKEYS naginata_keys;
 #define FN_KEY      LT(_ADJUST, KC_RALT)
 #define ENT_KEY     RSFT_T(KC_ENT)
 
+#define LTHUMB_KEY  LT(_ADJUST, KC_ENT)
 #define BS_KEY      LT(_NUM, KC_BSPC)
 #define DEL_KEY     LT(_MOUSE, KC_DEL)
 
@@ -204,10 +172,10 @@ bool de_layout_active  = false;
 bool is_alt_tab_active  = false;
 bool is_ctl_tab_active  = false;
 
-#if homerow_mods == 1
-// controls, whether long pressing A, O, Z results in Ä, Ö, ß
-bool umlaut_enable      = false; 
-#endif
+/* #if homerow_mods == 1 */
+/* // controls, whether long pressing A, O, Z results in Ä, Ö, ß */
+/* bool umlaut_enable      = false; */ 
+/* #endif */
 
 // controls which of the two languages (en/ge) is used for coding and which is used for typing German
 // English by default

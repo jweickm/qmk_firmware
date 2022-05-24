@@ -9,13 +9,11 @@ float td_factor     = 1.2;
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // thumb keys
-        case NAVENT:
-        case LT(_NUM, KC_ESC):
-        case LT(_NUM, KC_BSPC):
+        case LTHUMB_KEY:
+        case BS_KEY:
+        case DEL_KEY:
         case LOWER: 
-        case LSFT_T(KC_BSPC):
         case RAISE:
-        case LT(_MOUSE, KC_DEL):
             return TAPPING_TERM * thumb_factor;
         case NAVSPACE:
             return TAPPING_TERM * (thumb_factor + 0.1);
@@ -67,6 +65,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM * pinky_factor;
         case LCTL_T(KC_CAPS):
         case OSM(MOD_LSFT):
+        case OSM(MOD_RSFT):
         case LT(0, KC_BSLS):
         case LT(0, KC_QUOT):
             return TAPPING_TERM; // prefer these ones to be shorter
@@ -227,27 +226,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
 
 // ------------------------------- LANGUAGES & LAYERS --------------------------
-        case QWERTY:
-            if (record->event.pressed) {
-                layer_invert(_QWERTY);
-                // turn them back on when leaving the layer
-#ifdef AUDIO_ENABLE
-                PLAY_SONG(gaming_song);
-#endif
-            }
-            return false;
-            break;
-        case GAMING:
-            if (record->event.pressed) {
-                layer_invert(_GAMING);
-                combo_toggle(); // turns off combos when moving to _GAMING and 
-                // turn them back on when leaving the layer
-#ifdef AUDIO_ENABLE
-                PLAY_SONG(gaming_song);
-#endif
-            }
-            return false;
-            break;
+        /* case QWERTY: */
+        /*     if (record->event.pressed) { */
+        /*         layer_invert(_QWERTY); */
+        /*         // turn them back on when leaving the layer */
+/* #ifdef AUDIO_ENABLE */
+        /*         PLAY_SONG(gaming_song); */
+/* #endif */
+        /*     } */
+        /*     return false; */
+        /*     break; */
+        /* case GAMING: */
+        /*     if (record->event.pressed) { */
+        /*         layer_invert(_GAMING); */
+        /*         combo_toggle(); // turns off combos when moving to _GAMING and */ 
+        /*         // turn them back on when leaving the layer */
+/* #ifdef AUDIO_ENABLE */
+        /*         PLAY_SONG(gaming_song); */
+/* #endif */
+        /*     } */
+        /*     return false; */
+        /*     break; */
         case KC_DE_SWITCH: // switches only kb lang
             if (record->event.pressed) {
                 if (de_layout_active) {
@@ -270,7 +269,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 PLAY_SONG(colemak_de_song);
 #endif
                 }
-                layer_off(_GAMING);
             }
             return false;
         case LANG_SWITCH: // switches both system lang and kb lang
@@ -305,7 +303,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
                 // "turn off" gaming layer to update the layer state and show
                 // the led change
-                layer_off(_GAMING);
             }
             return false;
 
@@ -393,14 +390,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             /*     return false; */
             /* } */
             /* return true; */
-        /* case K_KEY: */
-        /*     if (record->event.pressed) { */
-        /*       if (!de_layout_active && ((mod_state & MOD_BIT(KC_LALT)) == MOD_BIT(KC_LALT))) { */
-        /*           tap_code(KC_GRV); */
-        /*           return false; */
-        /*       } */
-        /*     } */
-        /*     return true; */
+#ifndef KEY_OVERRIDE_ENABLE
+        case K_KEY:
+            if (record->event.pressed) {
+              if (!de_layout_active && (mod_state == MOD_BIT(KC_LALT))) {
+                  tap_code(KC_GRV);
+                  return false;
+              }
+            }
+            return true;
+#endif
         case UNDO:
             if (record->event.pressed) {
                 if (de_layout_active) {
@@ -471,21 +470,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
 #if thumb == 2
-        case LOWER:
-#ifdef NAGINATA_ENABLE
-            if (naginata_active) {
-                return true;
-            }
-#endif
-            if (record->tap.count && record->event.pressed) {
-                if (osmod_state & MOD_MASK_SHIFT) {
-                    clear_oneshot_mods();
-                } else {
-                    set_oneshot_mods(MOD_BIT(KC_LSFT));
-                }
-                return false;
-            }
-            return true;
+        /* case LOWER: */
+/* #ifdef NAGINATA_ENABLE */
+        /*     if (naginata_active) { */
+        /*         return true; */
+        /*     } */
+/* #endif */
+        /*     if (record->tap.count && record->event.pressed) { */
+        /*         if (osmod_state & MOD_MASK_SHIFT) { */
+        /*             clear_oneshot_mods(); */
+        /*         } else { */
+        /*             set_oneshot_mods(MOD_BIT(KC_LSFT)); */
+        /*         } */
+        /*         return false; */
+        /*     } */
+        /*     return true; */
 //      case RAISE:
 //          if (naginata_active) {
 //              return true;
@@ -514,16 +513,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 layer_off(_NUM);
             }
             return true;
-        case RAISE:
-            if (record->tap.count && record->event.pressed) {
-                if (osmod_state & MOD_MASK_SHIFT) {
-                    clear_oneshot_mods();
-                } else {
-                    set_oneshot_mods(MOD_BIT(KC_RSFT));
-                }
-                return false;
-            }
-            return true;
+        /* case RAISE: */
+        /*     if (record->tap.count && record->event.pressed) { */
+        /*         if (osmod_state & MOD_MASK_SHIFT) { */
+        /*             clear_oneshot_mods(); */
+        /*         } else { */
+        /*             set_oneshot_mods(MOD_BIT(KC_RSFT)); */
+        /*         } */
+        /*         return false; */
+        /*     } */
+        /*     return true; */
             /* if (record->tap.count && record->event.pressed && caps_lock_on) { */
             /*     tap_code(KC_CAPS); */
             /* } */ 
@@ -537,21 +536,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
 
 // ------------------------- UNICODE ----------------------------------------- 
-#if homerow_mods == 1
-        case UMLAUT_SW:
-            if (record->event.pressed) {
-#ifdef AUDIO_ENABLE
-                if (umlaut_enable) {
-                    PLAY_SONG(umlaut_off_song);
-                } else {
-                    PLAY_SONG(umlaut_on_song);
-                }
-#endif
-                umlaut_enable = !umlaut_enable;   
-            }
-            return false;
-            break;
-#endif
         case CODING_SW:
             if (record->event.pressed) {
 #ifdef AUDIO_ENABLE
@@ -629,10 +613,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                             tap_code16(DE_BSLS);
                         }
                         set_mods(mod_state);
-#if homerow_mods == 1
-                    } else if (umlaut_enable) {
-                        tap_code(DE_UDIA);
-#endif
                     } else if (de_en_switched) {
                         tap_code16(DE_UNDS);
                     } else {
@@ -648,17 +628,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return false;
                 } else if (!de_layout_active) {
                     if (!de_en_switched) {
-#if homerow_mods == 1
-                        if (umlaut_enable) {
-                            if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                                SEND_UMLAUT('U');
-                            } else {
-                                SEND_UMLAUT('u');
-                            }
-                            set_mods(mod_state);
-                            return false;
-                        } 
-#endif
                         tap_code16(KC_UNDS);
                     } else if (de_en_switched) {
                         tap_code(KC_BSLS);
@@ -1146,27 +1115,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         } else {
                             tap_code16(DE_QUOT);  // /'
                         }
-#if homerow_mods == 1
-                    } else if (umlaut_enable) {
-                        tap_code(DE_ADIA);
-#endif
                     } else if (de_en_switched) { // send minus in german layout on long-press, when de_en_switched
                         tap_code(DE_MINS);
                     }
                     return false;
                 } else if (!de_layout_active) { // in the English layout
                     if (!de_en_switched) { // normal processing
-#if homerow_mods == 1
-                        if (umlaut_enable) {
-                            if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                                SEND_UMLAUT('A'); // Ä
-                            } else {
-                                SEND_UMLAUT('a'); // ä
-                            }
-                            set_mods(mod_state);
-                            return false ;
-                        }
-#endif
                         tap_code(KC_MINS); // send minus on long_press
                     } else if (de_en_switched) { 
                         tap_code(KC_QUOT); // otherwise send quotes when de_en_switched
@@ -1509,8 +1463,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
 
 // ------------------------- TOP ROW NUMBERS ---------------------------------
-#if homerow_mods == 2
-
         case Q_KEY:
             return process_tap_long_press_key(record, KC_1);
             /* if (record->tap.count && record->event.pressed) { */
@@ -1650,158 +1602,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
 
-#elif homerow_mods == 1
-// ------------------------- NUMBERS CAPS IMMUNITY----------------------------
-//      case KC_0:
-//      case KC_1:
-//      case KC_2:
-//      case KC_3:
-//      case KC_4:
-//      case KC_5:
-//      case KC_6:
-//      case KC_7:
-//      case KC_8:
-//      case KC_9:
-//          if (record->event.pressed) {
-//              if (de_layout_active && caps_lock_on) {
-//                  register_code16(S(keycode));
-//                  return false;
-//              } else {
-//                  return true;
-//              }
-//          } else {
-//              return true;
-//          }
-// ------------------------- NUMBERS AUTOSHIFT -------------------------------
-//      case LT(0, KC_1): 
-//          if (record->tap.count && record->event.pressed) {
-//              return true;
-//          } else if (record->event.pressed) {
-//              tap_code16(KC_EXLM);
-//              return false;
-//          }
-//          return true;
-//      case LT(0, KC_2): 
-//          if (record->tap.count && record->event.pressed) {
-//              return true;
-//          } else if (record->event.pressed) {
-//              tap_code16(KC_AT);
-//              return false;
-//          }
-//          return true;
-//      case LT(0, KC_3): 
-//          if (record->tap.count && record->event.pressed) {
-//              return true;
-//          } else if (record->event.pressed) {
-//              tap_code16(KC_HASH);
-//              return false;
-//          }
-//          return true;
-//      case LT(0, KC_4): 
-//          if (record->tap.count && record->event.pressed) {
-//              return true;
-//          } else if (record->event.pressed) {
-//              tap_code16(KC_DLR);
-//              return false;
-//          }
-//          return true;
-//      case LT(0, KC_5): 
-//          if (record->tap.count && record->event.pressed) {
-//              return true;
-//          } else if (record->event.pressed) {
-//              tap_code16(KC_PERC);
-//              return false;
-//          }
-//          return true;
-//      case LT(0, KC_6): 
-//          if (record->tap.count && record->event.pressed) {
-//              return true;
-//          } else if (record->event.pressed) {
-//              tap_code16(KC_CIRC);
-//              return false;
-//          }
-//          return true;
-//      case LT(0, KC_7): 
-//          if (record->tap.count && record->event.pressed) {
-//              return true;
-//          } else if (record->event.pressed) {
-//              tap_code16(KC_AMPR);
-//              return false;
-//          }
-//          return true;
-//      case LT(0, KC_8): 
-//          if (record->tap.count && record->event.pressed) {
-//              return true;
-//          } else if (record->event.pressed) {
-//              tap_code16(KC_ASTR);
-//              return false;
-//          }
-//          return true;
-//      case LT(0, KC_9): 
-//          if (record->tap.count && record->event.pressed) {
-//              return true;
-//          } else if (record->event.pressed) {
-//              tap_code16(KC_LPRN);
-//              return false;
-//          }
-//          return true;
-//      case LT(0, KC_0): 
-//          if (record->tap.count && record->event.pressed) {
-//              return true;
-//          } else if (record->event.pressed) {
-//              tap_code16(KC_RPRN);
-//              return false;
-//          }
-//          return true;
-          
-// ------------------------- MOD-/LAYER-TAPS ---------------------------------
-        case LALT_T(KC_Y):
-            if (de_layout_active) {
-                if (record->tap.count && record->event.pressed) {
-                    register_code(DE_Y); // tap Y
-                    return false;
-                } else if (record->event.pressed) {
-                    return true;
-                } else {
-                    unregister_code(DE_Y);
-                    return true;
-                }
-            } else {
-                return true;
-            }
-
-        case RGUI_T(KC_SCLN): // this key behaves as a gui mod tap for both german and english layout
-            if (record->tap.count && record->event.pressed) {
-                if (!de_en_switched) {
-                    return true;
-                } else if (de_en_switched) {
-                    if (de_layout_active) {
-                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            register_code16(DE_COLN); // register :
-                        } else {
-                            register_code16(DE_SCLN); // register ;
-                        }
-                    } else if (!de_layout_active) {
-                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            SEND_UMLAUT('O'); // Ö
-                        } else {
-                            SEND_UMLAUT('o'); // ö
-                        }
-                        set_mods(mod_state);
-                    }
-                    return false;
-                }
-            } else if (record->event.pressed) {
-                return true;
-            } else {
-                if (de_en_switched && de_layout_active) {
-                    unregister_code16(DE_COLN);
-                    unregister_code16(DE_SCLN);
-                }
-                return true;
-            }
-#endif
-
 #ifdef NAGINATA_ENABLE
         // 薙刀式
         case EISU:
@@ -1857,4 +1657,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     return true;
 }
-
