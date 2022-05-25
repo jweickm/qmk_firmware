@@ -353,12 +353,11 @@ void SEND_UMLAUT(char umlaut) {
 #include "jweickm_process_record_user.c"
 
 // for leader functionality
-/* LEADER_EXTERNS(); */
-
+LEADER_EXTERNS();
 // ===============================================
 void matrix_scan_user(void) {
 
-/* #include "leader_dictionary.c" */
+#include "leader_dictionary.c"
 
 #ifdef ACHORDION
     achordion_task();

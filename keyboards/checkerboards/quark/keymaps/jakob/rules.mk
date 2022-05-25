@@ -8,7 +8,7 @@ COMBO_ENABLE 		= yes
 VPATH				+= keyboards/gboards/
 
 #ifdef ACHORDION
-SRC += features/getreuer/achordion.c
+SRC += features/achordion.c
 #endif
 
 #reduce firmware size by enabling link time optimization

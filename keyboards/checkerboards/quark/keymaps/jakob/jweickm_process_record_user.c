@@ -108,7 +108,7 @@ uint8_t osmod_state;
 
 // ===================== ACHORDION ================================
 #ifdef ACHORDION
-#include "features/getreuer/achordion.h"
+#include "features/achordion.h"
 bool achordion_chord(uint16_t tap_hold_keycode,
                      keyrecord_t* tap_hold_record,
                      uint16_t other_keycode,
