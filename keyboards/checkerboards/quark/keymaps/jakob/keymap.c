@@ -242,7 +242,136 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 // =============================================================
 
+// define custom function for sending special characters
+void SEND_SPECIAL(char key) {
+    switch (key) {
+        case '@':
+            if (de_layout_active) {
+                tap_code16(DE_AT);
+            } else {
+                tap_code16(KC_AT);
+            }
+            break;
+        case '+':
+            if (de_layout_active) {
+                tap_code(DE_PLUS);
+            } else {
+                tap_code16(KC_PLUS);
+            }
+            break;
+        case '-':
+            if (de_layout_active) {
+                tap_code(DE_MINS);
+            } else {
+                tap_code(KC_MINS);
+            }
+            break;
+        case '/':
+            if (de_layout_active) {
+                tap_code16(DE_SLSH);
+            } else {
+                tap_code(KC_SLSH);
+            }
+            break;
+        case '"':
+            if (de_layout_active) {
+                tap_code16(DE_DQUO);
+            } else {
+                tap_code16(S(KC_QUOT));
+            }
+            break;
+    }
+
+}
+// define custom function for tapping umlaut keys
+void SEND_UMLAUT(char umlaut) {
+    clear_mods();
+    clear_oneshot_mods();
+    add_mods(MOD_BIT(KC_LALT));
+    switch (umlaut) {
+        case 'a':
+            tap_code(KC_P0);
+            tap_code(KC_P2);
+            tap_code(KC_P2);
+            tap_code(KC_P8);  // ä
+            break;
+        case 'A':
+            tap_code(KC_P0);
+            tap_code(KC_P1);
+            tap_code(KC_P9);
+            tap_code(KC_P6);  // Ä
+            break;
+        case 'u':
+            tap_code(KC_P0);
+            tap_code(KC_P2);
+            tap_code(KC_P5);
+            tap_code(KC_P2);  // ü
+            break;
+        case 'U':
+            tap_code(KC_P0);
+            tap_code(KC_P2);
+            tap_code(KC_P2);
+            tap_code(KC_P0);  // Ü
+            break;
+        case 'o':
+            tap_code(KC_P0);
+            tap_code(KC_P2);
+            tap_code(KC_P4);
+            tap_code(KC_P6);  // ö
+            break;
+        case 'O':
+            tap_code(KC_P0);
+            tap_code(KC_P2);
+            tap_code(KC_P1);
+            tap_code(KC_P4);  // Ö
+            break;
+        case 's':
+            tap_code(KC_P0);
+            tap_code(KC_P2);
+            tap_code(KC_P2);
+            tap_code(KC_P3);  // ß
+            break;
+        case 'e':
+            tap_code(KC_P0);
+            tap_code(KC_P1);
+            tap_code(KC_P2);
+            tap_code(KC_P8);  // €
+            break;
+        case 'y':
+            tap_code(KC_P1);
+            tap_code(KC_P5);
+            tap_code(KC_P7);  // ¥
+            break;
+        default:
+            break; 
+    }
+    unregister_mods(MOD_LALT);
+}
+
+// ==== PROCESS RECORD USER
 #include "g/keymap_combo.h"
+#include "jweickm_process_record_user.c"
+
+// for leader functionality
+/* LEADER_EXTERNS(); */
+
+// ===============================================
+void matrix_scan_user(void) {
+
+/* #include "leader_dictionary.c" */
+
+#ifdef ACHORDION
+    achordion_task();
+#endif
+}
+
+// might be able to move this into the function that calls the custom umlauts so it's less invasive
+void led_set_user(uint8_t usb_led) {
+    // keep numlock turned on, i.e. turn it off everytime it is turned on
+    if (!(usb_led & (1<<USB_LED_NUM_LOCK))) {
+        tap_code(KC_NUMLOCK);
+    }
+}
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* ----------------------------------------------------------------------------------------

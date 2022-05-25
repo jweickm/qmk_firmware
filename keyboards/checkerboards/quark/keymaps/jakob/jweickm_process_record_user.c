@@ -106,6 +106,8 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 uint8_t mod_state;
 uint8_t osmod_state;
 
+// ===================== ACHORDION ================================
+#ifdef ACHORDION
 #include "features/getreuer/achordion.h"
 bool achordion_chord(uint16_t tap_hold_keycode,
                      keyrecord_t* tap_hold_record,
@@ -180,6 +182,8 @@ bool achordion_eager_mod(uint8_t mod) {
     }
 }
 
+#endif
+        
 // Helper for implementing taps and long-press keys. Given a tap-hold key event,
 // replaces the hold function with `long_press_keycode`.
 static bool process_tap_long_press_key(keyrecord_t* record, uint16_t long_press_keycode) {
@@ -194,14 +198,16 @@ static bool process_tap_long_press_key(keyrecord_t* record, uint16_t long_press_
     }
     return true; // Continue default handling for tapped keys
 }
-        
+
 
 // =================================================================
 // +++++++++++++++++++ PROCESS RECORD USER +++++++++++++++++++++++++
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
+#ifdef ACHORDION
     // for the ACHORDION functionality
     if (!process_achordion(keycode, record)) { return false; }
+#endif
     mod_state = get_mods();
     osmod_state = get_oneshot_mods();
     switch (keycode) {
