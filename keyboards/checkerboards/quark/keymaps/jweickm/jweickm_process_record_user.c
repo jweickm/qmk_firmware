@@ -106,7 +106,9 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
 uint8_t mod_state;
 uint8_t osmod_state;
 
-#include "features/getreuer/achordion.h"
+// ===================== ACHORDION ================================
+#ifdef ACHORDION
+#include "features/achordion.h"
 bool achordion_chord(uint16_t tap_hold_keycode,
                      keyrecord_t* tap_hold_record,
                      uint16_t other_keycode,
@@ -180,6 +182,8 @@ bool achordion_eager_mod(uint8_t mod) {
     }
 }
 
+#endif
+        
 // Helper for implementing taps and long-press keys. Given a tap-hold key event,
 // replaces the hold function with `long_press_keycode`.
 static bool process_tap_long_press_key(keyrecord_t* record, uint16_t long_press_keycode) {
@@ -194,14 +198,16 @@ static bool process_tap_long_press_key(keyrecord_t* record, uint16_t long_press_
     }
     return true; // Continue default handling for tapped keys
 }
-        
+
 
 // =================================================================
 // +++++++++++++++++++ PROCESS RECORD USER +++++++++++++++++++++++++
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
+#ifdef ACHORDION
     // for the ACHORDION functionality
     if (!process_achordion(keycode, record)) { return false; }
+#endif
     mod_state = get_mods();
     osmod_state = get_oneshot_mods();
     switch (keycode) {
@@ -239,14 +245,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 // ------------------------ SPECIAL FUNCTION KEYS ------------------------------------
         case VIM_O:
             if (record->event.pressed) {
-                if (mod_state & MOD_MASK_SHIFT) {
-                    tap_code(KC_HOME);
-                    tap_code(KC_ENT);
-                    tap_code(KC_UP);
-                } else {
-                    tap_code(KC_END);
-                    tap_code(KC_ENT);
-                }
+                tap_code(KC_END);
+                tap_code(KC_ENT);
             }
             return false;
             break;
@@ -334,13 +334,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
 
 // ------------------------- UNICODE ----------------------------------------- 
-        case CODING_SW:
-            if (record->event.pressed) {
-                de_en_switched = !de_en_switched;   
-            }
-            return false;
-            break;
-
         case DE_SZ: 
             if (record->event.pressed) {
                 if (de_layout_active) {
@@ -367,72 +360,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->tap.count && record->event.pressed) {
                 // tap
                 if (!de_layout_active) { // on the english layout
-                    if (!de_en_switched) { // Normal English functionality
-                        return true;
-                    } else if (de_en_switched) {
-                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            SEND_UMLAUT('U');
-                        } else {
-                            SEND_UMLAUT('u');
-                        }
-                        set_mods(mod_state);
-                        return false;
-                    }
+                    return true;
                 } else if (de_layout_active) {
-                    if (!de_en_switched) { // Normal German functionality
-                        register_code(DE_UDIA);
-                    } else if (de_en_switched) {
-                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            clear_oneshot_mods();
-                            clear_mods();
-                            register_code16(DE_PIPE);
-                        } else {
-                            register_code16(DE_BSLS);
-                        }
-                        set_mods(mod_state);
-                    }
+                    register_code(DE_UDIA);
                     return false;
                 }
             } else if (record->event.pressed) { // long press
                 if (de_layout_active) { // german layout
-                    if (!de_en_switched) { // normal behaviour, send special characters on long press
-                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            clear_oneshot_mods();
-                            clear_mods();
-                            tap_code16(DE_PIPE);
-                        } else {
-                            tap_code16(DE_BSLS);
-                        }
-                        set_mods(mod_state);
-                    } else if (de_en_switched) {
-                        tap_code16(DE_UNDS);
+                    if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
+                        clear_oneshot_mods();
+                        clear_mods();
+                        tap_code16(DE_PIPE);
                     } else {
-                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            clear_oneshot_mods();
-                            clear_mods();
-                            register_code16(DE_PIPE);
-                        } else {
-                            register_code16(DE_BSLS);
-                        }
-                        set_mods(mod_state);
+                        tap_code16(DE_BSLS);
                     }
+                    set_mods(mod_state);
                     return false;
                 } else if (!de_layout_active) {
-                    if (!de_en_switched) {
-                        tap_code16(KC_UNDS);
-                    } else if (de_en_switched) {
-                        tap_code(KC_BSLS);
-                    }
+                    tap_code16(KC_UNDS);
                 }
                 return false;
             } else { // key release
                 if (de_layout_active) {
-                    if (!de_en_switched) {
-                        unregister_code(DE_UDIA);
-                    } else if (de_en_switched) {
-                        unregister_code16(DE_PIPE);
-                        unregister_code16(DE_BSLS);
-                    }
+                    unregister_code(DE_UDIA);
                 } else if (!de_layout_active) {
                     //unregister_code(KC_BSLS);
                 }
@@ -712,54 +662,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case QUOT_KEY:
             if (record->tap.count && record->event.pressed) {
                 // tap
-                if (!de_en_switched) {
-                    return true;
-                } else if (de_en_switched) {
-                    if (de_layout_active) {
-                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            register_code16(DE_DQUO);  // \"
-                        } else {
-                            register_code16(DE_QUOT);  // /'
-                        }
-                    } else if (!de_layout_active) {
-                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            SEND_UMLAUT('A'); // Ä
-                        } else {
-                            SEND_UMLAUT('a'); // ä
-                        }
-                        set_mods(mod_state);
-                    }
-                    return false;
-                }
-                return false;
+                return true;
             } else if (record->event.pressed) { // long press
                 if (de_layout_active) {
-                    if (!de_en_switched) { // send quotes on long press when in the german layout
-                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            tap_code16(DE_DQUO);  // \"
-                        } else {
-                            tap_code16(DE_QUOT);  // /'
-                        }
-                    } else if (de_en_switched) { // send minus in german layout on long-press, when de_en_switched
-                        tap_code(DE_MINS);
+                    if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
+                        tap_code16(DE_DQUO);  // \"
+                    } else {
+                        tap_code16(DE_QUOT);  // /'
                     }
                     return false;
                 } else if (!de_layout_active) { // in the English layout
-                    if (!de_en_switched) { // normal processing
-                        tap_code(KC_MINS); // send minus on long_press
-                    } else if (de_en_switched) { 
-                        tap_code(KC_QUOT); // otherwise send quotes when de_en_switched
-                    }
+                    tap_code(KC_MINS); // send minus on long_press
                 return false;
                 }
             } else { // key release
                 if (de_layout_active) {
-                    if (!de_en_switched) {
-                        unregister_mods(DE_ADIA);
-                    } else if (de_en_switched) {
-                        unregister_code16(DE_QUOT);
-                        unregister_code16(DE_DQUO);
-                    }
+                    unregister_mods(DE_ADIA);
                 } else if (!de_layout_active) {
                 }
                 return true;
@@ -1040,33 +958,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
         case SCLN_KEY:
             if (record->tap.count && record->event.pressed) {
-                if (!de_en_switched) {
-                    return true;
-                } else if (de_en_switched) {
-                    if (de_layout_active) {
-                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            register_code16(DE_COLN); // register :
-                        } else {
-                            register_code16(DE_SCLN); // register ;
-                        }
-                    } else if (!de_layout_active) {
-                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            SEND_UMLAUT('O'); // Ö
-                        } else {
-                            SEND_UMLAUT('o'); // ö
-                        }
-                        set_mods(mod_state);
-                    }
-                    return false;
-                }
+                return true;
             } else if (record->event.pressed) {
                 tap_code(KC_0);
                 return false;
             } else {
-                if (de_en_switched && de_layout_active) {
-                    unregister_code16(DE_COLN);
-                    unregister_code16(DE_SCLN);
-                }
                 return true;
             }
         case ESC_KEY:

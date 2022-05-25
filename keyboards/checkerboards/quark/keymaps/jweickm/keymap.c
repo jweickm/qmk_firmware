@@ -1,5 +1,4 @@
 /* Copyright 2020 Nathan Spears
- * Copyright 2022 Jakob Weickmann
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,11 +14,122 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "jweickm_header.h"
-#include "g/keymap_combo.h"
-/* #include QMK_KEYBOARD_H */ // already included in jweickm_header.h
+#include QMK_KEYBOARD_H
+#include "keymap_german.h"
 
-// =========================================================================
+enum planck_layers {
+    _COLEMAK = 0,
+    _UMLAUTS,
+    _LOWER,
+    _RAISE,
+    _NUM,
+    _MOUSE,
+    _ADJUST,
+};
+
+// Define key names here 
+#define Q_KEY LT(0, KC_Q)
+#define W_KEY LT(0, KC_W)
+#define F_KEY LT(0, KC_F)
+#define P_KEY LT(0, KC_P)
+#define B_KEY LT(0, KC_B)
+#define J_KEY LT(0, KC_J)
+#define L_KEY LT(0, KC_L)
+#define U_KEY LT(0, KC_U)
+#define Y_KEY LT(0, KC_Y)
+#define SCLN_KEY LT(0, KC_SCLN)
+
+#define G_KEY LT(_NUM, KC_G)
+/* #define M_KEY LT(0, KC_M) */
+#define M_KEY LT(_RAISE, KC_M)
+
+#define A_KEY LGUI_T(KC_A)
+#define R_KEY LALT_T(KC_R)
+#define S_KEY LSFT_T(KC_S)
+#define T_KEY LCTL_T(KC_T)
+#define N_KEY RCTL_T(KC_N)
+#define E_KEY LSFT_T(KC_E)
+#define I_KEY LALT_T(KC_I)
+#define O_KEY LGUI_T(KC_O)
+
+/* #define D_KEY LT(_NUM, KC_D) */
+/* #define H_KEY LT(_MOUSE, KC_H) */
+#define D_KEY LT(_ADJUST, KC_D)
+#define H_KEY LT(_MOUSE, KC_H)
+
+#define Z_KEY LT(0, KC_Z)
+#define X_KEY LT(0, KC_X)
+#define C_KEY LT(0, KC_C)
+#define V_KEY LT(0, KC_V)
+
+#define K_KEY KC_K
+
+//=====================================
+
+// define the secondary function of the lower and raise keys here
+#define LOWER LT(_LOWER, KC_SPC)
+#define RAISE LT(_RAISE, KC_SPC)
+
+#define DOWN_KEY LT(_MOUSE, KC_DOWN)
+#define UP_KEY LT(_MOUSE, KC_UP)
+#define LEFT_KEY KC_LEFT
+#define RIGHT_KEY KC_RIGHT
+
+#define ESC_KEY     LT(0, KC_ESC)
+#define BSLS_KEY    LT(0, KC_BSLS)
+#define DOT_KEY     LT(0, KC_DOT)
+#define COMM_KEY    LT(0, KC_COMM)
+#define QUOT_KEY    LT(0, KC_QUOT)
+#define SLSH_KEY    LT(0, KC_SLSH)
+#define NAVSPACE    LT(_ADJUST, KC_SPC)
+#define FN_KEY      LT(_ADJUST, KC_RALT)
+#define ENT_KEY     RSFT_T(KC_ENT)
+
+#define BS_KEY      LT(_NUM, KC_BSPC)
+#define DEL_KEY     LT(_MOUSE, KC_DEL)
+
+enum planck_keycodes { 
+    COLEMAK = SAFE_RANGE,
+    VIM_O,
+    ALT_TAB,
+    CTL_TAB,
+    /* REDO, */ 
+    /* UNDO, */ 
+    DE_ACC_GRV,
+    DE_ACC_ACUT,
+    KC_DE_SWITCH,
+    LANG_SWITCH,
+    CODING_SW,
+    DE_UE,  // Ü
+    DE_OE,  // Ö
+    DE_AE,  // Ä
+    DE_SZ,   // ß
+    NAVSFT,
+    UMLAUT_RALT 
+};
+
+// =============== HELPER VARIABLES
+// logical variable to differentiate between the German and the English input mode
+bool de_layout_active  = false; 
+
+// declaring several logical variables
+bool is_alt_tab_active  = false;
+bool is_ctl_tab_active  = false;
+
+bool caps_lock_on       = false;
+
+// ============ TAP DANCE ================
+// Tap Dance declarations
+enum tap_dance_codes {
+    TD_PRN,     // round brackets (parentheses)
+    TD_BRC,     // square brackets
+    TD_CBR,     // curly brackets
+    TD_VIM_GG,  // single tap to scroll down, double tap to scroll up
+    TD_F4,      // double tap F4 to alt-F4
+    TD_LARROW,  // double tap left-angling bracket to get left arrow 
+    TD_RARROW,  // double tap right-angling bracket to get right arrow
+};
+
 // define the tap dance functions
 void dance_prn(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
@@ -127,7 +237,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_RARROW] = ACTION_TAP_DANCE_FN(dance_rabrk),
 };
 
-// =========================================================================
+// =============================================================
 
 // define custom function for sending special characters
 void SEND_SPECIAL(char key) {
@@ -235,15 +345,20 @@ void SEND_UMLAUT(char umlaut) {
     unregister_mods(MOD_LALT);
 }
 
+// ==== PROCESS RECORD USER
+#include "g/keymap_combo.h"
 #include "jweickm_process_record_user.c"
 
 // for leader functionality
+#ifdef LEADER_ENABLE
 LEADER_EXTERNS();
-
+#endif
 // ===============================================
 void matrix_scan_user(void) {
 
+#ifdef LEADER_ENABLE
 #include "leader_dictionary.c"
+#endif
 
 #ifdef ACHORDION
     achordion_task();
@@ -257,8 +372,6 @@ void led_set_user(uint8_t usb_led) {
         tap_code(KC_NUMLOCK);
     }
 }
-// =========================================================================
-//
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* ----------------------------------------------------------------------------------------
@@ -360,38 +473,39 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* ----------------------------------------------------------------------------------------
 * _MOUSE
      * ,-----------------------------------------------------------------------------------.
-     * | ____ | !MSE |WHL <-| M ↑  |WHL ->| XXXX | XXXX | STOP | PLY1 | REC1 | PLY2 | REC2 |
+     * | ____ | !MSE |WHL <-| M ↑  |WHL ->| XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | BTN 4| M <- | M ↓  | M -> |BTN 5 | XXXX | RCTL | RSFT | LALT | RGUI | ____ |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ACCEL| XXXX |WHL ↑ |WHL ↓ | XXXX | XXXX | STOP | PLY1 | REC1 | PLY2 | REC2 |
+     * | ____ | ACCEL| XXXX |WHL ↑ |WHL ↓ | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX | XXXX |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |!MOUSE|!MOUSE| XXXX | BTN 3| BTN 2|    BTN 1    | ____ | ____ | LEFT | RIGHT| ____ | 2x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_MOUSE] = LAYOUT_planck_mit(
-        KC_TRNS, TG(_MOUSE), KC_WH_L, KC_MS_U, KC_WH_R, KC_NO, KC_NO, DM_RSTP, DM_PLY1, DM_REC1, DM_PLY2, DM_REC2,
+        KC_TRNS, TG(_MOUSE), KC_WH_L, KC_MS_U, KC_WH_R, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
         KC_TRNS, KC_BTN4, KC_MS_L, KC_MS_D, KC_MS_R, KC_BTN5, KC_NO, KC_LCTL, KC_RSFT, KC_LALT, KC_RGUI, KC_TRNS, 
-        KC_TRNS, KC_ACL0, KC_NO, KC_WH_U, KC_WH_D, KC_NO, KC_NO, DM_RSTP, DM_PLY1, DM_REC1, DM_PLY2, DM_REC2,
+        KC_TRNS, KC_ACL0, KC_NO, KC_WH_U, KC_WH_D, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
         TG(_MOUSE), TG(_MOUSE), KC_NO, KC_BTN3, KC_BTN2, KC_BTN1, KC_TRNS, KC_TRNS, KC_LEFT, KC_RIGHT, KC_TRNS
     ),
 
 /* ----------------------------------------------------------------------------------------
 * _ADJUST
      * ,-----------------------------------------------------------------------------------.
-     * | ____ | XXXX | C(->)|  TAB | XXXX | C(<-)| XXXX | KANA | !LANG| DE_SW|JP<>DE| ____ |
+     * |A(TAB)| XXXX | C(->)|  TAB | XXXX | C(<-)| XXXX | KANA | !LANG| DE_SW|JP<>DE| ____ |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | LGUI | LALT | LSFT | LCTL |VIM_GG| LEFT | DOWN |  UP  | RIGHT| VIM_O|  INS |
+     * |C(TAB)| LGUI | LALT | LSFT | LCTL |VIM_GG| LEFT | DOWN |  UP  | RIGHT| VIM_O|  INS |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | XXXX |DESK<-| WHLUP| WHLDN|DESK->| HOME | PGDN | PGUP |  END | CD_SW| MUTE |
+     * |NAVSFT| XXXX |DESK<-| WHLUP| WHLDN|DESK->| HOME | PGDN | PGUP |  END | CD_SW| MUTE |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |EEPRST| RESET| ____ | ____ | ____ |     ____    | MUTE | MPLY | VOLD | VOLU | ____ | 2x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_ADJUST] = LAYOUT_planck_mit(
-        KC_TRNS, KC_NO, C(KC_RIGHT), KC_TAB, KC_NO, C(KC_LEFT), KC_NO, A(KC_GRV), LANG_SWITCH, KC_DE_SWITCH, A(KC_LSFT), KC_TRNS, 
-        KC_TRNS, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, TD(TD_VIM_GG), KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, KC_INS, 
-        KC_TRNS, KC_NO, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_HOME, KC_PGDN, KC_PGUP, KC_END, CODING_SW, KC_MUTE,
+        ALT_TAB, KC_NO, C(KC_RIGHT), KC_TAB, KC_NO, C(KC_LEFT), KC_NO, A(KC_GRV), LANG_SWITCH, KC_DE_SWITCH, A(KC_LSFT), KC_TRNS, 
+        CTL_TAB, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, TD(TD_VIM_GG), KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, KC_INS, 
+        NAVSFT, KC_NO, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_HOME, KC_PGDN, KC_PGUP, KC_END, CODING_SW, KC_MUTE,
         EEPROM_RESET, RESET, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MUTE, KC_MPLY, KC_VOLD, KC_VOLU, KC_TRNS
     ),
 };
+
