@@ -12,6 +12,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case LTHUMB_KEY:
         case BS_KEY:
         case DEL_KEY:
+        case LT(_ADJUST, KC_SPC):
         case LOWER: 
         case RAISE:
             return TAPPING_TERM * thumb_factor;
@@ -470,21 +471,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
 #if thumb == 2
-        /* case LOWER: */
+        case LOWER:
+            if (!record->event.pressed && (is_alt_tab_active || is_ctl_tab_active)) {
+                del_mods(MOD_BIT(KC_LALT));
+                del_mods(MOD_BIT(KC_LCTL));
+                is_alt_tab_active = false;
+                is_ctl_tab_active = false;
+            }
+            return true;
 /* #ifdef NAGINATA_ENABLE */
-        /*     if (naginata_active) { */
-        /*         return true; */
-        /*     } */
+/*             if (naginata_active) { */
+/*                 return true; */
+/*             } */
 /* #endif */
-        /*     if (record->tap.count && record->event.pressed) { */
-        /*         if (osmod_state & MOD_MASK_SHIFT) { */
-        /*             clear_oneshot_mods(); */
-        /*         } else { */
-        /*             set_oneshot_mods(MOD_BIT(KC_LSFT)); */
-        /*         } */
-        /*         return false; */
-        /*     } */
-        /*     return true; */
+/*             if (record->tap.count && record->event.pressed) { */
+/*                 if (osmod_state & MOD_MASK_SHIFT) { */
+/*                     clear_oneshot_mods(); */
+/*                 } else { */
+/*                     set_oneshot_mods(MOD_BIT(KC_LSFT)); */
+/*                 } */
+/*                 return false; */
+/*             } */
+/*             return true; */
 //      case RAISE:
 //          if (naginata_active) {
 //              return true;

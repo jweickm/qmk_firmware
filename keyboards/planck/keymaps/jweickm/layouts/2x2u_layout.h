@@ -56,14 +56,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ |CTLTAB| HOME | PGUP | PGDN |  END |   ~  |   '  |   <  |   >  |   -  |   `  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |!MOUSE| ____ |ADJUST| ____ |     ____    |    ADJUST   | ____ | Bri- | Bri+ | ____ | 2x2uC
+     * | ____ | ____ |ADJUST| ____ |     ____    |    ADJUST   | ____ | Bri- | Bri+ | ____ | 2x2uC
      * `-----------------------------------------------------------------------------------'
      */ 
     [_LOWER] = LAYOUT_planck_2x2u(
-        KC_GRV, KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, TD(TD_PRN), KC_RPRN, KC_PIPE,
-        KC_TRNS, VIM_O, KC_LEFT, KC_UP, KC_DOWN, KC_RIGHT, S(KC_QUOT), KC_UNDS, KC_PLUS, TD(TD_BRC), KC_RBRC, S(KC_QUOT), 
-        KC_TRNS, CTL_TAB, KC_HOME, KC_PGUP, KC_PGDN, KC_END, KC_TILD, KC_QUOT, TD(TD_LARROW), TD(TD_RARROW), KC_MINS, DE_ACC_GRV, 
-        TG(_MOUSE), KC_TRNS, OSL(_ADJUST), KC_TRNS, KC_TRNS, MO(_ADJUST), KC_TRNS, KC_BRID, KC_BRIU, KC_TRNS
+        ALT_TAB, KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, TD(TD_PRN), KC_RPRN, KC_PIPE,
+        CTL_TAB, VIM_O, KC_LEFT, KC_UP, KC_DOWN, KC_RIGHT, KC_GRV, KC_UNDS, KC_PLUS, TD(TD_BRC), KC_RBRC, S(KC_QUOT), 
+        NAVSFT, CTL_TAB, KC_HOME, KC_PGUP, KC_PGDN, KC_END, KC_TILD, KC_QUOT, TD(TD_LARROW), TD(TD_RARROW), KC_MINS, DE_ACC_GRV, 
+        KC_TRNS, KC_TRNS, OSL(_ADJUST), KC_TRNS, KC_TRNS, LT(_ADJUST, KC_SPC), KC_TRNS, KC_BRID, KC_BRIU, KC_TRNS
     ),
 
 /* ----------------------------------------------------------------------------------------
@@ -75,14 +75,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |  F12 |  F7  |  F8  |  F9  |  F10 |  F11 |   `  |   >  |   ,  |   .  |   _  |   ´  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |!MOUSE| ____ |ADJUST| ____ |    ADJUST   |     ____    | MAIL | <<|  |  |>> | MUTE | 2x2uC
+     * | ____ | ____ |ADJUST| ____ |    ADJUST   |     ____    | MAIL | <<|  |  |>> | MUTE | 2x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_RAISE] = LAYOUT_planck_2x2u(
         KC_TILD, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_BSLS, 
         KC_F6, KC_F1, KC_F2, KC_F3, TD(TD_F4), KC_F5, S(KC_COMM), KC_MINS, KC_EQL, TD(TD_CBR), KC_RCBR, KC_QUOT, 
         KC_F12, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_GRV, S(KC_DOT), COMM_KEY, DOT_KEY, KC_UNDS, DE_ACC_ACUT, 
-        TG(_MOUSE), KC_TRNS, OSL(_ADJUST), KC_TRNS, MO(_ADJUST), KC_TRNS, KC_MAIL, KC_MPRV, KC_MNXT, KC_MUTE
+        KC_TRNS, KC_TRNS, OSL(_ADJUST), KC_TRNS, LT(_ADJUST, KC_SPC), KC_TRNS, KC_MAIL, KC_MPRV, KC_MNXT, KC_MUTE
     ),
 
 /* ----------------------------------------------------------------------------------------
