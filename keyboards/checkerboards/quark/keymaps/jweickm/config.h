@@ -16,8 +16,6 @@
 
 #pragma once
 
-#define TAPPING_TOGGLE 2
-
 // settings for HOME ROW MODS
 #define TAPPING_TERM 160 // 200 ms is the default value
 #define TAPPING_TERM_PER_KEY
@@ -25,12 +23,12 @@
 #define IGNORE_MOD_TAP_INTERRUPT
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
-/* #define ACHORDION */
+#define ACHORDION
 
 // settings for LEADER key
-#define LEADER_PER_KEY_TIMING
-#define LEADER_TIMEOUT 280
-#define LEADER_NO_TIMEOUT
+/* #define LEADER_PER_KEY_TIMING */
+/* #define LEADER_TIMEOUT 280 */
+/* #define LEADER_NO_TIMEOUT */
 
 // settings for COMBOS
 #define COMBO_TERM 35 

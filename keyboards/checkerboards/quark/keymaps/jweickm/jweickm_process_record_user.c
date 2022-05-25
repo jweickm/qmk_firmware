@@ -10,8 +10,11 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // thumb keys
         case BS_KEY:
+        case BS_KEY_DE:
         case LOWER: 
         case RAISE:
+        case LOWER_DE: 
+        case RAISE_DE:
         case DEL_KEY:
             return TAPPING_TERM * thumb_factor;
         case NAVSPACE:
@@ -21,6 +24,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case P_KEY:
         case T_KEY:
         case G_KEY:
+        case G_KEY_DE:
         case V_KEY:
         case B_KEY:
         case J_KEY:
@@ -94,6 +98,8 @@ bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode){
         case LOWER:
         case RAISE:
+        case LOWER_DE:
+        case RAISE_DE:
             // Immediately select the hold action when another key is pressed.
             return true;
         default:
@@ -134,9 +140,11 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case NAVSPACE:
         case LOWER:
         case RAISE:
+        case LOWER_DE:
+        case RAISE_DE:
         case FN_KEY:
         case DEL_KEY:
-        case BS_KEY:
+        case BS_KEY_DE:
         case LCTL_T(KC_CAPS):
         case OSM(MOD_LSFT):
         case ESC_KEY:
@@ -164,6 +172,8 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case C_KEY:
         case V_KEY:
         case M_KEY:
+        case G_KEY:
+        case G_KEY_DE:
             return TAPPING_TERM + 60; // return a shorter timeout for these keys (tap event when held) results in 220 ms with current tapping term of 160 ms
     }
     return 400; // otherwise use a timeout of 400 ms.
@@ -217,8 +227,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (de_layout_active) {
                     de_layout_active = false;  // deactivate German overlay
+                    layer_off(_COLEMAK_DE);
                 } else {
                     de_layout_active = true;  // activate German overlay
+                    layer_on(_COLEMAK_DE);
                 }
             }
             return false;
@@ -226,8 +238,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (de_layout_active) {
                     de_layout_active = false;  // deactivate German overlay
+                    layer_off(_COLEMAK_DE);
                 } else {
                     de_layout_active = true;  // activate German overlay
+                    layer_on(_COLEMAK_DE);
                 }
             } else {
                 tap_code16(A(KC_LSFT));
@@ -238,7 +252,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case UMLAUT_RALT:
             if (record->event.pressed) {
                 tap_code16(KC_RALT);
-                SEND_SPECIAL('"');
+                tap_code16(S(KC_QUOT));
             }
             return false;
             break;
@@ -324,10 +338,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         /*     return true; */
 
         // these keys turn off caps lock, if it was active
+        /* case KC_LEAD: */
         case KC_ESC:
         case KC_ENT:
         case ENT_KEY:
-        case KC_LEAD:
             if (record->event.pressed && caps_lock_on) {
                 tap_code(KC_CAPS);
             }
@@ -338,16 +352,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (de_layout_active) {
                     register_code(DE_SS);
-                    layer_off(_LOWER);
                     return false;
                 } else {
                     SEND_UMLAUT('s'); // ß
                     set_mods(mod_state);
-                    layer_off(_LOWER);
                     return false;
                     break;
                 }
-                layer_off(_LOWER);
                 return true;
             } else {
                 if (de_layout_active) {
@@ -444,7 +455,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return false;
                 }
             }
-
       case DE_OE:
           if (record->event.pressed) {
               if (de_layout_active) {
@@ -466,29 +476,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                   return false;
               }
           }
-
         case DE_ACC_ACUT: // ´ (dead)
-            if (!de_layout_active) {
-                if (record->event.pressed) {
-                    tap_code(KC_RALT);
-                    tap_code(KC_QUOT);
-                }
-            } else {
-                if (record->event.pressed) {
-                    tap_code(DE_ACUT);
-                }
+            if (record->event.pressed) {
+                tap_code(KC_RALT);
+                tap_code(KC_QUOT);
             }
             return false;
         case DE_ACC_GRV: // ` (dead)
-            if (!de_layout_active) {
-                if (record->event.pressed) {
-                    tap_code(KC_RALT);
-                    tap_code(KC_GRV);
-                }
-            } else {
-                if (record->event.pressed) {
-                    tap_code16(DE_GRV);
-                }
+            if (record->event.pressed) {
+                tap_code(KC_RALT);
+                tap_code(KC_GRV);
             }
             return false;
 
@@ -513,119 +510,119 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
                 if (de_layout_active) {
                     unregister_code(DE_Z);
+                    return false;
                 } else {
-                    unregister_code(KC_Z);
+                    return true;
                 }
-                return true;
             }
-        case KC_AT: // @
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_AT);
-                } else {
-                    unregister_code16(DE_AT);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        case KC_HASH: // #
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                        register_code(DE_HASH);
-                } else {
-                    unregister_code(DE_HASH);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        case KC_TILD: // ~
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_TILD);
-                } else {
-                    unregister_code16(DE_TILD);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        case KC_CIRC: // ^
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_CIRC);
-                } else {
-                    unregister_code16(DE_CIRC);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        case KC_AMPR: // &
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                        register_code16(DE_AMPR);
-                } else {
-                    unregister_code16(DE_AMPR);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        case KC_ASTR: // *
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                        register_code16(DE_ASTR);
-                } else {
-                    unregister_code16(DE_ASTR);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        case KC_LPRN: // (
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                        register_code16(DE_LPRN);
-                } else {
-                    unregister_code16(DE_LPRN);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        case KC_RPRN: // )
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                        register_code16(DE_RPRN);
-                } else {
-                    unregister_code16(DE_RPRN);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        case KC_UNDS: // _
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_UNDS);
-                } else {
-                    unregister_code16(DE_UNDS);
-                }
-                return false;
-            } else {
-                return true;
-            }
+        /* case KC_AT: // @ */
+        /*     if (de_layout_active) { */
+        /*         if (record->event.pressed) { */
+        /*             register_code16(DE_AT); */
+        /*         } else { */
+        /*             unregister_code16(DE_AT); */
+        /*         } */
+        /*         return false; */
+        /*     } else { */
+        /*         return true; */
+        /*     } */
+        /* case KC_HASH: // # */
+        /*     if (de_layout_active) { */
+        /*         if (record->event.pressed) { */
+        /*             register_code(DE_HASH); */
+        /*         } else { */
+        /*             unregister_code(DE_HASH); */
+        /*         } */
+        /*         return false; */
+        /*     } else { */
+        /*         return true; */
+        /*     } */
+        /* case KC_TILD: // ~ */
+        /*     if (de_layout_active) { */
+        /*         if (record->event.pressed) { */
+        /*             register_code16(DE_TILD); */
+        /*         } else { */
+        /*             unregister_code16(DE_TILD); */
+        /*         } */
+        /*         return false; */
+        /*     } else { */
+        /*         return true; */
+        /*     } */
+        /* case KC_CIRC: // ^ */
+        /*     if (de_layout_active) { */
+        /*         if (record->event.pressed) { */
+        /*             register_code16(DE_CIRC); */
+        /*         } else { */
+        /*             unregister_code16(DE_CIRC); */
+        /*         } */
+        /*         return false; */
+        /*     } else { */
+        /*         return true; */
+        /*     } */
+        /* case KC_AMPR: // & */
+        /*     if (de_layout_active) { */
+        /*         if (record->event.pressed) { */
+        /*             register_code16(DE_AMPR); */
+        /*         } else { */
+        /*             unregister_code16(DE_AMPR); */
+        /*         } */
+        /*         return false; */
+        /*     } else { */
+        /*         return true; */
+        /*     } */
+        /* case KC_ASTR: // * */
+        /*     if (de_layout_active) { */
+        /*         if (record->event.pressed) { */
+        /*             register_code16(DE_ASTR); */
+        /*         } else { */
+        /*             unregister_code16(DE_ASTR); */
+        /*         } */
+        /*         return false; */
+        /*     } else { */
+        /*         return true; */
+        /*     } */
+        /* case KC_LPRN: // ( */
+        /*     if (de_layout_active) { */
+        /*         if (record->event.pressed) { */
+        /*             register_code16(DE_LPRN); */
+        /*         } else { */
+        /*             unregister_code16(DE_LPRN); */
+        /*         } */
+        /*         return false; */
+        /*     } else { */
+        /*         return true; */
+        /*     } */
+        /* case KC_RPRN: // ) */
+        /*     if (de_layout_active) { */
+        /*         if (record->event.pressed) { */
+        /*             register_code16(DE_RPRN); */
+        /*         } else { */
+        /*             unregister_code16(DE_RPRN); */
+        /*         } */
+        /*         return false; */
+        /*     } else { */
+        /*         return true; */
+        /*     } */
+        /* case KC_UNDS: // _ */
+        /*     if (de_layout_active) { */
+        /*         if (record->event.pressed) { */
+        /*             register_code16(DE_UNDS); */
+        /*         } else { */
+        /*             unregister_code16(DE_UNDS); */
+        /*         } */
+        /*         return false; */
+        /*     } else { */
+        /*         return true; */
+        /*     } */
         case KC_PLUS: // +
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                        register_code16(DE_PLUS);
-                } else {
-                    unregister_code16(DE_PLUS);
-                }
-                return false;
-            } else if (!de_layout_active) {
+            /* if (de_layout_active) { */
+            /*     if (record->event.pressed) { */
+            /*         register_code16(DE_PLUS); */
+            /*     } else { */
+            /*         unregister_code16(DE_PLUS); */
+            /*     } */
+            /*     return false; */
+            /* } else if (!de_layout_active) { */
                 if (mod_state & MOD_BIT(KC_LCTL)) {
                     if (record->event.pressed) {
                         register_code(KC_EQL);
@@ -635,30 +632,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         return false;
                     }
                 } 
-            } 
+            /* } */ 
             return true;
-        case KC_LCBR: // {
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_LCBR);
-                } else {
-                    unregister_code16(DE_LCBR);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        case KC_RCBR: // }
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_RCBR);
-                } else {
-                    unregister_code16(DE_RCBR);
-                }
-                return false;
-            } else {
-                return true;
-            }
+        /* case KC_LCBR: // { */
+        /*     if (de_layout_active) { */
+        /*         if (record->event.pressed) { */
+        /*             register_code16(DE_LCBR); */
+        /*         } else { */
+        /*             unregister_code16(DE_LCBR); */
+        /*         } */
+        /*         return false; */
+        /*     } else { */
+        /*         return true; */
+        /*     } */
+        /* case KC_RCBR: // } */
+        /*     if (de_layout_active) { */
+        /*         if (record->event.pressed) { */
+        /*             register_code16(DE_RCBR); */
+        /*         } else { */
+        /*             unregister_code16(DE_RCBR); */
+        /*         } */
+        /*         return false; */
+        /*     } else { */
+        /*         return true; */
+        /*     } */
         case QUOT_KEY:
             if (record->tap.count && record->event.pressed) {
                 // tap
@@ -683,22 +680,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return true;
             }
 
-          case KC_QUOT:
-              if (de_layout_active) {
-                  if (record->event.pressed) {
-                      if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                              register_code16(DE_DQUO);  // \"
-                      } else {
-                              register_code16(DE_QUOT);  // /'
-                      }
-                  } else {
-                      unregister_code16(DE_DQUO);
-                      unregister_code16(DE_QUOT);
-                  }
-                  return false;
-              } else {
-                  return true;
-              }
+/*           case KC_QUOT: */
+/*               if (de_layout_active) { */
+/*                   if (record->event.pressed) { */
+/*                       if ((mod_state | osmod_state) & MOD_MASK_SHIFT) { */
+/*                               register_code16(DE_DQUO);  // \" */
+/*                       } else { */
+/*                               register_code16(DE_QUOT);  // /' */
+/*                       } */
+/*                   } else { */
+/*                       unregister_code16(DE_DQUO); */
+/*                       unregister_code16(DE_QUOT); */
+/*                   } */
+/*                   return false; */
+/*               } else { */
+/*                   return true; */
+/*               } */
         case DOT_KEY:
             if (record->tap.count && record->event.pressed) {
                 if (de_layout_active) {
@@ -754,39 +751,39 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 return true;
             }
-        case S(KC_COMM): // <
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_LABK);
-                } else {
-                    unregister_code16(DE_LABK);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        case S(KC_DOT): // >
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_RABK);
-                } else {
-                    unregister_code16(DE_RABK);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        case S(KC_QUOT): // "
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_DQUO);
-                } else {
-                    unregister_code16(DE_DQUO);
-                }
-                return false;
-            } else {
-                return true;
-            }
+        /* case S(KC_COMM): // < */
+        /*     if (de_layout_active) { */
+        /*         if (record->event.pressed) { */
+        /*             register_code16(DE_LABK); */
+        /*         } else { */
+        /*             unregister_code16(DE_LABK); */
+        /*         } */
+        /*         return false; */
+        /*     } else { */
+        /*         return true; */
+        /*     } */
+        /* case S(KC_DOT): // > */
+        /*     if (de_layout_active) { */
+        /*         if (record->event.pressed) { */
+        /*             register_code16(DE_RABK); */
+        /*         } else { */
+        /*             unregister_code16(DE_RABK); */
+        /*         } */
+        /*         return false; */
+        /*     } else { */
+        /*         return true; */
+        /*     } */
+        /* case S(KC_QUOT): // " */
+        /*     if (de_layout_active) { */
+        /*         if (record->event.pressed) { */
+        /*             register_code16(DE_DQUO); */
+        /*         } else { */
+        /*             unregister_code16(DE_DQUO); */
+        /*         } */
+        /*         return false; */
+        /*     } else { */
+        /*         return true; */
+        /*     } */
         case SLSH_KEY: 
             if (record->tap.count && record->event.pressed) {
                 if (de_layout_active) {
@@ -813,111 +810,111 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 return true;
             }
-        case KC_SLSH:
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                        register_code16(DE_QUES); // register ?
-                    } else {
-                        register_code16(DE_SLSH); // register /
-                    }
-                    return false;
-                } else {
-                    unregister_code16(DE_QUES); // release ?
-                    unregister_code16(DE_SLSH); // release /
-                    return false;
-                }
-            } else { //process the key normally when the English layout is active
-                return true;
-            }
-        case KC_NUBS: // "\"
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_BSLS);
-                } else {
-                    unregister_code16(DE_BSLS);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        case KC_PIPE: // |
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_PIPE);
-                } else {
-                    unregister_code16(DE_PIPE);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        case KC_BSLS: // "\"
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_BSLS);
-                } else {
-                    unregister_code16(DE_BSLS);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        case KC_GRV: // `
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_GRV);
-                } else {
-                    unregister_code16(DE_GRV);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        case KC_MINS: // -
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_MINS);
-                } else {
-                    unregister_code16(DE_MINS);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        case KC_EQL: // =
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_EQL);
-                } else {
-                    unregister_code16(DE_EQL);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        case KC_LBRC: // [
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_LBRC);
-                } else {
-                    unregister_code16(DE_LBRC);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        case KC_RBRC: // ]
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_RBRC);
-                } else {
-                    unregister_code16(DE_RBRC);
-                }
-                return false;
-            } else {
-                return true;
-            }
+        /* case KC_SLSH: */
+        /*     if (de_layout_active) { */
+        /*         if (record->event.pressed) { */
+        /*             if ((mod_state | osmod_state) & MOD_MASK_SHIFT) { */
+        /*                 register_code16(DE_QUES); // register ? */
+        /*             } else { */
+        /*                 register_code16(DE_SLSH); // register / */
+        /*             } */
+        /*             return false; */
+        /*         } else { */
+        /*             unregister_code16(DE_QUES); // release ? */
+        /*             unregister_code16(DE_SLSH); // release / */
+        /*             return false; */
+        /*         } */
+        /*     } else { //process the key normally when the English layout is active */
+        /*         return true; */
+        /*     } */
+        /* case KC_NUBS: // "\" */
+        /*     if (de_layout_active) { */
+        /*         if (record->event.pressed) { */
+        /*             register_code16(DE_BSLS); */
+        /*         } else { */
+        /*             unregister_code16(DE_BSLS); */
+        /*         } */
+        /*         return false; */
+        /*     } else { */
+        /*         return true; */
+        /*     } */
+        /* case KC_PIPE: // | */
+        /*     if (de_layout_active) { */
+        /*         if (record->event.pressed) { */
+        /*             register_code16(DE_PIPE); */
+        /*         } else { */
+        /*             unregister_code16(DE_PIPE); */
+        /*         } */
+        /*         return false; */
+        /*     } else { */
+        /*         return true; */
+        /*     } */
+        /* case KC_BSLS: // "\" */
+        /*     if (de_layout_active) { */
+        /*         if (record->event.pressed) { */
+        /*             register_code16(DE_BSLS); */
+        /*         } else { */
+        /*             unregister_code16(DE_BSLS); */
+        /*         } */
+        /*         return false; */
+        /*     } else { */
+        /*         return true; */
+        /*     } */
+        /* case KC_GRV: // ` */
+        /*     if (de_layout_active) { */
+        /*         if (record->event.pressed) { */
+        /*             register_code16(DE_GRV); */
+        /*         } else { */
+        /*             unregister_code16(DE_GRV); */
+        /*         } */
+        /*         return false; */
+        /*     } else { */
+        /*         return true; */
+        /*     } */
+        /* case KC_MINS: // - */
+        /*     if (de_layout_active) { */
+        /*         if (record->event.pressed) { */
+        /*             register_code16(DE_MINS); */
+        /*         } else { */
+        /*             unregister_code16(DE_MINS); */
+        /*         } */
+        /*         return false; */
+        /*     } else { */
+        /*         return true; */
+        /*     } */
+        /* case KC_EQL: // = */
+        /*     if (de_layout_active) { */
+        /*         if (record->event.pressed) { */
+        /*             register_code16(DE_EQL); */
+        /*         } else { */
+        /*             unregister_code16(DE_EQL); */
+        /*         } */
+        /*         return false; */
+        /*     } else { */
+        /*         return true; */
+        /*     } */
+        /* case KC_LBRC: // [ */
+        /*     if (de_layout_active) { */
+        /*         if (record->event.pressed) { */
+        /*             register_code16(DE_LBRC); */
+        /*         } else { */
+        /*             unregister_code16(DE_LBRC); */
+        /*         } */
+        /*         return false; */
+        /*     } else { */
+        /*         return true; */
+        /*     } */
+        /* case KC_RBRC: // ] */
+        /*     if (de_layout_active) { */
+        /*         if (record->event.pressed) { */
+        /*             register_code16(DE_RBRC); */
+        /*         } else { */
+        /*             unregister_code16(DE_RBRC); */
+        /*         } */
+        /*         return false; */
+        /*     } else { */
+        /*         return true; */
+        /*     } */
 
 // ------------------------- TOP ROW NUMBERS ---------------------------------
         case Q_KEY:
@@ -957,14 +954,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
         case SCLN_KEY:
-            if (record->tap.count && record->event.pressed) {
-                return true;
-            } else if (record->event.pressed) {
-                tap_code(KC_0);
-                return false;
-            } else {
-                return true;
-            }
+            return process_tap_long_press_key(record, KC_0);
         case ESC_KEY:
             if (record->tap.count && record->event.pressed) {
                 if (caps_lock_on) {

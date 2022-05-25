@@ -25,19 +25,18 @@
 #define IGNORE_MOD_TAP_INTERRUPT
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
-/* #define ACHORDION */
+#define ACHORDION
 
 // settings for LEADER key
-#define LEADER_PER_KEY_TIMING
-#define LEADER_TIMEOUT 280
-#define LEADER_NO_TIMEOUT
+/* #define LEADER_PER_KEY_TIMING */
+/* #define LEADER_TIMEOUT 280 */
+/* #define LEADER_NO_TIMEOUT */
 
 // settings for COMBOS
-#define COMBO_TERM 35 
-// always checks for the combos on the base layer, even when using another layer
-#define COMBO_ONLY_FROM_LAYER 0
-#define COMBO_VARIABLE_LEN // for gboard combos
-
+/* #define COMBO_TERM 35 */ 
+/* // always checks for the combos on the base layer, even when using another layer */
+/* #define COMBO_ONLY_FROM_LAYER 0 */
+/* #define COMBO_VARIABLE_LEN // for gboard combos */
 
 // Feature disable options
 // These options are also useful to firmware size reduction.

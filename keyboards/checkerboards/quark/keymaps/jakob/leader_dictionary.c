@@ -2,53 +2,40 @@ LEADER_DICTIONARY() {
     leading = false;
     leader_end();
 
-    SEQ_ONE_KEY(KC_J) {
-        SEND_STRING("Jakob");
-    }
+    /* SEQ_ONE_KEY(KC_J) { */
+    /*     SEND_STRING("Jakob"); */
+    /* } */
     /* SEQ_ONE_KEY(KC_E) { */
     /*     SEND_STRING("E"); */
     /*     SEND_SPECIAL('-'); */
     /*     SEND_STRING("Mail"); */
     /* } */
-    SEQ_ONE_KEY(KC_W) {
-        SEND_STRING("Weickmann");
-    }
-    SEQ_ONE_KEY(KC_P) {
-        tap_code16(KC_PERC);
-        if (de_layout_active) {
-            tap_code16(DE_RABK);
-        } else {
-            tap_code16(S(KC_DOT));
-        }
-        tap_code16(KC_PERC);
-    }
+    /* SEQ_ONE_KEY(KC_W) { */
+    /*     SEND_STRING("Weickmann"); */
+    /* } */
+    /* SEQ_ONE_KEY(KC_P) { */
+    /*     tap_code16(KC_PERC); */
+    /*     if (de_layout_active) { */
+    /*         tap_code16(DE_RABK); */
+    /*     } else { */
+    /*         tap_code16(S(KC_DOT)); */
+    /*     } */
+    /*     tap_code16(KC_PERC); */
+    /* } */
     SEQ_TWO_KEYS(KC_M, KC_E) {
         SEND_STRING("Jakob Weickmann");
     }
-    SEQ_TWO_KEYS(KC_L, KC_G) {
-        SEND_STRING("Liebe ");
-        if (de_layout_active) {
-            SEND_STRING("Gr[-e");
-        } else {
-            SEND_STRING("Gr");
-            SEND_UMLAUT('u');
-            /* add_mods(MOD_BIT(KC_LALT)); */
-            /* tap_code(KC_P0); */
-            /* tap_code(KC_P2); */
-            /* tap_code(KC_P5); */
-            /* tap_code(KC_P2);  // ü */
-            /* unregister_mods(MOD_LALT); */
-            
-            SEND_UMLAUT('s');
-            /* add_mods(MOD_BIT(KC_LALT)); */
-            /* tap_code(KC_P0); */
-            /* tap_code(KC_P2); */
-            /* tap_code(KC_P2); */
-            /* tap_code(KC_P3);  // ß */
-            /* unregister_mods(MOD_LALT); */
-            SEND_STRING("e");
-        }
-    }
+    /* SEQ_TWO_KEYS(KC_L, KC_G) { */
+    /*     SEND_STRING("Liebe "); */
+    /*     if (de_layout_active) { */
+    /*         SEND_STRING("Gr[-e"); */
+    /*     } else { */
+    /*         SEND_STRING("Gr"); */
+    /*         SEND_UMLAUT('u'); */
+    /*         SEND_UMLAUT('s'); */
+    /*         SEND_STRING("e"); */
+    /*     } */
+    /* } */
     SEQ_TWO_KEYS(KC_G, KC_U) {
         SEND_STRING("git pull upstream master");
         tap_code(KC_ENT);
@@ -87,15 +74,15 @@ LEADER_DICTIONARY() {
     /*     SEND_UMLAUT('s'); */
     /*     SEND_STRING("en"); */
     /* } */
-    SEQ_THREE_KEYS(KC_A, KC_D, KC_R) {
-        SEND_STRING("Alser Stra");
-        SEND_UMLAUT('s');
-        SEND_STRING("e 53");
-        SEND_SPECIAL('/');
-        SEND_STRING("2");
-        SEND_SPECIAL('/');
-        SEND_STRING("12, 1080 Wien");
-    }
+    /* SEQ_THREE_KEYS(KC_A, KC_D, KC_R) { */
+    /*     SEND_STRING("Alser Stra"); */
+    /*     SEND_UMLAUT('s'); */
+    /*     SEND_STRING("e 53"); */
+    /*     SEND_SPECIAL('/'); */
+    /*     SEND_STRING("2"); */
+    /*     SEND_SPECIAL('/'); */
+    /*     SEND_STRING("12, 1080 Wien"); */
+    /* } */
     SEQ_THREE_KEYS(KC_U, KC_N, KC_I) {
         SEND_STRING("jakob.weickmann");
         SEND_SPECIAL('@');
@@ -106,17 +93,17 @@ LEADER_DICTIONARY() {
         SEND_SPECIAL('@');
         SEND_STRING("gmx.net");
     }
-    SEQ_THREE_KEYS(KC_G, KC_A, KC_C) {
-        SEND_STRING("git add .");
-        tap_code(KC_ENT);
-        SEND_STRING("git commit ");
-        if (!de_layout_active) {
-            SEND_STRING("-m \"\"");
-        } else  {
-            SEND_STRING("/m @@");
-        }
-        tap_code(KC_LEFT);
-    }
+    /* SEQ_THREE_KEYS(KC_G, KC_A, KC_C) { */
+    /*     SEND_STRING("git add ."); */
+    /*     tap_code(KC_ENT); */
+    /*     SEND_STRING("git commit "); */
+    /*     if (!de_layout_active) { */
+    /*         SEND_STRING("-m \"\""); */
+    /*     } else  { */
+    /*         SEND_STRING("/m @@"); */
+    /*     } */
+    /*     tap_code(KC_LEFT); */
+    /* } */
     SEQ_FOUR_KEYS(KC_V, KC_I, KC_S, KC_A) {
         SEND_STRING("4570382900105176");
     }
