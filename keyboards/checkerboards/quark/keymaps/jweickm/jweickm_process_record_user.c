@@ -119,7 +119,7 @@ bool achordion_chord(uint16_t tap_hold_keycode,
 
   // Also allow same-hand holds when the other key is in the rows below the
   // alphas.
-  if (other_record->event.key.row % (MATRIX_ROWS / 2) >= 3) { return true; }
+  if (other_record->event.key.row % (MATRIX_ROWS) >= 3) { return true; }
 
   // Otherwise, follow the opposite hands rule.
   return achordion_opposite_hands(tap_hold_record, other_record);

@@ -77,7 +77,6 @@ enum planck_layers {
 enum planck_keycodes { 
     COLEMAK = SAFE_RANGE,
     VIM_O,
-    VIM_V,
     ALT_TAB,
     CTL_TAB,
     /* REDO, */ 
