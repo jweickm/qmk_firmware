@@ -51,9 +51,10 @@ NGKEYS naginata_keys;
     #define Y_KEY LT(0, KC_Y)
     #define SCLN_KEY LT(0, KC_SCLN)
 
-    #define G_KEY LT(_NUM, KC_G)
-    /* #define M_KEY LT(0, KC_M) */
-    #define M_KEY LT(_MOUSE, KC_M)
+    #define G_KEY KC_G
+    #define M_KEY KC_M
+    /* #define G_KEY LT(_LOWER, KC_G) */
+    /* #define M_KEY LT(_RAISE, KC_M) */
 
     #define A_KEY LGUI_T(KC_A)
     #define R_KEY LALT_T(KC_R)
@@ -66,7 +67,7 @@ NGKEYS naginata_keys;
 
     /* #define D_KEY LT(_NUM, KC_D) */
     /* #define H_KEY LT(_MOUSE, KC_H) */
-    #define D_KEY LT(_ADJUST, KC_D)
+    #define D_KEY LT(_NUM, KC_D)
     #define H_KEY LT(_MOUSE, KC_H)
 
     #define Z_KEY LT(0, KC_Z)
