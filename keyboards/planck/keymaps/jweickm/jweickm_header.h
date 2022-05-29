@@ -17,7 +17,7 @@ enum planck_layers {
     _LOWER,
     _RAISE,
     _NUM,
-    _NAV,
+    /* _NAV, */
     _MOUSE,
     _ADJUST,
 };
@@ -36,7 +36,7 @@ NGKEYS naginata_keys;
 #elif hand_position == 2
     #define layout 1 // 1: 1x2uC, 2: 2x2u, 3: grid
 #elif hand_position == 3 
-    #define layout 2 // 1: 1x2uC, 2: 2x2u, 3: grid
+    #define layout 1 // 1: 1x2uC, 2: 2x2u, 3: grid
     #define thumb 2 // 1: backspace, 2: osm_shift
 #endif
 
@@ -53,7 +53,7 @@ NGKEYS naginata_keys;
 
     #define G_KEY LT(_NUM, KC_G)
     /* #define M_KEY LT(0, KC_M) */
-    #define M_KEY LT(_RAISE, KC_M)
+    #define M_KEY LT(_MOUSE, KC_M)
 
     #define A_KEY LGUI_T(KC_A)
     #define R_KEY LALT_T(KC_R)
@@ -84,12 +84,12 @@ NGKEYS naginata_keys;
     #define LOWER LT(_LOWER, KC_SPC)
     #define RAISE LT(_RAISE, KC_SPC)
 #else
-    #define LOWER LT(_LOWER, KC_BSPC)
-    #define RAISE LT(_RAISE, KC_ENT)
+    #define LOWER LT(_LOWER, KC_SPC)
+    #define RAISE LT(_RAISE, KC_SPC)
 #endif
 
 #define DOWN_KEY LT(_MOUSE, KC_DOWN)
-#define UP_KEY LT(_MOUSE, KC_UP)
+#define UP_KEY   LT(_MOUSE, KC_UP)
 #define LEFT_KEY KC_LEFT
 #define RIGHT_KEY KC_RIGHT
 
@@ -99,8 +99,8 @@ NGKEYS naginata_keys;
 #define COMM_KEY    LT(0, KC_COMM)
 #define QUOT_KEY    LT(0, KC_QUOT)
 #define SLSH_KEY    LT(0, KC_SLSH)
-#define NAVSPACE    LT(_NAV, KC_SPC)
-#define NAVENT      LT(_NAV, KC_ENT)
+#define NAVSPACE    LT(_ADJUST, KC_SPC)
+/* #define NAVENT      LT(_NAV, KC_ENT) */
 #define FN_KEY      LT(_ADJUST, KC_RALT)
 #define ENT_KEY     RSFT_T(KC_ENT)
 

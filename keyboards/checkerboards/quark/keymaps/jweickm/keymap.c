@@ -339,6 +339,16 @@ void led_set_user(uint8_t usb_led) {
     }
 }
 
+bool led_update_user(led_t led_state) {
+    if (led_state.caps_lock) {
+        caps_lock_on = true;
+    } else {
+        caps_lock_on = false;
+    }
+    return true;
+}
+
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* ----------------------------------------------------------------------------------------
 * _COLEMAK

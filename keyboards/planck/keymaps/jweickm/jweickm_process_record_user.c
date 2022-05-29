@@ -12,7 +12,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case LTHUMB_KEY:
         case BS_KEY:
         case DEL_KEY:
-        case LT(_ADJUST, KC_SPC):
         case LOWER: 
         case RAISE:
             return TAPPING_TERM * thumb_factor;
@@ -454,7 +453,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         // the next case allows us to use alt_tab without a timer
-        case NAVENT:
         case NAVSPACE: 
             if (!record->event.pressed && (is_alt_tab_active || is_ctl_tab_active)) {
                 del_mods(MOD_BIT(KC_LALT));
@@ -636,7 +634,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return false;
                 } else if (!de_layout_active) {
                     if (!de_en_switched) {
-                        tap_code16(KC_UNDS);
+                        tap_code(KC_PSCR); // print screen
                     } else if (de_en_switched) {
                         tap_code(KC_BSLS);
                     }
@@ -1129,7 +1127,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return false;
                 } else if (!de_layout_active) { // in the English layout
                     if (!de_en_switched) { // normal processing
-                        tap_code(KC_MINS); // send minus on long_press
+                        tap_code16(KC_UNDS); // send minus on long_press
                     } else if (de_en_switched) { 
                         tap_code(KC_QUOT); // otherwise send quotes when de_en_switched
                     }
@@ -1333,15 +1331,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return false;
                 } // process the key normally when English layout is active
                     return true;
-            } else if (record->event.pressed) { // register ? on hold
+            } else if (record->event.pressed) { // register - on hold
                 if (de_layout_active) {
 //                  if (caps_lock_on) { 
 //                      tap_code(DE_SS); // register ?
 //                  } else {
-                        tap_code16(DE_QUES); // register ?
+                        tap_code(DE_MINS); // register ?
 //                  }
                 } else { // ?
-                    tap_code16(KC_QUES);
+                    tap_code(KC_MINS);
                 }
                 return false;
             } else {

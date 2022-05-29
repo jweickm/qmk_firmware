@@ -388,7 +388,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     set_mods(mod_state);
                     return false;
                 } else if (!de_layout_active) {
-                    tap_code16(KC_UNDS);
+                    tap_code(KC_PSCR); // print screen
                 }
                 return false;
             } else { // key release
@@ -669,7 +669,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     }
                     return false;
                 } else if (!de_layout_active) { // in the English layout
-                    tap_code(KC_MINS); // send minus on long_press
+                    tap_code16(KC_UNDS); // send underscore on long_press
                 return false;
                 }
             } else { // key release
@@ -797,9 +797,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return true;
             } else if (record->event.pressed) { // register ? on hold
                 if (de_layout_active) {
-                        tap_code16(DE_QUES); // register ?
+                    tap_code16(DE_MINS); // register ?
                 } else { // ?
-                    tap_code16(KC_QUES);
+                    tap_code16(KC_MINS);
                 }
                 return false;
             } else {

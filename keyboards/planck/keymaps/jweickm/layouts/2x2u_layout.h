@@ -28,7 +28,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ESC_KEY, Q_KEY, W_KEY, F_KEY, P_KEY, B_KEY, J_KEY, L_KEY, U_KEY, Y_KEY, SCLN_KEY, BSLS_KEY, // LT(0, DE_UDIA), 
         KC_TAB, A_KEY, R_KEY, S_KEY, T_KEY, G_KEY, M_KEY, N_KEY, E_KEY, I_KEY, O_KEY, QUOT_KEY, // KC_QUOT, 
         OSM(MOD_LSFT), Z_KEY, X_KEY, C_KEY, D_KEY, V_KEY, K_KEY, H_KEY, COMM_KEY, DOT_KEY, SLSH_KEY, RSFT_T(KC_ENT), 
-        LCTL_T(KC_CAPS), KC_LGUI, KC_LALT, BS_KEY, LOWER,  RAISE, DEL_KEY, DOWN_KEY, UP_KEY, FN_KEY), /* ----------------------------------------------------------------------------------------
+        LCTL_T(KC_CAPS), KC_LGUI, KC_LALT, BS_KEY, LOWER,  RAISE, DEL_KEY, DOWN_KEY, UP_KEY, FN_KEY
+), 
+
+/* ----------------------------------------------------------------------------------------
 * _UMLAUTS
      * ,-----------------------------------------------------------------------------------.
      * | ____ | ____ | ____ | ____ | ____ | ____ | ____ | ____ |   Ü  | ____ |   Ö  |   Ü  |

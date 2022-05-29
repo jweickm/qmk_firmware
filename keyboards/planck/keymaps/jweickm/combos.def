@@ -3,7 +3,7 @@
 // LEFT HAND
 COMB(CD_ESC,        KC_ESC,         C_KEY, D_KEY)
 COMB(XD_APP,        KC_APP,         X_KEY, D_KEY)
-COMB(XS_DEL,        KC_DEL,     X_KEY, S_KEY)
+COMB(XS_DEL,        KC_DEL,         X_KEY, S_KEY)
 COMB(WF_TAB,        KC_TAB,         W_KEY, F_KEY)
 COMB(XC_CAPS,       KC_CAPS,        X_KEY, C_KEY)
 COMB(ZS_SZ,         DE_SZ,          Z_KEY, S_KEY)
@@ -29,10 +29,10 @@ COMB(UPFN_MNXT,     KC_MNXT,        UP_KEY, FN_KEY)
 
 // ---------------------- LAYER COMBOS ---------------------------
 //   name           result          combo keys
-COMB(DH_NAV,        TG(_NAV),       D_KEY, H_KEY)
+/* COMB(DH_NAV,        TG(_NAV),       D_KEY, H_KEY) */
 COMB(LR_ADJ,        MO(_ADJUST),    LOWER, RAISE)
-COMB(WFP_OS,        TG(_MOUSE),     W_KEY, F_KEY, P_KEY)
-COMB(LUY_OS,        TG(_NUM),       L_KEY, U_KEY, Y_KEY)
+/* COMB(WFP_OS,        TG(_MOUSE),     W_KEY, F_KEY, P_KEY) */
+/* COMB(LUY_OS,        TG(_NUM),       L_KEY, U_KEY, Y_KEY) */
 
 // ---------------------- STRING COMBOS --------------------------
 //   name           result          combo keys
