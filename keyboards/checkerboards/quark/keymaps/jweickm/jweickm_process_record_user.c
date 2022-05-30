@@ -24,7 +24,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case P_KEY:
         case T_KEY:
         case G_KEY:
-        case G_KEY_DE:
+        /* case G_KEY_DE: */
         case V_KEY:
         case B_KEY:
         case J_KEY:
@@ -173,7 +173,7 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case V_KEY:
         case M_KEY:
         case G_KEY:
-        case G_KEY_DE:
+        /* case G_KEY_DE: */
             return TAPPING_TERM + 60; // return a shorter timeout for these keys (tap event when held) results in 220 ms with current tapping term of 160 ms
     }
     return 400; // otherwise use a timeout of 400 ms.

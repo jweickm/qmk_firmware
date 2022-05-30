@@ -43,10 +43,10 @@ enum planck_layers {
 #define Y_KEY LT(0, KC_Y)
 #define SCLN_KEY LT(0, KC_SCLN)
 
-#define G_KEY LT(_NUM, KC_G)
-#define G_KEY_DE LT(_NUM_DE, KC_G)
+#define G_KEY KC_G
+/* #define G_KEY_DE LT(_LOWER_DE, KC_G) */
 /* #define M_KEY LT(0, KC_M) */
-#define M_KEY LT(_RAISE, KC_M)
+#define M_KEY KC_M
 
 #define A_KEY LGUI_T(KC_A)
 #define R_KEY LALT_T(KC_R)
@@ -57,9 +57,7 @@ enum planck_layers {
 #define I_KEY LALT_T(KC_I)
 #define O_KEY LGUI_T(KC_O)
 
-/* #define D_KEY LT(_NUM, KC_D) */
-/* #define H_KEY LT(_MOUSE, KC_H) */
-#define D_KEY LT(_ADJUST, KC_D)
+#define D_KEY LT(_NUM, KC_D)
 #define H_KEY LT(_MOUSE, KC_H)
 
 #define Z_KEY LT(0, KC_Z)
@@ -385,7 +383,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_COLEMAK_DE] = LAYOUT_planck_mit(
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, G_KEY_DE, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
         KC_TRNS, KC_TRNS, KC_TRNS, BS_KEY_DE, LOWER_DE,     KC_TRNS,     RAISE_DE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
     ),
