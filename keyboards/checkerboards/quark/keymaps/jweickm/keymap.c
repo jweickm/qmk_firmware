@@ -549,14 +549,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |NAVSFT| XXXX |DESK<-| WHLUP| WHLDN|DESK->| HOME | PGDN | PGUP |  END | XXXX | MUTE |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |EEPRST| RESET| ____ | ____ | ____ |     ____    | MUTE | MPLY | VOLD | VOLU | ____ | 2x2uC
+     * |EEPRST| FLASH|REBOOT| ____ | ____ |     ____    | MUTE | MPLY | VOLD | VOLU | ____ | 2x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_ADJUST] = LAYOUT_planck_mit(
         ALT_TAB, KC_NO, C(KC_RIGHT), KC_TAB, KC_NO, C(KC_LEFT), KC_NO, A(KC_GRV), LANG_SWITCH, KC_DE_SWITCH, A(KC_LSFT), KC_TRNS, 
         CTL_TAB, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, TD(TD_VIM_GG), KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, KC_INS, 
         NAVSFT, KC_NO, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_HOME, KC_PGDN, KC_PGUP, KC_END, KC_NO, KC_MUTE,
-        EEPROM_RESET, RESET, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MUTE, KC_MPLY, KC_VOLD, KC_VOLU, KC_TRNS
+        QK_CLEAR_EEPROM, QK_BOOT, QK_REBOOT, KC_TRNS, KC_TRNS, KC_TRNS, KC_MUTE, KC_MPLY, KC_VOLD, KC_VOLU, KC_TRNS
     ),
 };
 

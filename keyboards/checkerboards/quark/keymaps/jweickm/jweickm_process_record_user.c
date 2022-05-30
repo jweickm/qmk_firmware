@@ -301,6 +301,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         // the next case allows us to use alt_tab without a timer
+        case LOWER:
+        case LOWER_DE:
         case NAVSPACE: 
             if (!record->event.pressed && (is_alt_tab_active || is_ctl_tab_active)) {
                 del_mods(MOD_BIT(KC_LALT));

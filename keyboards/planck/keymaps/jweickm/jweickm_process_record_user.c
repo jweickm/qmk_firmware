@@ -65,7 +65,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM * pinky_factor;
         case LCTL_T(KC_CAPS):
         case OSM(MOD_LSFT):
-        case OSM(MOD_RSFT):
         case LT(0, KC_BSLS):
         case LT(0, KC_QUOT):
             return TAPPING_TERM; // prefer these ones to be shorter
@@ -453,6 +452,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         // the next case allows us to use alt_tab without a timer
+        case LOWER:
         case NAVSPACE: 
             if (!record->event.pressed && (is_alt_tab_active || is_ctl_tab_active)) {
                 del_mods(MOD_BIT(KC_LALT));
