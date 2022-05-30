@@ -468,15 +468,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 del_mods(MOD_BIT(KC_LSFT));
             }
             return false;
-#if thumb == 2
-        case LOWER:
-            if (!record->event.pressed && (is_alt_tab_active || is_ctl_tab_active)) {
-                del_mods(MOD_BIT(KC_LALT));
-                del_mods(MOD_BIT(KC_LCTL));
-                is_alt_tab_active = false;
-                is_ctl_tab_active = false;
-            }
-            return true;
+/* #if thumb == 2 */
+/*         case LOWER: */
+/*             if (!record->event.pressed && (is_alt_tab_active || is_ctl_tab_active)) { */
+/*                 del_mods(MOD_BIT(KC_LALT)); */
+/*                 del_mods(MOD_BIT(KC_LCTL)); */
+/*                 is_alt_tab_active = false; */
+/*                 is_ctl_tab_active = false; */
+/*             } */
+/*             return true; */
 /* #ifdef NAGINATA_ENABLE */
 /*             if (naginata_active) { */
 /*                 return true; */
@@ -508,7 +508,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 //                  return true;
 //              }
 //          }
-#endif
+/* #endif */
         // this esc turns off caps lock, if it was active
         case LT(_NUM, KC_ESC):
         case KC_ESC:
