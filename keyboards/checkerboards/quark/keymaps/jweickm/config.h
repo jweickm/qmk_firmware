@@ -25,6 +25,8 @@
 
 #define ACHORDION
 
+#define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
+
 // settings for LEADER key
 /* #define LEADER_PER_KEY_TIMING */
 /* #define LEADER_TIMEOUT 280 */

@@ -20,6 +20,7 @@ VPATH += keyboards/gboards/ # Enable gboard combo engine
 
 #ifdef ACHORDION
 SRC += features/getreuer/achordion.c # add the achordion feature
+SRC += features/getreuer/layer_lock.c # add the layer lock feature
 #endif
 
 #ifdef NAGINATA_ENABLE 		# enabled in config.h

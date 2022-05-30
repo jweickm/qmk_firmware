@@ -24,8 +24,9 @@ COMB(SCLNBSLS_BSPC, KC_BSPC,        SCLN_KEY, BSLS_KEY)
 
 // ---------------------- MEDIA COMBOS ---------------------------
 //   name           result          combo keys
-COMB(DOWNFN_MPRV,   KC_MPRV,        DOWN_KEY, FN_KEY)
+COMB(DOWNDEL_MPRV,  KC_MPRV,        DOWN_KEY, DEL_KEY)
 COMB(UPFN_MNXT,     KC_MNXT,        UP_KEY, FN_KEY)
+COMB(DOWNUP_MPLY,   KC_MPLY,        DOWN_KEY, UP_KEY)
 
 // ---------------------- LAYER COMBOS ---------------------------
 //   name           result          combo keys

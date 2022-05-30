@@ -89,8 +89,8 @@ NGKEYS naginata_keys;
     #define RAISE LT(_RAISE, KC_SPC)
 #endif
 
-#define DOWN_KEY LT(_MOUSE, KC_DOWN)
-#define UP_KEY   LT(_MOUSE, KC_UP)
+#define DOWN_KEY LT(_LOWER, KC_DOWN)
+#define UP_KEY   LT(_LOWER, KC_UP)
 #define LEFT_KEY KC_LEFT
 #define RIGHT_KEY KC_RIGHT
 
@@ -143,9 +143,10 @@ enum planck_keycodes {
     /* DE_ae,  // ä */
     DE_SZ,   // ß
     NAVSFT,
-    UMLAUT_RALT 
+    UMLAUT_RALT,
     /* MN_LARROW, */ 
     /* GM_PIPE, */ 
+    LLOCK // layer lock key
 };
 
 // Tap Dance declarations

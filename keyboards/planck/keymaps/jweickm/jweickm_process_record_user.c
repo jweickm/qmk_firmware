@@ -118,6 +118,7 @@ uint8_t mod_state;
 uint8_t osmod_state;
 
 #include "features/getreuer/achordion.h"
+#include "features/getreuer/layer_lock.h"
 bool achordion_chord(uint16_t tap_hold_keycode,
                      keyrecord_t* tap_hold_record,
                      uint16_t other_keycode,
@@ -220,6 +221,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     // for the ACHORDION functionality
     if (!process_achordion(keycode, record)) { return false; }
+    // for the LAYER_LOCK feature
+    if (!process_layer_lock(keycode, record, LLOCK)) { return false; }
+
     mod_state = get_mods();
     osmod_state = get_oneshot_mods();
     switch (keycode) {
