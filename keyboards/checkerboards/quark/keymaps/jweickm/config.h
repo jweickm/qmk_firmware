@@ -24,7 +24,6 @@
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
 #define ACHORDION
-
 #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
 
 // settings for LEADER key

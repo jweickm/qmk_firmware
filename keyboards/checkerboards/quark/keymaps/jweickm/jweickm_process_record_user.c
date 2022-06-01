@@ -21,10 +21,10 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM * (thumb_factor + 0.1);
 
         // index finger keys
+        case OSM(MOD_HYPR):
         case P_KEY:
         case T_KEY:
         case G_KEY:
-        /* case G_KEY_DE: */
         case V_KEY:
         case B_KEY:
         case J_KEY:
@@ -36,6 +36,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM * index_factor;
 
         // middle finger keys
+        case OSM(MOD_MEH):
         case F_KEY:
         case S_KEY:
         case C_KEY:
