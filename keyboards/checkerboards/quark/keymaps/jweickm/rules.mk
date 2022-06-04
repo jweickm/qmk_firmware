@@ -8,8 +8,8 @@ COMBO_ENABLE 		= yes
 NKRO_ENABLE			= no
 VPATH				+= keyboards/gboards/
 DYNAMIC_MACRO_ENABLE = no 	# QMK support for temporary macros
-KEY_LOCK_ENABLE 	= no # enables the use of KC_LOCK
-CAPS_WORD_ENABLE 	= no
+KEY_LOCK_ENABLE 	= no    # enables the use of KC_LOCK
+CAPS_WORD_ENABLE 	= yes
 
 #ifdef ACHORDION
 SRC += features/achordion.c

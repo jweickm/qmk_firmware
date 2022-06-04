@@ -400,6 +400,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
               }
             }
             return true;
+
+        case CAPS_WORD: // keycode to toggle caps_word as a combo
+            if (record->event.pressed) {
+                if (caps_lock_on) { // let this combo turn off caps lock if it is on
+                    tap_code(KC_CAPS);
+                } else {
+                    caps_word_on();  // Activate Caps Word!
+                }
+            }
+            return false;
+            break;
         case UNDO:
             if (record->event.pressed) {
                 if (de_layout_active) {
