@@ -16,14 +16,14 @@
  */
 #include "jweickm_header.h"
 #if hand_position == 1
-    #include "layouts/semi_wide_layout.h"
+    #include "layouts/semi_wide_layout.c"
 #elif hand_position == 2
-    #include "layouts/wide_layout.h"
+    #include "layouts/wide_layout.c"
 #elif hand_position == 3
     #if layout == 2 
-        #include "layouts/2x2u_layout.h"
+        #include "layouts/2x2u_layout.c"
     #else 
-        #include "layouts/narrow_layout.h"
+        #include "layouts/narrow_layout.c"
     #endif
 #endif
 
@@ -109,43 +109,38 @@ void vim_gg(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 void dance_labrk(qk_tap_dance_state_t *state, void *user_data) {
-    if (de_layout_active) {
-        tap_code16(DE_LABK);
-    } else {
-        tap_code16(S(KC_COMM));
-    }
+    tap_code16(LABK_CODE);
+    /* if (de_layout_active) { */
+    /*     tap_code16(DE_LABK); */
+    /* } else { */
+    /*     tap_code16(S(KC_COMM)); */
+    /* } */
     if (state->count == 1) {
     } else {
-        if (de_layout_active) {
-            tap_code(DE_MINS);
-        } else {
-            tap_code16(KC_MINS);
-        }
+        tap_code16(MINS_CODE);
+        /* if (de_layout_active) { */
+        /*     tap_code(DE_MINS); */
+        /* } else { */
+        /*     tap_code16(KC_MINS); */
+        /* } */
     }
 }
 void dance_rabrk(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count > 1) {
-        if (de_layout_active) {
-            tap_code(DE_MINS);
-        } else {
-            tap_code16(KC_MINS);
-        }
+        tap_code16(MINS_CODE);
+        /* if (de_layout_active) { */
+        /*     tap_code(DE_MINS); */
+        /* } else { */
+        /*     tap_code16(KC_MINS); */
+        /* } */
     } 
-    if (de_layout_active) {
-        tap_code16(DE_RABK);
-    } else {
-        tap_code16(S(KC_DOT));
-    }
+    tap_code16(RABK_CODE);
+    /* if (de_layout_active) { */
+    /*     tap_code16(DE_RABK); */
+    /* } else { */
+    /*     tap_code16(S(KC_DOT)); */
+    /* } */
 }
-/* void dance_caps(qk_tap_dance_state_t *state, void *user_data) { */
-/*     if (state->count > 1) { */
-/*         if (caps_lock_on) { */
-/*             tap_code(KC_CAPS); */
-/*         } */ 
-/*     } else { */
-/*         tap_code(KC_CAPS); */
-/*     } */
-/* } */
 
 qk_tap_dance_action_t tap_dance_actions[] = {
     // declare tap dance actions here
@@ -160,112 +155,6 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     /* [TD_BSPC]   = ACTION_TAP_DANCE_DOUBLE(KC_BSPC, C(KC_BSPC)), */ 
     /* [TD_DEL]   = ACTION_TAP_DANCE_DOUBLE(KC_DEL, C(KC_DEL)), */ 
 };
-
-// define custom function for sending special characters
-void SEND_SPECIAL(char key) {
-    switch (key) {
-        case '@':
-            if (de_layout_active) {
-                tap_code16(DE_AT);
-            } else {
-                tap_code16(KC_AT);
-            }
-            break;
-        case '+':
-            if (de_layout_active) {
-                tap_code(DE_PLUS);
-            } else {
-                tap_code16(KC_PLUS);
-            }
-            break;
-        case '-':
-            if (de_layout_active) {
-                tap_code(DE_MINS);
-            } else {
-                tap_code(KC_MINS);
-            }
-            break;
-        case '/':
-            if (de_layout_active) {
-                tap_code16(DE_SLSH);
-            } else {
-                tap_code(KC_SLSH);
-            }
-            break;
-        case '"':
-            if (de_layout_active) {
-                tap_code16(DE_DQUO);
-            } else {
-                tap_code16(S(KC_QUOT));
-            }
-            break;
-    }
-
-}
-// define custom function for tapping umlaut keys
-void SEND_UMLAUT(char umlaut) {
-    clear_mods();
-    clear_oneshot_mods();
-    add_mods(MOD_BIT(KC_LALT));
-    switch (umlaut) {
-        case 'a':
-            tap_code(KC_P0);
-            tap_code(KC_P2);
-            tap_code(KC_P2);
-            tap_code(KC_P8);  // ä
-            break;
-        case 'A':
-            tap_code(KC_P0);
-            tap_code(KC_P1);
-            tap_code(KC_P9);
-            tap_code(KC_P6);  // Ä
-            break;
-        case 'u':
-            tap_code(KC_P0);
-            tap_code(KC_P2);
-            tap_code(KC_P5);
-            tap_code(KC_P2);  // ü
-            break;
-        case 'U':
-            tap_code(KC_P0);
-            tap_code(KC_P2);
-            tap_code(KC_P2);
-            tap_code(KC_P0);  // Ü
-            break;
-        case 'o':
-            tap_code(KC_P0);
-            tap_code(KC_P2);
-            tap_code(KC_P4);
-            tap_code(KC_P6);  // ö
-            break;
-        case 'O':
-            tap_code(KC_P0);
-            tap_code(KC_P2);
-            tap_code(KC_P1);
-            tap_code(KC_P4);  // Ö
-            break;
-        case 's':
-            tap_code(KC_P0);
-            tap_code(KC_P2);
-            tap_code(KC_P2);
-            tap_code(KC_P3);  // ß
-            break;
-        case 'e':
-            tap_code(KC_P0);
-            tap_code(KC_P1);
-            tap_code(KC_P2);
-            tap_code(KC_P8);  // €
-            break;
-        case 'y':
-            tap_code(KC_P1);
-            tap_code(KC_P5);
-            tap_code(KC_P7);  // ¥
-            break;
-        default:
-            break; 
-    }
-    unregister_mods(MOD_LALT);
-}
 
 #include "jweickm_process_record_user.c"
 
@@ -424,8 +313,8 @@ void keyboard_post_init_user(void) {
     // Enable the LED layers
     rgblight_layers = my_rgb_layers;
 }
-
 #endif
+
 bool led_update_user(led_t led_state) {
 #ifdef RGBLIGHT_ENABLE
 #ifdef DYNAMIC_MACRO_ENABLE
@@ -434,11 +323,8 @@ bool led_update_user(led_t led_state) {
     rgblight_set_layer_state(7, led_state.caps_lock);
     rgblight_set_layer_state(1, de_layout_active);
 #endif
-    if (led_state.caps_lock) {
-        caps_lock_on = true;
-    } else {
-        caps_lock_on = false;
-    }
+    caps_lock_on    = led_state.caps_lock;
+    num_lock_on     = led_state.num_lock;
     return true;
 }
 
@@ -502,9 +388,8 @@ void led_set_user(uint8_t usb_led) {
     }
     old_usb_led = usb_led;
 #endif
-
-    // keep numlock turned on, i.e. turn it off everytime it is turned on
-    if (!(usb_led & (1<<USB_LED_NUM_LOCK))) {
-        tap_code(KC_NUMLOCK);
-    }
+    /* // keep numlock turned on, i.e. turn it on everytime it is turned off */
+    /* if (!(usb_led & (1<<USB_LED_NUM_LOCK))) { */
+    /*     tap_code(KC_NUMLOCK); */
+    /* } */
 }

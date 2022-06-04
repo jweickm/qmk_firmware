@@ -95,5 +95,9 @@
 // for unicode support in windows using wincompose
 // #define UNICODE_SELECTED_MODES UC_WINC
 
+// when not using separate LAYERS for GERMAN
+/* #define NO_SEPARATE_GERMAN_LAYERS */
+
+
 #define NO_ACTION_MACRO
 #define NO_ACTION_FUNCTION

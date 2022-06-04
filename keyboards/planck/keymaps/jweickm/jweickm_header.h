@@ -6,6 +6,7 @@
 
 enum planck_layers {
     _COLEMAK = 0,
+    _COLEMAK_DE,
     /* _QWERTY, */
     /* _GAMING, */
 #ifdef NAGINATA_ENABLE
@@ -13,10 +14,13 @@ enum planck_layers {
     _NAGINATA, // 薙刀式入力レイヤー
     // 薙刀式
 #endif
-    _UMLAUTS,
+    /* _UMLAUTS, */
     _LOWER,
+    _LOWER_DE,
     _RAISE,
+    _RAISE_DE,
     _NUM,
+    _NUM_DE,
     /* _NAV, */
     _MOUSE,
     _ADJUST,
@@ -78,16 +82,12 @@ NGKEYS naginata_keys;
     #define K_KEY KC_K
 
 // define the secondary function of the lower and raise keys here
-#if hand_position == 1 && layout == 2
-    #define LOWER OSL(_LOWER)
-    #define RAISE OSL(_RAISE)
-#elif hand_position == 3 && layout == 2
-    #define LOWER LT(_LOWER, KC_SPC)
-    #define RAISE LT(_RAISE, KC_SPC)
-#else
-    #define LOWER LT(_LOWER, KC_SPC)
-    #define RAISE LT(_RAISE, KC_SPC)
-#endif
+/* #define LOWER OSL(_LOWER) */
+/* #define RAISE OSL(_RAISE) */
+#define LOWER LT(_LOWER, KC_BSPC)
+#define RAISE LT(_RAISE, KC_SPC)
+#define LOWER_DE LT(_LOWER_DE, KC_BSPC)
+#define RAISE_DE LT(_RAISE_DE, KC_SPC)
 
 #define DOWN_KEY LT(_LOWER, KC_DOWN)
 #define UP_KEY   LT(_LOWER, KC_UP)
@@ -105,11 +105,15 @@ NGKEYS naginata_keys;
 #define FN_KEY      LT(_ADJUST, KC_RALT)
 #define ENT_KEY     RSFT_T(KC_ENT)
 
-#define LTHUMB_KEY  LT(_ADJUST, KC_ENT)
 #define BS_KEY      LT(_NUM, KC_BSPC)
+#define BS_KEY_DE   LT(_NUM, KC_BSPC)
 #define DEL_KEY     LT(_MOUSE, KC_DEL)
 
-enum planck_keycodes { 
+#define DE_UE       LT(0, DE_UDIA),  // Ü
+#define DE_OE       LT(0, DE_ODIA),  // Ö
+#define DE_AE       LT(0, DE_ADIA),  // Ä
+
+enum planck_keycodes {
 #ifdef NAGINATA_ENABLE
     // 薙刀式: SAFE_RANGE -> NG_SAFE_RANGE
     COLEMAK = NG_SAFE_RANGE,
@@ -135,19 +139,32 @@ enum planck_keycodes {
     LANG_SWITCH,
     UMLAUT_SW,
     CODING_SW,
-    DE_UE,  // Ü
-    DE_OE,  // Ö
-    DE_AE,  // Ä
     /* DE_ue,  // ü */
     /* DE_oe,  // ö */
     /* DE_ae,  // ä */
     DE_SZ,   // ß
     NAVSFT,
     UMLAUT_RALT,
+    OS_UMLAUT,
     /* MN_LARROW, */ 
     /* GM_PIPE, */ 
     LLOCK // layer lock key
 };
+
+// define custom ints that change the enum position depending on the currently active layout
+// initialize with the English Keys
+uint16_t Y_CODE   ; //  = KC_Y;
+uint16_t Z_CODE   ; //  = KC_Z;
+uint16_t LABK_CODE; //  = KC_LABK;
+uint16_t RABK_CODE; //  = KC_RABK;
+uint16_t SCLN_CODE; //  = KC_SCLN;
+uint16_t COLN_CODE; //  = KC_COLN;
+uint16_t QUOT_CODE; //  = KC_QUOT;
+uint16_t DQUO_CODE; //  = KC_DQUO;
+uint16_t MINS_CODE; //  = KC_MINS;
+uint16_t SLSH_CODE; //  = KC_SLSH;
+uint16_t QUES_CODE; //  = KC_QUES;
+uint16_t BSLS_CODE; //  = KC_BSLS;
 
 // Tap Dance declarations
 enum tap_dance_codes {
@@ -170,19 +187,16 @@ enum tap_dance_codes {
 // logical variable to differentiate between the German and the English input mode
 bool de_layout_active  = false; 
 
+bool caps_lock_on;
+bool num_lock_on;
+
 // declaring several logical variables
 bool is_alt_tab_active  = false;
 bool is_ctl_tab_active  = false;
 
-/* #if homerow_mods == 1 */
-/* // controls, whether long pressing A, O, Z results in Ä, Ö, ß */
-/* bool umlaut_enable      = false; */ 
-/* #endif */
-
 // controls which of the two languages (en/ge) is used for coding and which is used for typing German
 // English by default
 bool de_en_switched     = false; 
-bool caps_lock_on       = false;
 
 #ifdef NAGINATA_ENABLE
 bool naginata_active    = false;

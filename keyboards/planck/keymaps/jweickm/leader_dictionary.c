@@ -95,7 +95,8 @@ LEADER_DICTIONARY() {
     }
     SEQ_TWO_KEYS(KC_A, KC_S) {
         SEND_STRING("Alser Stra");
-        SEND_UMLAUT('s');
+        process_umlaut(Z_KEY);
+        /* SEND_UMLAUT('s'); */
         SEND_STRING("e 53");
         SEND_SPECIAL('/');
         SEND_STRING("2");
@@ -108,7 +109,8 @@ LEADER_DICTIONARY() {
             SEND_STRING("Gr[-e");
         } else {
             SEND_STRING("Gr");
-            SEND_UMLAUT('u');
+            process_umlaut(KC_U);
+            /* SEND_UMLAUT('u'); */
             /* add_mods(MOD_BIT(KC_LALT)); */
             /* tap_code(KC_P0); */
             /* tap_code(KC_P2); */
@@ -116,7 +118,8 @@ LEADER_DICTIONARY() {
             /* tap_code(KC_P2);  // ü */
             /* unregister_mods(MOD_LALT); */
             
-            SEND_UMLAUT('s');
+            process_umlaut(Z_KEY);
+            /* SEND_UMLAUT('s'); */
             /* add_mods(MOD_BIT(KC_LALT)); */
             /* tap_code(KC_P0); */
             /* tap_code(KC_P2); */
@@ -196,7 +199,8 @@ LEADER_DICTIONARY() {
             SEND_STRING("Mit herylichen Gr[-en");
         } else {
             SEND_STRING("Mit herzlichen Gr");
-            SEND_UMLAUT('u');
+            process_umlaut(KC_U);
+            /* SEND_UMLAUT('u'); */
             /* add_mods(MOD_BIT(KC_LALT)); */
             /* tap_code(KC_P0); */
             /* tap_code(KC_P2); */
@@ -204,7 +208,8 @@ LEADER_DICTIONARY() {
             /* tap_code(KC_P2);  // ü */
             /* unregister_mods(MOD_LALT); */
             
-            SEND_UMLAUT('s');
+            process_umlaut(KC_Z);
+            /* SEND_UMLAUT('s'); */
             /* add_mods(MOD_BIT(KC_LALT)); */
             /* tap_code(KC_P0); */
             /* tap_code(KC_P2); */
@@ -216,18 +221,22 @@ LEADER_DICTIONARY() {
     }
     SEQ_TWO_KEYS(KC_V, KC_D) {
         SEND_STRING("haben Sie vielen Dank f");
-        SEND_UMLAUT('u');
+        process_umlaut(KC_U);
+        /* SEND_UMLAUT('u'); */
         SEND_STRING("r Ihre Nachricht.");
     }
     SEQ_TWO_KEYS(KC_F, KC_G) {
         SEND_STRING("Mit freundlichen Gr");
-        SEND_UMLAUT('u');
-        SEND_UMLAUT('s');
+        process_umlaut(KC_U);
+        process_umlaut(KC_Z);
+        /* SEND_UMLAUT('u'); */
+        /* SEND_UMLAUT('s'); */
         SEND_STRING("en");
     }
     SEQ_THREE_KEYS(KC_A, KC_D, KC_R) {
         SEND_STRING("Alser Stra");
-        SEND_UMLAUT('s');
+        process_umlaut(KC_Z);
+        /* SEND_UMLAUT('s'); */
         SEND_STRING("e 53");
         SEND_SPECIAL('/');
         SEND_STRING("2");
