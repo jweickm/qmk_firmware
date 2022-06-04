@@ -1375,8 +1375,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       /*                 SEND_UMLAUT('O'); // Ö */
       /*             } else { */
       /*                 SEND_UMLAUT('o'); // ö */
-      /*             } */
-      /*             set_mods(mod_state); */
+      /*             } *             set_mods(mod_state); */
       /*             return false; */
       /*         } */
       /*         return true; */
