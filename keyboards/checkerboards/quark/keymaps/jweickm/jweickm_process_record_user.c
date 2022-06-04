@@ -89,7 +89,7 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
 //        case LOWER:
 //        case RAISE:
-            return true;
+            /* return true; */
         default:
             return false;
     }
@@ -97,12 +97,12 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
 
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode){
-        case LOWER:
-        case RAISE:
-        case LOWER_DE:
-        case RAISE_DE:
+        /* case LOWER: */
+        /* case RAISE: */
+        /* case LOWER_DE: */
+        /* case RAISE_DE: */
             // Immediately select the hold action when another key is pressed.
-            return true;
+            /* return true; */
         default:
             // Do not select the hold action when another key is pressed.
             return false;
@@ -946,9 +946,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return true;
             } else if (record->event.pressed) { // register ? on hold
                 if (de_layout_active) {
-                    tap_code16(DE_MINS); // register ?
+                    tap_code16(DE_QUES); // register ?
                 } else { // ?
-                    tap_code16(KC_MINS);
+                    tap_code16(KC_QUES);
                 }
                 return false;
             } else {
