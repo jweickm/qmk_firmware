@@ -678,18 +678,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                                 register_code16(DE_SCLN);
                             }
                         } else if (!de_layout_active) {
-                            if (!process_umlaut(KC_SCLN)) { return false; }
+                            if (!process_umlaut(SCLN_KEY)) { return false; }
                         }
                         return false;
                     }
                 } else { // key release
                     if (de_layout_active) {
                         unregister_code16(DE_COLN);
+                        unregister_code16(DE_SCLN);
                     }
                     return true;
                 }
             }
-
             /* if (record->tap.count && record->event.pressed) { */
             /*     if (!de_en_switched) { */
             /*         return true; */
@@ -1046,8 +1046,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         /*     } */
         /*     return true; */
         case SLSH_KEY: 
-            if (process_tap_long_press_key(record, QUES_CODE)) { return false; }
-            if (record->event.pressed) {
+            if (!process_tap_long_press_key(record, QUES_CODE)) { return false; }
+            if (record->event.pressed) { // tap event
                 if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
                     register_code16(QUES_CODE); // register ?
                 } else {
@@ -1085,62 +1085,99 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             /*     return true; */
             /* } */
         case QUOT_KEY:
-            if (record->tap.count && record->event.pressed) {
-                // tap
-                if (!de_en_switched) {
-                    return true;
-                } else if (de_en_switched) {
+            if ((de_layout_active && de_en_switched) || (!de_layout_active && !de_en_switched)) {
+                if (!process_tap_long_press_key(record, MINS_CODE)) { return false; } // send minus when long pressing in default
+            } else if (!de_layout_active) {
+                if (record->tap.count < 1 && record->event.pressed) { // if key is held when de_en_switched
+                    tap_code(KC_QUOT); // sending quot
+                    return false; 
+                }
+            } else if (de_layout_active) { // normal long-press de behaviour resulting in QUOTES
+                if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
+                    if (!process_tap_long_press_key(record, DE_DQUO)) { return false; }
+                } else {
+                    if (!process_tap_long_press_key(record, DE_QUOT)) { return false; }
+                }
+            }
+            // handling of tapping event:
+            if (record->event.pressed) {
+                if (de_en_switched) {
                     if (de_layout_active) {
                         if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            register_code16(DE_DQUO);  // \"
+                            register_code16(DE_DQUO); // sending "
                         } else {
-                            register_code16(DE_QUOT);  // /'
+                            register_code16(DE_QUOT); // sending ' or "
                         }
+                        return false;
                     } else if (!de_layout_active) {
-                        process_umlaut(A_KEY);
-                        /* if ((mod_state | osmod_state) & MOD_MASK_SHIFT) { */
-                        /*     SEND_UMLAUT('A'); // Ä */
-                        /* } else { */
-                        /*     SEND_UMLAUT('a'); // ä */
-                        /* } */
-                        /* set_mods(mod_state); */
+                        if (!process_umlaut(QUOT_KEY)) { return false; } // sending ä
                     }
-                    return false;
-                }
-                return false;
-            } else if (record->event.pressed) { // long press
-                if (de_layout_active) {
-                    if (!de_en_switched) { // send quotes on long press when in the german layout
-                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            tap_code16(DE_DQUO);  // \"
-                        } else {
-                            tap_code16(DE_QUOT);  // /'
-                        }
-                    } else if (de_en_switched) { // send minus in german layout on long-press, when de_en_switched
-                        tap_code(DE_MINS);
-                    }
-                    return false;
-                } else if (!de_layout_active) { // in the English layout
-                    if (!de_en_switched) { // normal processing
-                        tap_code16(KC_MINS); // send minus on long_press
-                    } else if (de_en_switched) { 
-                        tap_code(KC_QUOT); // otherwise send quotes when de_en_switched
-                    }
-                return false;
+                } else if (!de_en_switched) {
+                    return true; // return to normal handling for usual quot key
                 }
             } else { // key release
-                if (de_layout_active) {
-                    if (!de_en_switched) {
-                        unregister_mods(DE_ADIA);
-                    } else if (de_en_switched) {
-                        unregister_code16(DE_QUOT);
-                        unregister_code16(DE_DQUO);
-                    }
-                } else if (!de_layout_active) {
-                }
-                return true;
+                unregister_code16(QUOT_CODE); // releasing '
+                unregister_code16(DQUO_CODE); // releasing "
             }
+            return true;
             break;
+        /* case QUOT_KEY: */
+        /*     if (record->tap.count && record->event.pressed) { */
+        /*         // tap */
+        /*         if (!de_en_switched) { */
+        /*             return true; */
+        /*         } else if (de_en_switched) { */
+        /*             if (de_layout_active) { */
+        /*                 if ((mod_state | osmod_state) & MOD_MASK_SHIFT) { */
+        /*                     register_code16(DE_DQUO);  // \" */
+        /*                 } else { */
+        /*                     register_code16(DE_QUOT);  // /' */
+        /*                 } */
+        /*             } else if (!de_layout_active) { */
+        /*                 process_umlaut(A_KEY); */
+        /*                 /1* if ((mod_state | osmod_state) & MOD_MASK_SHIFT) { *1/ */
+        /*                 /1*     SEND_UMLAUT('A'); // Ä *1/ */
+        /*                 /1* } else { *1/ */
+        /*                 /1*     SEND_UMLAUT('a'); // ä *1/ */
+        /*                 /1* } *1/ */
+        /*                 /1* set_mods(mod_state); *1/ */
+        /*             } */
+        /*             return false; */
+        /*         } */
+        /*         return false; */
+        /*     } else if (record->event.pressed) { // long press */
+        /*         if (de_layout_active) { */
+        /*             if (!de_en_switched) { // send quotes on long press when in the german layout */
+        /*                 if ((mod_state | osmod_state) & MOD_MASK_SHIFT) { */
+        /*                     tap_code16(DE_DQUO);  // \" */
+        /*                 } else { */
+        /*                     tap_code16(DE_QUOT);  // /' */
+        /*                 } */
+        /*             } else if (de_en_switched) { // send minus in german layout on long-press, when de_en_switched */
+        /*                 tap_code(DE_MINS); */
+        /*             } */
+        /*             return false; */
+        /*         } else if (!de_layout_active) { // in the English layout */
+        /*             if (!de_en_switched) { // normal processing */
+        /*                 tap_code16(KC_MINS); // send minus on long_press */
+        /*             } else if (de_en_switched) { */ 
+        /*                 tap_code(KC_QUOT); // otherwise send quotes when de_en_switched */
+        /*             } */
+        /*         return false; */
+        /*         } */
+        /*     } else { // key release */
+        /*         if (de_layout_active) { */
+        /*             if (!de_en_switched) { */
+        /*                 unregister_mods(DE_ADIA); */
+        /*             } else if (de_en_switched) { */
+        /*                 unregister_code16(DE_QUOT); */
+        /*                 unregister_code16(DE_DQUO); */
+        /*             } */
+        /*         } else if (!de_layout_active) { */
+        /*         } */
+        /*         return true; */
+        /*     } */
+        /*     break; */
         /* case DE_UE: */
         /*     if (!de_en_switched) { */
         /*         if (!process_tap_long_press_key(record, (((mod_state | osmod_state) & MOD_MASK_SHIFT) ? DE_PIPE :DE_BSLS))) { return false }; */
@@ -1155,82 +1192,124 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         /*     return false; */
         /*     break; */
         case BSLS_KEY:
-            if (record->tap.count && record->event.pressed) {
-                // tap
-                if (!de_layout_active) { // on the english layout
-                    if (!de_en_switched) { // Normal English functionality
-                        return true;
-                    } else if (de_en_switched) {
-                        if (!process_umlaut(BSLS_KEY)) { return false; }
-                        /* if ((mod_state | osmod_state) & MOD_MASK_SHIFT) { */
-                        /*     SEND_UMLAUT('U'); */
-                        /* } else { */
-                        /*     SEND_UMLAUT('u'); */
-                        /* } */
-                        /* set_mods(mod_state); */
-                        /* return false; */
-                    }
-                } else if (de_layout_active) {
-                    if (!de_en_switched) { // Normal German functionality
-                        register_code(DE_UDIA);
-                    } else if (de_en_switched) {
-                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            clear_oneshot_mods();
-                            clear_mods();
-                            register_code16(DE_PIPE);
-                        } else {
-                            register_code16(DE_BSLS);
-                        }
-                        set_mods(mod_state);
-                    }
-                    return false;
+            if ((de_layout_active && de_en_switched) || (!de_layout_active && !de_en_switched)) {
+                if (!process_tap_long_press_key(record, S(MINS_CODE))) { return false; } // send minus when long pressing in default
+            } else if (!de_layout_active) {
+                if (record->tap.count < 1 && record->event.pressed) { // if key is held when de_en_switched
+                    tap_code(KC_BSLS); // sending BSLS
+                    return false; 
                 }
-            } else if (record->event.pressed) { // long press
-                if (de_layout_active) { // german layout
-                    if (!de_en_switched) { // normal behaviour, send special characters on long press
-                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            clear_oneshot_mods();
-                            clear_mods();
-                            tap_code16(DE_PIPE);
-                        } else {
-                            tap_code16(DE_BSLS);
-                        }
-                        set_mods(mod_state);
-                    } else if (de_en_switched) {
-                        tap_code16(DE_UNDS);
-                    } else {
-                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
-                            clear_oneshot_mods();
-                            clear_mods();
-                            register_code16(DE_PIPE);
-                        } else {
-                            register_code16(DE_BSLS);
-                        }
-                        set_mods(mod_state);
-                    }
-                    return false;
-                } else if (!de_layout_active) {
-                    if (!de_en_switched) {
-                        tap_code16(KC_UNDS); // underscore
-                    } else if (de_en_switched) {
-                        tap_code(KC_BSLS);
-                    }
+            } else if (de_layout_active) { // normal long-press de behaviour resulting in BSLS
+                if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
+                    if (!process_tap_long_press_key(record, DE_PIPE)) { return false; }
+                } else {
+                    if (!process_tap_long_press_key(record, DE_BSLS)) { return false; }
                 }
-                return false;
-            } else { // key release
-                if (de_layout_active) {
-                    if (!de_en_switched) {
-                        unregister_code(DE_UDIA);
-                    } else if (de_en_switched) {
-                        unregister_code16(DE_PIPE);
-                        unregister_code16(DE_BSLS);
-                    }
-                } else if (!de_layout_active) {
-                    //unregister_code(KC_BSLS);
-                }
-                return true;
             }
+            // handling of tapping event:
+            if (record->event.pressed) {
+                if (de_en_switched) {
+                    if (de_layout_active) {
+                        if ((mod_state | osmod_state) & MOD_MASK_SHIFT) {
+                            register_code16(DE_PIPE); // sending |
+                        } else {
+                            register_code16(DE_BSLS); // sending bsls
+                        }
+                        return false;
+                    } else if (!de_layout_active) {
+                        if (!process_umlaut(BSLS_KEY)) { return false; } // sending ü
+                    }
+                } else if (!de_en_switched) {
+                    if (de_layout_active) {
+                        register_code(DE_UDIA); // sending Ü
+                        return false;
+                    } 
+                    return true; // return to normal handling for usual bsls key
+                }
+            } else { // key release
+                unregister_code(DE_UDIA);
+                unregister_code16(DE_BSLS); // releasing bsls
+                unregister_code16(DE_PIPE); // releasing pipe
+            }
+            return true;
             break;
+        /* case BSLS_KEY: */
+        /*     if (record->tap.count && record->event.pressed) { */
+        /*         // tap */
+        /*         if (!de_layout_active) { // on the english layout */
+        /*             if (!de_en_switched) { // Normal English functionality */
+        /*                 return true; */
+        /*             } else if (de_en_switched) { */
+        /*                 if (!process_umlaut(BSLS_KEY)) { return false; } */
+        /*                 /1* if ((mod_state | osmod_state) & MOD_MASK_SHIFT) { *1/ */
+        /*                 /1*     SEND_UMLAUT('U'); *1/ */
+        /*                 /1* } else { *1/ */
+        /*                 /1*     SEND_UMLAUT('u'); *1/ */
+        /*                 /1* } *1/ */
+        /*                 /1* set_mods(mod_state); *1/ */
+        /*                 /1* return false; *1/ */
+        /*             } */
+        /*         } else if (de_layout_active) { */
+        /*             if (!de_en_switched) { // Normal German functionality */
+        /*                 register_code(DE_UDIA); */
+        /*             } else if (de_en_switched) { */
+        /*                 if ((mod_state | osmod_state) & MOD_MASK_SHIFT) { */
+        /*                     clear_oneshot_mods(); */
+        /*                     clear_mods(); */
+        /*                     register_code16(DE_PIPE); */
+        /*                 } else { */
+        /*                     register_code16(DE_BSLS); */
+        /*                 } */
+        /*                 set_mods(mod_state); */
+        /*             } */
+        /*             return false; */
+        /*         } */
+        /*     } else if (record->event.pressed) { // long press */
+        /*         if (de_layout_active) { // german layout */
+        /*             if (!de_en_switched) { // normal behaviour, send special characters on long press */
+        /*                 if ((mod_state | osmod_state) & MOD_MASK_SHIFT) { */
+        /*                     clear_oneshot_mods(); */
+        /*                     clear_mods(); */
+        /*                     tap_code16(DE_PIPE); */
+        /*                 } else { */
+        /*                     tap_code16(DE_BSLS); */
+        /*                 } */
+        /*                 set_mods(mod_state); */
+        /*             } else if (de_en_switched) { */
+        /*                 tap_code16(DE_UNDS); */
+        /*             } else { */
+        /*                 if ((mod_state | osmod_state) & MOD_MASK_SHIFT) { */
+        /*                     clear_oneshot_mods(); */
+        /*                     clear_mods(); */
+        /*                     register_code16(DE_PIPE); */
+        /*                 } else { */
+        /*                     register_code16(DE_BSLS); */
+        /*                 } */
+        /*                 set_mods(mod_state); */
+        /*             } */
+        /*             return false; */
+        /*         } else if (!de_layout_active) { */
+        /*             if (!de_en_switched) { */
+        /*                 tap_code16(KC_UNDS); // underscore */
+        /*             } else if (de_en_switched) { */
+        /*                 tap_code(KC_BSLS); */
+        /*             } */
+        /*         } */
+        /*         return false; */
+        /*     } else { // key release */
+        /*         if (de_layout_active) { */
+        /*             if (!de_en_switched) { */
+        /*                 unregister_code(DE_UDIA); */
+        /*             } else if (de_en_switched) { */
+        /*                 unregister_code16(DE_PIPE); */
+        /*                 unregister_code16(DE_BSLS); */
+        /*             } */
+        /*         } else if (!de_layout_active) { */
+        /*             //unregister_code(KC_BSLS); */
+        /*         } */
+        /*         return true; */
+        /*     } */
+        /*     break; */
 
             // make a rule so that we can output shifted umlauts from the SPECIAL layer
         /* case OSM(MOD_LSFT): */
