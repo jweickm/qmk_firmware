@@ -211,6 +211,124 @@ static bool process_tap_long_press_key(keyrecord_t* record, uint16_t long_press_
     return true; // Continue default handling for tapped keys
 }
 
+// define custom function for sending special characters
+void SEND_SPECIAL(char key) {
+    // define the different cases
+    switch (key) {
+        case '@':
+            if (de_layout_active) {
+                tap_code16(DE_AT);
+            } else {
+                tap_code16(KC_AT);
+            }
+            break;
+        case '+':
+            if (de_layout_active) {
+                tap_code(DE_PLUS);
+            } else {
+                tap_code16(KC_PLUS);
+            }
+            break;
+        case '-':
+            if (de_layout_active) {
+                tap_code(DE_MINS);
+            } else {
+                tap_code(KC_MINS);
+            }
+            break;
+        case '/':
+            if (de_layout_active) {
+                tap_code16(DE_SLSH);
+            } else {
+                tap_code(KC_SLSH);
+            }
+            break;
+        case '"':
+            if (de_layout_active) {
+                tap_code16(DE_DQUO);
+            } else {
+                tap_code16(S(KC_QUOT));
+            }
+            break;
+    }
+}
+
+// define custom function for tapping umlaut keys
+void SEND_UMLAUT(char umlaut) {
+    //check host keyboard numlock LED status and turn on when needed
+    if (!num_lock_on){
+        nlck_was_off = 1;
+        tap_code(KC_NLCK);
+    }
+    // define the different cases
+    clear_mods();
+    clear_oneshot_mods();
+    add_mods(MOD_BIT(KC_LALT));
+    switch (umlaut) {
+        case 'a':
+            tap_code(KC_P0);
+            tap_code(KC_P2);
+            tap_code(KC_P2);
+            tap_code(KC_P8);  // ä
+            break;
+        case 'A':
+            tap_code(KC_P0);
+            tap_code(KC_P1);
+            tap_code(KC_P9);
+            tap_code(KC_P6);  // Ä
+            break;
+        case 'u':
+            tap_code(KC_P0);
+            tap_code(KC_P2);
+            tap_code(KC_P5);
+            tap_code(KC_P2);  // ü
+            break;
+        case 'U':
+            tap_code(KC_P0);
+            tap_code(KC_P2);
+            tap_code(KC_P2);
+            tap_code(KC_P0);  // Ü
+            break;
+        case 'o':
+            tap_code(KC_P0);
+            tap_code(KC_P2);
+            tap_code(KC_P4);
+            tap_code(KC_P6);  // ö
+            break;
+        case 'O':
+            tap_code(KC_P0);
+            tap_code(KC_P2);
+            tap_code(KC_P1);
+            tap_code(KC_P4);  // Ö
+            break;
+        case 's':
+            tap_code(KC_P0);
+            tap_code(KC_P2);
+            tap_code(KC_P2);
+            tap_code(KC_P3);  // ß
+            break;
+        /* case 'e': */
+        /*     tap_code(KC_P0); */
+        /*     tap_code(KC_P1); */
+        /*     tap_code(KC_P2); */
+        /*     tap_code(KC_P8);  // € */
+        /*     break; */
+        /* case 'y': */
+        /*     tap_code(KC_P1); */
+        /*     tap_code(KC_P5); */
+        /*     tap_code(KC_P7);  // ¥ */
+        /*     break; */
+        default:
+            break; 
+    }
+    unregister_mods(MOD_LALT);
+    if (nlck_was_off) {
+        // turn Numlock off again if it was off before. 
+        tap_code(KC_NLCK);
+        nlck_was_off = 0;
+    }
+}
+
 
 // =================================================================
 // +++++++++++++++++++ PROCESS RECORD USER +++++++++++++++++++++++++
@@ -282,6 +400,35 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
               }
             }
             return true;
+        case UNDO:
+            if (record->event.pressed) {
+                if (de_layout_active) {
+                    register_code16(C(KC_Y));
+                } else {
+                    register_code16(C(KC_Z));
+                }
+                if (de_layout_active) {
+                    unregister_code16(C(KC_Y));
+                } else {
+                    unregister_code16(C(KC_Z));
+                }
+            }
+            return false;
+        case REDO:
+            if (record->event.pressed) {
+                if (de_layout_active) {
+                    register_code16(C(KC_Z));
+                } else {
+                    register_code16(C(KC_Y));
+                }
+            } else {
+                if (de_layout_active) {
+                    unregister_code16(C(KC_Z));
+                } else {
+                    unregister_code16(C(KC_Y));
+                }
+            }
+            return false;
         case ALT_TAB:
             if (record->event.pressed) {
                 if (!is_alt_tab_active) {
@@ -305,8 +452,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         // the next case allows us to use alt_tab without a timer
-        case LOWER:
-        case LOWER_DE:
         case NAVSPACE: 
             if (!record->event.pressed && (is_alt_tab_active || is_ctl_tab_active)) {
                 del_mods(MOD_BIT(KC_LALT));
@@ -323,6 +468,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
         /* case LOWER: */
+        /* case LOWER_DE: */
         /*     if (record->tap.count && record->event.pressed) { */
         /*         if (osmod_state & MOD_MASK_SHIFT) { */
         /*             clear_oneshot_mods(); */
@@ -394,7 +540,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     set_mods(mod_state);
                     return false;
                 } else if (!de_layout_active) {
-                    tap_code(KC_PSCR); // print screen
+                    tap_code16(KC_UNDS); // print screen
                 }
                 return false;
             } else { // key release
@@ -408,13 +554,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
             // make a rule so that we can output shifted umlauts from the _UMLAUTS layer
         case OSM(MOD_LSFT):
-            if (record->tap.count && record->event.pressed) {
-            } else if (record->event.pressed) {
-                if (IS_LAYER_ON(_UMLAUTS)) {
+            if (IS_LAYER_ON(_UMLAUTS)) {
+                if (record->event.pressed) {
                     set_oneshot_layer(_UMLAUTS, ONESHOT_START);
-                }
-            } else {
-                if (IS_LAYER_ON(_UMLAUTS)) {
+                } else {
                     clear_oneshot_layer_state(ONESHOT_PRESSED);
                 }
             }
@@ -816,6 +959,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 return true;
             }
+            break;
         /* case KC_SLSH: */
         /*     if (de_layout_active) { */
         /*         if (record->event.pressed) { */
@@ -877,17 +1021,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         /*     } else { */
         /*         return true; */
         /*     } */
-        /* case KC_MINS: // - */
-        /*     if (de_layout_active) { */
-        /*         if (record->event.pressed) { */
-        /*             register_code16(DE_MINS); */
-        /*         } else { */
-        /*             unregister_code16(DE_MINS); */
-        /*         } */
-        /*         return false; */
-        /*     } else { */
-        /*         return true; */
-        /*     } */
+        case KC_MINS: // -
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_MINS);
+                } else {
+                    unregister_code16(DE_MINS);
+                }
+                return false;
+            } else {
+                return true;
+            }
         /* case KC_EQL: // = */
         /*     if (de_layout_active) { */
         /*         if (record->event.pressed) { */

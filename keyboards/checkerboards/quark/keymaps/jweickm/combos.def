@@ -3,7 +3,8 @@
 // LEFT HAND
 COMB(CD_ESC,        KC_ESC,         C_KEY, D_KEY)
 COMB(XD_APP,        KC_APP,         X_KEY, D_KEY)
-COMB(XS_DEL,        KC_DEL,         X_KEY, S_KEY)
+/* COMB(XS_DEL,        KC_DEL,         X_KEY, S_KEY) */
+COMB(XS_BSPC,       KC_BSPC,        X_KEY, S_KEY)
 COMB(WF_TAB,        KC_TAB,         W_KEY, F_KEY)
 COMB(XC_CAPS,       KC_CAPS,        X_KEY, C_KEY)
 COMB(ZS_SZ,         DE_SZ,          Z_KEY, S_KEY)
@@ -18,8 +19,10 @@ COMB(WP_UMLAUT,     OSL(_UMLAUTS),  W_KEY, P_KEY)
 // disable the LY combo as it is a rather commonly typed bigram in English
 /* COMB(LY_RALT,       UMLAUT_RALT,    L_KEY, Y_KEY) */
 /* COMB(LY_UMLAUT,     OSL(_UMLAUTS),    L_KEY, Y_KEY) */
-/* COMB(COMMDOT_LEAD,  KC_LEAD,        COMM_KEY, DOT_KEY) */
-COMB(EDOT_BSPC,     KC_BSPC,        E_KEY, DOT_KEY)
+
+COMB(COMMDOT_MINS,  KC_MINS,        COMM_KEY, DOT_KEY)
+/* COMB(EDOT_BSPC,     KC_BSPC,        E_KEY, DOT_KEY) */
+COMB(EDOT_DEL,      KC_DEL,         E_KEY, DOT_KEY)
 COMB(SCLNBSLS_BSPC, KC_BSPC,        SCLN_KEY, BSLS_KEY)
 
 // ---------------------- MEDIA COMBOS ---------------------------
