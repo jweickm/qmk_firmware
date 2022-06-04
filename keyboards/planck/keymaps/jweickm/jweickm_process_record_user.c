@@ -322,7 +322,7 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
         //case E_KEY:
 //        case LOWER:
 //        case RAISE:
-            return true;
+            /* return true; */
         default:
             return false;
     }
@@ -330,12 +330,10 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
 
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode){
-#if thumb != 2
-        case LOWER:
-        case RAISE:
-#endif
+        /* case LOWER: */
+        /* case RAISE: */
             // Immediately select the hold action when another key is pressed.
-            return true;
+            /* return true; */
         default:
             // Do not select the hold action when another key is pressed.
             return false;
