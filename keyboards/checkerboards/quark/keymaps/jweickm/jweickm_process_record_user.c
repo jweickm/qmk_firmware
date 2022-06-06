@@ -50,6 +50,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case R_KEY:
         case X_KEY:
         case Y_KEY:
+        case Y_KEY_DE:
         case I_KEY:
         case LT(0, KC_DOT):
             return TAPPING_TERM * ring_factor;
@@ -57,7 +58,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         // pinky keys
         case Q_KEY:
         case A_KEY:
-        case Z_KEY:
+        case Z_KEY_DE:
         case SCLN_KEY:
         case O_KEY:
         case ESC_KEY:
@@ -170,6 +171,8 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case U_KEY:
         case Y_KEY:
         case Z_KEY:
+        case Y_KEY_DE:
+        case Z_KEY_DE:
         case X_KEY:
         case C_KEY:
         case V_KEY:
@@ -650,31 +653,40 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
 
 // ------------------------- GERMAN KEYMAP ----------------------------------------- 
+        case Z_KEY_DE:
+            return process_tap_long_press_key(record, DE_SS);
         case Z_KEY: // Z - ß
-            if (record->tap.count && record->event.pressed) {
-                if (de_layout_active) {
-                    register_code(DE_Z);  // Z
-                    return false;
-                }
-                return true;
-            } else if (record->event.pressed) {
-                if (de_layout_active) {
-                    tap_code16(DE_SS); // ß
-                    return false;
-                } else if (!de_layout_active) {
-                    SEND_UMLAUT('s'); // ß
-                    set_mods(mod_state);
-                    return false;
-                } 
+            if (record->event.pressed && record->tap.count < 1) {
+                SEND_UMLAUT('s'); // ß
+                set_mods(mod_state);
                 return false;
             } else {
-                if (de_layout_active) {
-                    unregister_code(DE_Z);
-                    return false;
-                } else {
-                    return true;
-                }
+                return true;
             }
+            /* if (record->tap.count && record->event.pressed) { */
+            /*     if (de_layout_active) { */
+            /*         register_code(DE_Z);  // Z */
+            /*         return false; */
+            /*     } */
+            /*     return true; */
+            /* } else if (record->event.pressed) { */
+            /*     if (de_layout_active) { */
+            /*         tap_code16(DE_SS); // ß */
+            /*         return false; */
+            /*     } else if (!de_layout_active) { */
+            /*         SEND_UMLAUT('s'); // ß */
+            /*         set_mods(mod_state); */
+            /*         return false; */
+            /*     } */ 
+            /*     return false; */
+            /* } else { */
+            /*     if (de_layout_active) { */
+            /*         unregister_code(DE_Z); */
+            /*         return false; */
+            /*     } else { */
+            /*         return true; */
+            /*     } */
+            /* } */
         /* case KC_AT: // @ */
         /*     if (de_layout_active) { */
         /*         if (record->event.pressed) { */
@@ -1094,26 +1106,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return process_tap_long_press_key(record, KC_7);
         case U_KEY:
             return process_tap_long_press_key(record, KC_8);
+        case Y_KEY_DE:
         case Y_KEY:
-            if (de_layout_active) {
-                if (record->tap.count && record->event.pressed) {
-                    register_code(DE_Y); // tapping Y
-                    return false;
-                } else if (record->event.pressed) {
-                } else {
-                    unregister_code(DE_Y);
-                    return false;
-                }
-            } else {
-                if (record->tap.count && record->event.pressed) {
-                    return true;
-                } 
-            }
-            if (record->event.pressed) {
-                tap_code(KC_9);
-                return false;
-            }
-            return true;
+            return process_tap_long_press_key(record, KC_9);
+            /* if (de_layout_active) { */
+            /*     if (record->tap.count && record->event.pressed) { */
+            /*         register_code(DE_Y); // tapping Y */
+            /*         return false; */
+            /*     } else if (record->event.pressed) { */
+            /*     } else { */
+            /*         unregister_code(DE_Y); */
+            /*         return false; */
+            /*     } */
+            /* } else { */
+            /*     if (record->tap.count && record->event.pressed) { */
+            /*         return true; */
+            /*     } */ 
+            /* } */
+            /* if (record->event.pressed) { */
+            /*     tap_code(KC_9); */
+            /*     return false; */
+            /* } */
+            /* return true; */
         case SCLN_KEY:
             return process_tap_long_press_key(record, KC_0);
         case ESC_KEY:

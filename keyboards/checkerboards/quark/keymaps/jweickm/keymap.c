@@ -41,6 +41,7 @@ enum planck_layers {
 #define L_KEY LT(0, KC_L)
 #define U_KEY LT(0, KC_U)
 #define Y_KEY LT(0, KC_Y)
+#define Y_KEY_DE LT(1, DE_Y)
 #define SCLN_KEY LT(0, KC_SCLN)
 
 #define G_KEY KC_G
@@ -61,6 +62,7 @@ enum planck_layers {
 #define H_KEY LT(_MOUSE, KC_H)
 
 #define Z_KEY LT(0, KC_Z)
+#define Z_KEY_DE LT(1, DE_Z)
 #define X_KEY LT(0, KC_X)
 #define C_KEY LT(0, KC_C)
 #define V_KEY LT(0, KC_V)
@@ -275,6 +277,26 @@ bool led_update_user(led_t led_state) {
     return true;
 }
 
+// default caps word characters definition
+/* bool caps_word_press_user(uint16_t keycode) { */
+/*     switch (keycode) { */
+/*         // Keycodes that continue Caps Word, with shift applied. */
+/*         case KC_A ... KC_Z: */
+/*         case KC_MINS: */
+/*             add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key. */
+/*             return true; */
+
+/*         // Keycodes that continue Caps Word, without shifting. */
+/*         case KC_1 ... KC_0: */
+/*         case KC_BSPC: */
+/*         case KC_DEL: */
+/*         case KC_UNDS: */
+/*             return true; */
+
+/*         default: */
+/*             return false;  // Deactivate Caps Word. */
+/*     } */
+/* } */
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* ----------------------------------------------------------------------------------------
@@ -311,9 +333,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_COLEMAK_DE] = LAYOUT_planck_mit(
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, Y_KEY_DE, KC_TRNS, KC_TRNS, 
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
+        KC_TRNS, Z_KEY_DE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
         KC_TRNS, KC_TRNS, KC_TRNS, BS_KEY_DE, LOWER_DE,     KC_TRNS,     RAISE_DE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
     ),
 
