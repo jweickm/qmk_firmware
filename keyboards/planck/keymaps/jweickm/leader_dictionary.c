@@ -5,130 +5,52 @@ LEADER_DICTIONARY() {
     SEQ_ONE_KEY(KC_J) {
         SEND_STRING("Jakob");
     }
-    SEQ_ONE_KEY(KC_E) {
-        SEND_STRING("E");
-        SEND_SPECIAL('-');
-        SEND_STRING("Mail");
-    }
-    /* SEQ_ONE_KEY(KC_A) { */
-    /*     if (de_layout_active) { */
-    /*         tap_code(DE_ADIA); */
-    /*     } else { */
-    /*         SEND_UMLAUT('a'); */
-    /*     } */
-    /* } */
-    /* SEQ_TWO_KEYS(KC_A, KC_A) { */
-    /*     if (de_layout_active) { */
-    /*         tap_code16(S(DE_ADIA)); */
-    /*     } else { */
-    /*         SEND_UMLAUT('A'); */
-    /*     } */
-    /* } */
-    /* SEQ_ONE_KEY(KC_U) { */
-    /*     if (de_layout_active) { */
-    /*         tap_code(DE_UDIA); */
-    /*     } else { */
-    /*         SEND_UMLAUT('u'); */
-    /*     } */
-    /* } */
-    /* SEQ_TWO_KEYS(KC_U, KC_U) { */
-    /*     if (de_layout_active) { */
-    /*         tap_code16(S(DE_UDIA)); */
-    /*     } else { */
-    /*         SEND_UMLAUT('U'); */
-    /*     } */
-    /* } */
-    /* SEQ_ONE_KEY(KC_O) { */
-    /*     if (de_layout_active) { */
-    /*         tap_code(DE_ODIA); */
-    /*     } else { */
-    /*         SEND_UMLAUT('o'); */
-    /*     } */
-    /* } */
-    /* SEQ_TWO_KEYS(KC_O, KC_O) { */
-    /*     if (de_layout_active) { */
-    /*         tap_code16(S(DE_ODIA)); */
-    /*     } else { */
-    /*         SEND_UMLAUT('O'); */
-    /*     } */
-    /* } */
-    /* SEQ_ONE_KEY(KC_Z) { */
-    /*     if (de_layout_active) { */
-    /*         tap_code16(DE_SS); */
-    /*     } else { */
-    /*         SEND_UMLAUT('s'); */
-    /*         /1* add_mods(MOD_BIT(KC_LALT)); *1/ */
-    /*         /1* tap_code(KC_P0); *1/ */
-    /*         /1* tap_code(KC_P2); *1/ */
-    /*         /1* tap_code(KC_P2); *1/ */
-    /*         /1* tap_code(KC_P3);  // ß *1/ */
-    /*         /1* unregister_mods(MOD_LALT); *1/ */
-    /*     } */
-    /* } */
-    /* SEQ_ONE_KEY(KC_S) { */
-    /*     if (de_layout_active) { */
-    /*         tap_code16(DE_SS); */
-    /*     } else { */
-    /*         SEND_UMLAUT('s'); */
-    /*         /1* add_mods(MOD_BIT(KC_LALT)); *1/ */
-    /*         /1* tap_code(KC_P0); *1/ */
-    /*         /1* tap_code(KC_P2); *1/ */
-    /*         /1* tap_code(KC_P2); *1/ */
-    /*         /1* tap_code(KC_P3);  // ß *1/ */
-    /*         /1* unregister_mods(MOD_LALT); *1/ */
-    /*     } */
+    /* SEQ_ONE_KEY(KC_E) { */
+    /*     SEND_STRING("E"); */
+    /*     SEND_SPECIAL('-'); */
+    /*     SEND_STRING("Mail"); */
     /* } */
     SEQ_ONE_KEY(KC_W) {
         SEND_STRING("Weickmann");
     }
-    SEQ_ONE_KEY(KC_P) {
-        tap_code16(KC_PERC);
-        if (de_layout_active) {
-            tap_code16(DE_RABK);
-        } else {
-            tap_code16(S(KC_DOT));
-        }
-        tap_code16(KC_PERC);
-    }
     SEQ_TWO_KEYS(KC_M, KC_E) {
         SEND_STRING("Jakob Weickmann");
     }
-    SEQ_TWO_KEYS(KC_A, KC_S) {
-        SEND_STRING("Alser Stra");
-        process_umlaut(Z_KEY);
-        /* SEND_UMLAUT('s'); */
-        SEND_STRING("e 53");
-        SEND_SPECIAL('/');
-        SEND_STRING("2");
-        SEND_SPECIAL('/');
-        SEND_STRING("12, 1080 Wien");
-    }
-    SEQ_TWO_KEYS(KC_L, KC_G) {
-        SEND_STRING("Liebe ");
-        if (de_layout_active) {
-            SEND_STRING("Gr[-e");
-        } else {
-            SEND_STRING("Gr");
-            process_umlaut(KC_U);
-            /* SEND_UMLAUT('u'); */
-            /* add_mods(MOD_BIT(KC_LALT)); */
-            /* tap_code(KC_P0); */
-            /* tap_code(KC_P2); */
-            /* tap_code(KC_P5); */
-            /* tap_code(KC_P2);  // ü */
-            /* unregister_mods(MOD_LALT); */
+    /* SEQ_TWO_KEYS(KC_A, KC_S) { */
+    /*     SEND_STRING("Alser Stra"); */
+    /*     /1* SEND_UMLAUT('s'); *1/ */
+    /*     SEND_STRING("e 53"); */
+    /*     SEND_SPECIAL('/'); */
+    /*     SEND_STRING("2"); */
+    /*     SEND_SPECIAL('/'); */
+    /*     SEND_STRING("12, 1080 Wien"); */
+    /* } */
+    /* SEQ_TWO_KEYS(KC_L, KC_G) { */
+    /*     SEND_STRING("Liebe "); */
+    /*     if (de_layout_active) { */
+    /*         SEND_STRING("Gr[-e"); */
+    /*     } else { */
+    /*         SEND_STRING("Gr"); */
+    /*         tap_code16(UE_KEY); */
+    /*         /1* SEND_UMLAUT('u'); *1/ */
+    /*         /1* add_mods(MOD_BIT(KC_LALT)); *1/ */
+    /*         /1* tap_code(KC_P0); *1/ */
+    /*         /1* tap_code(KC_P2); *1/ */
+    /*         /1* tap_code(KC_P5); *1/ */
+    /*         /1* tap_code(KC_P2);  // ü *1/ */
+    /*         /1* unregister_mods(MOD_LALT); *1/ */
             
-            process_umlaut(Z_KEY);
-            /* SEND_UMLAUT('s'); */
-            /* add_mods(MOD_BIT(KC_LALT)); */
-            /* tap_code(KC_P0); */
-            /* tap_code(KC_P2); */
-            /* tap_code(KC_P2); */
-            /* tap_code(KC_P3);  // ß */
-            /* unregister_mods(MOD_LALT); */
-            SEND_STRING("e");
-        }
-    }
+    /*         tap_code16(SZ_KEY); */
+    /*         /1* SEND_UMLAUT('s'); *1/ */
+    /*         /1* add_mods(MOD_BIT(KC_LALT)); *1/ */
+    /*         /1* tap_code(KC_P0); *1/ */
+    /*         /1* tap_code(KC_P2); *1/ */
+    /*         /1* tap_code(KC_P2); *1/ */
+    /*         /1* tap_code(KC_P3);  // ß *1/ */
+    /*         /1* unregister_mods(MOD_LALT); *1/ */
+    /*         SEND_STRING("e"); */
+    /*     } */
+    /* } */
     SEQ_TWO_KEYS(KC_G, KC_A) {
         SEND_STRING("git add .");
         tap_code(KC_ENT);
@@ -194,55 +116,55 @@ LEADER_DICTIONARY() {
     /*     tap_code16(S(KC_UP)); */
     /*     tap_code16(S(KC_DEL)); */
     /* } */
-    SEQ_TWO_KEYS(KC_H, KC_G) {
-        if (de_layout_active) {
-            SEND_STRING("Mit herylichen Gr[-en");
-        } else {
-            SEND_STRING("Mit herzlichen Gr");
-            process_umlaut(KC_U);
-            /* SEND_UMLAUT('u'); */
-            /* add_mods(MOD_BIT(KC_LALT)); */
-            /* tap_code(KC_P0); */
-            /* tap_code(KC_P2); */
-            /* tap_code(KC_P5); */
-            /* tap_code(KC_P2);  // ü */
-            /* unregister_mods(MOD_LALT); */
+    /* SEQ_TWO_KEYS(KC_H, KC_G) { */
+    /*     if (de_layout_active) { */
+    /*         SEND_STRING("Mit herylichen Gr[-en"); */
+    /*     } else { */
+    /*         SEND_STRING("Mit herzlichen Gr"); */
+    /*         tap_code16(UE_KEY); */
+    /*         /1* SEND_UMLAUT('u'); *1/ */
+    /*         /1* add_mods(MOD_BIT(KC_LALT)); *1/ */
+    /*         /1* tap_code(KC_P0); *1/ */
+    /*         /1* tap_code(KC_P2); *1/ */
+    /*         /1* tap_code(KC_P5); *1/ */
+    /*         /1* tap_code(KC_P2);  // ü *1/ */
+    /*         /1* unregister_mods(MOD_LALT); *1/ */
             
-            process_umlaut(KC_Z);
-            /* SEND_UMLAUT('s'); */
-            /* add_mods(MOD_BIT(KC_LALT)); */
-            /* tap_code(KC_P0); */
-            /* tap_code(KC_P2); */
-            /* tap_code(KC_P2); */
-            /* tap_code(KC_P3);  // ß */
-            /* unregister_mods(MOD_LALT); */
-            SEND_STRING("en");
-        }
-    }
-    SEQ_TWO_KEYS(KC_V, KC_D) {
-        SEND_STRING("haben Sie vielen Dank f");
-        process_umlaut(KC_U);
-        /* SEND_UMLAUT('u'); */
-        SEND_STRING("r Ihre Nachricht.");
-    }
-    SEQ_TWO_KEYS(KC_F, KC_G) {
-        SEND_STRING("Mit freundlichen Gr");
-        process_umlaut(KC_U);
-        process_umlaut(KC_Z);
-        /* SEND_UMLAUT('u'); */
-        /* SEND_UMLAUT('s'); */
-        SEND_STRING("en");
-    }
-    SEQ_THREE_KEYS(KC_A, KC_D, KC_R) {
-        SEND_STRING("Alser Stra");
-        process_umlaut(KC_Z);
-        /* SEND_UMLAUT('s'); */
-        SEND_STRING("e 53");
-        SEND_SPECIAL('/');
-        SEND_STRING("2");
-        SEND_SPECIAL('/');
-        SEND_STRING("12, 1080 Wien");
-    }
+    /*         tap_code16(SZ_KEY); */
+    /*         /1* SEND_UMLAUT('s'); *1/ */
+    /*         /1* add_mods(MOD_BIT(KC_LALT)); *1/ */
+    /*         /1* tap_code(KC_P0); *1/ */
+    /*         /1* tap_code(KC_P2); *1/ */
+    /*         /1* tap_code(KC_P2); *1/ */
+    /*         /1* tap_code(KC_P3);  // ß *1/ */
+    /*         /1* unregister_mods(MOD_LALT); *1/ */
+    /*         SEND_STRING("en"); */
+    /*     } */
+    /* } */
+    /* SEQ_TWO_KEYS(KC_V, KC_D) { */
+    /*     SEND_STRING("haben Sie vielen Dank f"); */
+    /*     tap_code16(UE_KEY); */
+    /*     /1* SEND_UMLAUT('u'); *1/ */
+    /*     SEND_STRING("r Ihre Nachricht."); */
+    /* } */
+    /* SEQ_TWO_KEYS(KC_F, KC_G) { */
+    /*     SEND_STRING("Mit freundlichen Gr"); */
+    /*     tap_code16(UE_KEY); */
+    /*     tap_code16(SZ_KEY); */
+    /*     /1* SEND_UMLAUT('u'); *1/ */
+    /*     /1* SEND_UMLAUT('s'); *1/ */
+    /*     SEND_STRING("en"); */
+    /* } */
+    /* SEQ_THREE_KEYS(KC_A, KC_D, KC_R) { */
+    /*     SEND_STRING("Alser Stra"); */
+    /*     tap_code16(SZ_KEY); */
+    /*     /1* SEND_UMLAUT('s'); *1/ */
+    /*     SEND_STRING("e 53"); */
+    /*     SEND_SPECIAL('/'); */
+    /*     SEND_STRING("2"); */
+    /*     SEND_SPECIAL('/'); */
+    /*     SEND_STRING("12, 1080 Wien"); */
+    /* } */
     SEQ_THREE_KEYS(KC_U, KC_N, KC_I) {
         SEND_STRING("jakob.weickmann");
         SEND_SPECIAL('@');
@@ -291,28 +213,28 @@ LEADER_DICTIONARY() {
     SEQ_THREE_KEYS(KC_B, KC_I, KC_C) {
         SEND_STRING("BEVODEBB");
     }
-    SEQ_THREE_KEYS(KC_E, KC_U, KC_R) {
-        if (de_layout_active) {
-            tap_code16(DE_EURO);
-        } else {
-            SEND_UMLAUT('e'); // €
-        }
-    }
-    SEQ_TWO_KEYS(KC_E, KC_N) {
-        SEND_UMLAUT('y'); // ¥
-    }
-    SEQ_ONE_KEY(KC_Q) {
-        add_mods(MOD_BIT(KC_LALT));
-        tap_code(KC_P9);
-        tap_code(KC_P6); // `
-        unregister_mods(MOD_BIT(KC_LALT));
-    }
-    SEQ_TWO_KEYS(KC_Q, KC_Q) {
-        for (int i=0; i<3; i++) {
-            add_mods(MOD_BIT(KC_LALT));
-            tap_code(KC_P9);
-            tap_code(KC_P6); // `
-            unregister_mods(MOD_BIT(KC_LALT));
-        }
-    }
+    /* SEQ_THREE_KEYS(KC_E, KC_U, KC_R) { */
+    /*     if (de_layout_active) { */
+    /*         tap_code16(DE_EURO); */
+    /*     } else { */
+    /*         SEND_UMLAUT('e'); // € */
+    /*     } */
+    /* } */
+    /* SEQ_TWO_KEYS(KC_E, KC_N) { */
+    /*     SEND_UMLAUT('y'); // ¥ */
+    /* } */
+    /* SEQ_ONE_KEY(KC_Q) { */
+    /*     add_mods(MOD_BIT(KC_LALT)); */
+    /*     tap_code(KC_P9); */
+    /*     tap_code(KC_P6); // ` */
+    /*     unregister_mods(MOD_BIT(KC_LALT)); */
+    /* } */
+    /* SEQ_TWO_KEYS(KC_Q, KC_Q) { */
+    /*     for (int i=0; i<3; i++) { */
+    /*         add_mods(MOD_BIT(KC_LALT)); */
+    /*         tap_code(KC_P9); */
+    /*         tap_code(KC_P6); // ` */
+    /*         unregister_mods(MOD_BIT(KC_LALT)); */
+    /*     } */
+    /* } */
 }

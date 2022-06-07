@@ -260,19 +260,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* ----------------------------------------------------------------------------------------
 * _MOUSE
      * ,-----------------------------------------------------------------------------------.
-     * | ____ | !MSE |WHL <-| M ↑  |WHL ->| XXXX | XXXX | STOP | PLY1 | REC1 | PLY2 | REC2 |
+     * | ____ | !MSE |WHL <-| M ↑  |WHL ->|C-HOME| XXXX | STOP | PLY1 | REC1 | PLY2 | REC2 |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | BTN 4| M <- | M ↓  | M -> |BTN 5 | XXXX | RCTL | RSFT | LALT | RGUI | ____ |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ACCEL| XXXX |WHL ↑ |WHL ↓ | XXXX | XXXX | STOP | PLY1 | REC1 | PLY2 | REC2 |
+     * | ____ | ACCEL| XXXX |WHL ↑ |WHL ↓ | C-END| XXXX | STOP | PLY1 | REC1 | PLY2 | REC2 |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | ____ | XXXX |BTN 3 |BTN 2 |    BTN 1    | LLOCK| ____ | Bri- | Bri+ | ____ | 1x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_MOUSE] = LAYOUT_planck_mit(
-        KC_TRNS, TG(_MOUSE), KC_WH_L, KC_MS_U, KC_WH_R, KC_NO, KC_NO, DM_RSTP, DM_PLY1, DM_REC1, DM_PLY2, DM_REC2,
+        KC_TRNS, TG(_MOUSE), KC_WH_L, KC_MS_U, KC_WH_R, C(KC_HOME), KC_NO, DM_RSTP, DM_PLY1, DM_REC1, DM_PLY2, DM_REC2,
         KC_TRNS, KC_BTN4, KC_MS_L, KC_MS_D, KC_MS_R, KC_BTN5, KC_NO, KC_LCTL, KC_RSFT, KC_LALT, KC_RGUI, KC_TRNS, 
-        KC_TRNS, KC_ACL0, KC_NO, KC_WH_U, KC_WH_D, KC_NO, KC_NO, DM_RSTP, DM_PLY1, DM_REC1, DM_PLY2, DM_REC2,
+        KC_TRNS, KC_ACL0, KC_NO, KC_WH_U, KC_WH_D, C(KC_END), KC_NO, DM_RSTP, DM_PLY1, DM_REC1, DM_PLY2, DM_REC2,
         KC_TRNS, KC_TRNS, KC_NO, KC_BTN3, KC_BTN2, KC_BTN1, LLOCK, KC_TRNS, KC_BRID, KC_BRIU, KC_TRNS
     ),
 
@@ -308,17 +308,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ,-----------------------------------------------------------------------------------.
      * |A(TAB)| XXXX | C(->)|  MEH | HYPR | C(<-)| PRINT| REDO | UNDO | !LANG|KBLANG|A(SFT)|
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |C(TAB)| LGUI | LALT | LSFT | LCTL |VIM_GG| LEFT | DOWN |  UP  | RIGHT| VIM_O|  INS |
+     * |C(TAB)| LGUI | LALT | LSFT | LCTL | XXXX | LEFT | DOWN |  UP  | RIGHT| VIM_O|  INS |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |NAVSFT|NUMLCK|DESK<-| WHLUP| WHLDN|DESK->| HOME | PGDN | PGUP |  END |UML_SW| MPLY |
+     * | ____ |NUMLCK|DESK<-| WHLUP| WHLDN|DESK->| HOME | PGDN | PGUP |  END |UML_SW| MPLY |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |EEPRST| FLASH|REBOOT| ____ | LLOCK|     ____    | LLOCK| MUTE | VOLD | VOLU | ____ | 1x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_ADJUST] = LAYOUT_planck_mit(
         ALT_TAB, KC_NO, C(KC_RIGHT), OSM(MOD_MEH), OSM(MOD_HYPR), C(KC_LEFT), KC_PSCR, REDO, UNDO, LANG_SWITCH, KB_LANG_SWITCH, A(KC_LSFT), 
-        CTL_TAB, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, TD(TD_VIM_GG), KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, KC_INS, 
-        NAVSFT, KC_NUM_LOCK, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_HOME, KC_PGDN, KC_PGUP, KC_END, UMLAUT_SWITCH, KC_MPLY,
+        CTL_TAB, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_NO, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, KC_INS, 
+        KC_TRNS, KC_NUM_LOCK, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_HOME, KC_PGDN, KC_PGUP, KC_END, UMLAUT_SWITCH, KC_MPLY,
         QK_CLEAR_EEPROM, QK_BOOT, QK_REBOOT, KC_TRNS, LLOCK, KC_TRNS, LLOCK, KC_MUTE, KC_VOLD, KC_VOLU, KC_TRNS
     ),
 };

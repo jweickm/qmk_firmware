@@ -46,14 +46,14 @@ void matrix_init_user(void) {
 void dance_prn(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         if (de_layout_active) {
-                tap_code16(DE_LPRN);
+            tap_code16(DE_LPRN);
         } else {
             tap_code16(KC_LPRN);
         }
     } else {
         if (de_layout_active) {
-                tap_code16(DE_LPRN);
-                tap_code16(DE_RPRN);
+            tap_code16(DE_LPRN);
+            tap_code16(DE_RPRN);
             tap_code(KC_LEFT);
         } else {
             tap_code16(KC_LPRN);
@@ -100,46 +100,42 @@ void dance_cbr(qk_tap_dance_state_t *state, void *user_data) {
         }
     }
 }
-void vim_gg(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        tap_code16(C(KC_END));
-    } else {
-        tap_code16(C(KC_HOME));
-    }
-}
+/* void vim_gg(qk_tap_dance_state_t *state, void *user_data) { */
+/*     if (state->count == 1) { */
+/*         tap_code16(C(KC_END)); */
+/*     } else { */
+/*         tap_code16(C(KC_HOME)); */
+/*     } */
+/* } */
 
 void dance_labrk(qk_tap_dance_state_t *state, void *user_data) {
-    tap_code16(LABK_CODE);
-    /* if (de_layout_active) { */
-    /*     tap_code16(DE_LABK); */
-    /* } else { */
-    /*     tap_code16(S(KC_COMM)); */
-    /* } */
+    if (de_layout_active) {
+        tap_code16(DE_LABK);
+    } else {
+        tap_code16(S(KC_COMM));
+    }
     if (state->count == 1) {
     } else {
-        tap_code16(MINS_CODE);
-        /* if (de_layout_active) { */
-        /*     tap_code(DE_MINS); */
-        /* } else { */
-        /*     tap_code16(KC_MINS); */
-        /* } */
+        if (de_layout_active) {
+            tap_code(DE_MINS);
+        } else {
+            tap_code16(KC_MINS);
+        }
     }
 }
 void dance_rabrk(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count > 1) {
-        tap_code16(MINS_CODE);
-        /* if (de_layout_active) { */
-        /*     tap_code(DE_MINS); */
-        /* } else { */
-        /*     tap_code16(KC_MINS); */
-        /* } */
+        if (de_layout_active) {
+            tap_code(DE_MINS);
+        } else {
+            tap_code16(KC_MINS);
+        }
     } 
-    tap_code16(RABK_CODE);
-    /* if (de_layout_active) { */
-    /*     tap_code16(DE_RABK); */
-    /* } else { */
-    /*     tap_code16(S(KC_DOT)); */
-    /* } */
+    if (de_layout_active) {
+        tap_code16(DE_RABK);
+    } else {
+        tap_code16(S(KC_DOT));
+    }
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
@@ -147,13 +143,10 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_PRN] = ACTION_TAP_DANCE_FN(dance_prn), 
     [TD_BRC] = ACTION_TAP_DANCE_FN(dance_brc), 
     [TD_CBR] = ACTION_TAP_DANCE_FN(dance_cbr), 
-    [TD_VIM_GG] = ACTION_TAP_DANCE_FN(vim_gg),
+    /* [TD_VIM_GG] = ACTION_TAP_DANCE_FN(vim_gg), */
     [TD_F4] = ACTION_TAP_DANCE_DOUBLE(KC_F4, A(KC_F4)),
     [TD_LARROW] = ACTION_TAP_DANCE_FN(dance_labrk),
     [TD_RARROW] = ACTION_TAP_DANCE_FN(dance_rabrk),
-    /* [TD_CAPS]   = ACTION_TAP_DANCE_FN(dance_caps), */
-    /* [TD_BSPC]   = ACTION_TAP_DANCE_DOUBLE(KC_BSPC, C(KC_BSPC)), */ 
-    /* [TD_DEL]   = ACTION_TAP_DANCE_DOUBLE(KC_DEL, C(KC_DEL)), */ 
 };
 
 #include "jweickm_process_record_user.c"

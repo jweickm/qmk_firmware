@@ -7,14 +7,15 @@
 enum planck_layers {
     _COLEMAK = 0,
     _COLEMAK_DE,
-    /* _QWERTY, */
+    _COLEMAK_EN,
+    _COLEMAK_EN_DE,
+    _UMLAUTS, 
     /* _GAMING, */
 #ifdef NAGINATA_ENABLE
     // 薙刀式
     _NAGINATA, // 薙刀式入力レイヤー
     // 薙刀式
 #endif
-    /* _UMLAUTS, */
     _LOWER,
     _LOWER_DE,
     _RAISE,
@@ -35,14 +36,8 @@ NGKEYS naginata_keys;
 
 // IMPORTANT: DEFINE THE LAYOUT FOR THE KEYBOARD HERE
 #define hand_position 3 // 1: semi-wide, 2: wide, 3: narrow
-#if hand_position == 1
-    #define layout 1 // 1: with OSM, 2: with OSL
-#elif hand_position == 2
-    #define layout 1 // 1: 1x2uC, 2: 2x2u, 3: grid
-#elif hand_position == 3 
-    #define layout 1 // 1: 1x2uC, 2: 2x2u, 3: grid
-    #define thumb 2 // 1: backspace, 2: osm_shift
-#endif
+#define layout 1 // 1: 1x2uC, 2: 2x2u, 3: grid
+#define thumb 2 // 1: backspace, 2: osm_shift
 
     #define Q_KEY LT(0, KC_Q)
     #define W_KEY LT(0, KC_W)
@@ -57,8 +52,6 @@ NGKEYS naginata_keys;
 
     #define G_KEY KC_G
     #define M_KEY KC_M
-    /* #define G_KEY LT(_LOWER, KC_G) */
-    /* #define M_KEY LT(_RAISE, KC_M) */
 
     #define A_KEY LGUI_T(KC_A)
     #define R_KEY LALT_T(KC_R)
@@ -69,8 +62,6 @@ NGKEYS naginata_keys;
     #define I_KEY LALT_T(KC_I)
     #define O_KEY LGUI_T(KC_O)
 
-    /* #define D_KEY LT(_NUM, KC_D) */
-    /* #define H_KEY LT(_MOUSE, KC_H) */
     #define D_KEY LT(_NUM, KC_D)
     #define H_KEY LT(_MOUSE, KC_H)
 
@@ -82,12 +73,8 @@ NGKEYS naginata_keys;
     #define K_KEY KC_K
 
 // define the secondary function of the lower and raise keys here
-/* #define LOWER OSL(_LOWER) */
-/* #define RAISE OSL(_RAISE) */
 #define LOWER LT(_LOWER, KC_BSPC)
 #define RAISE LT(_RAISE, KC_SPC)
-#define LOWER_DE LT(_LOWER_DE, KC_BSPC)
-#define RAISE_DE LT(_RAISE_DE, KC_SPC)
 
 #define DOWN_KEY LT(_LOWER, KC_DOWN)
 #define UP_KEY   LT(_LOWER, KC_UP)
@@ -106,12 +93,19 @@ NGKEYS naginata_keys;
 #define ENT_KEY     RSFT_T(KC_ENT)
 
 #define BS_KEY      LT(_NUM, KC_BSPC)
-#define BS_KEY_DE   LT(_NUM, KC_BSPC)
 #define DEL_KEY     LT(_MOUSE, KC_DEL)
 
-#define DE_UE       LT(0, DE_UDIA),  // Ü
-#define DE_OE       LT(0, DE_ODIA),  // Ö
-#define DE_AE       LT(0, DE_ADIA),  // Ä
+// ======================================================
+// GERMAN VERSIONS OF THE KEYS
+#define LOWER_DE    LT(_LOWER_DE, KC_BSPC)
+#define RAISE_DE    LT(_RAISE_DE, KC_SPC)
+#define BS_KEY_DE   LT(_NUM_DE, KC_BSPC)
+
+#define Z_KEY_DE    LT(1, DE_Z)
+#define Y_KEY_DE    LT(1, DE_Y)
+
+#define REDO C(KC_Y)
+#define UNDO C(KC_Z)
 
 enum planck_keycodes {
 #ifdef NAGINATA_ENABLE
@@ -126,62 +120,31 @@ enum planck_keycodes {
     COLEMAK = SAFE_RANGE,
 #endif
     GAMING,
-    QWERTY,
     VIM_O,
-    VIM_V,
     ALT_TAB,
     CTL_TAB,
-    REDO, 
-    UNDO, 
     DE_ACC_GRV,
     DE_ACC_ACUT,
-    KC_DE_SWITCH,
+    KB_LANG_SWITCH,
     LANG_SWITCH,
-    UMLAUT_SW,
-    CODING_SW,
-    /* DE_ue,  // ü */
-    /* DE_oe,  // ö */
-    /* DE_ae,  // ä */
-    DE_SZ,   // ß
-    NAVSFT,
+    UMLAUT_SWITCH,
     UMLAUT_RALT,
-    OS_UMLAUT,
-    /* MN_LARROW, */ 
-    /* GM_PIPE, */ 
-    LLOCK // layer lock key
+    LLOCK, // layer lock key
+    AE_KEY,
+    UE_KEY, 
+    OE_KEY,
+    SZ_KEY
 };
-
-// define custom ints that change the enum position depending on the currently active layout
-// initialize with the English Keys
-uint16_t Y_CODE   ; //  = KC_Y;
-uint16_t Z_CODE   ; //  = KC_Z;
-uint16_t LABK_CODE; //  = KC_LABK;
-uint16_t RABK_CODE; //  = KC_RABK;
-uint16_t SCLN_CODE; //  = KC_SCLN;
-uint16_t COLN_CODE; //  = KC_COLN;
-uint16_t QUOT_CODE; //  = KC_QUOT;
-uint16_t DQUO_CODE; //  = KC_DQUO;
-uint16_t MINS_CODE; //  = KC_MINS;
-uint16_t SLSH_CODE; //  = KC_SLSH;
-uint16_t QUES_CODE; //  = KC_QUES;
-uint16_t BSLS_CODE; //  = KC_BSLS;
 
 // Tap Dance declarations
 enum tap_dance_codes {
     TD_PRN,     // round brackets (parentheses)
     TD_BRC,     // square brackets
     TD_CBR,     // curly brackets
-    TD_VIM_GG,  // single tap to scroll down, double tap to scroll up
+    /* TD_VIM_GG,  // single tap to scroll down, double tap to scroll up */
     TD_F4,      // double tap F4 to alt-F4
     TD_LARROW,  // double tap left-angling bracket to get left arrow 
     TD_RARROW,  // double tap right-angling bracket to get right arrow
-    /* TD_CAPS,    // double tap caps to turn it off regardless of state */
-    /* TD_BSPC,    // double tap backspace to send C(KC_BSPC) */
-    /* TD_DEL,     // double tap delete to send C(KC_DEL) */
-    /* TD_QUOT,    // double tap KC_QUOT to type DBLQUOT; Edit: would be nice but doesn't play nicely with mod taps, same for the tap dances below*/
-    /* TD_A,       // double tap A to type Ä */
-    /* TD_U,       // double tap U to type Ü */
-    /* TD_O        // double tap O to type Ö */
 };
 
 // logical variable to differentiate between the German and the English input mode
@@ -198,40 +161,20 @@ bool is_ctl_tab_active  = false;
 // English by default
 bool de_en_switched     = false; 
 
+// NAGINATA AND AUDIO STUFF
+
 #ifdef NAGINATA_ENABLE
 bool naginata_active    = false;
 bool come_from_naginata = false;
 #endif
 
+#ifdef AUDIO_ENABLE
 bool     muse_mode      = false;
 uint8_t  last_muse_note = 0;
 uint16_t muse_counter   = 0;
 uint8_t  muse_offset    = 70;
 uint16_t muse_tempo     = 50;
 
-//#ifdef UNICODE_SELECTED_MODES
-//// unicodemap table
-//enum unicode_names {
-//    DE_ae,
-//    DE_AE,
-//    DE_oe,
-//    DE_OE,
-//    DE_ue,
-//    DE_UE,
-//    DE_SZ,
-//};
-//const uint32_t PROGMEM unicode_map[] = {
-//    [DE_ae]    = 0xE4, // ä
-//    [DE_AE]    = 0xC4, // Ä
-//    [DE_oe]    = 0xF6, // ö
-//    [DE_OE]    = 0xD6, // Ö
-//    [DE_ue]    = 0xFC, // ü
-//    [DE_UE]    = 0xDC, // Ü
-//    [DE_SZ]    = 0xDF, // ß
-//};
-//#endif
-
-#ifdef AUDIO_ENABLE
 float macro_on_song[][2]        = SONG(SCROLL_LOCK_ON_SOUND);
 float macro_off_song[][2]       = SONG(SCROLL_LOCK_OFF_SOUND);
 float tone_caps_on[][2]         = SONG(CAPS_LOCK_ON_SOUND);
@@ -251,248 +194,4 @@ float naginata_on_sound[][2]    = SONG(PLOVER_SOUND);
 float naginata_off_sound[][2]   = SONG(PLOVER_GOODBYE_SOUND);
 #endif
 #endif
-
-/* // Combo Declarations */
-/* enum combos { */
-/*     HCOMM_ENT, */
-/*     MN_LARROW, */
-/*     GM_PIPE, */
-/*     CD_ESC, */
-/*     HDOT_RALT, */
-/*     XD_APP, */
-/*     LR_ADJ, */
-/*     DOWNFN_MPRV, */
-/*     UPFN_MNXT, */
-/*     DH_NAV, */
-/*     /1* ESCW_ALTF4, *1/ */
-/*     /1* ESCBSLS_ALTF4, *1/ */
-/*     XC_CAPS, */
-/*     COMMDOT_LEAD, */
-/*     XS_TAB, */ 
-/*     QW_KANA, */ 
-/*     WF_TAB, */ 
-/*     ZS_SZ, */
-/*     ZX_LANG, */
-/*     EDOT_BSPC, */
-/*     SCLNBSLS_BSPC, */
-
-/*     // combos for the lower and raise keys */
-/*     QLOWER, */ 
-/*     WLOWER, */ 
-/*     FLOWER, */ 
-/*     PLOWER, */ 
-/*     BLOWER, */ 
-/*     VOLLOWER, */
-/*     JLOWER, */ 
-/*     LLOWER, */ 
-/*     ULOWER, */ 
-/*     YLOWER, */ 
-/*     SCLNLOWER, */ 
-/*     UELOWER, */
-/*     MLOWER, */ 
-/*     NLOWER, */ 
-/*     ELOWER, */ 
-/*     ILOWER, */ 
-/*     OLOWER, */ 
-/*     QUOTLOWER, */
-/*     HLOWER, */ 
-/*     SLOWER, */
-
-/*     QRAISE, */ 
-/*     WRAISE, */ 
-/*     FRAISE, */ 
-/*     PRAISE, */ 
-/*     BRAISE, */ 
-/*     VOLRAISE, */
-/*     JRAISE, */ 
-/*     LRAISE, */ 
-/*     URAISE, */ 
-/*     YRAISE, */ 
-/*     SCLNRAISE, */ 
-/*     UERAISE, */
-/*     MRAISE, */ 
-/*     NRAISE, */ 
-/*     ERAISE, */ 
-/*     IRAISE, */ 
-/*     ORAISE, */ 
-/*     QUOTRAISE, */
-/*     HRAISE, */
-
-/*     WFP_OS, */ 
-/*     LUY_OS, */
-
-/* #ifdef NAGINATA_ENABLE */
-/*     ST_NAV, */
-/*     NE_NAV, */
-/*     WP_NAGINATA, */ 
-/* #endif */
-/* }; */
-
-/* const uint16_t PROGMEM hcomm_combo[]        = {H_KEY, LT(0, KC_COMM), 	    COMBO_END}; */ 
-/* const uint16_t PROGMEM larr_combo[]         = {M_KEY, N_KEY,                COMBO_END}; */ 
-/* const uint16_t PROGMEM pipe_combo[]         = {G_KEY, M_KEY,                COMBO_END}; */ 
-/* const uint16_t PROGMEM cd_combo[]           = {C_KEY, D_KEY,         	    COMBO_END}; */ 
-/* const uint16_t PROGMEM hdot_combo[]         = {H_KEY, LT(0, KC_DOT),  	    COMBO_END}; */ 
-/* const uint16_t PROGMEM xd_combo[]           = {X_KEY, D_KEY,          	    COMBO_END}; */
-/* const uint16_t PROGMEM adj_combo[]          = {LOWER, RAISE,                COMBO_END}; */
-/* const uint16_t PROGMEM upmnxt_combo[]       = {FN_KEY, LT(_NAV, KC_UP),COMBO_END}; */
-/* const uint16_t PROGMEM downmprv_combo[]     = {FN_KEY, LT(_NAV, KC_DOWN),COMBO_END}; */
-/* const uint16_t PROGMEM dh_combo[]           = {D_KEY, H_KEY,                COMBO_END}; */
-/* /1* const uint16_t PROGMEM escw_combo[]         = {ESC_KEY, W_KEY,              COMBO_END}; *1/ */
-/* /1* const uint16_t PROGMEM escbsls_combo[]      = {ESC_KEY, LT(0, KC_BSLS),     COMBO_END}; *1/ */
-/* const uint16_t PROGMEM xc_combo[]           = {X_KEY, C_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM commdot_combo[]      = {LT(0, KC_COMM), LT(0, KC_DOT), COMBO_END}; */
-/* const uint16_t PROGMEM xs_combo[]           = {X_KEY, S_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM qw_combo[]           = {Q_KEY, W_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM wf_combo[]           = {W_KEY, F_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM zs_combo[]           = {Z_KEY, S_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM zx_combo[]           = {Z_KEY, X_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM edot_combo[]         = {E_KEY, LT(0, KC_DOT),        COMBO_END}; */
-/* const uint16_t PROGMEM sclnbsls_combo[]     = {SCLN_KEY, LT(0, KC_BSLS),    COMBO_END}; */
-/* //const uint16_t PROGMEM nraise_combo[]       = {KC_N, RAISE, COMBO_END}; */
-
-/* // combos for lower and raise */
-/* const uint16_t PROGMEM qlower_combo[]       = {LOWER, Q_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM wlower_combo[]       = {LOWER, W_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM flower_combo[]       = {LOWER, F_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM plower_combo[]       = {LOWER, P_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM blower_combo[]       = {LOWER, B_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM vollower_combo[]     = {LOWER, LT(_MOUSE, KC_VOLU), COMBO_END}; */
-/* const uint16_t PROGMEM jlower_combo[]       = {LOWER, J_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM llower_combo[]       = {LOWER, L_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM ulower_combo[]       = {LOWER, U_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM ylower_combo[]       = {LOWER, Y_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM sclnlower_combo[]    = {LOWER, SCLN_KEY,             COMBO_END}; */
-/* const uint16_t PROGMEM uelower_combo[]      = {LOWER, LT(0, DE_UDIA),       COMBO_END}; */
-
-/* const uint16_t PROGMEM mlower_combo[]       = {LOWER, KC_M,                 COMBO_END}; */
-/* const uint16_t PROGMEM nlower_combo[]       = {LOWER, N_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM elower_combo[]       = {LOWER, E_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM ilower_combo[]       = {LOWER, I_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM olower_combo[]       = {LOWER, O_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM quotlower_combo[]    = {LOWER, LT(0, KC_QUOT),       COMBO_END}; */
-/* const uint16_t PROGMEM hlower_combo[]       = {LOWER, H_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM slower_combo[]       = {LOWER, S_KEY,                COMBO_END}; */
-
-/* const uint16_t PROGMEM qraise_combo[]       = {RAISE, Q_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM wraise_combo[]       = {RAISE, W_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM fraise_combo[]       = {RAISE, F_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM praise_combo[]       = {RAISE, P_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM braise_combo[]       = {RAISE, B_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM volraise_combo[]     = {RAISE, LT(_MOUSE, KC_VOLU),  COMBO_END}; */
-/* const uint16_t PROGMEM jraise_combo[]       = {RAISE, J_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM lraise_combo[]       = {RAISE, L_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM uraise_combo[]       = {RAISE, U_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM yraise_combo[]       = {RAISE, Y_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM sclnraise_combo[]    = {RAISE, SCLN_KEY,             COMBO_END}; */
-/* const uint16_t PROGMEM ueraise_combo[]      = {RAISE, LT(0, DE_UDIA),       COMBO_END}; */
-
-/* const uint16_t PROGMEM mraise_combo[]       = {RAISE, KC_M,                 COMBO_END}; */
-/* const uint16_t PROGMEM nraise_combo[]       = {RAISE, N_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM eraise_combo[]       = {RAISE, E_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM iraise_combo[]       = {RAISE, I_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM oraise_combo[]       = {RAISE, O_KEY,                COMBO_END}; */
-/* const uint16_t PROGMEM quotraise_combo[]    = {RAISE, LT(0, KC_QUOT),       COMBO_END}; */
-/* const uint16_t PROGMEM hraise_combo[]       = {RAISE, H_KEY,                 COMBO_END}; */
-
-/* const uint16_t PROGMEM rst_combo[]          = {R_KEY, S_KEY, T_KEY,         COMBO_END}; */
-/* const uint16_t PROGMEM nei_combo[]          = {N_KEY, E_KEY, I_KEY,         COMBO_END}; */
-/* const uint16_t PROGMEM wfp_combo[]          = {W_KEY, F_KEY, P_KEY,         COMBO_END}; */
-/* const uint16_t PROGMEM luy_combo[]          = {L_KEY, U_KEY, Y_KEY,         COMBO_END}; */
-
-/* #ifdef NAGINATA_ENABLE */
-/* const uint16_t PROGMEM stnav_combo[] = {NG_D, NG_F, COMBO_END}; */
-/* const uint16_t PROGMEM nenav_combo[] = {NG_J, NG_K, COMBO_END}; */
-/* const uint16_t PROGMEM wpnaginata_combo[] = {W_KEY, P_KEY, COMBO_END}; */
-
-/* #endif */
-
-/* combo_t key_combos[] = { */  
-/*     [HCOMM_ENT]     = COMBO(hcomm_combo, KC_ENT), */  
-/*     [CD_ESC]        = COMBO(cd_combo, KC_ESC), */  
-/*     [HDOT_RALT]     = COMBO(hdot_combo, KC_RALT), */  
-/*     [XD_APP]        = COMBO(xd_combo, KC_APP), */
-/*     [LR_ADJ]        = COMBO(adj_combo, MO(_ADJUST)), */
-/*     [DOWNFN_MPRV]   = COMBO(downmprv_combo, KC_MPRV), */
-/*     [UPFN_MNXT]     = COMBO(upmnxt_combo, KC_MNXT), */
-/*     [XC_CAPS]       = COMBO(xc_combo, KC_CAPS), */
-/*     [COMMDOT_LEAD]  = COMBO(commdot_combo, KC_LEAD), */
-/*     [XS_TAB]        = COMBO(xs_combo, KC_TAB), */      
-/*     [QW_KANA]       = COMBO(qw_combo, A(KC_GRV)), */      
-/*     [WF_TAB]        = COMBO(wf_combo, KC_TAB), */      
-/*     [ZS_SZ]         = COMBO(zs_combo, DE_SZ), */      
-/*     [ZX_LANG]       = COMBO(zx_combo, LANG_SWITCH), */      
-/*     [EDOT_BSPC]     = COMBO(edot_combo, C(KC_BSPC)), */
-/*     [SCLNBSLS_BSPC] = COMBO(sclnbsls_combo, KC_BSPC), */
-
-/*     [DH_NAV]        = COMBO(dh_combo, TG(_NAV)), */
-/*     /1* [ESCW_ALTF4]    = COMBO(escw_combo, ESCW_ALTF4), *1/ */
-/*     /1* [ESCBSLS_ALTF4] = COMBO(escbsls_combo, ESCBSLS_ALTF4), *1/ */
-/*     [MN_LARROW]     = COMBO(larr_combo, MN_LARROW), */  
-/*     [GM_PIPE]       = COMBO(pipe_combo, GM_PIPE), */  
-/* //    [JL_LANG]       = COMBO(jl_combo, KC_DE_SWITCH), */  
-
-/* //    [NRAISE]        = COMBO(nraise_combo, OSL(_RAISE)), */
-/* //    [TLOWER]        = COMBO(tlower_combo, OSL(_LOWER)), */
-/* //    [EO_OE]         = COMBO(oe_combo, DE_oe), */
-/* //    [EA_AE]         = COMBO(ae_combo, DE_ae), */
-/* //    [EU_UE]         = COMBO(ue_combo, DE_ue), */
-/* //    [SPC_U]         = COMBO(spcu_combo, DE_ue), */
-/* //    [SPC_O]         = COMBO(spco_combo, DE_oe), */
-/* //    [SPC_A]         = COMBO(spca_combo, DE_ae), */
-/* //    [SPC_S]         = COMBO(spcs_combo, DE_SZ), */
-
-/*     // combos for the lower and raise keys */
-/*     [QLOWER]        = COMBO(qlower_combo, KC_EXLM), */
-/*     [WLOWER]        = COMBO(wlower_combo, KC_AT), */
-/*     [FLOWER]        = COMBO(flower_combo, KC_HASH), */
-/*     [PLOWER]        = COMBO(plower_combo, KC_DLR), */
-/*     [BLOWER]        = COMBO(blower_combo, KC_PERC), */
-/*     [VOLLOWER]      = COMBO(vollower_combo, KC_TILD), */
-/*     [JLOWER]        = COMBO(jlower_combo, KC_CIRC), */
-/*     [LLOWER]        = COMBO(llower_combo, KC_AMPR), */
-/*     [ULOWER]        = COMBO(ulower_combo, KC_ASTR), */
-/*     [YLOWER]        = COMBO(ylower_combo, KC_LPRN), */
-/*     [SCLNLOWER]     = COMBO(sclnlower_combo, KC_RPRN), */
-/*     [UELOWER]       = COMBO(uelower_combo, DE_OE), */ 
-/*     [MLOWER]        = COMBO(mlower_combo, S(KC_QUOT)), */
-/*     [NLOWER]        = COMBO(nlower_combo, KC_UNDS), */
-/*     [ELOWER]        = COMBO(elower_combo, KC_PLUS), */
-/*     [ILOWER]        = COMBO(ilower_combo, KC_LCBR), */
-/*     [OLOWER]        = COMBO(olower_combo, KC_RCBR), */
-/*     [QUOTLOWER]     = COMBO(quotlower_combo, DE_AE), */ 
-/*     [HLOWER]        = COMBO(hlower_combo, KC_GRV), */
-/*     [SLOWER]        = COMBO(slower_combo, DE_SZ), */
-
-/*     [QRAISE]        = COMBO(qraise_combo, KC_1), */
-/*     [WRAISE]        = COMBO(wraise_combo, KC_2), */
-/*     [FRAISE]        = COMBO(fraise_combo, KC_3), */
-/*     [PRAISE]        = COMBO(praise_combo, KC_4), */
-/*     [VOLRAISE]      = COMBO(volraise_combo, KC_GRV), */
-/*     [BRAISE]        = COMBO(braise_combo, KC_5), */
-/*     [JRAISE]        = COMBO(jraise_combo, KC_6), */
-/*     [LRAISE]        = COMBO(lraise_combo, KC_7), */
-/*     [URAISE]        = COMBO(uraise_combo, KC_8), */
-/*     [YRAISE]        = COMBO(yraise_combo, KC_9), */
-/*     [SCLNRAISE]     = COMBO(sclnraise_combo, KC_0), */
-/*     [UERAISE]       = COMBO(ueraise_combo, DE_oe), */
-/*     [MRAISE]        = COMBO(mraise_combo, S(KC_COMM)), */
-/*     [NRAISE]        = COMBO(nraise_combo, KC_MINS), */
-/*     [ERAISE]        = COMBO(eraise_combo, KC_EQL), */
-/*     [IRAISE]        = COMBO(iraise_combo, KC_LBRC), */
-/*     [ORAISE]        = COMBO(oraise_combo, KC_RBRC), */
-/*     [QUOTRAISE]     = COMBO(quotraise_combo, DE_ae), */
-/*     [HRAISE]        = COMBO(hraise_combo, S(KC_DOT)), */ 
-
-/* //  [RST_OS]        = COMBO(rst_combo, TG(_MOUSE)), */
-/* //  [NEI_OS]        = COMBO(nei_combo, TG(_NUM)), */
-/*     [WFP_OS]        = COMBO(wfp_combo, TG(_MOUSE)), */
-/*     [LUY_OS]        = COMBO(luy_combo, TG(_NUM)), */
-
-/* #ifdef NAGINATA_ENABLE */
-/*     [WP_NAGINATA] = COMBO(wpnaginata_combo, NAGINATA_SWITCH), */
-/* #endif */
-/* }; */
-
-/* uint16_t COMBO_LEN = sizeof(key_combos) / sizeof(key_combos[0]); */
 
