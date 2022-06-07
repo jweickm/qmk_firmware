@@ -605,7 +605,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifndef KEY_OVERRIDE_ENABLE
         case K_KEY:
             if (record->event.pressed) {
-              if (!de_layout_active && shifted) {
+              if (!de_layout_active && (mod_state == MOD_BIT(KC_LALT))) {
                   tap_code(KC_GRV);
                   return false;
               }
