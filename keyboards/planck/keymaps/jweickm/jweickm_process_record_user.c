@@ -65,16 +65,16 @@ bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
                     unregister_code16(keycode);
                 }
                 return false;
-            case SCLN_KEY: // sends ; or :
+            case DE_SCLN: // sends ; or :
                 if (record->event.pressed) {
                     if (shifted) { 
                         register_code16(DE_COLN);
                     } else {
-                        register_code16(DE_SCLN);
+                        register_code16(keycode);
                     }
                 } else {
                     unregister_code16(DE_COLN);
-                    unregister_code16(DE_SCLN);
+                    unregister_code16(keycode);
                 }
                 return false;
             case DE_BSLS:
@@ -117,15 +117,14 @@ bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
                     if (shifted) { 
                         register_code16(DE_QUES);
                     } else {
-                        register_code16(DE_SLSH);
+                        register_code16(keycode);
                     }
                 } else {
                     unregister_code16(DE_QUES);
-                    unregister_code16(DE_SLSH);
+                    unregister_code16(keycode);
                 }
                 return false;
             case SZ_KEY:
-            case Z_KEY:
                 tap_code(DE_SS);
                 return false;
             default: 
@@ -173,7 +172,7 @@ bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
                     }
                     processed = true;
                     break;
-                case SCLN_KEY:
+                case DE_SCLN:
                 case DE_ODIA:
                 case OE_KEY:
                     if (shifted) {
@@ -190,7 +189,6 @@ bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
                     processed = true;
                     break;
                 case SZ_KEY:
-                case Z_KEY:
                     tap_code(KC_P0);
                     tap_code(KC_P2);
                     tap_code(KC_P2);
@@ -327,12 +325,6 @@ bool achordion_chord(uint16_t tap_hold_keycode,
     // are on the same hand in Colemak
     switch (tap_hold_keycode) {
         // define some exceptions here
-        /* case T_KEY: // T + A */
-        /*     if (other_keycode == A_KEY) { return true; } */
-        /*     break; */
-      /* case HOME_S:  // S + H and S + G. */
-      /*   if (other_keycode == HOME_H || other_keycode == KC_G) { return true; } */
-      /*   break; */
     }
 
   // Also allow same-hand holds when the other key is in the rows below the
@@ -361,7 +353,7 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case ESC_KEY:
         case DOWN_KEY:
         case UP_KEY:
-        case RSFT_T(KC_ENT):
+        case ENT_KEY:
             return 0; // bypass Achordion for these keys
         case COMM_KEY:
         case DOT_KEY:
@@ -384,7 +376,6 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case X_KEY:
         case C_KEY:
         case V_KEY:
-        case M_KEY:
             return TAPPING_TERM + 60; // return a shorter timeout for these keys (tap event when held) results in 220 ms with current tapping term of 160 ms
     }
     return 400; // otherwise use a timeout of 400 ms.
@@ -409,9 +400,6 @@ static bool process_tap_long_press_key(keyrecord_t* record, uint16_t long_press_
     if (record->tap.count < 1) { // Key is being held.
         if (record->event.pressed) {
             tap_code16(long_press_keycode);
-            /* register_code16(long_press_keycode); */
-        /* } else { */
-            /* unregister_code16(long_press_keycode); */
         }
         return false; // Skip default handling.
     }
@@ -574,9 +562,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
                 if (!de_en_switched) { return true; 
                 } else {
-                return process_german_keycode(record, SCLN_KEY);
+                return process_german_keycode(record, DE_SCLN);
                 }
             }
+            break;
 
         case BSLS_KEY:
             if (!de_layout_active) {
@@ -589,6 +578,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     }
             }
             return process_german_keycode(record, DE_UDIA); // sending Ü
+            break;
 
         case QUOT_KEY:
             if (!de_layout_active) {
@@ -601,6 +591,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return process_german_keycode(record, DE_ADIA); // sending Ä
+            break;
 
         case X_KEY:
             return process_tap_long_press_key(record, C(KC_X));
@@ -622,16 +613,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
 #endif
 // ================ FROM ADJUST LAYER =================
-        case CAPS_WORD:
-            if (record->event.pressed) {
-                if (caps_lock_on) { // let this combo turn off caps lock if it is on
-                    tap_code(KC_CAPS);
-                } else {
-                    caps_word_on();  // Activate Caps Word!
-                }
-            }
-            return false;
-            break;
+        /* case CAPS_WORD: */
+        /*     if (record->event.pressed) { */
+        /*         if (caps_lock_on) { // let this combo turn off caps lock if it is on */
+        /*             tap_code(KC_CAPS); */
+        /*         } else { */
+        /*             caps_word_on();  // Activate Caps Word! */
+        /*         } */
+        /*     } */
+        /*     return false; */
+        /*     break; */
         case UNDO:
             if (de_layout_active) {
                 if (record->event.pressed) {

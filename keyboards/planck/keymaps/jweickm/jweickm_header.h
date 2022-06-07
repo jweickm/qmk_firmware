@@ -88,7 +88,6 @@ NGKEYS naginata_keys;
 #define QUOT_KEY    LT(0, KC_QUOT)
 #define SLSH_KEY    LT(0, KC_SLSH)
 #define NAVSPACE    LT(_ADJUST, KC_SPC)
-/* #define NAVENT      LT(_NAV, KC_ENT) */
 #define FN_KEY      LT(_ADJUST, KC_RALT)
 #define ENT_KEY     RSFT_T(KC_ENT)
 

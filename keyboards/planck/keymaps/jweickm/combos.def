@@ -2,15 +2,13 @@
 //   name           result          combo keys
 // LEFT HAND
 COMB(CD_ESC,        KC_ESC,         C_KEY, D_KEY)
-COMB(XD_CAPS,       CAPS_WORD,      X_KEY, D_KEY)
-/* COMB(XS_DEL,        KC_DEL,         X_KEY, S_KEY) */
+COMB(XD_CAPS,       KC_CAPS,        X_KEY, D_KEY)
 COMB(XS_BSPC,       KC_BSPC,        X_KEY, S_KEY)
 COMB(WF_TAB,        KC_TAB,         W_KEY, F_KEY)
 COMB(XC_SFT,        OSM(MOD_LSFT),  X_KEY, C_KEY)
 COMB(ZS_SZ,         SZ_KEY,         Z_KEY, S_KEY)
 COMB(QP_RALT,       UMLAUT_RALT,    Q_KEY, P_KEY)
 COMB(WP_UMLAUT,     OSL(_UMLAUTS),  W_KEY, P_KEY)
-/* COMB(WP_UMLAUT,     OS_UMLAUT,      W_KEY, P_KEY) */
 COMB(QF_WINSFT,     G(KC_LSFT),     Q_KEY, F_KEY)
 
 // RIGHT HAND

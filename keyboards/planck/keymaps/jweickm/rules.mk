@@ -11,7 +11,7 @@ MIDI_ENABLE 		= no		# MIDI output
 AUDIO_ENABLE 		= no		# Enables audio features
 RGBLIGHT_ENABLE 	= no		# Enables RGB backlight
 SWAP_HANDS_ENABLE 	= no 		# Allow swapping hands of keyboard
-CAPS_WORD_ENABLE	= yes   	# Enables new caps word feature from Getreuer
+CAPS_WORD_ENABLE	= no   		# Enables new caps word feature from Getreuer
 
 # SRC += muse.c
 
