@@ -290,24 +290,18 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
+bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) { // allows hold + tap within the tapping term (but hold must be held longer than tap)
     switch (keycode) {
-//        case LOWER:
-//        case RAISE:
-            /* return true; */
+        case S_KEY:
+        case E_KEY:
+        case LOWER:
+        case LOWER_DE:
+        case RAISE:
+        case RAISE_DE:
+            // Immediately select the hold action when another key is tapped.
+            return true;
         default:
-            return false;
-    }
-}
-
-bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode){
-        /* case LOWER: */
-        /* case RAISE: */
-            // Immediately select the hold action when another key is pressed.
-            /* return true; */
-        default:
-            // Do not select the hold action when another key is pressed.
+            // Do not select the hold action when another key is tapped.
             return false;
     }
 }
