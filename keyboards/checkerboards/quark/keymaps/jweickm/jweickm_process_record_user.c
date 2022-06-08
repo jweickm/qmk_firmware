@@ -610,20 +610,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
 
-        case KC_PLUS: // +
-            if (mod_state & MOD_BIT(KC_LCTL)) {
-                if (record->event.pressed) {
-                    register_code(KC_EQL);
-                } else {
-                    unregister_code(KC_EQL);
-                }
-                return false;
-            } 
-            return true;
-            
         case KC_MINS: // -
             if (de_layout_active) {
-                return process_german_keycode(record, DE_MINS);
+                return process_german_keycode(record, DE_QUOT);
             }
             return true;
 
