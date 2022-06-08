@@ -1,5 +1,5 @@
 /*
-Copyright 2017 Danny Nguyen <danny@keeb.io>
+Copyright 2022 Tommy Alatalo <@altosys>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,8 +17,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#define USE_SERIAL
-#define EE_HANDS
-#define TAPPING_TERM 150
-#define TAPPING_TOGGLE 2
-#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
+#include "config_common.h"
