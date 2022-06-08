@@ -143,7 +143,6 @@ bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
             add_mods(MOD_BIT(KC_LALT));
             switch (keycode) {
                 case DE_ADIA:
-                case AE_KEY:
                     if (shifted) {
                         tap_code(KC_P0);
                         tap_code(KC_P1);
@@ -158,7 +157,6 @@ bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
                     processed = true;
                     break;
                 case DE_UDIA:
-                case UE_KEY:
                     if (shifted) {
                         tap_code(KC_P0);
                         tap_code(KC_P2);
@@ -174,7 +172,6 @@ bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
                     break;
                 case DE_SCLN:
                 case DE_ODIA:
-                case OE_KEY:
                     if (shifted) {
                         tap_code(KC_P0);
                         tap_code(KC_P2);
@@ -534,6 +531,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
             break;
 
+        case COPY_ALL:
+            if (record->event.pressed) {
+                tap_code16(C(KC_HOME)); // go to the beginning of the file
+                tap_code16(C(S(KC_END))); // mark everything till the end of the file
+                /* tap_code16(C(KC_INS)); // send ctrl + ins -> copy to clipboard */
+            }
+            return true;
+            break;
+
+        case X_KEY:
+            return process_tap_long_press_key(record, C(KC_X));
+            break;
+        case C_KEY:
+            return process_tap_long_press_key(record, C(KC_INS));
+            break;
+        case V_KEY:
+            return process_tap_long_press_key(record, S(KC_INS));
+            break;
 // ================ FROM BASE LAYER =================
 // ------------------------- TOP ROW NUMBERS ---------------------------------
         case Q_KEY:
@@ -593,15 +608,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return process_german_keycode(record, DE_ADIA); // sending Ä
             break;
 
-        case X_KEY:
-            return process_tap_long_press_key(record, C(KC_X));
-            break;
-        case C_KEY:
-            return process_tap_long_press_key(record, C(KC_INS));
-            break;
-        case V_KEY:
-            return process_tap_long_press_key(record, S(KC_INS));
-            break;
 #ifndef KEY_OVERRIDE_ENABLE
         case K_KEY:
             if (record->event.pressed) {
@@ -787,10 +793,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
 
-        case AE_KEY:
-        case UE_KEY:
-        case OE_KEY:
         case SZ_KEY:
+        case DE_ADIA:
+        case DE_UDIA:
+        case DE_ODIA:
             return process_german_keycode(record, keycode);
             break;
 

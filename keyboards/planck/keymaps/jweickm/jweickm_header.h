@@ -106,6 +106,8 @@ NGKEYS naginata_keys;
 #define REDO C(KC_Y)
 #define UNDO C(KC_Z)
 
+#define COPY_ALL    C(KC_INS)
+
 enum planck_keycodes {
 #ifdef NAGINATA_ENABLE
     // 薙刀式: SAFE_RANGE -> NG_SAFE_RANGE
@@ -129,9 +131,6 @@ enum planck_keycodes {
     UMLAUT_SWITCH,
     UMLAUT_RALT,
     LLOCK, // layer lock key
-    AE_KEY,
-    UE_KEY, 
-    OE_KEY,
     SZ_KEY
 };
 
