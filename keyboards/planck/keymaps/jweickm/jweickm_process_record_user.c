@@ -895,33 +895,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return true;
             }
 #endif
-        case KC_PLUS: // +
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_PLUS);
-                } else {
-                    unregister_code16(DE_PLUS);
-                }
-                return false;
-            } else if (!de_layout_active) {
-                if (shifted) {
-                    if (record->event.pressed) {
-                        register_code(KC_EQL);
-                        return false;
-                    } else {
-                        unregister_code(KC_EQL);
-                        return false;
-                    }
-                } 
-            } 
-            return true;
         case KC_MINS: // -
             if (de_layout_active) {
-                return process_german_keycode(record, DE_MINS);
+                return process_german_keycode(record, DE_QUOT);
             }
             return true;
 
 #ifdef NO_SEPARATE_GERMAN_LAYERS
+        case KC_PLUS: // +
+            if (mod_state & MOD_BIT(KC_LCTL)) {
+                if (record->event.pressed) {
+                    register_code(KC_EQL);
+                } else {
+                    unregister_code(KC_EQL);
+                }
+                return false;
+            } 
+            return true;
         case KC_LCBR: // {
             if (de_layout_active) {
                 if (record->event.pressed) {
@@ -944,23 +934,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
                 return true;
             }
-          case KC_QUOT:
-              if (de_layout_active) {
-                  if (record->event.pressed) {
-                      if (shifted) {
-                              register_code16(DE_DQUO);  // \"
-                      } else {
-                              register_code16(DE_QUOT);  // /'
-                      }
-                  } else {
-                      unregister_code16(DE_DQUO);
-                      unregister_code16(DE_QUOT);
-                  }
-                  return false;
-              } else {
-                  return true;
-              }
-            break;
         case KC_LABK: // <
             if (de_layout_active) {
                 if (record->event.pressed) {
