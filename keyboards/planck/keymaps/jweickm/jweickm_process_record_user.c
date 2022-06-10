@@ -391,6 +391,9 @@ static bool process_tap_long_press_key(keyrecord_t* record, uint16_t long_press_
     if (record->tap.count < 1) { // Key is being held.
         if (record->event.pressed) {
             tap_code16(long_press_keycode);
+            /* register_code16(long_press_keycode); */
+        /* } else { */
+            /* unregister_code16(long_press_keycode); */
         }
         return false; // Skip default handling.
     }
