@@ -474,9 +474,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ,-----------------------------------------------------------------------------------.
      * | ____ | !MSE |WHL <-| M ↑  |WHL ->|C-HOME| XXXX | XXXX | XXXX | XXXX | XXXX | XXXX |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | BTN 4| M <- | M ↓  | M -> |BTN 5 | XXXX | RCTL | RSFT | LALT | RGUI | ____ |
+     * | LCTL | BTN 4| M <- | M ↓  | M -> |BTN 5 | XXXX | RCTL | RSFT | LALT | RGUI | RCTL |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | XXXX | XXXX |WHL ↑ |WHL ↓ | C-END| XXXX | XXXX | XXXX | XXXX | XXXX | XXXX |
+     * | LSFT | LSFT | XXXX |WHL ↑ |WHL ↓ | C-END| XXXX | ____ | BTN4 | BTN5 |SCRLCK| RSFT |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | ____ | XXXX | BTN 3| BTN 2|    BTN 1    | LLOCK| ____ | Bri- | Bri+ | ____ | 2x2uC
      * `-----------------------------------------------------------------------------------'
@@ -484,7 +484,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_MOUSE] = LAYOUT_planck_mit(
         KC_TRNS, TG(_MOUSE), KC_WH_L, KC_MS_U, KC_WH_R, C(KC_HOME), KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
         KC_TRNS, KC_BTN4, KC_MS_L, KC_MS_D, KC_MS_R, KC_BTN5, KC_NO, KC_LCTL, KC_RSFT, KC_LALT, KC_RGUI, KC_TRNS, 
-        KC_TRNS, KC_NO, KC_NO, KC_WH_U, KC_WH_D, C(KC_END), KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+        KC_LSFT, KC_LSFT, KC_NO, KC_WH_U, KC_WH_D, C(KC_END), KC_NO, KC_TRNS, KC_BTN4, KC_BTN5, KC_SCROLL_LOCK, KC_RSFT,
         KC_NO, KC_NO, KC_NO, KC_BTN3, KC_BTN2, KC_BTN1, LLOCK, KC_TRNS, KC_BRID, KC_BRIU, KC_TRNS
     ),
 

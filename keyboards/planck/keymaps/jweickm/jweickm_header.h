@@ -35,42 +35,42 @@ NGKEYS naginata_keys;
 #endif
 
 // IMPORTANT: DEFINE THE LAYOUT FOR THE KEYBOARD HERE
-#define hand_position 3 // 1: semi-wide, 2: wide, 3: narrow
-#define layout 1 // 1: 1x2uC, 2: 2x2u, 3: grid
-#define thumb 2 // 1: backspace, 2: osm_shift
+/* #define hand_position 3 // 1: semi-wide, 2: wide, 3: narrow */
+/* #define layout 1 // 1: 1x2uC, 2: 2x2u, 3: grid */
+/* #define thumb 2 // 1: backspace, 2: osm_shift */
 
-    #define Q_KEY LT(0, KC_Q)
-    #define W_KEY LT(0, KC_W)
-    #define F_KEY LT(0, KC_F)
-    #define P_KEY LT(0, KC_P)
-    #define B_KEY LT(0, KC_B)
-    #define J_KEY LT(0, KC_J)
-    #define L_KEY LT(0, KC_L)
-    #define U_KEY LT(0, KC_U)
-    #define Y_KEY LT(0, KC_Y)
-    #define SCLN_KEY LT(0, KC_SCLN)
+#define Q_KEY LT(0, KC_Q)
+#define W_KEY LT(0, KC_W)
+#define F_KEY LT(0, KC_F)
+#define P_KEY LT(0, KC_P)
+#define B_KEY LT(0, KC_B)
+#define J_KEY LT(0, KC_J)
+#define L_KEY LT(0, KC_L)
+#define U_KEY LT(0, KC_U)
+#define Y_KEY LT(0, KC_Y)
+#define SCLN_KEY LT(0, KC_SCLN)
 
-    #define G_KEY KC_G
-    #define M_KEY KC_M
+#define G_KEY KC_G
+#define M_KEY KC_M
 
-    #define A_KEY LGUI_T(KC_A)
-    #define R_KEY LALT_T(KC_R)
-    #define S_KEY LSFT_T(KC_S)
-    #define T_KEY LCTL_T(KC_T)
-    #define N_KEY RCTL_T(KC_N)
-    #define E_KEY LSFT_T(KC_E)
-    #define I_KEY LALT_T(KC_I)
-    #define O_KEY LGUI_T(KC_O)
+#define A_KEY LGUI_T(KC_A)
+#define R_KEY LALT_T(KC_R)
+#define S_KEY LSFT_T(KC_S)
+#define T_KEY LCTL_T(KC_T)
+#define N_KEY RCTL_T(KC_N)
+#define E_KEY LSFT_T(KC_E)
+#define I_KEY LALT_T(KC_I)
+#define O_KEY LGUI_T(KC_O)
 
-    #define D_KEY LT(_NUM, KC_D)
-    #define H_KEY LT(_MOUSE, KC_H)
+#define D_KEY LT(_NUM, KC_D)
+#define H_KEY LT(_MOUSE, KC_H)
 
-    #define Z_KEY LT(0, KC_Z)
-    #define X_KEY LT(0, KC_X)
-    #define C_KEY LT(0, KC_C)
-    #define V_KEY LT(0, KC_V)
-    
-    #define K_KEY KC_K
+#define Z_KEY LT(0, KC_Z)
+#define X_KEY LT(0, KC_X)
+#define C_KEY LT(0, KC_C)
+#define V_KEY LT(0, KC_V)
+
+#define K_KEY KC_K
 
 // define the secondary function of the lower and raise keys here
 #define LOWER LT(_LOWER, KC_BSPC)
