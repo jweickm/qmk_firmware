@@ -129,11 +129,11 @@ void dance_rabrk(qk_tap_dance_state_t *state, void *user_data) {
 
 qk_tap_dance_action_t tap_dance_actions[] = {
     // declare tap dance actions here
-    [TD_PRN] = ACTION_TAP_DANCE_FN(dance_prn), 
-    [TD_BRC] = ACTION_TAP_DANCE_FN(dance_brc), 
-    [TD_CBR] = ACTION_TAP_DANCE_FN(dance_cbr), 
+    [TD_PRN]    = ACTION_TAP_DANCE_FN(dance_prn), 
+    [TD_BRC]    = ACTION_TAP_DANCE_FN(dance_brc), 
+    [TD_CBR]    = ACTION_TAP_DANCE_FN(dance_cbr), 
     /* [TD_VIM_GG] = ACTION_TAP_DANCE_FN(vim_gg), */
-    [TD_F4] = ACTION_TAP_DANCE_DOUBLE(KC_F4, A(KC_F4)),
+    [TD_F4]     = ACTION_TAP_DANCE_DOUBLE(KC_F4, A(KC_F4)),
     [TD_LARROW] = ACTION_TAP_DANCE_FN(dance_labrk),
     [TD_RARROW] = ACTION_TAP_DANCE_FN(dance_rabrk),
 };
@@ -594,7 +594,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ,-----------------------------------------------------------------------------------.
      * | ____ |   A  |   B  |   C  |   D  |   E  |   F  |   7  |   8  |   9  |   0  | BSPC |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ | ____ | ____ | ____ | ____ |   *  |   4  |   5  |   6  |   +  |   -  |
+     * | ____ | LGUI | LALT | LSFT | LCTL | ____ |   *  |   4  |   5  |   6  |   +  |   -  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | ____ | ____ | ____ | ____ | ____ |   _  |   1  |   2  |   3  |   /  |   ,  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -603,7 +603,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */ 
     [_NUM_DE] = LAYOUT_planck_mit(
         KC_TRNS, KC_A, KC_B, KC_C, D_KEY, KC_E, KC_F, KC_7, KC_8, KC_9, KC_0, KC_BSPC,
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, DE_ASTR, KC_4, KC_5, KC_6, DE_PLUS, DE_MINS,
+        KC_TRNS, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_TRNS, DE_ASTR, KC_4, KC_5, KC_6, DE_PLUS, DE_MINS,
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, DE_UNDS, KC_1, KC_2, KC_3, SLSH_KEY, COMM_KEY,
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LLOCK, KC_TRNS, KC_0, DOT_KEY, COMM_KEY, DE_EQL, KC_TRNS
     ),
@@ -638,16 +638,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | LCTL | BTN4 | M <- | M ↓  | M -> | BTN5 | XXXX | RCTL | RSFT | LALT | RGUI | RCTL |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | LSFT | LSFT | XXXX |WHL ↑ |WHL ↓ | C-END| XXXX | ____ | BTN4 | BTN5 |SCRLCK| RSFT |
+     * | LSFT | ____ | XXXX |WHL ↑ |WHL ↓ | C-END| XXXX | ____ | BTN4 | BTN5 |SCRLCK| RSFT |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ | XXXX |BTN 3 |BTN 2 |    BTN 1    | LLOCK| ____ | Bri- | Bri+ | ____ | 1x2uC
+     * | LCTL | LGUI | LALT | BTN 3| BTN 2|    BTN 1    | LLOCK|  SPC | Bri- | Bri+ | ____ | 2x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_MOUSE] = LAYOUT_planck_mit(
         KC_TRNS, TG(_MOUSE), KC_WH_L, KC_MS_U, KC_WH_R, C(KC_HOME), KC_NO, DM_RSTP, DM_PLY1, DM_REC1, DM_PLY2, DM_REC2,
         KC_LCTL, KC_BTN4, KC_MS_L, KC_MS_D, KC_MS_R, KC_BTN5, KC_NO, KC_LCTL, KC_RSFT, KC_LALT, KC_RGUI, KC_RCTL, 
         KC_LSFT, KC_LSFT, KC_NO, KC_WH_U, KC_WH_D, C(KC_END), KC_NO, KC_TRNS, KC_BTN4, KC_BTN5, KC_SCROLL_LOCK, KC_RSFT,
-        KC_TRNS, KC_TRNS, KC_NO, KC_BTN3, KC_BTN2, KC_BTN1, LLOCK, KC_TRNS, KC_BRID, KC_BRIU, KC_TRNS
+        KC_LCTL, KC_LGUI, KC_LALT, KC_BTN3, KC_BTN2, KC_BTN1, LLOCK, KC_SPC, KC_BRID, KC_BRIU, KC_TRNS
     ),
 
 /* ----------------------------------------------------------------------------------------
