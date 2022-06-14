@@ -58,9 +58,9 @@ NGKEYS naginata_keys;
 #define S_KEY LSFT_T(KC_S)
 #define T_KEY LCTL_T(KC_T)
 #define N_KEY RCTL_T(KC_N)
-#define E_KEY LSFT_T(KC_E)
+#define E_KEY RSFT_T(KC_E)
 #define I_KEY LALT_T(KC_I)
-#define O_KEY LGUI_T(KC_O)
+#define O_KEY RGUI_T(KC_O)
 
 #define D_KEY LT(_NUM, KC_D)
 #define H_KEY LT(_MOUSE, KC_H)
@@ -140,7 +140,7 @@ enum tap_dance_codes {
     TD_BRC,     // square brackets
     TD_CBR,     // curly brackets
     /* TD_VIM_GG,  // single tap to scroll down, double tap to scroll up */
-    TD_F4,      // double tap F4 to alt-F4
+    /* TD_F4,      // double tap F4 to alt-F4 */
     TD_LARROW,  // double tap left-angling bracket to get left arrow 
     TD_RARROW,  // double tap right-angling bracket to get right arrow
 };

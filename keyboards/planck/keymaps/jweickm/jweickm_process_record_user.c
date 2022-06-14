@@ -279,10 +279,10 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
         // tap-dance actions
         /* case TD(TD_VIM_GG): */
+        /* case TD(TD_F4): */
         case TD(TD_PRN):
         case TD(TD_BRC):
         case TD(TD_CBR):
-        case TD(TD_F4):
         case TD(TD_LARROW):
         case TD(TD_RARROW):
             return TAPPING_TERM * td_factor;
