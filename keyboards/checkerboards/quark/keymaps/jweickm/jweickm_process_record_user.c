@@ -264,8 +264,8 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
         case S_KEY:
         case E_KEY:
-        case BS_KEY:
-        case BS_KEY_DE:
+        case LOWER:
+        case LOWER_DE:
             return true; // force hold and disable key repeating for homerow shift
         default:
             return false; // allow hold and key repeating by default
