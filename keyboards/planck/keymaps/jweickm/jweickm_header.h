@@ -102,6 +102,7 @@ NGKEYS naginata_keys;
 
 #define Z_KEY_DE    LT(1, DE_Z)
 #define Y_KEY_DE    LT(1, DE_Y)
+#define D_KEY_DE LT(_NUM_DE, KC_D)
 
 #define REDO C(KC_Y)
 #define UNDO C(KC_Z)

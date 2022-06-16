@@ -247,16 +247,28 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
         // tap-dance actions
         /* case TD(TD_VIM_GG): */
+        /* case TD(TD_F4): */
         case TD(TD_PRN):
         case TD(TD_BRC):
         case TD(TD_CBR):
-        case TD(TD_F4):
         case TD(TD_LARROW):
         case TD(TD_RARROW):
             return TAPPING_TERM * td_factor;
 
         default:
             return TAPPING_TERM;
+    }
+}
+
+bool get_tapping_force_hold(uint16_t keycode, keyrecord_t* record) {
+    switch (keycode) {
+        case S_KEY:
+        case E_KEY:
+        case BS_KEY:
+        case BS_KEY_DE:
+            return true; // force hold and disable key repeating for homerow shift
+        default:
+            return false; // allow hold and key repeating by default
     }
 }
 

@@ -34,7 +34,7 @@ COMB(LR_ADJ,        MO(_ADJUST),    LOWER, RAISE)
 
 // --------------------- OS COMBOS -------------------------------
 //   name           result          combo keys
-COMB(ESCTAB_ALTF4,  A(KC_F4),       ESC_KEY, KC_TAB)
+/* COMB(ESCTAB_ALTF4,  A(KC_F4),       ESC_KEY, KC_TAB) */
 COMB(ESCBSLS_ALTF4, A(KC_F4),       ESC_KEY, BSLS_KEY)
 COMB(CCOMM_LANG,    LANG_SWITCH,    C_KEY, COMM_KEY)
 
