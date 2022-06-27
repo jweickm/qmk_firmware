@@ -97,8 +97,11 @@
 // when not using separate LAYERS for GERMAN
     /* #define NO_SEPARATE_GERMAN_LAYERS */
 
+// save firmware size by removing unused features
 #define NO_ACTION_MACRO
 #define NO_ACTION_FUNCTION
+#undef LOCKING_SUPPORT_ENABLE
+#undef LOCKING_RESYNC_ENABLE
 
 // Mouse key speed and acceleration.
 #undef MOUSEKEY_DELAY

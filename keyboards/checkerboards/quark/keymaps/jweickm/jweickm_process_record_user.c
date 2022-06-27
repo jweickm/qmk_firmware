@@ -627,11 +627,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
 
-        case KC_MINS: // -
-            if (de_layout_active) {
-                return process_german_keycode(record, DE_QUOT);
-            }
-            return true;
+        /* case KC_MINS: // - */
+        /*     if (de_layout_active) { */
+        /*         return process_german_keycode(record, DE_QUOT); */
+        /*     } */
+        /*     return true; */
 
 // ------------------------- TOP ROW NUMBERS ---------------------------------
         case Q_KEY:

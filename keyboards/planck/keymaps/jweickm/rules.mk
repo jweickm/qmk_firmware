@@ -12,6 +12,8 @@ AUDIO_ENABLE 		= no		# Enables audio features
 RGBLIGHT_ENABLE 	= no		# Enables RGB backlight
 SWAP_HANDS_ENABLE 	= no 		# Allow swapping hands of keyboard
 CAPS_WORD_ENABLE	= no   		# Enables new caps word feature from Getreuer
+SPACE_CADET_ENABLE 	= no		# save space, never used this
+GRAVE_ESC_ENABLE 	= no		# save space, never used this
 
 # SRC += muse.c
 

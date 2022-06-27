@@ -238,6 +238,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case L_KEY:
         case N_KEY:
         case D_KEY:
+        case D_KEY_DE:
         case H_KEY:
             return TAPPING_TERM * index_factor;
 
@@ -913,12 +914,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
                 return true;
             }
-#endif
         case KC_MINS: // -
             if (de_layout_active) {
                 return process_german_keycode(record, DE_QUOT);
             }
             return true;
+#endif
 
 #ifdef NO_SEPARATE_GERMAN_LAYERS
         case KC_PLUS: // +
