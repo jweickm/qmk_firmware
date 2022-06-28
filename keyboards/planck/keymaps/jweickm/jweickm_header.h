@@ -124,7 +124,6 @@ enum planck_keycodes {
     GAMING,
     VIM_O,
     ALT_TAB,
-    CTL_TAB,
     DE_ACC_GRV,
     DE_ACC_ACUT,
     KB_LANG_SWITCH,
@@ -155,7 +154,6 @@ bool num_lock_on;
 
 // declaring several logical variables
 bool is_alt_tab_active  = false;
-bool is_ctl_tab_active  = false;
 
 // controls which of the two languages (en/ge) is used for coding and which is used for typing German
 // English by default
