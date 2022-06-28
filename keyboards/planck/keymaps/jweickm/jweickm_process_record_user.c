@@ -3,6 +3,36 @@ uint8_t mod_state;
 uint8_t osmod_state;
 bool shifted;
 
+void turn_num_lock_on(void) {
+    // check the host_keybord's num_lock state and turn num_lock on if it is off
+    if (!num_lock_on) {
+        tap_code(KC_NUM_LOCK);
+    }
+}
+
+bool register_unregister_key(keyrecord_t* record, uint16_t keycode) {
+    if (record->event.pressed) {
+        register_code16(keycode);
+    } else {
+        unregister_code16(keycode);
+    } 
+    return false;
+}
+
+bool register_unregister_shifted_key(keyrecord_t* record, uint16_t keycode, uint16_t shifted_keycode) {
+    if (record->event.pressed) {
+        if (shifted) {
+            register_code16(shifted_keycode);
+        } else {
+            register_code16(keycode);
+        }
+    } else {
+        unregister_code16(keycode);
+        unregister_code16(shifted_keycode);
+    }
+    return false;
+}
+
 // define custom function for sending special characters
 void SEND_SPECIAL(char key) {
     switch (key) {
@@ -41,54 +71,10 @@ void SEND_SPECIAL(char key) {
 bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
     if (de_layout_active) {
         switch (keycode) {
-            case DE_Z:
-            case DE_Y:
-            case DE_MINS:
             case DE_ODIA:
             case DE_ADIA:
             case DE_UDIA:
-                if (record->event.pressed) {
-                    register_code16(keycode);
-                } else {
-                    unregister_code16(keycode);
-                } 
-                return false;
-            case DE_QUOT:
-                if (record->event.pressed) {
-                    if (shifted) { 
-                        register_code16(DE_DQUO);
-                    } else {
-                        register_code16(keycode);
-                    }
-                } else {
-                    unregister_code16(DE_DQUO);
-                    unregister_code16(keycode);
-                }
-                return false;
-            case DE_SCLN: // sends ; or :
-                if (record->event.pressed) {
-                    if (shifted) { 
-                        register_code16(DE_COLN);
-                    } else {
-                        register_code16(keycode);
-                    }
-                } else {
-                    unregister_code16(DE_COLN);
-                    unregister_code16(keycode);
-                }
-                return false;
-            case DE_BSLS:
-                if (record->event.pressed) {
-                    if (shifted) { 
-                        register_code16(DE_PIPE);
-                    } else {
-                        register_code16(keycode);
-                    }
-                } else {
-                    unregister_code16(DE_PIPE);
-                    unregister_code16(keycode);
-                }
-                return false;
+                return register_unregister_key(record, keycode);
             case DE_COMM:
                 if (record->event.pressed) {
                     if (shifted) { 
@@ -102,30 +88,10 @@ bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
                     unregister_code16(DE_LABK);
                 }
                 return true;
-            case DE_DOT:
-                if (record->event.pressed) {
-                    if (shifted) { 
-                        register_code16(DE_RABK);
-                        return false;
-                    }
-                } else {
-                    unregister_code16(DE_RABK);
-                }
-                return true;
-            case DE_SLSH:
-                if (record->event.pressed) {
-                    if (shifted) { 
-                        register_code16(DE_QUES);
-                    } else {
-                        register_code16(keycode);
-                    }
-                } else {
-                    unregister_code16(DE_QUES);
-                    unregister_code16(keycode);
-                }
-                return false;
             case SZ_KEY:
-                tap_code(DE_SS);
+                if (record->event.pressed) {
+                    tap_code(DE_SS);
+                }
                 return false;
             default: 
                 return true;
@@ -133,11 +99,7 @@ bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
     } else {
         bool processed = false;
         if (record->event.pressed) {
-            bool num_lock_was_off;
-            if (!num_lock_on) {
-                num_lock_was_off = 1;
-                tap_code(KC_NUM_LOCK);
-            }
+            turn_num_lock_on();
             clear_mods();
             clear_oneshot_mods();
             add_mods(MOD_BIT(KC_LALT));
@@ -192,6 +154,12 @@ bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
                     tap_code(KC_P3);  // ß
                     processed = true;
                     break;
+                case KC_DEG:
+                    tap_code(KC_P2);
+                    tap_code(KC_P4);
+                    tap_code(KC_P8);
+                    processed = true;
+                    break;
                 default:
                     processed = false;
                     break;
@@ -199,10 +167,6 @@ bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
             unregister_mods(MOD_LALT);
             set_mods(mod_state);
 
-            if (num_lock_was_off) {
-                tap_code(KC_NUM_LOCK);
-                num_lock_was_off = 0;
-            }
         }
         return !processed; // returns false when an umlaut was specially processed, else returns true and processing continues 
     }
@@ -222,7 +186,9 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case BS_KEY:
         case DEL_KEY:
         case LOWER: 
+        case LOWER_DE: 
         case RAISE:
+        case RAISE_DE:
             return TAPPING_TERM * thumb_factor;
         case NAVSPACE:
             return TAPPING_TERM * (thumb_factor + 0.1);
@@ -238,7 +204,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case L_KEY:
         case N_KEY:
         case D_KEY:
-        case D_KEY_DE:
         case H_KEY:
             return TAPPING_TERM * index_factor;
 
@@ -353,7 +318,7 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case FN_KEY:
         case DEL_KEY:
         case BS_KEY:
-        case BS_KEY_DE:
+        /* case BS_KEY_DE: */
         case LCTL_T(KC_CAPS):
         case OSM(MOD_LSFT):
         case ESC_KEY:
@@ -429,6 +394,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_achordion(keycode, record)) { return false; }
     // for the LAYER_LOCK feature
     if (!process_layer_lock(keycode, record, LLOCK)) { return false; }
+    
+    // make sure that num_lock is turned on, when on the _NUM layer
+    if (IS_LAYER_ON(_NUM)) {
+        turn_num_lock_on();
+    }
 
     switch (keycode) {
 
@@ -591,7 +561,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
                 if (!de_en_switched) { return true; 
                 } else {
-                return process_german_keycode(record, DE_SCLN);
+                    return register_unregister_shifted_key(record, DE_SCLN, DE_COLN);
                 }
             }
             break;
@@ -602,8 +572,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (!de_en_switched) { return true; } // normal English Layout
             } else {
                 if (!process_tap_long_press_key(record, DE_UNDS)) { return false; } 
-                    if (de_en_switched) { return 
-                        process_german_keycode(record, DE_BSLS); // German layout switched
+                    if (de_en_switched) { 
+                        return register_unregister_shifted_key(record, DE_BSLS, DE_PIPE);
                     }
             }
             return process_german_keycode(record, DE_UDIA); // sending Ü
@@ -616,7 +586,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
                 if (!process_tap_long_press_key(record, DE_MINS)) {return false; }
                 if (de_en_switched) { // " 
-                    return process_german_keycode(record, DE_QUOT); // sending ' or "
+                    return register_unregister_shifted_key(record, DE_QUOT, DE_DQUO);
                 }
             }
             return process_german_keycode(record, DE_ADIA); // sending Ä
@@ -645,23 +615,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         /*     break; */
         case UNDO:
             if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(C(DE_Z));
-                } else {
-                    unregister_code16(C(DE_Z));
-                }
-                return false;
+                return register_unregister_key(record, C(DE_Z));
             }
             return true;
             break;
         case REDO:
             if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(C(DE_Y));
-                } else {
-                    unregister_code16(C(DE_Y));
-                }
-                return false;
+                return register_unregister_key(record, C(DE_Y));
             }
             return true;
             break;
@@ -770,7 +730,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (!process_tap_long_press_key(record, DE_COLN)) { // long press ;
                     return false;
                 } else {
-                    return process_german_keycode(record, DE_DOT);
+                    return register_unregister_shifted_key(record, DE_DOT, DE_RABK);
                 }
             } else {
                 return (process_tap_long_press_key(record, KC_COLN)); // :
@@ -782,7 +742,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (!process_tap_long_press_key(record, DE_QUES)) { // long press ;
                     return false;
                 } else {
-                    return process_german_keycode(record, DE_SLSH);
+                    return register_unregister_shifted_key(record, DE_SLSH, DE_QUES);
                 }
             } else {
                 return (process_tap_long_press_key(record, KC_QUES)); // ?
@@ -811,8 +771,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case DE_ADIA:
         case DE_UDIA:
         case DE_ODIA:
+        case KC_DEG:
             return process_german_keycode(record, keycode);
             break;
+
+        case KC_KP_EQUAL:
+            if (de_layout_active) {
+                return register_unregister_key(record, DE_EQL);
+            } else {
+                return register_unregister_key(record, KC_EQL);
+            }
+            break;
+
 
 #ifdef NO_SEPARATE_GERMAN_LAYERS
         case KC_AT: // @
@@ -916,12 +886,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
         case KC_MINS: // -
             if (de_layout_active) {
-                return process_german_keycode(record, DE_QUOT);
+                return register_unregister_shifted_key(record, DE_QUOT, DE_DQUO);
             }
             return true;
-#endif
-
-#ifdef NO_SEPARATE_GERMAN_LAYERS
+        case KC_EQL: // =
+            if (de_layout_active) {
+                if (record->event.pressed) {
+                    register_code16(DE_EQL);
+                } else {
+                    unregister_code16(DE_EQL);
+                }
+                return false;
+            } else {
+                return true;
+            }
         case KC_PLUS: // +
             if (mod_state & MOD_BIT(KC_LCTL)) {
                 if (record->event.pressed) {
@@ -1019,17 +997,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     register_code16(DE_GRV);
                 } else {
                     unregister_code16(DE_GRV);
-                }
-                return false;
-            } else {
-                return true;
-            }
-        case KC_EQL: // =
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_EQL);
-                } else {
-                    unregister_code16(DE_EQL);
                 }
                 return false;
             } else {

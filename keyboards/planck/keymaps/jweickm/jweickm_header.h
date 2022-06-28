@@ -21,7 +21,7 @@ enum planck_layers {
     _RAISE,
     _RAISE_DE,
     _NUM,
-    _NUM_DE,
+    /* _NUM_DE, */
     /* _NAV, */
     _MOUSE,
     _ADJUST,
@@ -98,11 +98,11 @@ NGKEYS naginata_keys;
 // GERMAN VERSIONS OF THE KEYS
 #define LOWER_DE    LT(_LOWER_DE, KC_BSPC)
 #define RAISE_DE    LT(_RAISE_DE, KC_SPC)
-#define BS_KEY_DE   LT(_NUM_DE, KC_BSPC)
+/* #define BS_KEY_DE   LT(_NUM_DE, KC_BSPC) */
 
 #define Z_KEY_DE    LT(1, DE_Z)
 #define Y_KEY_DE    LT(1, DE_Y)
-#define D_KEY_DE LT(_NUM_DE, KC_D)
+/* #define D_KEY_DE LT(_NUM_DE, KC_D) */
 
 #define REDO C(KC_Y)
 #define UNDO C(KC_Z)
@@ -132,7 +132,8 @@ enum planck_keycodes {
     UMLAUT_SWITCH,
     UMLAUT_RALT,
     LLOCK, // layer lock key
-    SZ_KEY
+    SZ_KEY, 
+    KC_DEG,
 };
 
 // Tap Dance declarations
