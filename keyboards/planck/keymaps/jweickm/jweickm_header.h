@@ -142,8 +142,9 @@ enum tap_dance_codes {
     TD_CBR,     // curly brackets
     /* TD_VIM_GG,  // single tap to scroll down, double tap to scroll up */
     /* TD_F4,      // double tap F4 to alt-F4 */
-    TD_LARROW,  // double tap left-angling bracket to get left arrow 
+    /* TD_LARROW,  // double tap left-angling bracket to get left arrow */ 
     TD_RARROW,  // double tap right-angling bracket to get right arrow
+    TD_ABK,     // angling brackets
 };
 
 // logical variable to differentiate between the German and the English input mode

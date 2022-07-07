@@ -135,66 +135,55 @@ enum tap_dance_codes {
     TD_CBR,     // curly brackets
     /* TD_VIM_GG,  // single tap to scroll down, double tap to scroll up */
     /* TD_F4,      // double tap F4 to alt-F4 */
-    TD_LARROW,  // double tap left-angling bracket to get left arrow 
+    /* TD_LARROW,  // double tap left-angling bracket to get left arrow */ 
     TD_RARROW,  // double tap right-angling bracket to get right arrow
+    TD_ABK,     // angle brackets
 };
 
 // define the tap dance functions
 void dance_prn(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        if (de_layout_active) {
-                tap_code16(DE_LPRN);
-        } else {
-            tap_code16(KC_LPRN);
-        }
+    if (de_layout_active) {
+        tap_code16(DE_LPRN);
     } else {
+        tap_code16(KC_LPRN);
+    }
+    if (state->count > 1) {
         if (de_layout_active) {
-                tap_code16(DE_LPRN);
-                tap_code16(DE_RPRN);
-            tap_code(KC_LEFT);
+            tap_code16(DE_RPRN);
         } else {
-            tap_code16(KC_LPRN);
             tap_code16(KC_RPRN);
-            tap_code(KC_LEFT);
         }
+        tap_code(KC_LEFT);
     }
 }
 void dance_brc(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        if (de_layout_active) {
-            tap_code16(DE_LBRC);
-        } else {
-            tap_code(KC_LBRC);
-        }
+    if (de_layout_active) {
+        tap_code16(DE_LBRC);
     } else {
+        tap_code(KC_LBRC);
+    }
+    if (state->count > 1) {
         if (de_layout_active) {
-            tap_code16(DE_LBRC);
             tap_code16(DE_RBRC);
-            tap_code(KC_LEFT);
         } else {
-            tap_code(KC_LBRC);
             tap_code(KC_RBRC);
-            tap_code(KC_LEFT);
         }
+        tap_code(KC_LEFT);
     }
 }
 void dance_cbr(qk_tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        if (de_layout_active) {
-            tap_code16(DE_LCBR);
-        } else {
-            tap_code16(KC_LCBR);
-        }
+    if (de_layout_active) {
+        tap_code16(DE_LCBR);
     } else {
+        tap_code16(KC_LCBR);
+    }
+    if (state->count > 1) {
         if (de_layout_active) {
-            tap_code16(DE_LCBR);
             tap_code16(DE_RCBR);
-            tap_code(KC_LEFT);
         } else {
-            tap_code16(KC_LCBR);
             tap_code16(KC_RCBR);
-            tap_code(KC_LEFT);
         }
+        tap_code(KC_LEFT);
     }
 }
 /* void vim_gg(qk_tap_dance_state_t *state, void *user_data) { */
@@ -205,22 +194,38 @@ void dance_cbr(qk_tap_dance_state_t *state, void *user_data) {
 /*     } */
 /* } */
 
-void dance_labrk(qk_tap_dance_state_t *state, void *user_data) {
+void dance_abk(qk_tap_dance_state_t *state, void *user_data) {
     if (de_layout_active) {
         tap_code16(DE_LABK);
     } else {
-        tap_code16(S(KC_COMM));
+        tap_code16(KC_LABK);
     }
-    if (state->count == 1) {
-    } else {
+    if (state->count > 1) {
         if (de_layout_active) {
-            tap_code(DE_MINS);
+            tap_code16(DE_RABK);
         } else {
-            tap_code16(KC_MINS);
+            tap_code16(KC_RABK);
         }
+        tap_code(KC_LEFT);
     }
 }
-void dance_rabrk(qk_tap_dance_state_t *state, void *user_data) {
+
+/* void dance_larrow(qk_tap_dance_state_t *state, void *user_data) { */
+/*     if (de_layout_active) { */
+/*         tap_code16(DE_LABK); */
+/*     } else { */
+/*         tap_code16(S(KC_COMM)); */
+/*     } */
+/*     if (state->count == 1) { */
+/*     } else { */
+/*         if (de_layout_active) { */
+/*             tap_code(DE_MINS); */
+/*         } else { */
+/*             tap_code16(KC_MINS); */
+/*         } */
+/*     } */
+/* } */
+void dance_rarrow(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count > 1) {
         if (de_layout_active) {
             tap_code(DE_MINS);
@@ -237,13 +242,14 @@ void dance_rabrk(qk_tap_dance_state_t *state, void *user_data) {
 
 qk_tap_dance_action_t tap_dance_actions[] = {
     // declare tap dance actions here
-    [TD_PRN] = ACTION_TAP_DANCE_FN(dance_prn), 
-    [TD_BRC] = ACTION_TAP_DANCE_FN(dance_brc), 
-    [TD_CBR] = ACTION_TAP_DANCE_FN(dance_cbr), 
+    [TD_PRN]    = ACTION_TAP_DANCE_FN(dance_prn), 
+    [TD_BRC]    = ACTION_TAP_DANCE_FN(dance_brc), 
+    [TD_CBR]    = ACTION_TAP_DANCE_FN(dance_cbr), 
     /* [TD_VIM_GG] = ACTION_TAP_DANCE_FN(vim_gg), */
-    /* [TD_F4] = ACTION_TAP_DANCE_DOUBLE(KC_F4, A(KC_F4)), */
-    [TD_LARROW] = ACTION_TAP_DANCE_FN(dance_labrk),
-    [TD_RARROW] = ACTION_TAP_DANCE_FN(dance_rabrk),
+    /* [TD_F4]     = ACTION_TAP_DANCE_DOUBLE(KC_F4, A(KC_F4)), */
+    /* [TD_LARROW] = ACTION_TAP_DANCE_FN(dance_larrow), */
+    [TD_RARROW] = ACTION_TAP_DANCE_FN(dance_rarrow),
+    [TD_ABK]    = ACTION_TAP_DANCE_FN(dance_abk),
 };
 
 // ==== PROCESS RECORD USER
@@ -368,7 +374,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_LOWER] = LAYOUT_planck_mit(
         KC_GRV, KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, TD(TD_PRN), KC_RPRN, KC_PIPE,
         KC_TRNS, TD(TD_PRN), KC_RPRN, TD(TD_BRC), KC_RBRC, C(KC_HOME), KC_DQUO, KC_UNDS, KC_PLUS, TD(TD_CBR), KC_RCBR, KC_DQUO, 
-        KC_TRNS, KC_PERC, KC_DEG, TD(TD_CBR), KC_RCBR, C(KC_END), KC_TILD, QUOT_KEY, TD(TD_LARROW), TD(TD_RARROW), KC_BSLS, DE_ACC_GRV, 
+        KC_TRNS, KC_PERC, KC_DEG, TD(TD_CBR), KC_RCBR, C(KC_END), KC_TILD, QUOT_KEY, TD(TD_ABK), KC_RABK, KC_BSLS, DE_ACC_GRV, 
         KC_TRNS, KC_TRNS, OSL(_ADJUST), KC_TRNS, KC_TRNS, KC_TRNS, MO(_ADJUST), KC_TRNS, KC_LEFT, KC_RIGHT, KC_TRNS
     ),
 
@@ -387,7 +393,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_LOWER_DE] = LAYOUT_planck_mit(
         DE_GRV, DE_EXLM, DE_AT, DE_HASH, DE_DLR, DE_PERC, DE_CIRC, DE_AMPR, DE_ASTR, TD(TD_PRN), DE_RPRN, DE_PIPE,
         KC_TRNS, TD(TD_PRN), DE_RPRN, TD(TD_BRC), DE_RBRC, C(KC_HOME), DE_DQUO, DE_UNDS, DE_PLUS, TD(TD_CBR), DE_RCBR, DE_DQUO, 
-        KC_TRNS, DE_PERC, DE_DEG, TD(TD_CBR), DE_RCBR, C(KC_END), DE_TILD, DE_QUOT, TD(TD_LARROW), TD(TD_RARROW), DE_BSLS, DE_GRV, 
+        KC_TRNS, DE_PERC, DE_DEG, TD(TD_CBR), DE_RCBR, C(KC_END), DE_TILD, DE_QUOT, TD(TD_ABK), DE_RABK, DE_BSLS, DE_GRV, 
         KC_TRNS, KC_TRNS, OSL(_ADJUST), KC_TRNS, KC_TRNS, KC_TRNS, MO(_ADJUST), KC_TRNS, KC_LEFT, KC_RIGHT, KC_TRNS
     ),
 
@@ -405,7 +411,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_RAISE] = LAYOUT_planck_mit(
         KC_TILD, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_BSLS, 
-        KC_F6, KC_F1, KC_F2, KC_F3, KC_F4/*TD(TD_F4)*/, KC_F5, TD(TD_LARROW), KC_MINS, KC_EQL, TD(TD_BRC), KC_RBRC, KC_QUOT, 
+        KC_F6, KC_F1, KC_F2, KC_F3, KC_F4/*TD(TD_F4)*/, KC_F5, KC_LABK, KC_MINS, KC_EQL, TD(TD_BRC), KC_RBRC, QUOT_KEY, 
         KC_F12, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_GRV, TD(TD_RARROW), COMM_KEY, DOT_KEY, SLSH_KEY, DE_ACC_ACUT, 
         KC_TRNS, KC_TRNS, OSL(_ADJUST), KC_TRNS, MO(_ADJUST), KC_TRNS, KC_TRNS, KC_MAIL, KC_MPRV, KC_MNXT, KC_MUTE
     ),
@@ -424,7 +430,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_RAISE_DE] = LAYOUT_planck_mit(
         DE_TILD, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, DE_BSLS, 
-        KC_F6, KC_F1, KC_F2, KC_F3, KC_F4/*TD(TD_F4)*/, KC_F5, TD(TD_LARROW), DE_MINS, DE_EQL, TD(TD_BRC), DE_RBRC, DE_QUOT, 
+        KC_F6, KC_F1, KC_F2, KC_F3, KC_F4/*TD(TD_F4)*/, KC_F5, DE_LABK, DE_MINS, DE_EQL, TD(TD_BRC), DE_RBRC, DE_QUOT, 
         KC_F12, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, DE_GRV, TD(TD_RARROW), COMM_KEY, DOT_KEY, SLSH_KEY, DE_ACUT, 
         KC_TRNS, KC_TRNS, OSL(_ADJUST), KC_TRNS, MO(_ADJUST), KC_TRNS, KC_TRNS, KC_MAIL, KC_MPRV, KC_MNXT, KC_MUTE
     ),
@@ -434,9 +440,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ,-----------------------------------------------------------------------------------.
      * | LLOCK|   A  |   B  |   C  |   D  |   E  |   F  |   7  |   8  |   9  |   0  | BSPC |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | LGUI | LALT | LSFT | LCTL | ____ |   +  |   4  |   5  |   6  |   *  |   -  |
+     * | ____ | LGUI | LALT | LSFT | LCTL | ____ |   +  |   4  |   5  |   6  |   *  |   ,  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ |NUMLCK| ____ | ____ | ____ | ____ |   -  |   1  |   2  |   3  |   /  |   =  |
+     * | ____ |NUMLCK| ____ |   €  | ____ | ____ |   -  |   1  |   2  |   3  |   /  | ____ |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | ____ | ____ | ____ | LLOCK|     ____    |   0  |   .  |   ,  |   =  | ____ | 1x2uC
      * `-----------------------------------------------------------------------------------'
@@ -444,8 +450,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_NUM] = LAYOUT_planck_mit(
         LLOCK, KC_A, KC_B, KC_C, D_KEY, KC_E, KC_F, KC_KP_7, KC_KP_8, KC_KP_9, KC_KP_0, KC_BSPC,
         KC_TRNS, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_TRNS, KC_KP_PLUS, KC_KP_4, KC_KP_5, KC_KP_6, KC_KP_ASTERISK, KC_COMM,
-        KC_TRNS, KC_NUM_LOCK, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_KP_MINUS, KC_KP_1, KC_KP_2, KC_KP_3, KC_KP_SLASH, KC_KP_EQUAL,
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LLOCK, KC_TRNS, KC_KP_0, KC_DOT, KC_COMM, KC_KP_EQUAL, KC_TRNS
+        KC_TRNS, KC_NUM_LOCK, KC_TRNS, DE_EURO, KC_TRNS, KC_TRNS, KC_KP_MINUS, KC_KP_1, KC_KP_2, KC_KP_3, KC_KP_SLASH, KC_TRNS,
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LLOCK, KC_TRNS, KC_KP_0, DOT_KEY, COMM_KEY, KC_KP_EQUAL, KC_TRNS
     ),
 
 /* ----------------------------------------------------------------------------------------

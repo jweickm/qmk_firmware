@@ -74,6 +74,7 @@ bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
             case DE_ODIA:
             case DE_ADIA:
             case DE_UDIA:
+            case DE_EURO:
                 return register_unregister_key(record, keycode);
             case DE_COMM:
                 if (record->event.pressed) {
@@ -145,6 +146,13 @@ bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
                         tap_code(KC_P4);
                         tap_code(KC_P6);  // ö
                     }
+                    processed = true;
+                    break;
+                case DE_EURO:
+                    tap_code(KC_P0);
+                    tap_code(KC_P1);
+                    tap_code(KC_P2);
+                    tap_code(KC_P8);  // ß
                     processed = true;
                     break;
                 case SZ_KEY:
@@ -244,12 +252,13 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM; // prefer these ones to be shorter
 
         // tap-dance actions
+        /* case TD(TD_LARROW): */
         /* case TD(TD_VIM_GG): */
         /* case TD(TD_F4): */
         case TD(TD_PRN):
         case TD(TD_BRC):
         case TD(TD_CBR):
-        case TD(TD_LARROW):
+        case TD(TD_ABK):
         case TD(TD_RARROW):
             return TAPPING_TERM * td_factor;
 
@@ -758,6 +767,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case DE_ADIA:
         case DE_UDIA:
         case DE_ODIA:
+        case DE_EURO:
         case KC_DEG:
             return process_german_keycode(record, keycode);
             break;
