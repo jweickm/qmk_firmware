@@ -1,7 +1,6 @@
-/* Copyright 2015-2017 Jack Humbert
- * Copyright 2022 Jakob Weickmann
+/* Copyright 2020 Nathan Spears
  *
- This program is free software: you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
@@ -14,22 +13,156 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "jweickm_header.h"
-/* #include "layouts/narrow_layout.c" */
-#include "g/keymap_combo.h"
 
-// =========================================================================================
+#include QMK_KEYBOARD_H
+#include "keymap_german.h"
 
-#ifdef NAGINATA_ENABLE
-// 薙刀式
-void matrix_init_user(void) {
-  uint16_t ngonkeys[]  = {NG_DUMMY, NG_DUMMY};
-  uint16_t ngoffkeys[] = {NG_DUMMY, NG_DUMMY};
-  set_naginata(_NAGINATA, ngonkeys, ngoffkeys);
-// set_naginata(_NAGINATA);
-}
-// 薙刀式
+enum planck_layers {
+    _COLEMAK = 0,
+    _COLEMAK_DE,
+    _UMLAUTS,
+#ifdef GAMING_LAYER
+    _GAMING,
 #endif
+    _LOWER,
+    _LOWER_DE,
+    _RAISE,
+    _RAISE_DE,
+    _NUM,
+    /* _NUM_DE, */
+    _MOUSE,
+    _ADJUST,
+};
+
+// Define key names here 
+#define Q_KEY LT(0, KC_Q)
+#define W_KEY LT(0, KC_W)
+#define F_KEY LT(0, KC_F)
+#define P_KEY LT(0, KC_P)
+#define B_KEY LT(0, KC_B)
+#define J_KEY LT(0, KC_J)
+#define L_KEY LT(0, KC_L)
+#define U_KEY LT(0, KC_U)
+#define Y_KEY LT(0, KC_Y)
+#define Y_KEY_DE LT(1, DE_Y)
+#define SCLN_KEY LT(0, KC_SCLN)
+
+/* #define G_KEY LT(_ADJUST, KC_G) */
+/* #define M_KEY LT(_ADJUST, KC_M) */
+#define G_KEY KC_G
+#define M_KEY KC_M
+
+#define A_KEY LGUI_T(KC_A)
+#define R_KEY LALT_T(KC_R)
+#define S_KEY LSFT_T(KC_S)
+#define T_KEY LCTL_T(KC_T)
+#define N_KEY RCTL_T(KC_N)
+#define E_KEY RSFT_T(KC_E)
+#define I_KEY LALT_T(KC_I)
+#define O_KEY RGUI_T(KC_O)
+
+#define D_KEY LT(_NUM, KC_D)
+/* #define D_KEY_DE LT(_NUM_DE, KC_D) */
+#define H_KEY LT(_MOUSE, KC_H)
+
+#define Z_KEY LT(0, KC_Z)
+#define Z_KEY_DE LT(1, DE_Z)
+#define X_KEY LT(0, KC_X)
+#define C_KEY LT(0, KC_C)
+#define V_KEY LT(0, KC_V)
+
+#define K_KEY KC_K
+
+//=====================================
+
+// define the secondary function of the lower and raise keys here
+#define LOWER LT(_LOWER, KC_BSPC)
+#define RAISE LT(_RAISE, KC_SPC)
+#define LOWER_DE LT(_LOWER_DE, KC_BSPC)
+#define RAISE_DE LT(_RAISE_DE, KC_SPC)
+
+#define DOWN_KEY LT(_LOWER, KC_DOWN)
+#define UP_KEY LT(_LOWER, KC_UP)
+
+#define ESC_KEY     LT(0, KC_ESC)
+
+#define BSLS_KEY    LT(0, KC_BSLS)
+
+/* #define TAB_KEY     LCAG_T(KC_TAB) */
+#define TAB_KEY     KC_TAB
+#define QUOT_KEY    LT(0, KC_QUOT)
+
+#define DOT_KEY     LT(0, KC_DOT)
+#define COMM_KEY    LT(0, KC_COMM)
+#define SLSH_KEY    LT(0, KC_SLSH)
+
+#define NAVSPACE    LT(_ADJUST, KC_SPC)
+/* #define FN_KEY      LT(_ADJUST, KC_RALT) */
+/* #define FN_KEY      LT(_ADJUST, KC_ENT) */
+/* #define ENT_KEY     RSFT_T(KC_ENT) */
+#define ENT_KEY     LT(_ADJUST, KC_ENT)
+
+#define BS_KEY      LT(_NUM, KC_BSPC)
+/* #define BS_KEY_DE   LT(_NUM_DE, KC_BSPC) */
+#define DEL_KEY     LT(_MOUSE, KC_DEL)
+
+#define UNDO        C(KC_Z)
+#define REDO        C(KC_Y)
+
+#define COPY_ALL    C(KC_INS)
+
+#define LLOCK_ADJUST LT(_ADJUST, KC_NO)
+#define KC_HEMINGWAY KC_F13
+
+#define NUM_2 LT(0, KC_KP_2)
+#define NUM_3 LT(0, KC_KP_3)
+
+enum planck_keycodes { 
+    COLEMAK = SAFE_RANGE,
+#ifdef GAMING_LAYER
+    GAMING,
+#endif
+    VIM_O,
+    ALT_TAB,
+    DE_ACC_GRV,
+    DE_ACC_ACUT,
+    KB_LANG_SWITCH,
+    LANG_SWITCH,
+    UMLAUT_SWITCH,
+    UMLAUT_RALT,
+    LLOCK, // layer lock key
+    SZ_KEY,
+    KC_DEG,
+    /* KC_HEMINGWAY, */
+    /* LLOCK_ADJUST, */
+};
+
+// =============== HELPER VARIABLES
+// logical variable to differentiate between the German and the English input mode
+bool de_layout_active  = false; 
+
+// declaring several logical variables
+bool is_alt_tab_active  = false;
+
+bool caps_lock_on;
+bool num_lock_on;
+// controls which of the two languages (en/ge) is used for coding and which is used for typing German
+// English by default
+bool de_en_switched     = false; 
+
+
+// ============ TAP DANCE ================
+// Tap Dance declarations
+enum tap_dance_codes {
+    TD_PRN,     // round brackets (parentheses)
+    TD_BRC,     // square brackets
+    TD_CBR,     // curly brackets
+    /* TD_VIM_GG,  // single tap to scroll down, double tap to scroll up */
+    /* TD_F4,      // double tap F4 to alt-F4 */
+    /* TD_LARROW,  // double tap left-angling bracket to get left arrow */ 
+    TD_RARROW,  // double tap right-angling bracket to get right arrow
+    TD_ABK,     // angle brackets
+};
 
 // define the tap dance functions
 void dance_prn(qk_tap_dance_state_t *state, void *user_data) {
@@ -143,279 +276,49 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_ABK]    = ACTION_TAP_DANCE_FN(dance_abk),
 };
 
+// ==== PROCESS RECORD USER
+#include "g/keymap_combo.h"
 #include "jweickm_process_record_user.c"
 
-// bool encoder_update_user(uint8_t index, bool clockwise) {
-//     if (muse_mode) {
-//         if (IS_LAYER_ON(_RAISE)) {
-//             if (clockwise) {
-//                 muse_offset++;
-//             } else {
-//                 muse_offset--;
-//             }
-//         } else {
-//             if (clockwise) {
-//                 muse_tempo += 1;
-//             } else {
-//                 muse_tempo -= 1;
-//             }
-//         }
-//     } else {
-//         if (clockwise) {
-// #ifdef MOUSEKEY_ENABLE
-//             tap_code(KC_MS_WH_DOWN);
-// #else
-//             tap_code(KC_PGDN);
-// #endif
-//         } else {
-// #ifdef MOUSEKEY_ENABLE
-//             tap_code(KC_MS_WH_UP);
-// #else
-//             tap_code(KC_PGUP);
-// #endif
-//         }
-//     }
-//     return true;
-// }
-
-// bool dip_switch_update_user(uint8_t index, bool active) {
-//     switch (index) {
-//         case 0: {
-//             if (active) {
-//                 layer_on(_ADJUST);
-//             } else {
-//                 layer_off(_ADJUST);
-//             }
-//             break;
-//         }
-//         case 1:
-//             if (active) {
-//                 muse_mode = true;
-//             } else {
-//                 muse_mode = false;
-//             }
-//     }
-//     return true;
-// }
-
-#ifdef KEY_OVERRIDE_ENABLE
-    const key_override_t combo_delete_key_override  = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
-    const key_override_t lalt_k_kana_override       = ko_make_with_layers_and_negmods(
-            MOD_BIT(KC_LALT),   // Trigger mods: LALT
-            K_KEY,              // Trigger key: K
-            A(KC_GRV),          // Replacement key: A(KC_GRV)
-            ~0,                 // Activate on all layers
-            MOD_MASK_CSG        // Do not activate when Ctrl, Shift or GUI are pressed
-            ); // this override allows us to switch kana by pressing ralt and esc
-
-// This globally defines all key overrides to be used
-const key_override_t **key_overrides = (const key_override_t *[]){
-    &lalt_k_kana_override,
-    /* &combo_delete_key_override, */
-    /* &lalt_esc_kana_override, */
-    NULL // Null terminate the array of overrides!
-};
-#endif
-
+// for leader functionality
+#ifdef LEADER_ENABLE
 LEADER_EXTERNS();
-
+#endif
+// ===============================================
 void matrix_scan_user(void) {
 
+#ifdef LEADER_ENABLE
 #include "leader_dictionary.c"
+#endif
 
 #ifdef ACHORDION
     achordion_task();
 #endif
-#ifdef AUDIO_ENABLE
-    /* if (muse_mode) { */
-    /*     if (muse_counter == 0) { */
-    /*         uint8_t muse_note = muse_offset + SCALE[muse_clock_pulse()]; */
-    /*         if (muse_note != last_muse_note) { */
-    /*             stop_note(compute_freq_for_midi_note(last_muse_note)); */
-    /*             play_note(compute_freq_for_midi_note(muse_note), 0xF); */
-    /*             last_muse_note = muse_note; */
-    /*         } */
-    /*     } */
-    /*     muse_counter = (muse_counter + 1) % muse_tempo; */
-    /* } else { */
-    /*     if (muse_counter) { */
-    /*         stop_all_notes(); */
-    /*         muse_counter = 0; */
-    /*     } */
-    /* } */
-#endif
-}
-
-#ifdef AUDIO_ENABLE
-bool music_mask_user(uint16_t keycode) {
-    switch (keycode) {
-        case RAISE:
-        case LOWER:
-            return false;
-        default:
-            return true;
-    }
-}
-#endif
-
-#ifdef RGBLIGHT_ENABLE
-// Set RGB to change with layer changes
-#define HSV_DARKORANGE 10, 255, 255
-#define HSV_GRASS 57, 255, 100
-#define HSV_OCEAN 148, 255, 100
-#define HSV_DARKMAGENTA 201, 255, 255
-#define HSV_DARKRED 0, 255, 100
-#define HSV_EGGSHELL 30, 10, 255
-
-// Light LEDs 1 to 10 in green when COLEMAK is active
-const rgblight_segment_t PROGMEM my_layer0_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_OCEAN});
-// Light LEDs 1 to 10 in green when de_layout_active is true
-const rgblight_segment_t PROGMEM my_layer1_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_GRASS});
-// Light LEDs 1 to 10 in darkorange when QWERTY layer is active
-const rgblight_segment_t PROGMEM my_layer2_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_DARKORANGE});
-// Light LEDs 1 to 10 in red when GAMING layer is active
-const rgblight_segment_t PROGMEM my_layer3_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_DARKRED});
-// Light LEDs 1 to 10 in goldenrod when _MOUSE is active
-const rgblight_segment_t PROGMEM my_layer4_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_ORANGE});
-// Light LEDs 1 to 10 in white when _NUM is active
-const rgblight_segment_t PROGMEM my_layer5_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_DARKMAGENTA});
-// Light bottom LEDs in eggshell when _ADJUST layer is active
-const rgblight_segment_t PROGMEM my_layer6_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 2, HSV_EGGSHELL}, {7, 3, HSV_EGGSHELL});
-// Light bottom LEDs and corner LEDs in darkorange when caps lock is active. Hard to ignore!
-const rgblight_segment_t PROGMEM my_capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 4, HSV_DARKORANGE}, {6, 3, HSV_DARKORANGE});
-// Light LEDs 1 to 10 in green when recording a macro 
-const rgblight_segment_t PROGMEM my_macro_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 4, HSV_GREEN}, {6, 3, HSV_GREEN});
-
-// Now define the array of layers. Later layers take precedence
-const rgblight_segment_t *const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(my_layer0_layer,   // 1 colemak 
-                                                                               my_layer1_layer,   // 2 de_layout
-                                                                               my_layer2_layer,   // 3 qwerty
-                                                                               my_layer3_layer,   // 4 gaming
-                                                                               my_layer4_layer,   // 5 mouse
-                                                                               my_layer5_layer,   // 6 _num
-                                                                               my_layer6_layer,   // 7 adjust
-                                                                               my_capslock_layer, // 8 capslock
-                                                                               my_macro_layer     // 9 recording macro
-);
-
-#endif
-
-void keyboard_post_init_user(void) {
-#ifdef RGBLIGHT_ENABLE
-    // Enable the LED layers
-    rgblight_layers = my_rgb_layers;
-#endif
 }
 
 bool led_update_user(led_t led_state) {
-#ifdef RGBLIGHT_ENABLE
-#ifdef DYNAMIC_MACRO_ENABLE
-    rgblight_set_layer_state(8, isRecording); // turn on the adjust layer when recording otf macros
-#endif
-    rgblight_set_layer_state(7, led_state.caps_lock);
-    rgblight_set_layer_state(1, de_layout_active);
-#endif
-    caps_lock_on    = led_state.caps_lock;
-    num_lock_on     = led_state.num_lock;
+    caps_lock_on = led_state.caps_lock;
+    num_lock_on  = led_state.num_lock;
     return true;
 }
 
-#ifdef RGBLIGHT_ENABLE
-layer_state_t layer_state_set_user(layer_state_t state) {
-    rgblight_set_layer_state(1, de_layout_active);
-    rgblight_set_layer_state(2, layer_state_cmp(state, _QWERTY));
-    rgblight_set_layer_state(3, layer_state_cmp(state, _GAMING));
-    rgblight_set_layer_state(4, layer_state_cmp(state, _MOUSE));
-    rgblight_set_layer_state(5, layer_state_cmp(state, _NUM));
-    rgblight_set_layer_state(6, layer_state_cmp(state, _ADJUST));
-#ifdef NAGINATA_ENABLE
-    rgblight_set_layer_state(2, layer_state_cmp(state, _NAGINATA));
-    if (layer_state_cmp(state, _NAGINATA)) {
-        naginata_active = true;
-    } else {
-        naginata_active = false;
-    }
-#endif
-    //if (layer_state_cmp(state, _LOWER) && layer_state_cmp(state, _RAISE))  {
-    //    return state | (1UL << _ADJUST);
-    //} else {
-    //    return state & ~(1UL << _ADJUST);
-    //}
-    // state = update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
-    //rgblight_set_layer_state(5, layer_state_cmp(state, _ADJUST));
-    return state;
-}
-
-layer_state_t default_layer_state_set_user(layer_state_t state) {
-    rgblight_set_layer_state(0, layer_state_cmp(state, _COLEMAK));
-    return state;
-}
-#endif
-
-#ifdef DYNAMIC_MACRO_ENABLE
-    #ifdef AUDIO_ENABLE
-bool isRecording = false;
-void dynamic_macro_record_start_user(void) {
-    isRecording = true;
-    PLAY_SONG(macro_on_song);
-}
-void dynamic_macro_record_end_user(int8_t direction) {
-    isRecording = false;
-    PLAY_SONG(macro_off_song);
-}
-    #endif
-#endif
-
-void led_set_user(uint8_t usb_led) {
-#ifdef AUDIO_ENABLE
-    static uint8_t old_usb_led = 0;
-    if (!is_playing_notes()) {
-        if ((usb_led & (1<<USB_LED_CAPS_LOCK)) && !(old_usb_led & (1<<USB_LED_CAPS_LOCK))) { 
-                // If CAPS LK LED is turning on...
-                PLAY_SONG(tone_caps_on);
-        } else if (!(usb_led & (1<<USB_LED_CAPS_LOCK)) && (old_usb_led & (1<<USB_LED_CAPS_LOCK))) {
-                // If CAPS LK LED is turning off...
-                PLAY_SONG(tone_caps_off);
-        }
-    }
-    old_usb_led = usb_led;
-#endif
-    // keep numlock turned on, i.e. turn it on everytime it is turned off
-    /* if (!(usb_led & (1<<USB_LED_NUM_LOCK))) { */
-    /*     tap_code(KC_NUM_LOCK); */
-    /* } */
-}
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-/* ================================================================================================
-*  ================================================================================================
-* NARROW HAND POSITION (3) for MT3 SUSUWATARI
-     * ,-----------------------------------------------------------------------------------.
-     * |      |      |      |      |      |      |      |      |      |      |      |      |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |      |      |      |      |  __  |      |      |  __  |      |      |      |      |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |      |      |      |      |      |      |      |      |      |      |      |      |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |      |      |      |      |      |             |      |      |      |      |      | 
-     * `-----------------------------------------------------------------------------------'
-     */
-
 /* ----------------------------------------------------------------------------------------
 * _COLEMAK
      * ,-----------------------------------------------------------------------------------.
-     * | ESC  |   Q  |   W  |   F  |   P  |   B  |   J  |   L  |   U  |   Y  |  ;:  |  \|  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | TAB  |   A  |   R  |   S  |   T  |   G  |   M  |   N  |   E  |   I  |   O  |  '"  |
+     * | ESC  |   Q  |   W  |   F  |   P  |   B  |   J  |   L  |   U  |   Y  |   ;: |   \| |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | TAB  |   A  |   R  |   S  |   T  |   G  |   M  |   N  |   E  |   I  |   O  |   '" |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | LSFT |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  |SFTENT|
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |C-CAPS|  WIN |  LALT|  BS  |LOWER |   NAV-SPC   | RAISE|  DEL | Mo ↓ | Mo ↑ |A_RALT| 1x2uC 
+     * |C-CAPS|  WIN |  LALT|  BS  |LOWER |   NAV-SPC   | RAISE|  DEL | DOWN |  UP  |A_RALT| 1x2uC 
      * `-----------------------------------------------------------------------------------'
      */
     [_COLEMAK] = LAYOUT_planck_mit(
-        ESC_KEY, Q_KEY, W_KEY, F_KEY, P_KEY, B_KEY, J_KEY, L_KEY, U_KEY, Y_KEY, SCLN_KEY, BSLS_KEY, // LT(0, DE_UDIA), 
-        TAB_KEY, A_KEY, R_KEY, S_KEY, T_KEY, G_KEY, M_KEY, N_KEY, E_KEY, I_KEY, O_KEY, QUOT_KEY, // KC_QUOT, 
+        ESC_KEY, Q_KEY, W_KEY, F_KEY, P_KEY, B_KEY, J_KEY, L_KEY, U_KEY, Y_KEY, SCLN_KEY, BSLS_KEY, 
+        TAB_KEY, A_KEY, R_KEY, S_KEY, T_KEY, G_KEY, M_KEY, N_KEY, E_KEY, I_KEY, O_KEY, QUOT_KEY, 
         OSM(MOD_LSFT), Z_KEY, X_KEY, C_KEY, D_KEY, V_KEY, K_KEY, H_KEY, COMM_KEY, DOT_KEY, SLSH_KEY, OSM(MOD_RSFT)/*ENT_KEY*/, 
         LCTL_T(KC_CAPS), OSM(MOD_LGUI), OSM(MOD_LALT), BS_KEY, LOWER, NAVSPACE, RAISE, DEL_KEY, DOWN_KEY, UP_KEY, ENT_KEY/*FN_KEY*/
         /* LCTL_T(KC_CAPS), KC_LGUI, KC_LALT, BS_KEY, LOWER, NAVSPACE, RAISE, DEL_KEY, DOWN_KEY, UP_KEY, ENT_KEY */
@@ -435,10 +338,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_COLEMAK_DE] = LAYOUT_planck_mit(
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, Y_KEY_DE, KC_TRNS, KC_TRNS, //DE_UDIA_DE, 
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, Y_KEY_DE, KC_TRNS, KC_TRNS, 
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
-        KC_TRNS, Z_KEY_DE, KC_TRNS, KC_TRNS, KC_TRNS/*D_KEY_DE*/, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS/*BS_KEY_DE*/, LOWER_DE,     KC_TRNS,     RAISE_DE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
+        KC_TRNS, Z_KEY_DE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LOWER_DE,     KC_TRNS,     RAISE_DE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
     ),
 
 /* ----------------------------------------------------------------------------------------
@@ -479,32 +382,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LSFT, KC_A, KC_S, KC_D, KC_F, KC_V, KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT, 
         KC_LCTL, KC_Z, KC_LALT, KC_B, KC_P, KC_SPC, KC_ENT, KC_RALT, DOWN_KEY, UP_KEY, MO(_ADJUST)
     ),
-#endif
-
-// ----------------------------------------------------------------------------------------
-#ifdef NAGINATA_ENABLE
-/* 薙刀式
-     * ,----------------------------------------------------------------------------------.
-     * | ____ |  小  |き  ぬ|て  り|し  む|  <-  |  ->  |さ  え|う　わ|す  ゆ|へ  ：| TATE |
-     * +------|------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ |あ  せ|け  め|と  に|か゛ま|っ  ち|く  や|の゛ー|る　も|い　よ|お  つ| KOTI |
-     * +------|------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ |  ほ  |  ひ  |は  を|こ゜、|そ  み|た  ろ|な゜。|ん  ね|ら  ふ|れ　ふ| ____ |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | EISU | ____ | ____ | ____ | ____ |   NGSHFT    | ____ | ____ | ____ | ____ | ____ | 1x2uC
-     * `-----------------------------------------------------------------------------------'
-     */
-    [_NAGINATA] = LAYOUT_planck_mit(
-       KC_TRNS, NG_Q, NG_W, NG_E, NG_R, NG_T, NG_Y, NG_U, NG_I, NG_O, NG_P, NG_TAYO,
-       KC_TRNS, NG_A, NG_S, NG_D, NG_F, NG_G, NG_H, NG_J, NG_K, NG_L, NG_SCLN, NG_KOTI,
-       KC_TRNS, NG_Z, NG_X, NG_C, NG_V, NG_B, NG_N, NG_M, NG_COMM, NG_DOT, NG_SLSH, KC_TRNS,
-    #if layout == 1
-        EISU, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, NG_SHFT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
-    #elif layout == 2
-        EISU, KC_TRNS, KC_TRNS, KC_TRNS, NG_SHFT2, NG_SHFT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
-    #endif
-    ),
-// 薙刀式
 #endif
 
 /* ----------------------------------------------------------------------------------------
@@ -562,11 +439,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_F6, KC_F1, KC_F2, KC_F3, KC_F4/*TD(TD_F4)*/, KC_F5, KC_LABK, KC_MINS, KC_EQL, TD(TD_BRC), KC_RBRC, QUOT_KEY, 
         KC_F12, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_GRV, TD(TD_RARROW), KC_TRNS, KC_TRNS, KC_TRNS, DE_ACC_ACUT, 
         KC_TRNS, KC_TRNS, OSL(_ADJUST), KC_TRNS, KC_BSPC, KC_TRNS, KC_TRNS, KC_MAIL, KC_MPRV, KC_MNXT, KC_TRNS
-    [_ADJUST] = LAYOUT_planck_grid(
-        LALT(KC_LSFT), QK_BOOT, DEBUG, RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, KC_DE_SWITCH, 
-        LALT(KC_GRV), EEP_RST, MU_MOD, AU_ON, AU_OFF, AG_NORM, AG_SWAP, HRWIDECOLEMAK, WIDECOLEMAK, LALT(KC_GRV), LANG_SWITCH, GAMING, 
-        KC_TRNS, MUV_DE, MUV_IN, MU_ON, MU_OFF, MI_ON, MI_OFF, KC_SVD_BD, KC_MPLY, KC_SVU_BU, KC_TRNS, KC_TRNS,
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, EEPROM_RESET
     ),
 
 /* ----------------------------------------------------------------------------------------
@@ -645,3 +517,4 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         QK_CLEAR_EEPROM, QK_BOOT, QK_REBOOT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_VOLD, KC_VOLU, KC_TRNS
     ),
 };
+
