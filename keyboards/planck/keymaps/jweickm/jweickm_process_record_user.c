@@ -589,6 +589,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } 
             return true;
             break;
+// shift to osl(_adjust) when held
+        case OSL(_UMLAUTS):
+            if (record->event.pressed) {
+                if (record->tap.count < 1) { // when key is held
+                    add_mods(MOD_BIT(KC_LSFT)); // add the shift
+                }
+            } else {
+                del_mods(MOD_BIT(KC_LSFT)); // release the shift 
+            }
+            return true;
+            break;
 // ------------------------ SPECIAL FUNCTION KEYS ------------------------------------
         case VIM_O:
             if (record->event.pressed) {

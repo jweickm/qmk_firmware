@@ -382,6 +382,8 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case X_KEY:
         case C_KEY:
         case V_KEY:
+        case NUM_2:
+        case NUM_3:
         /* case G_KEY: */
         /* case M_KEY: */
             return TAPPING_TERM + 60; // return a shorter timeout for these keys (tap event when held) results in 220 ms with current tapping term of 160 ms
@@ -518,6 +520,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 return false;
             } 
+            return true;
+            break;
+// shift to osl(_adjust) when held
+        case OSL(_UMLAUTS):
+            if (record->event.pressed) {
+                if (record->tap.count < 1) { // when key is held
+                    add_mods(MOD_BIT(KC_LSFT)); // add the shift
+                }
+            } else {
+                del_mods(MOD_BIT(KC_LSFT)); // release the shift 
+            }
             return true;
             break;
 // ------------------------ SPECIAL FUNCTION KEYS ------------------------------------
