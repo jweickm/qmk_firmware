@@ -3,6 +3,11 @@ uint8_t mod_state;
 uint8_t osmod_state;
 bool shifted;
 bool key_tapped;
+
+#ifdef QWERTY_LAYER
+bool qwerty_active;
+#endif
+
 #ifdef THUMB_SHIFT
 #ifdef SPC_SFT
 bool spc_pressed;
@@ -43,7 +48,10 @@ bool register_unregister_key(keyrecord_t* record, uint16_t keycode) {
 bool register_unregister_shifted_key(keyrecord_t* record, uint16_t keycode, uint16_t shifted_keycode) {
     if (record->event.pressed) {
         if (shifted) {
+            clear_mods();
+            clear_oneshot_mods();
             register_code16(shifted_keycode);
+            set_mods(mod_state);
         } else {
             register_code16(keycode);
         }
@@ -51,6 +59,9 @@ bool register_unregister_shifted_key(keyrecord_t* record, uint16_t keycode, uint
         unregister_code16(keycode);
         unregister_code16(shifted_keycode);
     }
+#ifdef CAPS_WORD_ENABLE
+    caps_word_off(); // break caps_word
+#endif
     return false;
 }
 
@@ -58,23 +69,8 @@ bool register_unregister_shifted_key(keyrecord_t* record, uint16_t keycode, uint
 bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
     if (de_layout_active) {
         switch (keycode) {
-            case DE_ODIA:
-            case DE_ADIA:
-            case DE_UDIA:
-                return register_unregister_key(record, keycode);
             case DE_COMM:
-                if (record->event.pressed) {
-                    if (shifted) { 
-                        clear_mods();
-                        clear_oneshot_mods();
-                        register_code16(DE_LABK);
-                        set_mods(mod_state);
-                        return false;
-                    }
-                } else {
-                    unregister_code16(DE_LABK);
-                }
-                return true;
+                return register_unregister_shifted_key(record, keycode, DE_LABK);
             case SZ_KEY:
                 if (record->event.pressed) {
                     tap_code(DE_SS);
@@ -239,6 +235,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case OSM(MOD_RSFT):
         case ENT_KEY:
         case BSLS_KEY:
+        case UE_KEY:
         case QUOT_KEY:
         /* case TAB_KEY: */
             return TAPPING_TERM; // prefer these ones to be shorter
@@ -294,17 +291,25 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) { // allows hold
 bool caps_word_press_user(uint16_t keycode) {
     switch (keycode) {
         // Keycodes that continue Caps Word, with shift applied.
+        case DE_UDIA: // DE_UDIA
+        case DE_ADIA:
+        case DE_ODIA:
+            if (!de_layout_active) {
+                return false;
+            }
         case KC_A ... KC_Z:
             add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
             return true;
 
         // Keycodes that continue Caps Word, without shifting.
+        case KC_MINS:
         case KC_UNDS:
             if (de_layout_active) {
                 return false;
             } else {
                 return true;
             }
+        case DE_MINS:
         case DE_UNDS:
             if (!de_layout_active) {
                 return false;
@@ -313,9 +318,14 @@ bool caps_word_press_user(uint16_t keycode) {
         case KC_KP_1 ... KC_KP_0:
         case KC_BSPC:
         case KC_DEL:
+        case OSM(MOD_LSFT):
+        case OSM(MOD_RSFT):
             return true;
 
         default:
+            if (shifted) {
+                return true;
+            }
             return false;  // Deactivate Caps Word.
     }
 }
@@ -368,6 +378,7 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case SLSH_KEY:
         case SCLN_KEY:
         case BSLS_KEY:
+        case UE_KEY:
         case QUOT_KEY:
         case Q_KEY:
         case W_KEY:
@@ -410,16 +421,12 @@ bool achordion_eager_mod(uint8_t mod) {
 // replaces the hold function with `long_press_keycode`.
 static bool process_tap_long_press_key(keyrecord_t* record, uint16_t long_press_keycode) {
     if (record->tap.count < 1) { // Key is being held.
-        /* switch (long_press_keycode) { */
-        /*     case KC_BSPC: */
-        /*         register_unregister_key(record, long_press_keycode); */
-        /*         break; */
-        /*     default: */
                 if (record->event.pressed) {
                     tap_code16(long_press_keycode);
                 }
-                /* break; */
-        /* } */
+#ifdef CAPS_WORD_ENABLE
+        caps_word_off(); // break caps_word
+#endif
         return false; // Skip default handling.
     }
     return true; // Continue default handling for tapped keys
@@ -469,6 +476,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
 
 // ------------------------------- LANGUAGES & LAYERS --------------------------
+#ifdef QWERTY_LAYER
+        case QWERTY: // toggles the _QWERTY layer which doesn't use mod taps
+            if (record->event.pressed) {
+                qwerty_active = !qwerty_active;
+                tap_code16(A(KC_GRV));
+                /* combo_toggle(); // turns off combos when moving to _QWERTY and turn them back on when leaving the layer */
+            }
+            return true;
+            break;
+#endif 
+
         case LANG_SWITCH: // sends A(KC_LSFT) to change OS language
             if (record->event.pressed) {
                 // change keyboard language
@@ -476,7 +494,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 de_layout_active = !de_layout_active;
             }
             return true;
-        case KB_LANG_SWITCH: // toggles _COLEMAK_DE
+
+        case KB_LANG_SWITCH: // TG(_COLEMAK_DE): switches only kb lang
             if (record->event.pressed) {
                 // invert the state of de_layout_active
                 de_layout_active = !de_layout_active;
@@ -489,17 +508,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
             break;
-
-#ifdef GAMING_LAYER
-        case GAMING:
-            if (record->event.pressed) {
-                layer_invert(_GAMING);
-                combo_toggle(); // turns off combos when moving to _GAMING and 
-                // turn them back on when leaving the layer
-            }
-            return false;
-            break;
-#endif 
 
 // ------------------------------- ACTION COMBOS --------------------
         // move to the _ADJUST LAYER and llock it
@@ -629,8 +637,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case DE_ADIA:
         case DE_UDIA:
         case DE_ODIA:
-        case KC_DEG:
         case DE_EURO:
+        case KC_DEG:
+#ifdef QWERTY_LAYER
+            if (de_layout_active || qwerty_active) {
+                return true;
+            }
+#endif
             return process_german_keycode(record, keycode);
             break;
 
@@ -766,15 +779,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case BSLS_KEY:
             if (!process_tap_long_press_key(record, KC_APP)) { return false; }
-            if (!de_layout_active) {
-                if (!de_en_switched) { return true; } // normal English Layout
-            } else {
-                if (de_en_switched) { 
-                    return register_unregister_shifted_key(record, DE_BSLS, DE_PIPE);
-                }
+            if (de_en_switched) {
+                return process_german_keycode(record, DE_UDIA); // sending Ü
+            } 
+            return true;
+        case UE_KEY: // UE_KEY
+            if (!process_tap_long_press_key(record, KC_APP)) { return false; }
+            if (de_en_switched) { 
+                return register_unregister_shifted_key(record, DE_BSLS, DE_PIPE);
             }
-            return process_german_keycode(record, DE_UDIA); // sending Ü
-            break;
+            return true;
 
 // kc_mins when held
         case QUOT_KEY:

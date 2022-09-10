@@ -421,28 +421,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ESC_KEY, Q_KEY, W_KEY, F_KEY, P_KEY, B_KEY, J_KEY, L_KEY, U_KEY, Y_KEY, SCLN_KEY, BSLS_KEY, // LT(0, DE_UDIA), 
         TAB_KEY, A_KEY, R_KEY, S_KEY, T_KEY, G_KEY, M_KEY, N_KEY, E_KEY, I_KEY, O_KEY, QUOT_KEY, // KC_QUOT, 
         OSM(MOD_LSFT), Z_KEY, X_KEY, C_KEY, D_KEY, V_KEY, K_KEY, H_KEY, COMM_KEY, DOT_KEY, SLSH_KEY, OSM(MOD_RSFT)/*ENT_KEY*/, 
-        LCTL_T(KC_CAPS), OSM(MOD_LGUI), OSM(MOD_LALT), BS_KEY, LOWER, NAVSPACE, RAISE, DEL_KEY, DOWN_KEY, UP_KEY, ENT_KEY/*FN_KEY*/
-        /* LCTL_T(KC_CAPS), KC_LGUI, KC_LALT, BS_KEY, LOWER, NAVSPACE, RAISE, DEL_KEY, DOWN_KEY, UP_KEY, ENT_KEY */
-    ),
-
-/* ----------------------------------------------------------------------------------------
-* _COLEMAK_DE
-     * ,-----------------------------------------------------------------------------------.
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ | ____ | ____ | ____ | ____ | ____ | ____ | ____ |   Y  |   Ö  |   Ü  |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ | ____ | ____ | ____ | ____ | ____ | ____ | ____ | ____ | ____ |   Ä  |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ |   Z  | ____ | ____ | ____ | ____ | ____ | ____ |   ,  |   .  |   /  | ____ |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ | ____ | ____ |LWR_DE|     ____    |RSE_DE| ____ | ____ | ____ | ____ | 1x2uC 
-     * `-----------------------------------------------------------------------------------'
-     */
-    [_COLEMAK_DE] = LAYOUT_planck_mit(
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, Y_KEY_DE, KC_TRNS, KC_TRNS, //DE_UDIA_DE, 
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
-        KC_TRNS, Z_KEY_DE, KC_TRNS, KC_TRNS, KC_TRNS/*D_KEY_DE*/, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS/*BS_KEY_DE*/, LOWER_DE,     KC_TRNS,     RAISE_DE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
+        LCTL_T(KC_CAPS), OSM(MOD_LGUI), OSM(MOD_LALT), BS_KEY, LOWER,   NAVSPACE   , RAISE, DEL_KEY, DOWN_KEY, UP_KEY, ENT_KEY/*FN_KEY*/
     ),
 
 #ifdef QWERTY_LAYER
@@ -455,7 +434,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ |   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  | ____ |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |C-CAPS|  WIN |  LALT|  BS  |LOWER |   NAV-SPC   | RAISE|  DEL | DOWN |  UP  |  ENT | 1x2uC 
+     * | ____ | ____ | ____ | ____ | ____ |      SPC    | ____ | ____ | ____ | ____ | ____ | 1x2uC 
      * `-----------------------------------------------------------------------------------'
      */
     [_QWERTY] = LAYOUT_planck_mit(
@@ -465,6 +444,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_SPC, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS/*FN_KEY*/
     ),
 #endif 
+
+/* ----------------------------------------------------------------------------------------
+* _COLEMAK_DE
+     * ,-----------------------------------------------------------------------------------.
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | ____ |   Q  |   W  |   F  |   P  |   B  |   J  |   L  |   U  |   Y  |   Ö  |   Ü  |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | ____ |   A  |   R  |   S  |   T  |   G  |   M  |   N  |   E  |   I  |   O  |   Ä  |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | ____ |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  | ____ |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | ____ | ____ | ____ | ____ |LWR_DE|   NAVSPACE  |RSE_DE| ____ | ____ | ____ | ____ | 1x2uC 
+     * `-----------------------------------------------------------------------------------'
+     */
+    [_COLEMAK_DE] = LAYOUT_planck_mit(
+        KC_TRNS, Q_KEY, W_KEY, F_KEY, P_KEY, B_KEY, J_KEY, L_KEY, U_KEY, Y_KEY_DE, SCLN_KEY, UE_KEY,//BSLS_KEY, 
+        KC_TRNS, A_KEY, R_KEY, S_KEY, T_KEY, G_KEY, M_KEY, N_KEY, E_KEY, I_KEY, O_KEY, QUOT_KEY, 
+        KC_TRNS, Z_KEY_DE, X_KEY, C_KEY, D_KEY, V_KEY, K_KEY, H_KEY, COMM_KEY, DOT_KEY, SLSH_KEY, KC_TRNS, 
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LOWER_DE,   NAVSPACE   ,RAISE_DE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
+    ),
 
 /* ----------------------------------------------------------------------------------------
 * _UMLAUTS
@@ -625,7 +624,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* ----------------------------------------------------------------------------------------
 * _ADJUST
      * ,-----------------------------------------------------------------------------------.
-     * | LLOCK| PRINT| C(->)|  MEH | HYPR | C(<-)| KANA | REDO | UNDO | !LANG|KBLANG|G(SPC)|
+     * | LLOCK| PRINT| C(->)|  MEH | HYPR | C(<-)| KANA | REDO | UNDO | !LANG|KBLANG|QWERTY|
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |A(TAB)| LGUI | LALT | LSFT | LCTL |CPYALL| LEFT | DOWN |  UP  | RIGHT| VIM_O|  INS |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -635,7 +634,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_ADJUST] = LAYOUT_planck_mit(
-        LLOCK, KC_PSCR, C(KC_RIGHT), OSM(MOD_MEH), OSM(MOD_HYPR), C(KC_LEFT), A(KC_GRV), REDO, UNDO, LANG_SWITCH, KB_LANG_SWITCH, G(KC_SPC), 
+        LLOCK, KC_PSCR, C(KC_RIGHT), OSM(MOD_MEH), OSM(MOD_HYPR), C(KC_LEFT), A(KC_GRV), REDO, UNDO, LANG_SWITCH, KB_LANG_SWITCH, QWERTY, 
         ALT_TAB, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, COPY_ALL, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, KC_INS, 
         OSM(MOD_LSFT), KC_NUM_LOCK, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_HOME, KC_PGDN, KC_PGUP, KC_END, UMLAUT_SWITCH, KC_MUTE,
         QK_CLEAR_EEPROM, QK_BOOT, QK_REBOOT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_VOLD, KC_VOLU, KC_TRNS
