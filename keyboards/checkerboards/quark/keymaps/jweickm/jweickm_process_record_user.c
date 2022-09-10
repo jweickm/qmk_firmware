@@ -469,26 +469,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
 
 // ------------------------------- LANGUAGES & LAYERS --------------------------
-        case LANG_SWITCH: // switches both system lang and kb lang
-        case KB_LANG_SWITCH: // switches only kb lang
+        case LANG_SWITCH: // sends A(KC_LSFT) to change OS language
             if (record->event.pressed) {
-                if (de_layout_active) {
-                    de_layout_active = false;  // deactivate German overlay
-                    /* default_layer_set(_COLEMAK); */
-                    layer_off(_COLEMAK_DE);
-                } else {
-                    de_layout_active = true;  // activate German overlay
-                    /* default_layer_set(_COLEMAK_DE); */
-                    layer_on(_COLEMAK_DE);
-                }
-            } else {
-                switch (keycode) {
-                    case LANG_SWITCH:
-                        tap_code16(A(KC_LSFT));
-                        break;
-                }
+                // change keyboard language
+                layer_invert(_COLEMAK_DE);
+                de_layout_active = !de_layout_active;
             }
-            return false;
+            return true;
+        case KB_LANG_SWITCH: // toggles _COLEMAK_DE
+            if (record->event.pressed) {
+                // invert the state of de_layout_active
+                de_layout_active = !de_layout_active;
+            }
+            return true;
 
         case UMLAUT_SWITCH: // switches the state of de_en_switched
             if (record->event.pressed) {
@@ -620,7 +613,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return toggle_osm_shift(record);
 #endif
             // make a rule so that we can use it for alt-tabbing without changing the language
-        case OSM(MOD_RSFT):
         case OSM(MOD_LSFT):
             if (IS_LAYER_ON(_ADJUST)) { // using the add_mods function to not trigger the language change
                 if (record->event.pressed) {
@@ -630,11 +622,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 return false;
             }
-#ifdef THUMB_SHIFT
-            return toggle_osm_shift(record);
-#else 
             return true;
-#endif
+            break;
 
         case SZ_KEY:
         case DE_ADIA:

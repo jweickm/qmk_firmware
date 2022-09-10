@@ -7,12 +7,10 @@
 enum planck_layers {
     _COLEMAK = 0,
     _COLEMAK_DE,
-    _COLEMAK_EN,
-    _COLEMAK_EN_DE,
-    _UMLAUTS,
-#ifdef GAMING_LAYER
-    _GAMING,
+#ifdef QWERTY_LAYER
+    _QWERTY,
 #endif
+    _UMLAUTS,
 #ifdef NAGINATA_ENABLE
     // 薙刀式
     _NAGINATA, // 薙刀式入力レイヤー
@@ -126,6 +124,9 @@ NGKEYS naginata_keys;
 #define NUM_2 LT(0, KC_KP_2)
 #define NUM_3 LT(0, KC_KP_3)
 
+#define KB_LANG_SWITCH TG(_COLEMAK_DE)
+#define LANG_SWITCH A(KC_LSFT)
+
 enum planck_keycodes {
 #ifdef NAGINATA_ENABLE
     // 薙刀式: SAFE_RANGE -> NG_SAFE_RANGE
@@ -145,8 +146,8 @@ enum planck_keycodes {
     ALT_TAB,
     DE_ACC_GRV,
     DE_ACC_ACUT,
-    KB_LANG_SWITCH,
-    LANG_SWITCH,
+    /* KB_LANG_SWITCH, */
+    /* LANG_SWITCH, */
     UMLAUT_SWITCH,
     UMLAUT_RALT,
     LLOCK, // layer lock key

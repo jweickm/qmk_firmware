@@ -1,5 +1,5 @@
-/*
- * Copyright 2018 Jack Humbert <jack.humb@gmail.com>
+/* Copyright 2018 Jack Humbert <jack.humb@gmail.com>
+ * Copyright 2022 Jakob Weickmann 
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,7 +70,7 @@
 #define ACHORDION
 
 /* #define HEMINGWAY_MODE // mode that disables backspace and movement keys to focus on writing */
-/* #define GAMING_LAYER // enables an additional gaming layer */
+#define QWERTY_LAYER // enables an additional QWERTY layer without mod taps
                        
 // turns the lower and raise keys into oneshot shift keys 124-130 bytes
 /* #define THUMB_SHIFT */ 

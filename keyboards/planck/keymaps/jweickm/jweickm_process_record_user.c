@@ -507,9 +507,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (de_layout_active) {
                     de_layout_active = false;  // deactivate German overlay
-                    layer_off(_COLEMAK_DE); // turn off the GERMAN layer
-//                    set_single_persistent_default_layer(_COLEMAK);
-//                    default_layer_set(1UL<<_COLEMAK); // reduce writing to eeprom
+                    /* layer_off(_COLEMAK_DE); // turn off the GERMAN layer */
 #ifdef AUDIO_ENABLE
                 PLAY_SONG(colemak_en_song);
 #endif
@@ -520,20 +518,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     }
 #endif
                     de_layout_active = true;  // activate German overlay
-                    layer_on(_COLEMAK_DE); // turn on the GERMAN layer
-//                    set_single_persistent_default_layer(_COLEMAK_DE);
-//                    default_layer_set(1UL<<_COLEMAK_DE); // reduce writing to eeprom
+                    /* layer_on(_COLEMAK_DE); // turn on the GERMAN layer */
 #ifdef AUDIO_ENABLE
                 PLAY_SONG(colemak_de_song);
 #endif
                 }
             }
-            return false;
+            return true; // toggle _COLEMAK_DE
+                         
         case LANG_SWITCH: // switches both system lang and kb lang
             if (record->event.pressed) {
+                layer_invert(_COLEMAK_DE);
                 if (de_layout_active) {
                     de_layout_active = false;  // deactivate German overlay
-                    layer_off(_COLEMAK_DE);
+                    /* layer_off(_COLEMAK_DE); */
 #ifdef AUDIO_ENABLE
                 PLAY_SONG(colemak_en_song);
 #endif
@@ -545,7 +543,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     }
 #endif
                     de_layout_active = true;  // activate German overlay
-                    layer_on(_COLEMAK_DE);
+                    /* layer_on(_COLEMAK_DE); */
  //                   set_single_persistent_default_layer(_COLEMAK_DE);
  //                   default_layer_set(1UL<<_COLEMAK_DE); // reduce writing to eeprom
 #ifdef AUDIO_ENABLE
@@ -560,7 +558,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
 #endif
             }
-            return false;
+            return true; //sends A(KC_LSFT) to change OS language
 
         case UMLAUT_SWITCH:
             if (record->event.pressed) {

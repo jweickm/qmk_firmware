@@ -1,5 +1,5 @@
-/* Copyright 2015-2017 Jack Humbert
- * Copyright 2022 Jakob Weickmann
+ /* Copyright 2022 Jakob Weickmann
+ * PLANCK/REV6
  *
  This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -217,11 +217,15 @@ const key_override_t **key_overrides = (const key_override_t *[]){
 };
 #endif
 
+#ifdef LEADER_ENABLE
 LEADER_EXTERNS();
+#endif
 
 void matrix_scan_user(void) {
 
+#ifdef LEADER_ENABLE
 #include "leader_dictionary.c"
+#endif
 
 #ifdef ACHORDION
     achordion_task();
@@ -441,6 +445,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS/*BS_KEY_DE*/, LOWER_DE,     KC_TRNS,     RAISE_DE, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS
     ),
 
+#ifdef QWERTY_LAYER
+/* _QWERTY without homerow mods so that it can be used with AHK-Naginata 薙刀式
+     * ,-----------------------------------------------------------------------------------.
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | ____ |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  |   [] |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | ____ |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |   '" |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | ____ |   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  | ____ |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * |C-CAPS|  WIN |  LALT|  BS  |LOWER |   NAV-SPC   | RAISE|  DEL | DOWN |  UP  |  ENT | 1x2uC 
+     * `-----------------------------------------------------------------------------------'
+     */
+    [_QWERTY] = LAYOUT_planck_mit(
+        KC_TRNS, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, TD(TD_BRC), 
+        KC_TRNS, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT, 
+        KC_TRNS, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_TRNS, 
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_SPC, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS/*FN_KEY*/
+    ),
+#endif 
+
 /* ----------------------------------------------------------------------------------------
 * _UMLAUTS
      * ,-----------------------------------------------------------------------------------.
@@ -459,27 +484,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS 
     ),
-
-/* ----------------------------------------------------------------------------------------*/
-/* * _GAMING*/
-/*      * ,-----------------------------------------------------------------------------------.*/
-/*      * | ESC  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |  F5  |  F8  |  F9  | BSPC |*/
-/*      * |------+------+------+------+------+------+------+------+------+------+------+------|*/
-/*      * | TAB  |   Q  |   W  |   E  |   R  |   G  |   M  |   N  |   T  |   I  |   O  |   '  |*/
-/*      * |------+------+------+------+------+------+------+------+------+------+------+------|*/
-/*      * | LSFT |   A  |   S  |   D  |   F  |   V  |   K  |   H  |   ,  |   .  |   /  | RSFT |*/
-/*      * |------+------+------+------+------+------+------+------+------+------+------+------|*/
-/*      * | LCTL |   Z  | LALT |   B  |   P  |    SPACE    |  ENT | RALT | DOWN |  UP  |ADJUST| 1x2uC*/
-/*      * `-----------------------------------------------------------------------------------'*/
-/*      */
-#ifdef GAMING_LAYER
-    [_GAMING] = LAYOUT_planck_mit(
-        KC_ESC, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_F5, KC_F8, KC_F9, KC_BSPC, 
-        KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_G, KC_M, KC_N, KC_T, KC_I, KC_O, KC_QUOT, 
-        KC_LSFT, KC_A, KC_S, KC_D, KC_F, KC_V, KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT, 
-        KC_LCTL, KC_Z, KC_LALT, KC_B, KC_P, KC_SPC, KC_ENT, KC_RALT, DOWN_KEY, UP_KEY, MO(_ADJUST)
-    ),
-#endif
 
 // ----------------------------------------------------------------------------------------
 #ifdef NAGINATA_ENABLE
@@ -602,26 +606,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* ----------------------------------------------------------------------------------------
 * _MOUSE
      * ,-----------------------------------------------------------------------------------.
-     * | LLOCK|C-HOME| BTN4 | M ↑  | BTN5 | C-END| XXXX | XXXX | XXXX | XXXX | XXXX | XXXX |
+     * | LLOCK|C-HOME| BTN4 | M ↑  | BTN5 | C-END|  F16 |  F17 |  F18 |  F19 |  F20 |  F21 |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ |DESK<-| M <- | M ↓  | M -> |DESK->| XXXX | RCTL | RSFT | LALT | RGUI | ____ |
+     * | ____ |DESK<-| M <- | M ↓  | M -> |DESK->|  F15 | RCTL | RSFT | LALT | RGUI | ____ |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | LSFT |WHL <-|WHL ↑ |WHL ↓ |WHL ->| XXXX |HMNGWY| BTN4 | BTN5 |SCRLCK| ____ |
+     * | ____ | LSFT |WHL <-|WHL ↑ |WHL ↓ |WHL ->|  F14 |  F13 | BTN4 | BTN5 |SCRLCK| ____ |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | ____ | ____ | BTN 3| BTN 2|    BTN 1    | LLOCK|  SPC | Bri- | Bri+ | ____ | 2x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_MOUSE] = LAYOUT_planck_mit(
-        LLOCK, C(KC_HOME), KC_BTN4, KC_MS_U, KC_BTN5, C(KC_END), KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
-        KC_TRNS, C(G(KC_LEFT)), KC_MS_L, KC_MS_D, KC_MS_R, C(G(KC_RIGHT)), KC_NO, KC_RCTL, OSM(MOD_RSFT), OSM(MOD_LALT), OSM(MOD_RGUI), KC_TRNS, 
-        KC_TRNS, KC_LSFT, KC_WH_L, KC_WH_U, KC_WH_D, KC_WH_R, KC_NO, KC_HEMINGWAY, KC_BTN4, KC_BTN5, KC_SCROLL_LOCK, KC_TRNS,
+        LLOCK, C(KC_HOME), KC_BTN4, KC_MS_U, KC_BTN5, C(KC_END), KC_F16, KC_F17, KC_F18, KC_F19, KC_F20, KC_F21,
+        KC_TRNS, C(G(KC_LEFT)), KC_MS_L, KC_MS_D, KC_MS_R, C(G(KC_RIGHT)), KC_F15, KC_RCTL, OSM(MOD_RSFT), OSM(MOD_LALT), OSM(MOD_RGUI), KC_TRNS, 
+        KC_TRNS, KC_LSFT, KC_WH_L, KC_WH_U, KC_WH_D, KC_WH_R, KC_F14, KC_F13, KC_BTN4, KC_BTN5, KC_SCROLL_LOCK, KC_TRNS,
         KC_TRNS, KC_TRNS, KC_TRNS, KC_BTN3, KC_BTN2, KC_BTN1, LLOCK, KC_SPC, KC_BRID, KC_BRIU, KC_TRNS
     ),
 
 /* ----------------------------------------------------------------------------------------
 * _ADJUST
      * ,-----------------------------------------------------------------------------------.
-     * | LLOCK| PRINT| C(->)|  MEH | HYPR | C(<-)| KANA | REDO | UNDO | !LANG|KBLANG|A(SFT)|
+     * | LLOCK| PRINT| C(->)|  MEH | HYPR | C(<-)| KANA | REDO | UNDO | !LANG|KBLANG|G(SPC)|
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |A(TAB)| LGUI | LALT | LSFT | LCTL |CPYALL| LEFT | DOWN |  UP  | RIGHT| VIM_O|  INS |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -631,7 +635,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_ADJUST] = LAYOUT_planck_mit(
-        LLOCK, KC_PSCR, C(KC_RIGHT), OSM(MOD_MEH), OSM(MOD_HYPR), C(KC_LEFT), A(KC_GRV), REDO, UNDO, LANG_SWITCH, KB_LANG_SWITCH, A(KC_LSFT), 
+        LLOCK, KC_PSCR, C(KC_RIGHT), OSM(MOD_MEH), OSM(MOD_HYPR), C(KC_LEFT), A(KC_GRV), REDO, UNDO, LANG_SWITCH, KB_LANG_SWITCH, G(KC_SPC), 
         ALT_TAB, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, COPY_ALL, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, KC_INS, 
         OSM(MOD_LSFT), KC_NUM_LOCK, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_HOME, KC_PGDN, KC_PGUP, KC_END, UMLAUT_SWITCH, KC_MUTE,
         QK_CLEAR_EEPROM, QK_BOOT, QK_REBOOT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_VOLD, KC_VOLU, KC_TRNS

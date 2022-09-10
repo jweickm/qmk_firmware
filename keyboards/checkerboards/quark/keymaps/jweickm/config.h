@@ -1,4 +1,5 @@
 /* Copyright 2020 Nathan Spears
+ * Copyright 2022 Jakob Weickmann
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +27,7 @@
 #define ACHORDION
 /* #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD */
 
-/* #define GAMING_LAYER // enables an additional gaming layer */
+#define QWERTY_LAYER // enables an additional QWERTY layer without mod taps
 
 // turns the lower and raise keys into oneshot shift keys 124-130 bytes
 /* #define THUMB_SHIFT */ 
