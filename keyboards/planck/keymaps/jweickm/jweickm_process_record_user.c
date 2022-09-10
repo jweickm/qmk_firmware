@@ -350,8 +350,6 @@ bool caps_word_press_user(uint16_t keycode) {
         case KC_KP_1 ... KC_KP_0:
         case KC_BSPC:
         case KC_DEL:
-        case OSM(MOD_LSFT):
-        case OSM(MOD_RSFT):
             return true;
 
         default:
