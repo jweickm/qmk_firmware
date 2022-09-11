@@ -758,17 +758,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
 
 // ------------------------- UNICODE ----------------------------------------- 
-        /* case UMLAUT_RALT: */
-        /*     if (record->event.pressed) { */
-        /*         tap_code16(KC_RALT); */
-        /*         if (de_layout_active) { */
-        /*             tap_code16(DE_DQUO); */
-        /*         } else { */
-        /*             tap_code16(KC_DQUO); */
-        /*         } */
-        /*     } */
-        /*     return false; */
-        /*     break; */
+        case UMLAUT_RALT:
+            if (record->event.pressed) {
+                tap_code16(KC_RALT);
+                if (de_layout_active) {
+                    tap_code16(DE_DQUO);
+                } else {
+                    tap_code16(KC_DQUO);
+                }
+            }
+            return false;
+
         case DE_ACC_GRV: // ` (dead)
         case DE_ACC_ACUT: // ´ (dead)
             if (record->event.pressed) {
