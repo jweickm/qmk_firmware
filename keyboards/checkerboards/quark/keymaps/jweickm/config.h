@@ -44,6 +44,7 @@
 // always checks for the combos on the base layer, even when using another layer
 #define COMBO_ONLY_FROM_LAYER 0
 #define COMBO_VARIABLE_LEN // for gboard combos
+#define COMBO_SHOULD_TRIGGER // for selective combo activation
 
 // Feature disable options
 // These options are also useful to firmware size reduction.

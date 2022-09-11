@@ -8,27 +8,6 @@ bool key_tapped;
 bool qwerty_active;
 #endif
 
-#ifdef THUMB_SHIFT
-#ifdef SPC_SFT
-bool spc_pressed;
-#endif
-#endif
-
-
-#ifdef THUMB_SHIFT
-bool toggle_osm_shift(keyrecord_t* record) {
-    if (key_tapped) {
-        if (osmod_state & MOD_MASK_SHIFT) {
-            clear_oneshot_mods();
-        } else {
-            set_oneshot_mods(MOD_BIT(KC_LSFT));
-        }
-        return false;
-    }
-    return true;
-}
-#endif
-
 void turn_num_lock_on(void) {
     // check the host_keybord's num_lock state and turn num_lock on if it is off
     if (!num_lock_on) {
@@ -329,6 +308,22 @@ bool caps_word_press_user(uint16_t keycode) {
 }
 #endif
 
+// ===================== COMBOS ===================================
+bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
+    /* Disable combo `SOME_COMBO` on layer `_LAYER_A` */
+    switch (combo_index) {
+        case LWR_RSE_ADJ:
+        case ESCQ_DEL:
+        case SCLNBSLS_BSPC:
+            return true; // keep these combos active on all layers
+        default: // deactivate all other combos on the _QWERTY layer
+            if (qwerty_active) {
+                return false;
+            }
+    }
+    return true;
+}
+
 // ===================== ACHORDION ================================
 #ifdef ACHORDION
 #include "features/achordion.h"
@@ -454,22 +449,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (IS_LAYER_ON(_NUM)) {
         turn_num_lock_on();
     }
-
-#ifdef THUMB_SHIFT
-#ifdef SPC_SFT
-    switch (keycode) {
-        case NAVSPACE:
-            spc_pressed = 1;
-            break;
-        case RAISE:
-        case RAISE_DE:
-            break;
-        default:
-            spc_pressed = 0;
-            break;
-    }
-#endif
-#endif
 
     switch (keycode) {
 
@@ -605,19 +584,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
 
-// turn the thumb keys into oneshot shifts
-#ifdef THUMB_SHIFT
+        // tap is ENT on QWERTY_LAYER
+#ifdef QWERTY_LAYER
         case RAISE:
-        case RAISE_DE:
-#ifdef SPC_SFT
-            // only tap space before the shift if it hasn't already been tapped
-            if (key_tapped && !spc_pressed) {
-                tap_code(KC_SPC);
-                spc_pressed = 1;
+            if (key_tapped && qwerty_active) {
+                tap_code(KC_ENT);
+                return false;
             }
+            return true;
 #endif
-            return toggle_osm_shift(record);
-#endif
+
+
             // make a rule so that we can use it for alt-tabbing without changing the language
         case OSM(MOD_LSFT):
             if (IS_LAYER_ON(_ADJUST)) { // using the add_mods function to not trigger the language change

@@ -361,6 +361,24 @@ bool caps_word_press_user(uint16_t keycode) {
 }
 #endif
 
+// ===================== COMBOS ===================================
+bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
+    /* Disable combo `SOME_COMBO` on layer `_LAYER_A` */
+    switch (combo_index) {
+        case LWR_RSE_ADJ:
+        case ESCQ_DEL:
+        case SCLNBSLS_BSPC:
+            return true; // keep these combos active on all layers
+        default: // deactivate all other combos on the _QWERTY layer
+            if (qwerty_active) {
+                return false;
+            }
+    }
+    return true;
+}
+
+// ===================== ACHORDION ================================
+
 #include "features/getreuer/achordion.h"
 #include "features/getreuer/layer_lock.h"
 bool achordion_chord(uint16_t tap_hold_keycode,
@@ -710,6 +728,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 is_alt_tab_active = false;
             }
             return true;
+
+        // tap is ENT on QWERTY_LAYER
+#ifdef QWERTY_LAYER
+        case RAISE:
+            if (key_tapped && qwerty_active) {
+                tap_code(KC_ENT);
+                return false;
+            }
+            return true;
+#endif
 
         case KC_ESC:
         case KC_ENT:

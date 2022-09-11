@@ -91,6 +91,7 @@
 // always checks for the combos on the base layer, even when using another layer
 #define COMBO_ONLY_FROM_LAYER 0
 #define COMBO_VARIABLE_LEN // for gboard combos
+#define COMBO_SHOULD_TRIGGER // for selective combo activation
 
 #define RGBLIGHT_SLEEP // RGB lighting will switch off when the host goes to sleep
 #define RGBLIGHT_LAYERS
