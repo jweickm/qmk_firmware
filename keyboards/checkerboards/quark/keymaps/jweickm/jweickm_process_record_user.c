@@ -312,7 +312,6 @@ bool caps_word_press_user(uint16_t keycode) {
 bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
     /* Disable combo `SOME_COMBO` on layer `_LAYER_A` */
     switch (combo_index) {
-        case LWR_RSE_ADJ:
         case ESCQ_DEL:
         case SCLNBSLS_BSPC:
             return true; // keep these combos active on all layers

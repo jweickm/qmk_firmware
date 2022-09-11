@@ -344,14 +344,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ |   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  | ____ |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |C-CAPS|  WIN |  LALT|  BS  |LOWER |   NAV-SPC   | RAISE|  DEL | DOWN |  UP  |  ENT | 1x2uC 
+     * | ____ | ____ | ____ | ____ |  SPC |    _____    |  SPC | ____ | ____ | ____ | ____ | 1x2uC 
      * `-----------------------------------------------------------------------------------'
      */
     [_QWERTY] = LAYOUT_planck_mit(
         KC_TRNS, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, TD(TD_BRC), 
         KC_TRNS, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT, 
         KC_TRNS, KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_TRNS, 
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_SPC, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS/*FN_KEY*/
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_SPC, NAVSPACE, KC_SPC, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS/*FN_KEY*/
     ),
 #endif 
 
@@ -394,26 +394,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS 
     ),
 
-/* ----------------------------------------------------------------------------------------*/
-/* * _GAMING*/
-/*      * ,-----------------------------------------------------------------------------------.*/
-/*      * | ESC  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |  F5  |  F8  |  F9  | BSPC |*/
-/*      * |------+------+------+------+------+------+------+------+------+------+------+------|*/
-/*      * | TAB  |   Q  |   W  |   E  |   R  |   G  |   M  |   N  |   T  |   I  |   O  |   '  |*/
-/*      * |------+------+------+------+------+------+------+------+------+------+------+------|*/
-/*      * | LSFT |   A  |   S  |   D  |   F  |   V  |   K  |   H  |   ,  |   .  |   /  | RSFT |*/
-/*      * |------+------+------+------+------+------+------+------+------+------+------+------|*/
-/*      * | LCTL |   Z  | LALT |   B  |   P  |    SPACE    |  ENT | RALT | DOWN |  UP  |ADJUST| 1x2uC*/
-/*      * `-----------------------------------------------------------------------------------'*/
-/*      */
-#ifdef GAMING_LAYER
-    [_GAMING] = LAYOUT_planck_mit(
-        KC_ESC, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_F5, KC_F8, KC_F9, KC_BSPC, 
-        KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_G, KC_M, KC_N, KC_T, KC_I, KC_O, KC_QUOT, 
-        KC_LSFT, KC_A, KC_S, KC_D, KC_F, KC_V, KC_K, KC_H, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT, 
-        KC_LCTL, KC_Z, KC_LALT, KC_B, KC_P, KC_SPC, KC_ENT, KC_RALT, DOWN_KEY, UP_KEY, MO(_ADJUST)
+/* ----------------------------------------------------------------------------------------
+* _ADJUST
+     * ,-----------------------------------------------------------------------------------.
+     * | LLOCK| PRINT| C(->)|  MEH | HYPR | C(<-)| KANA | REDO | UNDO | LANG |KBLANG|QWERTY|
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * |A(TAB)| LGUI | LALT | LSFT | LCTL |CPYALL| LEFT | DOWN |  UP  | RIGHT| VIM_O|  INS |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | ____ |NUMLCK|DESK<-| WHLUP| WHLDN|DESK->| HOME | PGDN | PGUP |  END |UML_SW| MUTE |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * |EEPRST| FLASH|REBOOT| ____ | LOWER|     ____    | RAISE| ____ | VOLD | VOLU | ____ | 2x2uC
+     * `-----------------------------------------------------------------------------------'
+     */
+    [_ADJUST] = LAYOUT_planck_mit(
+        LLOCK, KC_PSCR, C(KC_RIGHT), OSM(MOD_MEH), OSM(MOD_HYPR), C(KC_LEFT), A(KC_GRV), REDO, UNDO, LANG_SWITCH, KB_LANG_SWITCH, QWERTY, 
+        ALT_TAB, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, COPY_ALL, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, KC_INS, 
+        OSM(MOD_LSFT), KC_NUM_LOCK, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_HOME, KC_PGDN, KC_PGUP, KC_END, UMLAUT_SWITCH, KC_MUTE,
+        QK_CLEAR_EEPROM, QK_BOOT, QK_REBOOT, KC_TRNS, LOWER, KC_TRNS, RAISE, KC_TRNS, KC_VOLD, KC_VOLU, KC_TRNS
     ),
-#endif
 
 /* ----------------------------------------------------------------------------------------
 * _LOWER
@@ -527,25 +525,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRNS, C(G(KC_LEFT)), KC_MS_L, KC_MS_D, KC_MS_R, C(G(KC_RIGHT)), KC_F15, KC_RCTL, OSM(MOD_RSFT), OSM(MOD_LALT), OSM(MOD_RGUI), KC_TRNS, 
         KC_TRNS, KC_LSFT, KC_WH_L, KC_WH_U, KC_WH_D, KC_WH_R, KC_F14, KC_F13, KC_BTN4, KC_BTN5, KC_SCROLL_LOCK, KC_TRNS,
         KC_TRNS, KC_TRNS, KC_TRNS, KC_BTN3, KC_BTN2, KC_BTN1, LLOCK, KC_SPC, KC_BRID, KC_BRIU, KC_TRNS
-    ),
-
-/* ----------------------------------------------------------------------------------------
-* _ADJUST
-     * ,-----------------------------------------------------------------------------------.
-     * | LLOCK| PRINT| C(->)|  MEH | HYPR | C(<-)| KANA | REDO | UNDO | LANG |KBLANG|QWERTY|
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |A(TAB)| LGUI | LALT | LSFT | LCTL |CPYALL| LEFT | DOWN |  UP  | RIGHT| VIM_O|  INS |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ |NUMLCK|DESK<-| WHLUP| WHLDN|DESK->| HOME | PGDN | PGUP |  END |UML_SW| MUTE |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |EEPRST| FLASH|REBOOT| ____ | ____ |     ____    | ____ | ____ | VOLD | VOLU | ____ | 2x2uC
-     * `-----------------------------------------------------------------------------------'
-     */
-    [_ADJUST] = LAYOUT_planck_mit(
-        LLOCK, KC_PSCR, C(KC_RIGHT), OSM(MOD_MEH), OSM(MOD_HYPR), C(KC_LEFT), A(KC_GRV), REDO, UNDO, LANG_SWITCH, KB_LANG_SWITCH, QWERTY, 
-        ALT_TAB, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, COPY_ALL, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, KC_INS, 
-        OSM(MOD_LSFT), KC_NUM_LOCK, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_HOME, KC_PGDN, KC_PGUP, KC_END, UMLAUT_SWITCH, KC_MUTE,
-        QK_CLEAR_EEPROM, QK_BOOT, QK_REBOOT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_VOLD, KC_VOLU, KC_TRNS
     ),
 };
 
