@@ -46,101 +46,87 @@ bool register_unregister_shifted_key(keyrecord_t* record, uint16_t keycode, uint
 
 // define custom function for processing special characters and German Key overlay
 bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
-    if (de_layout_active) {
+    bool processed = false; 
+    if (record->event.pressed && !(IS_LAYER_ON(_RAISE) || IS_LAYER_ON(_LOWER))) {
+        turn_num_lock_on();
+        clear_mods();
+        clear_oneshot_mods();
+        add_mods(MOD_BIT(KC_LALT));
         switch (keycode) {
-            case DE_COMM:
-                return register_unregister_shifted_key(record, keycode, DE_LABK);
-            case SZ_KEY:
-                if (record->event.pressed) {
-                    tap_code(DE_SS);
-                }
-                return false;
-            default: 
-                return true;
-        } // end of switch statement
-    } else {
-        bool processed = false; 
-        if (record->event.pressed && !(IS_LAYER_ON(_RAISE) || IS_LAYER_ON(_LOWER))) {
-            turn_num_lock_on();
-            clear_mods();
-            clear_oneshot_mods();
-            add_mods(MOD_BIT(KC_LALT));
-            switch (keycode) {
-                case DE_ADIA:
-                    if (shifted || caps_lock_on) {
-                        tap_code(KC_P0);
-                        tap_code(KC_P1);
-                        tap_code(KC_P9);
-                        tap_code(KC_P6);  // Ä
-                    } else {
-                        tap_code(KC_P0);
-                        tap_code(KC_P2);
-                        tap_code(KC_P2);
-                        tap_code(KC_P8);  // ä
-                    } 
-                    processed = true;
-                    break;
-                case DE_UDIA:
-                    if (shifted || caps_lock_on) {
-                        tap_code(KC_P0);
-                        tap_code(KC_P2);
-                        tap_code(KC_P2);
-                        tap_code(KC_P0);  // Ü
-                    } else {
-                        tap_code(KC_P0);
-                        tap_code(KC_P2);
-                        tap_code(KC_P5);
-                        tap_code(KC_P2);  // ü
-                    }
-                    processed = true;
-                    break;
-                case DE_SCLN:
-                case DE_ODIA:
-                    if (shifted || caps_lock_on) {
-                        tap_code(KC_P0);
-                        tap_code(KC_P2);
-                        tap_code(KC_P1);
-                        tap_code(KC_P4);  // Ö
-                    } else {
-                        tap_code(KC_P0);
-                        tap_code(KC_P2);
-                        tap_code(KC_P4);
-                        tap_code(KC_P6);  // ö
-                    }
-                    processed = true;
-                    break;
-                case DE_EURO:
+            case DE_ADIA:
+                if (shifted || caps_lock_on) {
                     tap_code(KC_P0);
                     tap_code(KC_P1);
-                    tap_code(KC_P2);
-                    tap_code(KC_P8);  // ß
-                    processed = true;
-                    break;
-                case SZ_KEY:
+                    tap_code(KC_P9);
+                    tap_code(KC_P6);  // Ä
+                } else {
                     tap_code(KC_P0);
                     tap_code(KC_P2);
                     tap_code(KC_P2);
-                    tap_code(KC_P3);  // ß
-                    processed = true;
-                    break;
-                case KC_DEG:
+                    tap_code(KC_P8);  // ä
+                } 
+                processed = true;
+                break;
+            case DE_UDIA:
+                if (shifted || caps_lock_on) {
+                    tap_code(KC_P0);
+                    tap_code(KC_P2);
+                    tap_code(KC_P2);
+                    tap_code(KC_P0);  // Ü
+                } else {
+                    tap_code(KC_P0);
+                    tap_code(KC_P2);
+                    tap_code(KC_P5);
+                    tap_code(KC_P2);  // ü
+                }
+                processed = true;
+                break;
+            case DE_SCLN:
+            case DE_ODIA:
+                if (shifted || caps_lock_on) {
+                    tap_code(KC_P0);
+                    tap_code(KC_P2);
+                    tap_code(KC_P1);
+                    tap_code(KC_P4);  // Ö
+                } else {
+                    tap_code(KC_P0);
                     tap_code(KC_P2);
                     tap_code(KC_P4);
-                    tap_code(KC_P8);
-                    processed = true;
-                    break;
-                default:
-                    processed = false;
-                    break;
-            }
-            unregister_mods(MOD_LALT);
-            set_mods(mod_state);
-
-        } else {
-            return true;
+                    tap_code(KC_P6);  // ö
+                }
+                processed = true;
+                break;
+            case DE_EURO:
+                tap_code(KC_P0);
+                tap_code(KC_P1);
+                tap_code(KC_P2);
+                tap_code(KC_P8);  // ß
+                processed = true;
+                break;
+            case SZ_KEY:
+                tap_code(KC_P0);
+                tap_code(KC_P2);
+                tap_code(KC_P2);
+                tap_code(KC_P3);  // ß
+                processed = true;
+                break;
+            case KC_DEG:
+                tap_code(KC_P2);
+                tap_code(KC_P4);
+                tap_code(KC_P8);
+                processed = true;
+                break;
+            default:
+                processed = false;
+                break;
         }
-        return !processed; // returns false when an umlaut was specially processed, else returns true and processing continues 
+        unregister_mods(MOD_LALT);
+        set_mods(mod_state);
+
+    } else {
+        return true;
     }
+    return !processed; // returns false when an umlaut was specially processed, else returns true and processing continues 
 }
 
 float thumb_factor  = 1.05;
@@ -607,7 +593,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
             break;
 
-        case SZ_KEY:
+        // ===== PROCESS_GERMAN_KEYCODE =======
         case DE_ADIA:
         case DE_UDIA:
         case DE_ODIA:
@@ -618,8 +604,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return true;
             }
 #endif
+        case SZ_KEY:
+            if (de_layout_active) {
+                return register_unregister_key(record, DE_SS);
+            }
             return process_german_keycode(record, keycode);
             break;
+        // ===== PROCESS_GERMAN_KEYCODE =======
 
         case KC_KP_EQUAL:
             if (de_layout_active) {
@@ -680,7 +671,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (!process_tap_long_press_key(record, DE_SCLN)) { // long press ;
                     return false;
                 } else {
-                    return process_german_keycode(record, DE_COMM);
+                    return register_unregister_shifted_key(record, DE_COMM, DE_LABK);
                 }
             } else {
                 return (process_tap_long_press_key(record, KC_SCLN)); // ;
@@ -769,13 +760,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case QUOT_KEY:
             if (!de_layout_active) {
                 if (!process_tap_long_press_key(record, KC_MINS)) { return false; }
-                if (!de_en_switched) { return true; }
-            } else {
+            } else { // if German layout
                 if (!process_tap_long_press_key(record, DE_MINS)) {return false; }
                 if (de_en_switched) { // " 
                     return register_unregister_shifted_key(record, DE_QUOT, DE_DQUO);
                 }
             }
+            if (!de_en_switched) { return true; }
             return process_german_keycode(record, DE_ADIA); // sending Ä
             break;
 
