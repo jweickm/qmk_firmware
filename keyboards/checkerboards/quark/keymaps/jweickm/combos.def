@@ -1,6 +1,7 @@
 // CHECKERBOARDS QUARK
 // ---------------------- GENERAL FUNCTION COMBOS  ----------------
 //   name           result          combo keys
+COMB(DH_ENT,        KC_ENT,         D_KEY, H_KEY)
 // LEFT HAND
 COMB(CD_ESC,        KC_ESC,         C_KEY, D_KEY)
 COMB(XD_RALT,       KC_RALT,        X_KEY, D_KEY)

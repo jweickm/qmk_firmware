@@ -1,5 +1,6 @@
 // OLKB PLANCK REV6
 // ---------------------- GENERAL FUNCTION COMBOS  ----------------
+COMB(DH_ENT,        KC_ENT,         D_KEY, H_KEY)
 //   name           result          combo keys
 // LEFT HAND
 COMB(CD_ESC,        KC_ESC,         C_KEY, D_KEY)
