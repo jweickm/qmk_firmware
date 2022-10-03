@@ -3,10 +3,7 @@ uint8_t mod_state;
 uint8_t osmod_state;
 bool shifted;
 bool key_tapped;
-
-#ifdef QWERTY_LAYER
-bool qwerty_active;
-#endif
+bool dualf_off;
 
 void turn_num_lock_on(void) {
     // check the host_keybord's num_lock state and turn num_lock on if it is off
@@ -100,7 +97,7 @@ bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
                 tap_code(KC_P0);
                 tap_code(KC_P1);
                 tap_code(KC_P2);
-                tap_code(KC_P8);  // ß
+                tap_code(KC_P8);  // €
                 processed = true;
                 break;
             case SZ_KEY:
@@ -209,11 +206,11 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         /* case TD(TD_LARROW): */
         /* case TD(TD_VIM_GG): */
         /* case TD(TD_F4): */
+        /* case TD(TD_RARROW): */
         case TD(TD_PRN):
         case TD(TD_BRC):
         case TD(TD_CBR):
         case TD(TD_ABK):
-        case TD(TD_RARROW):
             return TAPPING_TERM * td_factor;
 
         default:
@@ -298,15 +295,9 @@ bool caps_word_press_user(uint16_t keycode) {
 bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
     /* Disable combo `SOME_COMBO` on layer `_LAYER_A` */
     switch (combo_index) {
-        case ESCQ_DEL:
-        case SCLNBSLS_BSPC:
-            return true; // keep these combos active on all layers
-        default: // deactivate all other combos on the _QWERTY layer
-            if (qwerty_active) {
-                return false;
-            }
+        default: 
+            return true; // keep the combos activated for these layers
     }
-    return true;
 }
 
 // ===================== ACHORDION ================================
@@ -438,31 +429,39 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
 
 // ------------------------------- LANGUAGES & LAYERS --------------------------
-#ifdef QWERTY_LAYER
-        case QWERTY: // toggles the _QWERTY layer which doesn't use mod taps
+        case KB_LANG_SWITCH: // TG(_COLEMAK_DE): switches only kb lang
             if (record->event.pressed) {
-                qwerty_active = !qwerty_active;
-                tap_code16(A(KC_GRV));
-                /* combo_toggle(); // turns off combos when moving to _QWERTY and turn them back on when leaving the layer */
+                // invert the state of de_layout_active
+                de_layout_active = !de_layout_active;
+                if (dualf_off) {
+                    layer_invert(_DE_DUALF);
+                    layer_invert(_EN_DUALF);
+                }
             }
             return true;
-            break;
-#endif 
 
         case LANG_SWITCH: // sends A(KC_LSFT) to change OS language
             if (record->event.pressed) {
                 // change keyboard language
                 layer_invert(_COLEMAK_DE);
                 de_layout_active = !de_layout_active;
+                if (dualf_off) {
+                    layer_invert(_DE_DUALF);
+                    layer_invert(_EN_DUALF);
+                }
             }
             return true;
 
-        case KB_LANG_SWITCH: // TG(_COLEMAK_DE): switches only kb lang
+        case TOGGLE_DUALF: // toggle dual function keys
             if (record->event.pressed) {
-                // invert the state of de_layout_active
-                de_layout_active = !de_layout_active;
+                dualf_off = !dualf_off;
+                if (de_layout_active) {
+                    layer_invert(_DE_DUALF);
+                } else {
+                    layer_invert(_EN_DUALF);
+                }
             }
-            return true;
+            return false;
 
         case UMLAUT_SWITCH: // switches the state of de_en_switched
             if (record->event.pressed) {
@@ -569,17 +568,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
 
-        // tap is ENT on QWERTY_LAYER
-#ifdef QWERTY_LAYER
-        case RAISE:
-            if (key_tapped && qwerty_active) {
-                tap_code(KC_ENT);
-                return false;
-            }
-            return true;
-#endif
-
-
             // make a rule so that we can use it for alt-tabbing without changing the language
         case OSM(MOD_LSFT):
             if (IS_LAYER_ON(_ADJUST)) { // using the add_mods function to not trigger the language change
@@ -597,16 +585,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case DE_ADIA:
         case DE_UDIA:
         case DE_ODIA:
-        case DE_EURO:
+            if (IS_LAYER_ON(_UMLAUTS)) {
+                return process_german_keycode(record, keycode);
+            } 
+            return true;
         case KC_DEG:
-#ifdef QWERTY_LAYER
-            if (de_layout_active || qwerty_active) {
-                return true;
+            if (de_layout_active) {
+                return register_unregister_key(record, DE_DEG);
             }
-#endif
         case SZ_KEY:
             if (de_layout_active) {
                 return register_unregister_key(record, DE_SS);
+            }
+        case DE_EURO:
+            if (de_layout_active) {
+                return true;
             }
             return process_german_keycode(record, keycode);
             break;

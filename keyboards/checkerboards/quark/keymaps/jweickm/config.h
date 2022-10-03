@@ -27,8 +27,6 @@
 #define ACHORDION
 /* #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD */
 
-#define QWERTY_LAYER // enables an additional QWERTY layer without mod taps
-
 // turns the lower and raise keys into oneshot shift keys 124-130 bytes
 /* #define THUMB_SHIFT */ 
 // adds a space before the thumb shift (only if space was not pressed before)

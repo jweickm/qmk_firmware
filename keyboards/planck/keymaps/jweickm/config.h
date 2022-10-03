@@ -70,7 +70,7 @@
 #define ACHORDION
 
 /* #define HEMINGWAY_MODE // mode that disables backspace and movement keys to focus on writing */
-#define QWERTY_LAYER // enables an additional QWERTY layer without mod taps
+/* #define QWERTY_LAYER // enables an additional QWERTY layer without mod taps */
                        
 // turns the lower and raise keys into oneshot shift keys 124-130 bytes
 /* #define THUMB_SHIFT */ 

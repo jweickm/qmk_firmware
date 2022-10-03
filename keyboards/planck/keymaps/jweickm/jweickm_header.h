@@ -6,10 +6,9 @@
 
 enum planck_layers {
     _COLEMAK = 0,
-#ifdef QWERTY_LAYER
-    _QWERTY,
-#endif
+    _EN_DUALF,
     _COLEMAK_DE,
+    _DE_DUALF,
     _UMLAUTS,
 #ifdef NAGINATA_ENABLE
     // 薙刀式
@@ -120,19 +119,12 @@ NGKEYS naginata_keys;
 #define COPY_ALL    C(KC_INS)
 
 #define LLOCK_ADJUST LT(_ADJUST, KC_NO)
-#define KC_HEMINGWAY KC_F13
 
 #define NUM_2 LT(0, KC_KP_2)
 #define NUM_3 LT(0, KC_KP_3)
 
 #define KB_LANG_SWITCH TG(_COLEMAK_DE)
 #define LANG_SWITCH A(KC_LSFT)
-
-#ifdef QWERTY_LAYER
-#define QWERTY TG(_QWERTY)
-#else
-#define QWERTY G(KC_SPC)
-#endif
 
 enum planck_keycodes {
 #ifdef NAGINATA_ENABLE
@@ -157,7 +149,7 @@ enum planck_keycodes {
     LLOCK, // layer lock key
     SZ_KEY,
     KC_DEG,
-    /* KC_HEMINGWAY, */
+    TOGGLE_DUALF
     /* LLOCK_ADJUST, */
 };
 
