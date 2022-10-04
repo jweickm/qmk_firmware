@@ -620,15 +620,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case SCLN_KEY:
             if (!process_tap_long_press_key(record, KC_0)) {
                 return false;
+            } 
+        case KC_SCLN: // case DE_ODIA: 
+            // first process the DE_ODIA case in the _UMLAUTS layer
+            if (IS_LAYER_ON(_UMLAUTS)) {
+                return process_german_keycode(record, keycode);
+            } 
+            // then process the key normally when de_en is not switched
+            if (!de_en_switched) { 
+                return true; 
+            } 
+            if (de_layout_active) {
+                return register_unregister_shifted_key(record, DE_SCLN, DE_COLN);
             } else {
-                if (!de_en_switched) { return true; 
-                } else {
-                    if (de_layout_active) {
-                        return register_unregister_shifted_key(record, DE_SCLN, DE_COLN);
-                    } else {
-                        return process_german_keycode(record, DE_ODIA);// sending Ö
-                    }
-                }
+                return process_german_keycode(record, DE_ODIA);// sending Ö
             }
             break;
 
@@ -836,7 +841,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // ===== PROCESS_GERMAN_KEYCODE =======
         case DE_ADIA:
         case DE_UDIA:
-        case DE_ODIA:
             if (IS_LAYER_ON(_UMLAUTS)) {
                 return process_german_keycode(record, keycode);
             } 
