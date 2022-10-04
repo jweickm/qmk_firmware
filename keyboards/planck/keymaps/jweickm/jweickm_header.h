@@ -15,10 +15,10 @@ enum planck_layers {
     _NAGINATA, // 薙刀式入力レイヤー
     // 薙刀式
 #endif
-    _LOWER,
-    _LOWER_DE,
     _RAISE,
     _RAISE_DE,
+    _LOWER,
+    _LOWER_DE,
     _NUM,
     /* _NUM_DE, */
     /* _NAV, */
