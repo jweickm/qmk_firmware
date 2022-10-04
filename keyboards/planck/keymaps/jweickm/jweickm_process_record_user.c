@@ -655,7 +655,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (de_layout_active) {
                 if (de_en_switched) { // " 
                     return register_unregister_shifted_key(record, DE_QUOT, DE_DQUO);
-                    }
+                }
             }
             if (!de_en_switched) { return true; }
             return process_german_keycode(record, DE_ADIA); // sending Ä

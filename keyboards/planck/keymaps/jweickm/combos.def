@@ -48,6 +48,7 @@ COMB(BS_DEL_DUALF,  TOGGLE_DUALF,   BS_KEY, DEL_KEY)
 COMB(ESCBSLS_ALTF4, A(KC_F4),       ESC_KEY, BSLS_KEY)
 /* COMB(CCOMM_LANG,    LANG_SWITCH,    C_KEY, COMM_KEY) */
 COMB(GM_APP,        KC_APP,         G_KEY, M_KEY)
+COMB(VK_CAPS,       KC_CAPS,        V_KEY, K_KEY)
 
 /* // -------------------- LOWER COMBOS ----------------------------- */
 /* //   name           result          combo keys */

@@ -192,14 +192,14 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case SCLN_KEY:
         case SLSH_KEY:
             return TAPPING_TERM * pinky_factor;
-        case LCTL_T(KC_CAPS):
+        case CAPS_KEY:
         case OSM(MOD_LSFT):
         case OSM(MOD_RSFT):
         case ENT_KEY:
         case BSLS_KEY:
         case UE_KEY:
         case QUOT_KEY:
-        /* case TAB_KEY: */
+        case TAB_KEY:
             return TAPPING_TERM; // prefer these ones to be shorter
 
         // tap-dance actions
@@ -324,7 +324,7 @@ bool achordion_chord(uint16_t tap_hold_keycode,
 uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
     switch (tap_hold_keycode) {
         // add all keys here that should NOT be handled by ACHORDION
-        /* case TAB_KEY: */
+        case TAB_KEY:
         case NAVSPACE:
         case LOWER:
         case RAISE:
@@ -332,7 +332,7 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case RAISE_DE:
         case DEL_KEY:
         case BS_KEY:
-        case LCTL_T(KC_CAPS):
+        case CAPS_KEY:
         case OSM(MOD_LSFT):
         case OSM(MOD_RSFT):
         case ESC_KEY:
@@ -452,8 +452,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
 
-        case TOGGLE_DUALF: // toggle dual function keys
-            if (record->event.pressed) {
+        case TOGGLE_DUALF: // toggle dual function keys on key release
+            if (!record->event.pressed) {
                 dualf_off = !dualf_off;
                 if (de_layout_active) {
                     layer_invert(_DE_DUALF);
@@ -736,25 +736,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
 
+            // LALT when held
         case BSLS_KEY:
-            if (!process_tap_long_press_key(record, KC_APP)) { return false; }
+            /* if (!process_tap_long_press_key(record, KC_APP)) { return false; } */
             if (de_en_switched) {
                 return process_german_keycode(record, DE_UDIA); // sending Ü
             } 
             return true;
         case UE_KEY: // UE_KEY
-            if (!process_tap_long_press_key(record, KC_APP)) { return false; }
+            /* if (!process_tap_long_press_key(record, KC_APP)) { return false; } */
             if (de_en_switched) { 
                 return register_unregister_shifted_key(record, DE_BSLS, DE_PIPE);
             }
             return true;
 
-// kc_mins when held
+// RCTL when held
         case QUOT_KEY:
-            if (!de_layout_active) {
-                if (!process_tap_long_press_key(record, KC_MINS)) { return false; }
-            } else { // if German layout
-                if (!process_tap_long_press_key(record, DE_MINS)) {return false; }
+            /* if (!de_layout_active) { */
+            /*     if (!process_tap_long_press_key(record, KC_MINS)) { return false; } */
+            /* } else { // if German layout */
+            /*     if (!process_tap_long_press_key(record, DE_MINS)) {return false; } */
+            if (de_layout_active) {
                 if (de_en_switched) { // " 
                     return register_unregister_shifted_key(record, DE_QUOT, DE_DQUO);
                 }
@@ -782,9 +784,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (caps_lock_on && record->event.pressed) {
                 tap_code(KC_CAPS);
             }
-            if (!process_tap_long_press_key(record, KC_LGUI)) {
-                return false;
-            }
+            /* if (!process_tap_long_press_key(record, KC_LGUI)) { */
+            /*     return false; */
+            /* } */
             return true;
         
     } // switch(keycode)
