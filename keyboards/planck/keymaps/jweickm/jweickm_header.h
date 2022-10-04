@@ -85,24 +85,28 @@ NGKEYS naginata_keys;
 #define LEFT_KEY KC_LEFT
 #define RIGHT_KEY KC_RIGHT
 
-#define ESC_KEY     LT(0, KC_ESC)
+/* #define ESC_KEY     LT(0, KC_ESC) */
+#define ESC_KEY     LALT_T(KC_ESC)
 
-#define BSLS_KEY    LT(0, KC_BSLS)
-#define UE_KEY      LT(0, DE_UDIA)
+/* #define BSLS_KEY    LT(0, KC_BSLS) */
+#define BSLS_KEY    LALT_T(KC_BSLS)
+/* #define UE_KEY      LT(0, DE_UDIA) */
+#define UE_KEY      LALT_T(DE_UDIA)
 
-/* #define TAB_KEY     LCAG_T(KC_TAB) */
-#define TAB_KEY     KC_TAB
-#define QUOT_KEY    LT(0, KC_QUOT)
+/* #define TAB_KEY     KC_TAB */
+#define TAB_KEY     LCTL_T(KC_TAB)
+/* #define QUOT_KEY    LT(0, KC_QUOT) */
+#define QUOT_KEY    RCTL_T(KC_QUOT)
 
 #define DOT_KEY     LT(0, KC_DOT)
 #define COMM_KEY    LT(0, KC_COMM)
 #define SLSH_KEY    LT(0, KC_SLSH)
 
 #define NAVSPACE    LT(_ADJUST, KC_SPC)
-/* #define FN_KEY      LT(_ADJUST, KC_RALT) */
-/* #define FN_KEY      LT(_ADJUST, KC_ENT) */
-/* #define ENT_KEY     RSFT_T(KC_ENT) */
-#define ENT_KEY     LT(_ADJUST, KC_ENT)
+/* #define ENT_KEY     LT(_ADJUST, KC_ENT) */
+#define ENT_KEY     RGUI_T(KC_ENT)
+/* #define CAPS_KEY    LCTL_T(KC_CAPS) */
+#define CAPS_KEY    LCTL_T(KC_CAPS)
 
 #define BS_KEY      LT(_NUM, KC_BSPC)
 #define DEL_KEY     LT(_MOUSE, KC_DEL)
