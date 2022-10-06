@@ -24,6 +24,8 @@ enum planck_layers {
     _COLEMAK_DE,
     _DE_DUALF,
     _UMLAUTS,
+    /* _NAV, */
+    _ADJUST,
     _RAISE,
     _RAISE_DE,
     _LOWER,
@@ -31,7 +33,6 @@ enum planck_layers {
     _NUM,
     /* _NUM_DE, */
     _MOUSE,
-    _ADJUST,
 };
 
 // Define key names here 
@@ -383,7 +384,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_DE_DUALF] = LAYOUT_planck_mit(
-        KC_TRNS, KC_Q, KC_W, KC_F, KC_P, KC_B, KC_J, KC_L, KC_U, DE_Y, DE_ODIA, KC_TRNS, 
+        KC_TRNS, KC_Q, KC_W, KC_F, KC_P, KC_B, KC_J, KC_L, KC_U, DE_Y, DE_ODIA, UE_KEY, 
         KC_TRNS, KC_A, KC_R, KC_S, KC_T, KC_G, KC_M, KC_N, KC_E, KC_I, KC_O, KC_TRNS, 
         KC_TRNS, Z_KEY_DE, KC_X, KC_C, KC_D, KC_V, KC_K, KC_H, COMM_KEY, DOT_KEY, SLSH_KEY, KC_TRNS, 
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS/*FN_KEY*/
@@ -407,6 +408,46 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS 
     ),
+
+    /* ======================== PLAN FOR SPLITTING UP _ADJUST AND _NAV LAYERS ========================== */
+/* ----------------------------------------------------------------------------------------
+* _NAV
+     * ,-----------------------------------------------------------------------------------.
+     * | LLOCK| ____ | C(->)|  MEH | HYPR | C(<-)| ____ | REDO | UNDO | ____ | ____ | ____ |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * |A(TAB)| LGUI | LALT | LSFT | LCTL |CPYALL| LEFT | DOWN |  UP  | RIGHT| VIM_O| ____ |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | ____ | ____ |DESK<-| WHLUP| WHLDN|DESK->| HOME | PGDN | PGUP |  END | ____ | ____ |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | ____ | ____ | ____ | ____ | LOWER|     ____    | RAISE| ____ | BRI- | BRI+ | ____ | 2x2uC
+     * `-----------------------------------------------------------------------------------'
+     */
+    /* [_NAV] = LAYOUT_planck_mit( */
+    /*     LLOCK, KC_TRNS, C(KC_RIGHT), OSM(MOD_MEH), OSM(MOD_HYPR), C(KC_LEFT), KC_TRNS, REDO, UNDO, KC_TRNS, KC_TRNS, KC_TRNS, */ 
+    /*     ALT_TAB, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, COPY_ALL, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, KC_TRNS, */ 
+    /*     OSM(MOD_LSFT), KC_TRNS, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_HOME, KC_PGDN, KC_PGUP, KC_END, KC_TRNS, KC_TRNS, */
+    /*     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LOWER, KC_TRNS, RAISE, KC_TRNS, KC_BRID, KC_BRIU, KC_TRNS */
+    /* ), */
+
+/* ----------------------------------------------------------------------------------------
+* _ADJUST
+     * ,-----------------------------------------------------------------------------------.
+     * | LLOCK| PRINT| C(->)|  MEH | HYPR | C(<-)| KANA | REDO | UNDO | LANG |KBLANG| DUALF|
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * |  F6  |  F1  |  F2  |  F3  |  F4  |  F5  | LEFT | DOWN |  UP  | RIGHT| VIM_O|  INS |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * |  F12 |  F7  |  F8  |  F9  |  F10 |  F11 |   `  |   >  |   ,  |NUMLCK|UML_SW| MUTE |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * |EEPRST| FLASH|REBOOT| ____ | LOWER|     ____    | RAISE| ____ | BRI- | BRI+ | ____ | 2x2uC
+     * `-----------------------------------------------------------------------------------'
+     */
+    /* [_ADJUST] = LAYOUT_planck_mit( */
+    /*     LLOCK, KC_PSCR, C(KC_RIGHT), OSM(MOD_MEH), OSM(MOD_HYPR), C(KC_LEFT), A(KC_GRV), REDO, UNDO, LANG_SWITCH, KB_LANG_SWITCH, TOGGLE_DUALF, */ 
+    /*     ALT_TAB, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, COPY_ALL, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, KC_INS, */ 
+    /*     OSM(MOD_LSFT), KC_NUM_LOCK, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_HOME, KC_PGDN, KC_PGUP, KC_END, UMLAUT_SWITCH, KC_MUTE, */
+    /*     QK_CLEAR_EEPROM, QK_BOOT, QK_REBOOT, KC_TRNS, LOWER, KC_TRNS, RAISE, KC_TRNS, KC_BRID, KC_BRIU, KC_TRNS */
+    /* ), */
+/* ======================== PLAN FOR SPLITTING UP _ADJUST AND _NAV LAYERS ========================== */
 
 /* ----------------------------------------------------------------------------------------
 * _ADJUST

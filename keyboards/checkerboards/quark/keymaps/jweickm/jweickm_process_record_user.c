@@ -119,7 +119,6 @@ bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
         }
         unregister_mods(MOD_LALT);
         set_mods(mod_state);
-
     } else {
         return true;
     }
@@ -720,7 +719,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case Y_KEY_DE:
         case Y_KEY:
             return process_tap_long_press_key(record, KC_9);
-        case SCLN_KEY:
+        case SCLN_KEY: // case for the base English Colemak Layer (continues in the next case)
             if (!process_tap_long_press_key(record, KC_0)) {
                 return false;
             } 
@@ -735,37 +734,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } 
             if (de_layout_active) {
                 return register_unregister_shifted_key(record, DE_SCLN, DE_COLN);
-            } else {
-                return process_german_keycode(record, DE_ODIA);// sending Ö
-            }
+            } 
+            return process_german_keycode(record, DE_ODIA);// sending Ö
             break;
 
-            // LALT when held
-        case BSLS_KEY:
+        case BSLS_KEY: // LALT when held LALT_T(KC_BSLS)
             /* if (!process_tap_long_press_key(record, KC_APP)) { return false; } */
-            if (de_en_switched) {
-                return process_german_keycode(record, DE_UDIA); // sending Ü
-            } 
-            return true;
-        case UE_KEY: // UE_KEY
-            /* if (!process_tap_long_press_key(record, KC_APP)) { return false; } */
-            if (de_en_switched) { 
-                return register_unregister_shifted_key(record, DE_BSLS, DE_PIPE);
-            }
-            return true;
+            if (!de_en_switched || !record->tap.count) { return true; }
+            return process_german_keycode(record, DE_UDIA); // sending Ü
+            break;
 
-// RCTL when held
-        case QUOT_KEY:
-            /* if (!de_layout_active) { */
-            /*     if (!process_tap_long_press_key(record, KC_MINS)) { return false; } */
-            /* } else { // if German layout */
-            /*     if (!process_tap_long_press_key(record, DE_MINS)) {return false; } */
+        case UE_KEY: // LALT when held LALT_T(DE_UDIA)
+            /* if (!process_tap_long_press_key(record, KC_APP)) { return false; } */
+            if (!de_en_switched || !record->tap.count) { return true; }
+            return register_unregister_shifted_key(record, DE_BSLS, DE_PIPE);
+            break;
+
+        case QUOT_KEY: // RCTL_T(KC_QUOT), RCTL_T(DE_ADIA)
+            // normal processing, also when held
+            if (!de_en_switched || !record->tap.count) { return true; }
             if (de_layout_active) {
-                if (de_en_switched) { // " 
-                    return register_unregister_shifted_key(record, DE_QUOT, DE_DQUO);
-                }
+                return register_unregister_shifted_key(record, DE_QUOT, DE_DQUO);
             }
-            if (!de_en_switched) { return true; }
             return process_german_keycode(record, DE_ADIA); // sending Ä
             break;
 
