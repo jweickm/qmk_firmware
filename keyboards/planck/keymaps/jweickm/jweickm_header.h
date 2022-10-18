@@ -119,7 +119,7 @@ NGKEYS naginata_keys;
 #define REDO C(KC_Y)
 #define UNDO C(KC_Z)
 
-#define COPY_ALL    C(KC_INS)
+/* #define COPY_ALL    C(KC_INS) */
 
 #define LLOCK_ADJUST LT(_ADJUST, KC_NO)
 
@@ -148,7 +148,7 @@ enum planck_keycodes {
     /* KB_LANG_SWITCH, */
     /* LANG_SWITCH, */
     UMLAUT_SWITCH,
-    UMLAUT_RALT,
+    /* UMLAUT_RALT, */
     LLOCK, // layer lock key
     SZ_KEY,
     KC_DEG,

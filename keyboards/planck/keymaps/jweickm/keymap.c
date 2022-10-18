@@ -550,7 +550,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ,-----------------------------------------------------------------------------------.
      * | LLOCK| PRINT| C(->)|  MEH | HYPR | C(<-)| KANA | REDO | UNDO | LANG |KBLANG| DUALF|
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |A(TAB)| LGUI | LALT | LSFT | LCTL |CPYALL| LEFT | DOWN |  UP  | RIGHT| VIM_O|  INS |
+     * |A(TAB)| LGUI | LALT | LSFT | LCTL | RALT | LEFT | DOWN |  UP  | RIGHT| VIM_O|  INS |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ |NUMLCK|DESK<-| WHLUP| WHLDN|DESK->| HOME | PGDN | PGUP |  END |UML_SW| MUTE |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -559,7 +559,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_ADJUST] = LAYOUT_planck_mit(
         LLOCK, KC_PSCR, C(KC_RIGHT), OSM(MOD_MEH), OSM(MOD_HYPR), C(KC_LEFT), A(KC_GRV), REDO, UNDO, LANG_SWITCH, KB_LANG_SWITCH, TOGGLE_DUALF, 
-        ALT_TAB, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, COPY_ALL, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, KC_INS, 
+        ALT_TAB, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_RALT, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, KC_INS, 
         OSM(MOD_LSFT), KC_NUM_LOCK, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_HOME, KC_PGDN, KC_PGUP, KC_END, UMLAUT_SWITCH, KC_MUTE,
         QK_CLEAR_EEPROM, QK_BOOT, QK_REBOOT, KC_TRNS, LOWER, KC_TRNS, RAISE, KC_TRNS, KC_BRID, KC_BRIU, KC_TRNS
     ),
@@ -609,7 +609,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | LGUI | LALT | LSFT | LCTL |C-HOME|   "  |   _  |   +  |   {  |   }  |   "  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ |  <>  |  {}  |  []  |  ()  | C-END|   ~  |   '  |   <  |   >  |   \  |   `  |
+     * | ____ |  <>  |  {}  |  []  |  ()  | C-END|   ~  |   '  |   <  |   >  |   ?  |   `  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | ____ | ____ | ____ | ____ |     ____    |  ENT | ____ | LEFT | RIGHT| ____ | 1x2uC
      * `-----------------------------------------------------------------------------------'
@@ -628,7 +628,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | LGUI | LALT | LSFT | LCTL |C-HOME|   "  |   _  |   +  |   {  |   }  |   "  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ |  <>  |  {}  |  []  |  ()  | C-END|   ~  |   '  |   <  |   >  |   \  |   `  |
+     * | ____ |  <>  |  {}  |  []  |  ()  | C-END|   ~  |   '  |   <  |   >  |   ?  |   `  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | ____ | ____ | ____ | ____ |     ____    |  ENT | ____ | LEFT | RIGHT| ____ | 2x2uC
      * `-----------------------------------------------------------------------------------'

@@ -45,6 +45,9 @@ bool register_unregister_shifted_key(keyrecord_t* record, uint16_t keycode, uint
 bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
     bool processed = false; 
     if (record->event.pressed && !(IS_LAYER_ON(_RAISE) || IS_LAYER_ON(_LOWER))) {
+        if (de_layout_active) {
+            return true;
+        }
         turn_num_lock_on();
         clear_mods();
         clear_oneshot_mods();
@@ -511,14 +514,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
             break;
 
-        case COPY_ALL:
-            if (record->event.pressed) {
-                tap_code16(C(KC_HOME)); // go to the beginning of the file
-                tap_code16(C(S(KC_END))); // mark everything till the end of the file
-                /* tap_code16(C(KC_INS)); // send ctrl + ins -> copy to clipboard */
-            }
-            return true; // registers and unregisters C(KC_INS)
-            break;
+        /* case COPY_ALL: */
+        /*     if (record->event.pressed) { */
+        /*         tap_code16(C(KC_HOME)); // go to the beginning of the file */
+        /*         tap_code16(C(S(KC_END))); // mark everything till the end of the file */
+        /*         /1* tap_code16(C(KC_INS)); // send ctrl + ins -> copy to clipboard *1/ */
+        /*     } */
+        /*     return true; // registers and unregisters C(KC_INS) */
+        /*     break; */
 
         case X_KEY:
             return process_tap_long_press_key(record, C(KC_X));
@@ -587,6 +590,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return process_german_keycode(record, keycode);
             } 
             return true;
+
         case KC_DEG:
             if (de_layout_active) {
                 return register_unregister_key(record, DE_DEG);
@@ -596,11 +600,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return register_unregister_key(record, DE_SS);
             }
         case DE_EURO:
-            if (de_layout_active) {
-                return true;
-            }
-            return process_german_keycode(record, keycode);
-            break;
+            return process_german_keycode(record, keycode); // returns true for de_layout_active
         // ===== PROCESS_GERMAN_KEYCODE =======
 
         case KC_KP_EQUAL:
@@ -611,23 +611,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
 
-        case KC_UNDS:
-            if (de_layout_active) {
+        case KC_UNDS: // make underscore work for both layouts on the _NUM layer
+            if (IS_LAYER_ON(_NUM) && de_layout_active) {
                 return register_unregister_key(record, DE_UNDS);
             }
             return true;
 
             // sends Ralt + " für Umlaute mit Wincompose
-        case UMLAUT_RALT:
-            if (record->event.pressed) {
-                tap_code16(KC_RALT);
-                if (de_layout_active) {
-                    tap_code16(DE_DQUO);
-                } else {
-                    tap_code16(KC_DQUO);
-                }
-            }
-            return false;
+        /* case UMLAUT_RALT: */
+        /*     if (record->event.pressed) { */
+        /*         tap_code16(KC_RALT); */
+        /*         if (de_layout_active) { */
+        /*             tap_code16(DE_DQUO); */
+        /*         } else { */
+        /*             tap_code16(KC_DQUO); */
+        /*         } */
+        /*     } */
+        /*     return false; */
 
         case DE_ACC_GRV: // ` (dead) using Wincompose
         case DE_ACC_ACUT: // ´ (dead) using Wincompose
@@ -765,13 +765,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return process_german_keycode(record, DE_ODIA);// sending Ö
             break;
 
-        case BSLS_KEY: // LALT when held LALT_T(KC_BSLS)
+        case BSLS_KEY: // LALT when held LALT_T(KC_BSLS); only for English layout
             /* if (!process_tap_long_press_key(record, KC_APP)) { return false; } */
             if (!de_en_switched || !record->tap.count) { return true; }
             return process_german_keycode(record, DE_UDIA); // sending Ü
             break;
 
-        case UE_KEY: // LALT when held LALT_T(DE_UDIA)
+        case UE_KEY: // LALT when held LALT_T(DE_UDIA); only for German layout
             /* if (!process_tap_long_press_key(record, KC_APP)) { return false; } */
             if (!de_en_switched || !record->tap.count) { return true; }
             return register_unregister_shifted_key(record, DE_BSLS, DE_PIPE);

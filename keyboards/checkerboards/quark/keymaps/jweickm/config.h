@@ -33,9 +33,9 @@
 /* #define SPC_SFT // 66 bytes */
 
 // settings for LEADER key
-#define LEADER_PER_KEY_TIMING
-#define LEADER_TIMEOUT 280
-#define LEADER_NO_TIMEOUT
+/* #define LEADER_PER_KEY_TIMING */
+/* #define LEADER_TIMEOUT 280 */
+/* #define LEADER_NO_TIMEOUT */
 
 // settings for COMBOS
 #define COMBO_TERM 35 
