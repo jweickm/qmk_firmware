@@ -105,7 +105,7 @@ NGKEYS naginata_keys;
 /* #define ENT_KEY     LT(_ADJUST, KC_ENT) */
 #define ENT_KEY     RGUI_T(KC_ENT)
 /* #define CAPS_KEY    LCTL_T(KC_CAPS) */
-#define CAPS_KEY    LCTL_T(KC_CAPS)
+#define CAPS_KEY    LGUI_T(KC_CAPS)
 
 #define BS_KEY      LT(_NUM, KC_BSPC)
 #define DEL_KEY     LT(_MOUSE, KC_DEL)
@@ -143,8 +143,8 @@ enum planck_keycodes {
 #endif
     VIM_O,
     ALT_TAB,
-    DE_ACC_GRV,
-    DE_ACC_ACUT,
+    KC_ACC_GRV,
+    KC_ACC_ACUT,
     /* KB_LANG_SWITCH, */
     /* LANG_SWITCH, */
     UMLAUT_SWITCH,
@@ -152,8 +152,14 @@ enum planck_keycodes {
     LLOCK, // layer lock key
     SZ_KEY,
     KC_DEG,
-    TOGGLE_DUALF
+    TOGGLE_DUALF,
     /* LLOCK_ADJUST, */
+    AE_QUOT,
+    OE_SCLN,
+    UE_BSLS,
+    AE_QUOT_CAPS,
+    OE_SCLN_CAPS,
+    UE_BSLS_CAPS,
 };
 
 // Tap Dance declarations
@@ -164,7 +170,7 @@ enum tap_dance_codes {
     /* TD_VIM_GG,  // single tap to scroll down, double tap to scroll up */
     /* TD_F4,      // double tap F4 to alt-F4 */
     /* TD_LARROW,  // double tap left-angling bracket to get left arrow */
-    TD_RARROW,  // double tap right-angling bracket to get right arrow
+    /* TD_RARROW,  // double tap right-angling bracket to get right arrow */
     TD_ABK,     // angling brackets
 };
 

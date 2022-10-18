@@ -99,6 +99,9 @@ void SEND_SPECIAL(char key) {
 bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
     bool processed = false;
     if (record->event.pressed && !(IS_LAYER_ON(_RAISE) || IS_LAYER_ON(_LOWER))) {
+        if (de_layout_active) {
+            return true;
+        }
         turn_num_lock_on();
         clear_mods();
         clear_oneshot_mods();
@@ -173,7 +176,6 @@ bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
         }
         unregister_mods(MOD_LALT);
         set_mods(mod_state);
-
     } else {
         return true;
     } 
@@ -737,15 +739,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
 
-        case DE_ACC_GRV: // ` (dead)
-        case DE_ACC_ACUT: // ´ (dead)
+        case KC_ACC_GRV: // ` (dead)
+        case KC_ACC_ACUT: // ´ (dead)
+            /* if (de_layout_active) { */
+            /*     switch(keycode) { */
+            /*         case KC_ACC_ACUT: // ´ (dead) */
+            /*             return register_unregister_key(record, DE_ACUT); */
+            /*         case KC_ACC_GRV: // ` (dead) */
+            /*             return register_unregister_key(record, DE_GRV); */
+            /*     } */
+            /* } */
             if (record->event.pressed) {
-                tap_code(KC_RALT);
+                tap_code(KC_RALT); // using wincompose when on the English Layout
                 switch(keycode) {
-                    case DE_ACC_ACUT: // ´ (dead)
+                    case KC_ACC_ACUT: // ´ (dead)
                         tap_code(KC_QUOT);
                         break;
-                    case DE_ACC_GRV: // ` (dead)
+                    case KC_ACC_GRV: // ` (dead)
                         tap_code(KC_GRV);
                         break;
                     default:
@@ -851,7 +861,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return process_german_keycode(record, keycode);
             break;
         // ===== PROCESS_GERMAN_KEYCODE =======
-
         case KC_KP_EQUAL: // =
             if (de_layout_active) {
                 return register_unregister_key(record, DE_EQL);
@@ -859,14 +868,40 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return register_unregister_key(record, KC_EQL);
             }
             break;
-
         case KC_UNDS: // _
             if (de_layout_active) {
                 return register_unregister_key(record, DE_UNDS);
-            } else {
-                return true;
             }
-            break;
+            return true;
+
+            // ===== COMBOS ====
+        case AE_QUOT_CAPS: // for the combo with lower to produce capital letters
+            shifted = true;
+        case AE_QUOT:
+            if (de_layout_active) {
+                return register_unregister_shifted_key(record, DE_QUOT, DE_DQUO);
+            } else {
+                return process_german_keycode(record, DE_ADIA);
+            }
+            return false;
+        case OE_SCLN_CAPS: // for the combo with lower to produce capital letters
+            shifted = true;
+        case OE_SCLN:
+            if (de_layout_active) {
+                return register_unregister_shifted_key(record, DE_SCLN, DE_COLN);
+            } else {
+                return process_german_keycode(record, DE_ODIA);
+            }
+            return false;
+        case UE_BSLS_CAPS: // for the combo with lower to produce capital letters
+            shifted = true;
+        case UE_BSLS:
+            if (de_layout_active) {
+                return register_unregister_shifted_key(record, DE_BSLS, DE_PIPE);
+            } else {
+                return process_german_keycode(record, DE_UDIA);
+            }
+            return false;
 
 #ifdef NO_SEPARATE_GERMAN_LAYERS
         case KC_AT: // @
@@ -957,43 +992,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
                 return true;
             }
-        case KC_UNDS: // _
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_UNDS);
-                } else {
-                    unregister_code16(DE_UNDS);
-                }
-                return false;
-            } else {
-                return true;
-            }
         case KC_MINS: // -
             if (de_layout_active) {
-                return register_unregister_shifted_key(record, DE_QUOT, DE_DQUO);
+                return register_unregister_key(record, DE_MINS);
             }
             return true;
         case KC_EQL: // =
             if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_EQL);
-                } else {
-                    unregister_code16(DE_EQL);
-                }
-                return false;
-            } else {
-                return true;
+                return register_unregister_key(record, DE_EQL);
             }
-        case KC_PLUS: // +
-            if (mod_state & MOD_BIT(KC_LCTL)) {
-                if (record->event.pressed) {
-                    register_code(KC_EQL);
-                } else {
-                    unregister_code(KC_EQL);
-                }
-                return false;
-            } 
             return true;
+        case KC_PLUS: // +
+            if (de_layout_active) {
+                return register_unregister_key(record, DE_PLUS);
+            }
+            return true;
+        case DE_QUOT: // S(KC_NUHS)
+            if (!de_layout_active) {
+                return register_unregister_key(record, KC_QUOT);
+            }
+            return true;
+
         case KC_LCBR: // {
             if (de_layout_active) {
                 if (record->event.pressed) {
@@ -1042,16 +1061,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
         case KC_DQUO: // "
             if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_DQUO);
-                } else {
-                    unregister_code16(DE_DQUO);
-                }
-                return false;
-            } else {
-                return true;
+                return register_unregister_key(record, DE_DQUO);
             }
-            break;
+            return true;
         case KC_PIPE: // |
             if (de_layout_active) {
                 if (record->event.pressed) {

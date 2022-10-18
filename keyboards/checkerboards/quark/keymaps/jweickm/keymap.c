@@ -105,7 +105,7 @@ enum planck_layers {
 /* #define ENT_KEY     LT(_ADJUST, KC_ENT) */
 #define ENT_KEY     RGUI_T(KC_ENT)
 /* #define CAPS_KEY    LCTL_T(KC_CAPS) */
-#define CAPS_KEY    LCTL_T(KC_CAPS)
+#define CAPS_KEY    LGUI_T(KC_CAPS)
 
 #define BS_KEY      LT(_NUM, KC_BSPC)
 /* #define BS_KEY_DE   LT(_NUM_DE, KC_BSPC) */
@@ -137,8 +137,13 @@ enum planck_keycodes {
     LLOCK, // layer lock key
     SZ_KEY,
     KC_DEG,
-    TOGGLE_DUALF
-    /* KC_HEMINGWAY, */
+    TOGGLE_DUALF,
+    AE_QUOT, 
+    OE_SCLN, 
+    UE_BSLS,
+    AE_QUOT_CAPS, 
+    OE_SCLN_CAPS, 
+    UE_BSLS_CAPS,
     /* LLOCK_ADJUST, */
 };
 
@@ -325,7 +330,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ESC_KEY, Q_KEY, W_KEY, F_KEY, P_KEY, B_KEY, J_KEY, L_KEY, U_KEY, Y_KEY, SCLN_KEY, BSLS_KEY, 
         TAB_KEY, A_KEY, R_KEY, S_KEY, T_KEY, G_KEY, M_KEY, N_KEY, E_KEY, I_KEY, O_KEY, QUOT_KEY, 
         OSM(MOD_LSFT), Z_KEY, X_KEY, C_KEY, D_KEY, V_KEY, K_KEY, H_KEY, COMM_KEY, DOT_KEY, SLSH_KEY, OSM(MOD_RSFT)/*ENT_KEY*/, 
-        CAPS_KEY, KC_LGUI, KC_LALT, BS_KEY, LOWER, NAVSPACE, RAISE, DEL_KEY, DOWN_KEY, UP_KEY, ENT_KEY/*FN_KEY*/
+        CAPS_KEY, KC_LCTL, KC_LALT, BS_KEY, LOWER, NAVSPACE, RAISE, DEL_KEY, DOWN_KEY, UP_KEY, ENT_KEY/*FN_KEY*/
         /* LCTL_T(KC_CAPS), KC_LGUI, KC_LALT, BS_KEY, LOWER, NAVSPACE, RAISE, DEL_KEY, DOWN_KEY, UP_KEY, ENT_KEY */
     ),
 

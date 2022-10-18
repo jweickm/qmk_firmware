@@ -52,43 +52,16 @@ COMB(VK_CAPS,       KC_CAPS,        V_KEY, K_KEY)
 
 /* // -------------------- LOWER COMBOS ----------------------------- */
 /* //   name           result          combo keys */
-/* COMB(ESCLOWER,      KC_GRV,         LOWER, ESC_KEY) */
-/* COMB(QLOWER,        KC_EXLM,        LOWER, Q_KEY) */
-/* COMB(WLOWER,        KC_AT,          LOWER, W_KEY) */
-/* COMB(FLOWER,        KC_HASH,        LOWER, F_KEY) */
-/* COMB(PLOWER,        KC_DLR,         LOWER, P_KEY) */
-/* COMB(BLOWER,        KC_PERC,        LOWER, B_KEY) */
-/* COMB(JLOWER,        KC_CIRC,        LOWER, J_KEY) */
-/* COMB(LLOWER,        KC_AMPR,        LOWER, L_KEY) */
-/* COMB(ULOWER,        KC_ASTR,        LOWER, U_KEY) */
-/* COMB(YLOWER,        KC_LPRN,        LOWER, Y_KEY) */
-/* COMB(SCLNLOWER,     KC_RPRN,        LOWER, SCLN_KEY) */
-/* COMB(BSLSLOWER,     KC_PIPE,        LOWER, BSLS_KEY) */
-/* COMB(MLOWER,        S(DOT_KEY),     LOWER, M_KEY) */
-/* COMB(NLOWER,        KC_UNDS,        LOWER, N_KEY) */
-/* COMB(ELOWER,        KC_PLUS,        LOWER, E_KEY) */
-/* COMB(ILOWER,        KC_LBRC,        LOWER, I_KEY) */
-/* COMB(OLOWER,        KC_RBRC,        LOWER, O_KEY) */
-/* COMB(QUOTLOWER,     S(DOT_KEY),     LOWER, QUOT_KEY) */
-/* COMB(HLOWER,        KC_QUOT,        LOWER, H_KEY) */
+COMB(QUOTLOWER,     AE_QUOT_CAPS,   LOWER, QUOT_KEY)
+COMB(BSLSLOWER,     UE_BSLS_CAPS,   LOWER, BSLS_KEY)
+COMB(SCLNLOWER,     OE_SCLN_CAPS,   LOWER, SCLN_KEY)
+COMB(NLOWER,        KC_UNDS,        LOWER, N_KEY)
+COMB(ELOWER,        KC_KP_PLUS,     LOWER, E_KEY)
 
 /* // -------------------- RAISE COMBOS ----------------------------- */
 /* //   name           result          combo keys */
-/* COMB(ESCRAISE,      KC_TILD,        RAISE, ESC_KEY) */
-/* COMB(QRAISE,        KC_1,           RAISE, Q_KEY) */
-/* COMB(WRAISE,        KC_2,           RAISE, W_KEY) */
-/* COMB(FRAISE,        KC_3,           RAISE, F_KEY) */
-/* COMB(PRAISE,        KC_4,           RAISE, P_KEY) */
-/* COMB(BRAISE,        KC_5,           RAISE, B_KEY) */
-/* COMB(JRAISE,        KC_6,           RAISE, J_KEY) */
-/* COMB(LRAISE,        KC_7,           RAISE, L_KEY) */
-/* COMB(URAISE,        KC_8,           RAISE, U_KEY) */
-/* COMB(YRAISE,        KC_9,           RAISE, Y_KEY) */
-/* COMB(SCLNRAISE,     KC_0,           RAISE, SCLN_KEY) */
-/* COMB(MRAISE,        S(COMM_KEY),    RAISE, M_KEY) */
-/* COMB(NRAISE,        KC_MINS,        RAISE, N_KEY) */
-/* COMB(ERAISE,        KC_EQL,         RAISE, E_KEY) */
-/* COMB(IRAISE,        KC_LCBR,        RAISE, I_KEY) */
-/* COMB(ORAISE,        KC_RCBR,        RAISE, O_KEY) */
-/* COMB(KRAISE,        KC_GRV,         RAISE, M_KEY) */
-/* COMB(HRAISE,        S(DOT_KEY),     RAISE, H_KEY) */
+COMB(QUOTRAISE,     AE_QUOT,        RAISE, QUOT_KEY)
+COMB(BSLSRAISE,     UE_BSLS,        RAISE, BSLS_KEY)
+COMB(SCLNRAISE,     OE_SCLN,        RAISE, SCLN_KEY)
+COMB(NRAISE,        KC_KP_MINUS,    RAISE, N_KEY)
+COMB(ERAISE,        KC_KP_EQUAL,    RAISE, E_KEY)

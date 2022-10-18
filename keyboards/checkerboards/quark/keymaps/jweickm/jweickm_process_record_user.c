@@ -614,10 +614,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_UNDS:
             if (de_layout_active) {
                 return register_unregister_key(record, DE_UNDS);
-            } else {
-                return true;
             }
-            break;
+            return true;
 
             // sends Ralt + " für Umlaute mit Wincompose
         case UMLAUT_RALT:
@@ -645,6 +643,35 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     default:
                         break;
                 }
+            }
+            return false;
+
+        // ===== COMBOS ====
+        case AE_QUOT_CAPS: // for the combo with lower to produce capital letters
+            shifted = true;
+        case AE_QUOT:
+            if (de_layout_active) {
+                return register_unregister_shifted_key(record, DE_QUOT, DE_DQUO);
+            } else {
+                return process_german_keycode(record, DE_ADIA);
+            }
+            return false;
+        case OE_SCLN_CAPS: // for the combo with lower to produce capital letters
+            shifted = true;
+        case OE_SCLN:
+            if (de_layout_active) {
+                return register_unregister_shifted_key(record, DE_SCLN, DE_COLN);
+            } else {
+                return process_german_keycode(record, DE_ODIA);
+            }
+            return false;
+        case UE_BSLS_CAPS: // for the combo with lower to produce capital letters
+            shifted = true;
+        case UE_BSLS:
+            if (de_layout_active) {
+                return register_unregister_shifted_key(record, DE_BSLS, DE_PIPE);
+            } else {
+                return process_german_keycode(record, DE_UDIA);
             }
             return false;
 
