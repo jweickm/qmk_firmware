@@ -175,20 +175,16 @@ enum tap_dance_codes {
 };
 
 // logical variable to differentiate between the German and the English input mode
-bool de_layout_active  = false;
+bool de_layout_active = false;
+
+// controls which of the two languages (en/ge) is used for coding and which is used for typing German
+// English by default
+bool de_en_switched = false;
 
 bool caps_lock_on;
 bool num_lock_on;
 
-// declaring several logical variables
-bool is_alt_tab_active  = false;
-
-// controls which of the two languages (en/ge) is used for coding and which is used for typing German
-// English by default
-bool de_en_switched     = false;
-
 // NAGINATA AND AUDIO STUFF
-
 #ifdef NAGINATA_ENABLE
 bool naginata_active    = false;
 bool come_from_naginata = false;

@@ -203,7 +203,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     const key_override_t lalt_k_kana_override       = ko_make_with_layers_and_negmods(
             MOD_BIT(KC_LALT),   // Trigger mods: LALT
             K_KEY,              // Trigger key: K
-            A(KC_GRV),          // Replacement key: A(KC_GRV)
+            A(KC_GRV),          // Replacement key: KANA
             ~0,                 // Activate on all layers
             MOD_MASK_CSG        // Do not activate when Ctrl, Shift or GUI are pressed
             ); // this override allows us to switch kana by pressing ralt and esc
@@ -554,14 +554,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ |NUMLCK|DESK<-| WHLUP| WHLDN|DESK->| HOME | PGDN | PGUP |  END |UML_SW| MUTE |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |EEPRST| FLASH|REBOOT| ____ | LOWER|     ____    | RAISE| ____ | BRI- | BRI+ | ____ | 2x2uC
+     * |EEPRST| FLASH|REBOOT| ____ | LOWER|     ____    | RAISE| ____ | BRI- | BRI+ | KANA | 2x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_ADJUST] = LAYOUT_planck_mit(
         LLOCK, KC_PSCR, C(KC_RIGHT), OSM(MOD_MEH), OSM(MOD_HYPR), C(KC_LEFT), A(KC_GRV), REDO, UNDO, LANG_SWITCH, KB_LANG_SWITCH, TOGGLE_DUALF, 
         ALT_TAB, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_RALT, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, KC_INS, 
         OSM(MOD_LSFT), KC_NUM_LOCK, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_HOME, KC_PGDN, KC_PGUP, KC_END, UMLAUT_SWITCH, KC_MUTE,
-        QK_CLEAR_EEPROM, QK_BOOT, QK_REBOOT, KC_TRNS, LOWER, KC_TRNS, RAISE, KC_TRNS, KC_BRID, KC_BRIU, KC_TRNS
+        QK_CLEAR_EEPROM, QK_BOOT, QK_REBOOT, KC_TRNS, LOWER, KC_TRNS, RAISE, KC_TRNS, KC_BRID, KC_BRIU, A(KC_GRV)
     ),
 
 /* ----------------------------------------------------------------------------------------

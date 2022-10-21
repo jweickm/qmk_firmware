@@ -1,3 +1,10 @@
+// indicates that kana input was activated
+// for writing Japanese in vim
+bool jap_input = false;
+
+// declaring several logical variables
+bool is_alt_tab_active  = false;
+
 // initialize the mod_state and the osmod_state variables
 uint8_t mod_state;
 uint8_t osmod_state;
@@ -320,14 +327,14 @@ bool caps_word_press_user(uint16_t keycode) {
             return true;
 
         // Keycodes that continue Caps Word, without shifting.
-        case KC_MINS:
+        /* case KC_MINS: */
         case KC_UNDS:
             if (de_layout_active) {
                 return false;
             } else {
                 return true;
             }
-        case DE_MINS:
+        /* case DE_MINS: */
         case DE_UNDS:
             if (!de_layout_active) {
                 return false;
@@ -670,11 +677,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
               if (!de_layout_active && (mod_state == MOD_BIT(KC_LALT))) {
                   tap_code(KC_GRV);
+                  jap_input = !jap_input;
                   return false;
               }
             }
             return true;
 #endif
+        case A(KC_GRV): // KANA: kana switch
+            if (record->event.pressed && !de_layout_active) {
+                jap_input = !jap_input;
+            }
+            return true;
+
 // ================ FROM ADJUST LAYER =================
         case UNDO:
             if (de_layout_active) {
@@ -709,6 +723,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
 
+        case ESC_KEY:
+            /* if (!process_tap_long_press_key(record, KC_LGUI)) { */
+            /*     return false; */
+            /* } */
         case KC_LEAD:
         case KC_ESC:
         case KC_ENT:
@@ -716,15 +734,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (caps_lock_on && record->event.pressed) {
                 tap_code(KC_CAPS);
             }
-            return true;
-
-        case ESC_KEY:
-            if (caps_lock_on && record->event.pressed) {
-                tap_code(KC_CAPS);
+            if (jap_input && !de_layout_active) {
+                tap_code16(A(KC_GRV));
+                jap_input = false;
             }
-            /* if (!process_tap_long_press_key(record, KC_LGUI)) { */
-            /*     return false; */
-            /* } */
             return true;
 
 // ------------------------- UNICODE ----------------------------------------- 
@@ -866,7 +879,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
         case KC_UNDS: // make underscore work for both layouts on the _NUM layer
-            if (IS_LAYER_ON(_NUM) && de_layout_active) {
+            if (de_layout_active && !IS_LAYER_ON(_LOWER_DE) ) {
                 return register_unregister_key(record, DE_UNDS);
             }
             return true;
