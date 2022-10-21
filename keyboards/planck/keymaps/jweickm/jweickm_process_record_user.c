@@ -729,14 +729,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             /* } */
         case KC_LEAD:
         case KC_ESC:
+            if (jap_input && !de_layout_active) {
+                tap_code16(A(KC_GRV));
+                jap_input = false;
+            }
         case KC_ENT:
         case ENT_KEY:
             if (caps_lock_on && record->event.pressed) {
                 tap_code(KC_CAPS);
-            }
-            if (jap_input && !de_layout_active) {
-                tap_code16(A(KC_GRV));
-                jap_input = false;
             }
             return true;
 
