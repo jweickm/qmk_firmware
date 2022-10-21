@@ -573,14 +573,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |  F12 |  F7  |  F8  |  F9  |  F10 |  F11 |   `  |   >  |   ,  |   .  |   /  |   ´  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ |  APP | BSPC | ____ |     ____    | ____ | MAIL | BRID | BRIU | ____ | 2x2uC
+     * | ____ | ____ |  APP | BSPC | ____ |    SPC ____    | ____ | MAIL | BRID | BRIU | ____ | 2x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_RAISE] = LAYOUT_planck_mit(
         KC_TILD, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_BSLS, 
         KC_F6, KC_F1, KC_F2, KC_F3, KC_F4/*TD(TD_F4)*/, KC_F5, KC_LABK, KC_MINS, KC_EQL, KC_LBRC, KC_RBRC, QUOT_KEY, 
         KC_F12, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_GRV, KC_RABK, KC_TRNS, KC_TRNS, KC_TRNS, KC_ACC_ACUT, 
-        KC_TRNS, KC_TRNS, KC_APP, KC_BSPC, KC_TRNS, KC_TRNS, KC_TRNS, KC_MAIL, KC_BRID, KC_BRIU, KC_TRNS
+        KC_TRNS, KC_TRNS, KC_APP, KC_BSPC, KC_TRNS, KC_SPC, KC_TRNS, KC_MAIL, KC_BRID, KC_BRIU, KC_TRNS
     ),
 
 /* ----------------------------------------------------------------------------------------
@@ -592,14 +592,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |  F12 |  F7  |  F8  |  F9  |  F10 |  F11 |   `  |   >  |   ,  |   .  |   /  |   ´  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ |  APP | BSPC | ____ |     ____    | ____ | MAIL | BRID | BRIU | ____ | 2x2uC
+     * | ____ | ____ |  APP | BSPC | ____ |     SPC     | ____ | MAIL | BRID | BRIU | ____ | 2x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_RAISE_DE] = LAYOUT_planck_mit(
         DE_TILD, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, DE_BSLS, 
         KC_F6, KC_F1, KC_F2, KC_F3, KC_F4/*TD(TD_F4)*/, KC_F5, DE_LABK, DE_MINS, DE_EQL, DE_LBRC, DE_RBRC, DE_QUOT, 
         KC_F12, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, DE_GRV, DE_RABK, KC_TRNS, KC_TRNS, KC_TRNS, DE_ACUT, 
-        KC_TRNS, KC_TRNS, KC_APP, KC_BSPC, KC_TRNS, KC_TRNS, KC_TRNS, KC_MAIL, KC_BRID, KC_BRIU, KC_TRNS
+        KC_TRNS, KC_TRNS, KC_APP, KC_BSPC, KC_TRNS, KC_SPC, KC_TRNS, KC_MAIL, KC_BRID, KC_BRIU, KC_TRNS
     ),
 
 /* ----------------------------------------------------------------------------------------
@@ -611,14 +611,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ |  <>  |  {}  |  []  |  ()  | C-END|   ~  |   '  |   <  |   >  |   ?  |   `  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ | ____ | ____ | ____ |     ____    |  ENT | ____ | LEFT | RIGHT| ____ | 1x2uC
+     * | ____ | ____ | ____ | ____ | ____ |     SPC     |  ENT | ____ | LEFT | RIGHT| ____ | 1x2uC
      * `-----------------------------------------------------------------------------------'
      */ 
     [_LOWER] = LAYOUT_planck_mit(
         KC_GRV, KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_PIPE,
         KC_TRNS, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, C(KC_HOME), KC_DQUO, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_DQUO, 
         KC_TRNS, TD(TD_ABK), TD(TD_CBR), TD(TD_BRC), TD(TD_PRN), C(KC_END), KC_TILD, QUOT_KEY, KC_LABK, KC_RABK, KC_QUES, KC_ACC_GRV, 
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_ENT, KC_TRNS, KC_LEFT, KC_RIGHT, KC_TRNS
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_SPC, KC_ENT, KC_TRNS, KC_LEFT, KC_RIGHT, KC_TRNS
     ),
 
 /* ----------------------------------------------------------------------------------------
@@ -630,14 +630,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ |  <>  |  {}  |  []  |  ()  | C-END|   ~  |   '  |   <  |   >  |   ?  |   `  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ | ____ | ____ | ____ |     ____    |  ENT | ____ | LEFT | RIGHT| ____ | 2x2uC
+     * | ____ | ____ | ____ | ____ | ____ |     SPC     |  ENT | ____ | LEFT | RIGHT| ____ | 2x2uC
      * `-----------------------------------------------------------------------------------'
      */ 
     [_LOWER_DE] = LAYOUT_planck_mit(
         DE_GRV, DE_EXLM, DE_AT, DE_HASH, DE_DLR, DE_PERC, DE_CIRC, DE_AMPR, DE_ASTR, DE_LPRN, DE_RPRN, DE_PIPE,
         KC_TRNS, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, C(KC_HOME), DE_DQUO, DE_UNDS, DE_PLUS, DE_LCBR, DE_RCBR, DE_DQUO, 
         KC_TRNS, TD(TD_ABK), TD(TD_CBR), TD(TD_BRC), TD(TD_PRN), C(KC_END), DE_TILD, DE_QUOT, DE_LABK, DE_RABK, DE_QUES, DE_GRV, 
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_ENT, KC_TRNS, KC_LEFT, KC_RIGHT, KC_TRNS
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_SPC, KC_ENT, KC_TRNS, KC_LEFT, KC_RIGHT, KC_TRNS
     ),
 
 /* ----------------------------------------------------------------------------------------
