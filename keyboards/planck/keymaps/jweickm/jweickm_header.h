@@ -32,11 +32,6 @@ NGKEYS naginata_keys;
 // 薙刀式
 #endif
 
-// IMPORTANT: DEFINE THE LAYOUT FOR THE KEYBOARD HERE
-/* #define hand_position 3 // 1: semi-wide, 2: wide, 3: narrow */
-/* #define layout 1 // 1: 1x2uC, 2: 2x2u, 3: grid */
-/* #define thumb 2 // 1: backspace, 2: osm_shift */
-
 #define Q_KEY LT(0, KC_Q)
 #define W_KEY LT(0, KC_W)
 #define F_KEY LT(0, KC_F)
@@ -48,8 +43,6 @@ NGKEYS naginata_keys;
 #define Y_KEY LT(0, KC_Y)
 #define SCLN_KEY LT(0, KC_SCLN)
 
-/* #define G_KEY LT(_ADJUST, KC_G) */
-/* #define M_KEY LT(_ADJUST, KC_M) */
 #define G_KEY KC_G
 #define M_KEY KC_M
 
@@ -104,6 +97,7 @@ NGKEYS naginata_keys;
 #define NAVSPACE    LT(_ADJUST, KC_SPC)
 /* #define ENT_KEY     LT(_ADJUST, KC_ENT) */
 #define ENT_KEY     RGUI_T(KC_ENT)
+
 /* #define CAPS_KEY    LCTL_T(KC_CAPS) */
 #define CAPS_KEY    LGUI_T(KC_CAPS)
 
@@ -116,12 +110,13 @@ NGKEYS naginata_keys;
 #define Y_KEY_DE    LT(1, DE_Y)
 /* #define D_KEY_DE LT(_NUM_DE, KC_D) */
 
+// OS keys
 #define REDO C(KC_Y)
 #define UNDO C(KC_Z)
 
-/* #define COPY_ALL    C(KC_INS) */
-
 #define LLOCK_ADJUST LT(_ADJUST, KC_NO)
+#define LLOCK_NUM LT(_NUM, KC_NO)
+#define LLOCK_MOUSE LT(_MOUSE, KC_NO)
 
 #define NUM_2 LT(0, KC_KP_2)
 #define NUM_3 LT(0, KC_KP_3)
@@ -153,6 +148,8 @@ enum planck_keycodes {
     SZ_KEY,
     KC_DEG,
     TOGGLE_DUALF,
+    /* DUALF_ON, */
+    /* DUALF_OFF, */
     /* LLOCK_ADJUST, */
     AE_QUOT,
     OE_SCLN,
@@ -163,16 +160,14 @@ enum planck_keycodes {
 };
 
 // Tap Dance declarations
+#ifdef TAP_DANCE_ENABLE
 enum tap_dance_codes {
-    TD_PRN,     // round brackets (parentheses)
-    TD_BRC,     // square brackets
-    TD_CBR,     // curly brackets
-    /* TD_VIM_GG,  // single tap to scroll down, double tap to scroll up */
-    /* TD_F4,      // double tap F4 to alt-F4 */
-    /* TD_LARROW,  // double tap left-angling bracket to get left arrow */
-    /* TD_RARROW,  // double tap right-angling bracket to get right arrow */
-    TD_ABK,     // angling brackets
+    TD_LPRN,     // round brackets (parentheses)
+    TD_LBRC,     // square brackets
+    TD_LCBR,     // curly brackets
+    TD_LABK,     // angling brackets
 };
+#endif
 
 // logical variable to differentiate between the German and the English input mode
 bool de_layout_active = false;

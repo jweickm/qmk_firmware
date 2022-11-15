@@ -1,7 +1,5 @@
-// indicates that kana input was activated
-// for writing Japanese in vim
-bool jap_input = false;
-
+#include "features/getreuer/achordion.h"
+#include "features/getreuer/layer_lock.h"
 // declaring several logical variables
 bool is_alt_tab_active  = false;
 
@@ -10,7 +8,7 @@ uint8_t mod_state;
 uint8_t osmod_state;
 bool shifted;
 bool key_tapped;
-bool dualf_off;
+bool is_dualf_off;
 
 #ifdef SPC_SFT
 bool spc_pressed;
@@ -29,6 +27,15 @@ bool toggle_osm_shift(keyrecord_t* record) {
     return true;
 }
 #endif
+
+bool toggle_lock_layer(layer_state_t layer) {
+    if (!IS_LAYER_ON(layer)) {
+        layer_lock_on(layer); // locks and turns on layer
+    } else {
+        layer_lock_off(layer); // unlocks and turns off layer
+    }
+    return false;
+}
 
 void turn_num_lock_on(void) {
     // check the host_keybord's num_lock state and turn num_lock on if it is off
@@ -189,12 +196,60 @@ bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
     return !processed; // returns false when an umlaut was specially processed, else returns true and processing continues 
 }
 
+// ================= TAP DANCE ===============================
+// define the tap dance functions
+#ifdef TAP_DANCE_ENABLE
+void bracket_matching(qk_tap_dance_state_t *state, uint16_t de_key1, uint16_t en_key1, uint16_t de_key2, uint16_t en_key2) {
+    if (de_layout_active) {
+        tap_code16(de_key1);
+    } else {
+        tap_code16(en_key1);
+    }
+    if (state->count > 1) {
+        if (de_layout_active) {
+            tap_code16(de_key2);
+        } else {
+            tap_code16(en_key2);
+        }
+        tap_code(KC_LEFT);
+    }
+}
+
+void dance_lprn(qk_tap_dance_state_t *state, void *user_data) {
+    bracket_matching(state, DE_LPRN, KC_LPRN, DE_RPRN, KC_RPRN);
+}
+
+void dance_lbrc(qk_tap_dance_state_t *state, void *user_data) {
+    bracket_matching(state, DE_LBRC, KC_LBRC, DE_RBRC, KC_RBRC);
+}
+
+void dance_lcbr(qk_tap_dance_state_t *state, void *user_data) {
+    bracket_matching(state, DE_LCBR, KC_LCBR, DE_RCBR, KC_RCBR);
+}
+
+void dance_labk(qk_tap_dance_state_t *state, void *user_data) {
+    bracket_matching(state, DE_LABK, KC_LABK, DE_RABK, KC_RABK);
+}
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+    // declare tap dance actions here
+    [TD_LPRN]    = ACTION_TAP_DANCE_FN(dance_lprn), 
+    [TD_LBRC]    = ACTION_TAP_DANCE_FN(dance_lbrc), 
+    [TD_LCBR]    = ACTION_TAP_DANCE_FN(dance_lcbr), 
+    [TD_LABK]    = ACTION_TAP_DANCE_FN(dance_labk),
+};
+#endif
+
+// ===================================================
+
 float thumb_factor  = 1.05;
 float index_factor  = 1.15;
 float middle_factor = 1.2;
 float ring_factor   = 1.25;
 float pinky_factor  = 1.15;
-float td_factor     = 1.2;
+#ifdef TAP_DANCE_ENABLE
+float td_factor     = 1.10; // used to be 1.20
+#endif
 
 // define the per_key_tapping_term
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
@@ -265,23 +320,21 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case TAB_KEY:
             return TAPPING_TERM; // prefer these ones to be shorter
 
-        // tap-dance actions
-        /* case TD(TD_LARROW): */
-        /* case TD(TD_VIM_GG): */
-        /* case TD(TD_F4): */
-        /* case TD(TD_RARROW): */
-        case TD(TD_PRN):
-        case TD(TD_BRC):
-        case TD(TD_CBR):
-        case TD(TD_ABK):
+        // tap dance actions
+#ifdef TAP_DANCE_ENABLE
+        case TD(TD_LPRN):
+        case TD(TD_LBRC):
+        case TD(TD_LCBR):
+        case TD(TD_LABK):
             return TAPPING_TERM * td_factor;
+#endif
 
         default:
             return TAPPING_TERM;
     }
 }
 
-bool get_tapping_force_hold(uint16_t keycode, keyrecord_t* record) {
+bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case S_KEY:
         case E_KEY:
@@ -365,8 +418,6 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
 
 // ===================== ACHORDION ================================
 
-#include "features/getreuer/achordion.h"
-#include "features/getreuer/layer_lock.h"
 bool achordion_chord(uint16_t tap_hold_keycode,
                      keyrecord_t* tap_hold_record,
                      uint16_t other_keycode,
@@ -503,7 +554,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KB_LANG_SWITCH: // TG(_COLEMAK_DE): switches only kb lang
             if (record->event.pressed) {
                 de_layout_active = !de_layout_active;
-                if (dualf_off) {
+                if (is_dualf_off) {
                     layer_invert(_DE_DUALF);
                     layer_invert(_EN_DUALF);
                 }
@@ -514,16 +565,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 layer_invert(_COLEMAK_DE);
                 de_layout_active = !de_layout_active;  // toggle bool
-                if (dualf_off) {
+                if (is_dualf_off) {
                     layer_invert(_DE_DUALF);
                     layer_invert(_EN_DUALF);
                 }
             }
             return true; //sends A(KC_LSFT) to change OS language
 
+        /* case DUALF_ON: */
+        /*     if (record->event.pressed) { */
+        /*         is_dualf_off = 0; */
+        /*         if (de_layout_active) { */
+        /*             layer_on(_DE_DUALF); */
+        /*         } else { */
+        /*             layer_on(_EN_DUALF); */
+        /*         } */
+        /*     } */
+        /*     return false; */
+        /* case DUALF_OFF: */
+        /*     if (record->event.pressed) { */
+        /*         is_dualf_off = 1; */
+        /*         if (de_layout_active) { */
+        /*             layer_off(_DE_DUALF); */
+        /*         } else { */
+        /*             layer_off(_EN_DUALF); */
+        /*         } */
+        /*     } */
+        /*     return false; */
         case TOGGLE_DUALF: // toggle dual function keys on key release
             if (!record->event.pressed) {
-                dualf_off = !dualf_off;
+                is_dualf_off = !is_dualf_off;
                 if (de_layout_active) {
                     layer_invert(_DE_DUALF);
                 } else {
@@ -546,19 +617,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
             break;
 // ------------------------------- ACTION COMBOS --------------------
+// requires LAYER_LOCK by Getreuer
         // move to the _ADJUST LAYER and llock it
         // if it's already active deactivate it
         case LLOCK_ADJUST:
             if (key_tapped) {
-                if (!IS_LAYER_ON(_ADJUST)) {
-                    layer_lock_on(_ADJUST);
-                } else {
-                    layer_lock_off(_ADJUST);
-                }
-                return false;
+                return toggle_lock_layer(_ADJUST);
             } 
             return true;
             break;
+
+        // move to the _NUM LAYER and llock it
+        // if it's already active deactivate it
+        case LLOCK_NUM:
+            if (key_tapped) {
+                return toggle_lock_layer(_NUM);
+            } 
+            return true;
+            break;
+
+        case LLOCK_MOUSE:
+            if (key_tapped) {
+                return toggle_lock_layer(_MOUSE);
+            } 
+            return true;
+            break;
+
 // shift to osl(_adjust) when held
         case OSL(_UMLAUTS):
             if (record->event.pressed) {
@@ -672,23 +756,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case NUM_3:
             return process_tap_long_press_key(record, KC_DOT);
 
-#ifndef KEY_OVERRIDE_ENABLE
-        case K_KEY:
-            if (record->event.pressed) {
-              if (!de_layout_active && (mod_state == MOD_BIT(KC_LALT))) {
-                  tap_code(KC_GRV);
-                  jap_input = !jap_input;
-                  return false;
-              }
-            }
-            return true;
-#endif
-        case A(KC_GRV): // KANA: kana switch
-            if (record->event.pressed && !de_layout_active) {
-                jap_input = !jap_input;
-            }
-            return true;
-
 // ================ FROM ADJUST LAYER =================
         case UNDO:
             if (de_layout_active) {
@@ -729,10 +796,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             /* } */
         case KC_LEAD:
         case KC_ESC:
-            if (jap_input && !de_layout_active) {
-                tap_code16(A(KC_GRV));
-                jap_input = false;
-            }
         case KC_ENT:
         case ENT_KEY:
             if (caps_lock_on && record->event.pressed) {

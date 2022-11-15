@@ -69,17 +69,17 @@
 
 #define ACHORDION
 
-/* #define HEMINGWAY_MODE // mode that disables backspace and movement keys to focus on writing */
 /* #define QWERTY_LAYER // enables an additional QWERTY layer without mod taps */
                        
 // turns the lower and raise keys into oneshot shift keys 124-130 bytes
 /* #define THUMB_SHIFT */ 
-// adds a space before the thumb shift (only if space was not pressed before)
-/* #define SPC_SFT // */ 
 
 // CAPS WORD SETTINGS
-/* #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD */
+/* #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD // works only on left shift */
 #define CAPS_WORD_IDLE_TIMEOUT 5000 // 5 seconds = default
+#define ONESHOT_TIMEOUT 5000 // Time in ms before the one shot key is released
+
+// ================= TAP DANCE ===============================
 
 // settings for LEADER key
 #define LEADER_PER_KEY_TIMING
