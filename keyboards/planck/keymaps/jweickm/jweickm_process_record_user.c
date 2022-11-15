@@ -8,7 +8,7 @@ uint8_t mod_state;
 uint8_t osmod_state;
 bool shifted;
 bool key_tapped;
-bool is_dualf_off;
+bool dualf_is_off;
 
 #ifdef SPC_SFT
 bool spc_pressed;
@@ -456,6 +456,9 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case UP_KEY:
         case ENT_KEY:
         case Z_KEY_DE:
+        case KC_LCTL:
+        case KC_LALT:
+        case KC_LGUI:
             return 0; // bypass Achordion for these keys
         case Z_KEY:
         case COMM_KEY:
@@ -554,7 +557,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KB_LANG_SWITCH: // TG(_COLEMAK_DE): switches only kb lang
             if (record->event.pressed) {
                 de_layout_active = !de_layout_active;
-                if (is_dualf_off) {
+                if (dualf_is_off) {
                     layer_invert(_DE_DUALF);
                     layer_invert(_EN_DUALF);
                 }
@@ -565,7 +568,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 layer_invert(_COLEMAK_DE);
                 de_layout_active = !de_layout_active;  // toggle bool
-                if (is_dualf_off) {
+                if (dualf_is_off) {
                     layer_invert(_DE_DUALF);
                     layer_invert(_EN_DUALF);
                 }
@@ -574,7 +577,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         /* case DUALF_ON: */
         /*     if (record->event.pressed) { */
-        /*         is_dualf_off = 0; */
+        /*         dualf_is_off = 0; */
         /*         if (de_layout_active) { */
         /*             layer_on(_DE_DUALF); */
         /*         } else { */
@@ -584,7 +587,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         /*     return false; */
         /* case DUALF_OFF: */
         /*     if (record->event.pressed) { */
-        /*         is_dualf_off = 1; */
+        /*         dualf_is_off = 1; */
         /*         if (de_layout_active) { */
         /*             layer_off(_DE_DUALF); */
         /*         } else { */
@@ -594,7 +597,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         /*     return false; */
         case TOGGLE_DUALF: // toggle dual function keys on key release
             if (!record->event.pressed) {
-                is_dualf_off = !is_dualf_off;
+                dualf_is_off = !dualf_is_off;
                 if (de_layout_active) {
                     layer_invert(_DE_DUALF);
                 } else {
@@ -817,14 +820,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_ACC_GRV: // ` (dead)
         case KC_ACC_ACUT: // ´ (dead)
-            /* if (de_layout_active) { */
-            /*     switch(keycode) { */
-            /*         case KC_ACC_ACUT: // ´ (dead) */
-            /*             return register_unregister_key(record, DE_ACUT); */
-            /*         case KC_ACC_GRV: // ` (dead) */
-            /*             return register_unregister_key(record, DE_GRV); */
-            /*     } */
-            /* } */
             if (record->event.pressed) {
                 tap_code(KC_RALT); // using wincompose when on the English Layout
                 switch(keycode) {

@@ -24,7 +24,6 @@ COMB(HSLSH_LEAD,    KC_LEAD,        H_KEY, SLSH_KEY)
 // ---------------------- MEDIA COMBOS ---------------------------
 //   name           result          combo keys
 COMB(DOWNDEL_MPRV,  KC_MPRV,        DOWN_KEY, DEL_KEY)
-/* COMB(UPFN_MNXT,     KC_MNXT,        UP_KEY, FN_KEY) */
 COMB(UPFN_MNXT,     KC_MNXT,        UP_KEY, ENT_KEY)
 COMB(DOWNUP_MPLY,   KC_MPLY,        DOWN_KEY, UP_KEY)
 COMB(DOWNENT_MUTE,  KC_MUTE,        DOWN_KEY, ENT_KEY)

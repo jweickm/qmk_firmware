@@ -25,7 +25,10 @@
 #define PERMISSIVE_HOLD_PER_KEY
 
 #define ACHORDION
-/* #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD */
+// CAPS WORD SETTINGS
+/* #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD // works only on left shift */
+#define CAPS_WORD_IDLE_TIMEOUT 5000 // 5 seconds = default
+#define ONESHOT_TIMEOUT 5000 // Time in ms before the one shot key is released
 
 // turns the lower and raise keys into oneshot shift keys 124-130 bytes
 /* #define THUMB_SHIFT */ 

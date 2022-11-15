@@ -77,17 +77,12 @@ NGKEYS naginata_keys;
 #define LEFT_KEY KC_LEFT
 #define RIGHT_KEY KC_RIGHT
 
-/* #define ESC_KEY     LT(0, KC_ESC) */
 #define ESC_KEY     LALT_T(KC_ESC)
 
-/* #define BSLS_KEY    LT(0, KC_BSLS) */
 #define BSLS_KEY    LALT_T(KC_BSLS)
-/* #define UE_KEY      LT(0, DE_UDIA) */
 #define UE_KEY      LALT_T(DE_UDIA)
 
-/* #define TAB_KEY     KC_TAB */
 #define TAB_KEY     LCTL_T(KC_TAB)
-/* #define QUOT_KEY    LT(0, KC_QUOT) */
 #define QUOT_KEY    RCTL_T(KC_QUOT)
 
 #define DOT_KEY     LT(0, KC_DOT)
@@ -95,10 +90,8 @@ NGKEYS naginata_keys;
 #define SLSH_KEY    LT(0, KC_SLSH)
 
 #define NAVSPACE    LT(_ADJUST, KC_SPC)
-/* #define ENT_KEY     LT(_ADJUST, KC_ENT) */
 #define ENT_KEY     RGUI_T(KC_ENT)
 
-/* #define CAPS_KEY    LCTL_T(KC_CAPS) */
 #define CAPS_KEY    LGUI_T(KC_CAPS)
 
 #define BS_KEY      LT(_NUM, KC_BSPC)
@@ -108,7 +101,6 @@ NGKEYS naginata_keys;
 // GERMAN VERSIONS OF THE KEYS
 #define Z_KEY_DE    LT(1, DE_Z)
 #define Y_KEY_DE    LT(1, DE_Y)
-/* #define D_KEY_DE LT(_NUM_DE, KC_D) */
 
 // OS keys
 #define REDO C(KC_Y)

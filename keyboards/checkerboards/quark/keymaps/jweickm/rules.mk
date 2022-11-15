@@ -1,9 +1,10 @@
 MOUSEKEY_ENABLE 	= yes
 COMMAND_ENABLE		= no
+CONSOLE_ENABLE 		= no        # Console for debug
 RGBLIGHT_ENABLE		= no
 UNICODE_ENABLE		= no
 LEADER_ENABLE 		= no
-TAP_DANCE_ENABLE	= yes
+TAP_DANCE_ENABLE	= no
 NKRO_ENABLE			= no	# 334 bytes
 DYNAMIC_MACRO_ENABLE = no 	# QMK support for temporary macros
 KEY_LOCK_ENABLE 	= no    # enables the use of KC_LOCK
