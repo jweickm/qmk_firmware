@@ -478,7 +478,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 #ifdef ACHORDION
     // for the ACHORDION functionality
-    if (!process_achordion(keycode, record)) { return false; }
+    if (!dualf_is_off) {
+        if (!process_achordion(keycode, record)) { return false; }
+    }
 #endif
     
     // for the custom layer lock key from Getreuer

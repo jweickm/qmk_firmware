@@ -411,6 +411,10 @@ bool caps_word_press_user(uint16_t keycode) {
 bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
     /* Disable combo `SOME_COMBO` on layer `_LAYER_A` */
     switch (combo_index) {
+        /* case RSE_H_NUM: */
+        /*     if (layer_state_is(_NUM)) { */
+        /*         return false; */
+        /*     } */
         default: 
             return true; // keep the combos activated for these layers
     }
@@ -528,7 +532,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     key_tapped = record->event.pressed && record->tap.count;
 
     // for the ACHORDION functionality
-    if (!process_achordion(keycode, record)) { return false; }
+    if (!dualf_is_off) {
+        if (!process_achordion(keycode, record)) { return false; }
+    }
     // for the LAYER_LOCK feature
     if (!process_layer_lock(keycode, record, LLOCK)) { return false; }
     
