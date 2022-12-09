@@ -67,10 +67,10 @@ NGKEYS naginata_keys;
 
 // define the secondary function of the lower and raise keys here
 #define LOWER       LT(_LOWER, KC_BSPC)
-#define RAISE       LT(_RAISE, KC_SPC)
+#define RAISE       LT(_RAISE, KC_MINS)
 // GERMAN VERSIONS OF THE KEYS
 #define LOWER_DE    LT(_LOWER_DE, KC_BSPC)
-#define RAISE_DE    LT(_RAISE_DE, KC_SPC)
+#define RAISE_DE    LT(_RAISE_DE, DE_MINS)
 
 #define DOWN_KEY LT(_LOWER, KC_DOWN)
 #define UP_KEY   LT(_LOWER, KC_UP)

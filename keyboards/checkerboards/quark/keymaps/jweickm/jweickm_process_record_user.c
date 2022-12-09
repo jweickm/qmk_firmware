@@ -358,9 +358,25 @@ bool caps_word_press_user(uint16_t keycode) {
 // ===================== COMBOS ===================================
 bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
     /* Disable combo `SOME_COMBO` on layer `_LAYER_A` */
-    switch (combo_index) {
-        default: 
-            return true; // keep the combos activated for these layers
+    if (layer_state_is(_MOUSE)) {
+        switch (combo_index) {
+            case CD_ESC:
+            case HCOMM_ENT:
+            case LWR_D_MOUSE:
+                return true;
+
+            default:
+                return false;
+        }
+    } else {
+        switch (combo_index) {
+            /* case RSE_H_NUM: */
+            /*     if (layer_state_is(_NUM)) { */
+            /*         return false; */
+            /*     } */
+            default: 
+                return true; // keep the combos activated for these layers
+        }
     }
 }
 
@@ -634,7 +650,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // the next case allows us to use alt_tab without a timer
         case NAVSPACE: 
             if (!record->event.pressed && is_alt_tab_active) {
-                del_mods(MOD_BIT(KC_LALT));
+                unregister_mods(MOD_BIT(KC_LALT));
                 is_alt_tab_active = false;
             }
             return true;
@@ -683,6 +699,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_UNDS: // make underscore work for both layouts on the _NUM layer
             if (de_layout_active && !IS_LAYER_ON(_LOWER_DE) ) {
                 return register_unregister_key(record, DE_UNDS);
+            }
+            return true;
+
+
+        case KC_COLN:
+            if (IS_LAYER_ON(_NUM) && de_layout_active) {
+                return register_unregister_key(record, DE_COLN);
+            }
+            return true;
+
+            // make dead keys send immediately on german keyboard when de_en_switched
+        case DE_GRV:
+        case DE_CIRC:
+            if (record->event.pressed) {
+                if (de_layout_active && de_en_switched) {
+                    tap_code16(keycode);
+                    tap_code(KC_SPC);
+                    return false;
+                }
             }
             return true;
 

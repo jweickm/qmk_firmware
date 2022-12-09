@@ -26,7 +26,7 @@ SRC += features/getreuer/layer_lock.c # add the layer lock feature
 #endif
 
 #ifdef NAGINATA_ENABLE 		# enabled in config.h
-SRC += features/naginata/naginata_v14.c
+# SRC += features/naginata/naginata_v14.c
 #endif
 
 #ifdef UNICODE_SELECTED_MODES 
