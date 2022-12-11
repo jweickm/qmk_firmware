@@ -328,14 +328,14 @@ bool caps_word_press_user(uint16_t keycode) {
             return true;
 
         // Keycodes that continue Caps Word, without shifting.
-        /* case KC_MINS: */
+        case KC_MINS:
         case KC_UNDS:
             if (de_layout_active) {
                 return false;
             } else {
                 return true;
             }
-        /* case DE_MINS: */
+        case DE_MINS:
         case DE_UNDS:
             if (!de_layout_active) {
                 return false;
