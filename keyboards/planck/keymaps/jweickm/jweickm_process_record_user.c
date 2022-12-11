@@ -376,14 +376,14 @@ bool caps_word_press_user(uint16_t keycode) {
             return true;
 
         // Keycodes that continue Caps Word, without shifting.
-        /* case KC_MINS: */
+        case KC_MINS:
         case KC_UNDS:
             if (de_layout_active) {
                 return false;
             } else {
                 return true;
             }
-        /* case DE_MINS: */
+        case DE_MINS:
         case DE_UNDS:
             if (!de_layout_active) {
                 return false;
@@ -418,10 +418,16 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
         }
     } else {
         switch (combo_index) {
-            /* case RSE_H_NUM: */
-            /*     if (layer_state_is(_NUM)) { */
-            /*         return false; */
-            /*     } */
+            case HCOMM_ENT:
+            case COMMDOT_CPSWRD:
+            case HDOT_RALT:
+            case EDOT_BSPC:
+            case NRAISE:
+            case ERAISE:
+            case RAISECOMM_TAB:
+                if (layer_state_is(_NUM)) {
+                    return false;
+                }
             default: 
                 return true; // keep the combos activated for these layers
         }
@@ -797,10 +803,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             /* if (!process_tap_long_press_key(record, KC_LGUI)) { */
             /*     return false; */
             /* } */
-        case KC_LEAD:
+        /* case KC_LEAD: */
         case KC_ESC:
-        case KC_ENT:
-        case ENT_KEY:
+        /* case KC_ENT: */
+        /* case ENT_KEY: */
             if (caps_lock_on && record->event.pressed) {
                 tap_code(KC_CAPS);
             }
