@@ -114,7 +114,7 @@ NGKEYS naginata_keys;
 #define NUM_3 LT(0, KC_KP_3)
 
 #define KB_LANG_SWITCH TG(_COLEMAK_DE)
-#define LANG_SWITCH A(KC_LSFT)
+#define LANG_SWITCH S(KC_LALT)
 
 enum planck_keycodes {
 #ifdef NAGINATA_ENABLE
