@@ -45,7 +45,7 @@ bool register_unregister_key(keyrecord_t* record, uint16_t keycode) {
         register_code16(keycode);
     } else {
         unregister_code16(keycode);
-    } 
+    }
     return false;
 }
 
@@ -69,43 +69,138 @@ bool register_unregister_shifted_key(keyrecord_t* record, uint16_t keycode, uint
     return false;
 }
 
-// define custom function for sending special characters
-#ifdef LEADER_ENABLE
-void SEND_SPECIAL(char key) {
-    switch (key) {
-        case '@':
-            if (de_layout_active) {
-                tap_code16(DE_AT);
+bool process_unicode_alt(uint16_t keycode) {
+//  function to process the unicode characters using windows alt + numpad combos (doesn't work usually, hence switching to wincompose)
+    bool processed = false;
+    add_mods(MOD_BIT(KC_LALT));
+    switch (keycode) {
+        case DE_ADIA:
+            if (shifted || caps_lock_on) {
+                tap_code(KC_P0);
+                tap_code(KC_P1);
+                tap_code(KC_P9);
+                tap_code(KC_P6);  // Ä
             } else {
-                tap_code16(KC_AT);
+                tap_code(KC_P0);
+                tap_code(KC_P2);
+                tap_code(KC_P2);
+                tap_code(KC_P8);  // ä
             }
+            processed = true;
             break;
-        case '+':
-            if (de_layout_active) {
-                tap_code(DE_PLUS);
+        case DE_UDIA:
+            if (shifted || caps_lock_on) {
+                tap_code(KC_P0);
+                tap_code(KC_P2);
+                tap_code(KC_P2);
+                tap_code(KC_P0);  // Ü
             } else {
-                tap_code16(KC_PLUS);
+                tap_code(KC_P0);
+                tap_code(KC_P2);
+                tap_code(KC_P5);
+                tap_code(KC_P2);  // ü
             }
+            processed = true;
             break;
-        /* case '-': */
-        /*     if (de_layout_active) { */
-        /*         tap_code(DE_MINS); */
-        /*     } else { */
-        /*         tap_code(KC_MINS); */
-        /*     } */
-        /*     break; */
-        case '/':
-            if (de_layout_active) {
-                tap_code16(DE_SLSH);
+        case DE_SCLN:
+        case DE_ODIA:
+            if (shifted || caps_lock_on) {
+                tap_code(KC_P0);
+                tap_code(KC_P2);
+                tap_code(KC_P1);
+                tap_code(KC_P4);  // Ö
             } else {
-                tap_code(KC_SLSH);
+                tap_code(KC_P0);
+                tap_code(KC_P2);
+                tap_code(KC_P4);
+                tap_code(KC_P6);  // ö
             }
+            processed = true;
+            break;
+        case DE_EURO:
+            tap_code(KC_P0);
+            tap_code(KC_P1);
+            tap_code(KC_P2);
+            tap_code(KC_P8);  // €
+            processed = true;
+            break;
+        case SZ_KEY:
+            tap_code(KC_P0);
+            tap_code(KC_P2);
+            tap_code(KC_P2);
+            tap_code(KC_P3);  // ß
+            processed = true;
+            break;
+        case KC_DEG:
+            tap_code(KC_P2);
+            tap_code(KC_P4);
+            tap_code(KC_P8);
+            processed = true;
+            break;
+        default:
+            processed = false;
             break;
     }
+    unregister_mods(MOD_LALT);
+    return processed;
 }
-#endif
 
-// define custom function for processing special characters 
+bool process_winc(uint16_t keycode) {
+//  function to process the unicode characters using wincompose
+    bool processed = false;
+    tap_code(KC_RALT);
+    switch (keycode) {
+        case DE_ADIA:
+            tap_code16(KC_DQUO);
+            if (shifted || caps_lock_on) {
+                tap_code16(S(KC_A)); // Ä
+            } else {
+                tap_code(KC_A); // ä
+            }
+            processed = true;
+            break;
+        case DE_UDIA:
+            tap_code16(KC_DQUO);
+            if (shifted || caps_lock_on) {
+                tap_code16(S(KC_U)); // Ü
+            } else {
+                tap_code(KC_U); // ü
+            }
+            processed = true;
+            break;
+        case DE_SCLN:
+        case DE_ODIA:
+            tap_code16(KC_DQUO);
+            if (shifted || caps_lock_on) {
+                tap_code16(S(KC_O)); // Ö
+            } else {
+                tap_code(KC_O); // ö
+            }
+            processed = true;
+            break;
+        case DE_EURO:
+            tap_code(KC_EQL);
+            tap_code(KC_E); // €
+            processed = true;
+            break;
+        case SZ_KEY:
+            tap_code(KC_S);
+            tap_code(KC_S); // ß
+            processed = true;
+            break;
+        case KC_DEG:
+            tap_code(KC_O);
+            tap_code(KC_O);
+            processed = true;
+            break;
+        default:
+            processed = false;
+            break;
+    }
+    return processed;
+}
+
+// define custom function for processing special characters
 bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
     bool processed = false;
     if (record->event.pressed && !(IS_LAYER_ON(_RAISE) || IS_LAYER_ON(_LOWER))) {
@@ -115,81 +210,13 @@ bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
         turn_num_lock_on();
         clear_mods();
         clear_oneshot_mods();
-        add_mods(MOD_BIT(KC_LALT));
-        switch (keycode) {
-            case DE_ADIA:
-                if (shifted || caps_lock_on) {
-                    tap_code(KC_P0);
-                    tap_code(KC_P1);
-                    tap_code(KC_P9);
-                    tap_code(KC_P6);  // Ä
-                } else {
-                    tap_code(KC_P0);
-                    tap_code(KC_P2);
-                    tap_code(KC_P2);
-                    tap_code(KC_P8);  // ä
-                } 
-                processed = true;
-                break;
-            case DE_UDIA:
-                if (shifted || caps_lock_on) {
-                    tap_code(KC_P0);
-                    tap_code(KC_P2);
-                    tap_code(KC_P2);
-                    tap_code(KC_P0);  // Ü
-                } else {
-                    tap_code(KC_P0);
-                    tap_code(KC_P2);
-                    tap_code(KC_P5);
-                    tap_code(KC_P2);  // ü
-                }
-                processed = true;
-                break;
-            case DE_SCLN:
-            case DE_ODIA:
-                if (shifted || caps_lock_on) {
-                    tap_code(KC_P0);
-                    tap_code(KC_P2);
-                    tap_code(KC_P1);
-                    tap_code(KC_P4);  // Ö
-                } else {
-                    tap_code(KC_P0);
-                    tap_code(KC_P2);
-                    tap_code(KC_P4);
-                    tap_code(KC_P6);  // ö
-                }
-                processed = true;
-                break;
-            case DE_EURO:
-                tap_code(KC_P0);
-                tap_code(KC_P1);
-                tap_code(KC_P2);
-                tap_code(KC_P8);  // €
-                processed = true;
-                break;
-            case SZ_KEY:
-                tap_code(KC_P0);
-                tap_code(KC_P2);
-                tap_code(KC_P2);
-                tap_code(KC_P3);  // ß
-                processed = true;
-                break;
-            case KC_DEG:
-                tap_code(KC_P2);
-                tap_code(KC_P4);
-                tap_code(KC_P8);
-                processed = true;
-                break;
-            default:
-                processed = false;
-                break;
-        }
-        unregister_mods(MOD_LALT);
+        /* processed = process_unicode_alt(keycode); */
+        processed = process_winc(keycode);
         set_mods(mod_state);
     } else {
         return true;
-    } 
-    return !processed; // returns false when an umlaut was specially processed, else returns true and processing continues 
+    }
+    return !processed; // returns false when an umlaut was specially processed, else returns true and processing continues
 }
 
 // ================= TAP DANCE ===============================
@@ -229,9 +256,9 @@ void dance_labk(qk_tap_dance_state_t *state, void *user_data) {
 
 qk_tap_dance_action_t tap_dance_actions[] = {
     // declare tap dance actions here
-    [TD_LPRN]    = ACTION_TAP_DANCE_FN(dance_lprn), 
-    [TD_LBRC]    = ACTION_TAP_DANCE_FN(dance_lbrc), 
-    [TD_LCBR]    = ACTION_TAP_DANCE_FN(dance_lcbr), 
+    [TD_LPRN]    = ACTION_TAP_DANCE_FN(dance_lprn),
+    [TD_LBRC]    = ACTION_TAP_DANCE_FN(dance_lbrc),
+    [TD_LCBR]    = ACTION_TAP_DANCE_FN(dance_lcbr),
     [TD_LABK]    = ACTION_TAP_DANCE_FN(dance_labk),
 };
 #endif
@@ -253,8 +280,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         // thumb keys
         case BS_KEY:
         case DEL_KEY:
-        case LOWER: 
-        case LOWER_DE: 
+        case LOWER:
+        case LOWER_DE:
         case RAISE:
         case RAISE_DE:
             return TAPPING_TERM * thumb_factor;
@@ -412,11 +439,10 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
             case HCOMM_ENT:
             case LWR_D_MOUSE:
                 return true;
-
             default:
                 return false;
         }
-    } else {
+    } else if (layer_state_is(_NUM)) {
         switch (combo_index) {
             case HCOMM_ENT:
             case COMMDOT_CPSWRD:
@@ -425,12 +451,13 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
             case NRAISE:
             case ERAISE:
             case RAISECOMM_TAB:
-                if (layer_state_is(_NUM)) {
-                    return false;
-                }
-            default: 
+            case RSE_H_NUM: // combo to disable num_layer
+                return false;
+            default:
                 return true; // keep the combos activated for these layers
         }
+    } else {
+        return true;
     }
 }
 
@@ -535,7 +562,7 @@ static bool process_tap_long_press_key(keyrecord_t* record, uint16_t long_press_
     }
     return true; // Continue default handling for tapped keys
 }
-        
+
 // =================================================================
 // +++++++++++++++++++ PROCESS RECORD USER +++++++++++++++++++++++++
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -551,7 +578,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     // for the LAYER_LOCK feature
     if (!process_layer_lock(keycode, record, LLOCK)) { return false; }
-    
+
     // make sure that num_lock is turned on, when on the _NUM layer
     if (IS_LAYER_ON(_NUM)) {
         turn_num_lock_on();
@@ -569,7 +596,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return true; // toggle _COLEMAK_DE
-                         
+
         case LANG_SWITCH: // sends A(LSFT): switches both system lang and kb lang
             if (record->event.pressed) {
                 layer_invert(_COLEMAK_DE);
@@ -621,7 +648,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     PLAY_SONG(coding_de_song);
                 }
 #endif
-                de_en_switched = !de_en_switched;   
+                de_en_switched = !de_en_switched;
             }
             return false;
             break;
@@ -632,7 +659,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case LLOCK_ADJUST:
             if (key_tapped) {
                 return toggle_lock_layer(_ADJUST);
-            } 
+            }
             return true;
             break;
 
@@ -641,25 +668,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case LLOCK_NUM:
             if (key_tapped) {
                 return toggle_lock_layer(_NUM);
-            } 
+            }
             return true;
             break;
 
         case LLOCK_MOUSE:
             if (key_tapped) {
                 return toggle_lock_layer(_MOUSE);
-            } 
+            }
             return true;
             break;
 
-// shift to osl(_adjust) when held
+// add shift to OSL(_UMLAUTS) when held
         case OSL(_UMLAUTS):
             if (record->event.pressed) {
                 if (record->tap.count < 1) { // when key is held
                     add_mods(MOD_BIT(KC_LSFT)); // add the shift
                 }
             } else {
-                del_mods(MOD_BIT(KC_LSFT)); // release the shift 
+                del_mods(MOD_BIT(KC_LSFT)); // release the shift
             }
             return true;
             break;
@@ -722,19 +749,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case SCLN_KEY: // case for the base English Colemak Layer (continues in the next case)
             if (!process_tap_long_press_key(record, KC_0)) {
                 return false;
-            } 
-        case KC_SCLN: // case DE_ODIA: 
+            }
+        case KC_SCLN: // case DE_ODIA:
             // first process the DE_ODIA case in the _UMLAUTS layer
             if (IS_LAYER_ON(_UMLAUTS)) {
                 return process_german_keycode(record, keycode);
-            } 
+            }
             // then process the key normally when de_en is not switched
-            if (!de_en_switched) { 
-                return true; 
-            } 
+            if (!de_en_switched) {
+                return true;
+            }
             if (de_layout_active) {
                 return register_unregister_shifted_key(record, DE_SCLN, DE_COLN);
-            } 
+            }
             return process_german_keycode(record, DE_ODIA);// sending Ö
             break;
 
@@ -784,7 +811,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (!is_alt_tab_active) {
                     is_alt_tab_active = true;
                     add_mods(MOD_BIT(KC_LALT));
-                } 
+                }
                 register_code(KC_TAB);
             } else {
                 unregister_code(KC_TAB);
@@ -792,7 +819,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
 
         // the next case allows us to use alt_tab without a timer
-        case NAVSPACE: 
+        case NAVSPACE:
             if (!record->event.pressed && is_alt_tab_active) {
                 unregister_mods(MOD_BIT(KC_LALT));
                 is_alt_tab_active = false;
@@ -812,7 +839,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
 
-// ------------------------- UNICODE ----------------------------------------- 
+// ------------------------- UNICODE -----------------------------------------
         /* case UMLAUT_RALT: */
         /*     if (record->event.pressed) { */
         /*         tap_code16(KC_RALT); */
@@ -841,13 +868,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
 
-// ------------------------- GERMAN KEYMAP ----------------------------------------- 
+// ------------------------- GERMAN KEYMAP -----------------------------------------
         case Z_KEY_DE:
             return process_tap_long_press_key(record, DE_SS);
         case Z_KEY: // Z - ß
             if (record->event.pressed && record->tap.count < 1) { // key is held
                 return process_german_keycode(record, SZ_KEY);
-            } 
+            }
             return true;
             break;
         case COMM_KEY:
@@ -885,7 +912,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return (process_tap_long_press_key(record, KC_QUES)); // ?
             }
             break;
-            
+
 #ifdef THUMB_SHIFT
         case LOWER:
         case LOWER_DE:
@@ -905,7 +932,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
 #ifdef THUMB_SHIFT
             return toggle_osm_shift(record);
-#else 
+#else
             return true;
 #endif
 
@@ -914,7 +941,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case DE_UDIA:
             if (IS_LAYER_ON(_UMLAUTS)) {
                 return process_german_keycode(record, keycode);
-            } 
+            }
             return true;
         case KC_DEG:
             if (de_layout_active) {
@@ -927,7 +954,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case DE_EURO:
             return process_german_keycode(record, keycode); // returns true for de_layout_active
         // ===== PROCESS_GERMAN_KEYCODE =======
-                                                            
+
         case KC_KP_EQUAL: // =
             if (de_layout_active) {
                 return register_unregister_key(record, DE_EQL);
@@ -941,23 +968,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
 
-        case KC_COLN:
-            if (IS_LAYER_ON(_NUM) && de_layout_active) {
-                return register_unregister_key(record, DE_COLN);
+        case KC_HASH: // make hash work as a combo for both layouts
+            if (de_layout_active && !IS_LAYER_ON(_LOWER_DE) ) {
+                return register_unregister_key(record, DE_HASH);
             }
             return true;
 
-            // make dead keys send immediately on german keyboard when de_en_switched
-        case DE_GRV:
-        case DE_CIRC:
-            if (record->event.pressed) {
-                if (de_layout_active && de_en_switched) {
-                    tap_code16(keycode);
-                    tap_code(KC_SPC);
-                    return false;
-                }
-            }
-            return true;
+        /* case KC_COLN: */
+        /*     if (IS_LAYER_ON(_NUM) && de_layout_active) { */
+        /*         return register_unregister_key(record, DE_COLN); */
+        /*     } */
+        /*     return true; */
 
             // ===== COMBOS ====
         case AE_QUOT_CAPS: // for the combo with lower to produce capital letters
@@ -1000,86 +1021,44 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
                 return true;
             }
-        case KC_HASH: // #
-            if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code(DE_HASH);
-                } else {
-                    unregister_code(DE_HASH);
-                }
-                return false;
-            } else {
-                return true;
-            }
         case KC_TILD: // ~
             if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_TILD);
-                } else {
-                    unregister_code16(DE_TILD);
-                }
-                return false;
-            } else {
-                return true;
+                return register_unregister_key(record, DE_TILD);
             }
+            return true;
         case KC_CIRC: // ^
             if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_CIRC);
-                } else {
-                    unregister_code16(DE_CIRC);
-                }
-                return false;
-            } else {
-                return true;
+                return register_unregister_key(record, DE_CIRC);
             }
+            return true;
         case KC_AMPR: // &
             if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_AMPR);
-                } else {
-                    unregister_code16(DE_AMPR);
-                }
-                return false;
-            } else {
-                return true;
+                return register_unregister_key(record, DE_AMPR);
             }
+            return true;
         case KC_ASTR: // *
             if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_ASTR);
-                } else {
-                    unregister_code16(DE_ASTR);
-                }
-                return false;
-            } else {
-                return true;
+                return register_unregister_key(record, DE_ASTR);
             }
+            return true;
         case KC_LPRN: // (
             if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_LPRN);
-                } else {
-                    unregister_code16(DE_LPRN);
-                }
-                return false;
-            } else {
-                return true;
+                return register_unregister_key(record, DE_LPRN);
             }
+            return true;
         case KC_RPRN: // )
             if (de_layout_active) {
-                if (record->event.pressed) {
-                    register_code16(DE_RPRN);
-                } else {
-                    unregister_code16(DE_RPRN);
-                }
-                return false;
-            } else {
-                return true;
+                return register_unregister_key(record, DE_RPRN);
             }
+            return true;
         case KC_MINS: // -
             if (de_layout_active) {
                 return register_unregister_key(record, DE_MINS);
+            }
+            return true;
+        case KC_HASH: // #
+            if (de_layout_active) {
+                return register_unregister_key(record, DE_HASH);
             }
             return true;
         case KC_EQL: // =

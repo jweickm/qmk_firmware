@@ -54,6 +54,8 @@ COMB(SCLNLOWER,     OE_SCLN_CAPS,   LOWER, SCLN_KEY)
 COMB(NLOWER,        KC_UNDS,        LOWER, N_KEY)
 COMB(ELOWER,        KC_KP_PLUS,     LOWER, E_KEY)
 COMB(QLOWER,        KC_EXLM,        LOWER, Q_KEY)
+COMB(FLOWER,        KC_HASH,        LOWER, F_KEY)
+COMB(PLOWER,        KC_DLR,         LOWER, P_KEY)
 COMB(LOWERC_APP,    KC_APP,         LOWER, C_KEY)
 
 /* // -------------------- RAISE COMBOS ----------------------------- */
