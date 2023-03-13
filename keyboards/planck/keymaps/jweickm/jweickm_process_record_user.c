@@ -289,8 +289,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM * (thumb_factor + 0.1);
 
         // index finger keys
-        /* case G_KEY: */
-        /* case M_KEY: */
+        case G_KEY:
+        case M_KEY:
         case P_KEY:
         case T_KEY:
         case V_KEY:

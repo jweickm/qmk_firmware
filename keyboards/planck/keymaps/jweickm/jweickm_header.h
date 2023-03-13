@@ -43,8 +43,8 @@ NGKEYS naginata_keys;
 #define Y_KEY LT(0, KC_Y)
 #define SCLN_KEY LT(0, KC_SCLN)
 
-#define G_KEY KC_G
-#define M_KEY KC_M
+#define G_KEY LT(_UMLAUTS, KC_G)
+#define M_KEY LT(_UMLAUTS, KC_M)
 
 #define A_KEY LGUI_T(KC_A)
 #define R_KEY LALT_T(KC_R)
