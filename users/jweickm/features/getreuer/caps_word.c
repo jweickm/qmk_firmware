@@ -1,4 +1,4 @@
-// Copyright 2021-2022 Google LLC
+// Copyright 2021-2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,23 +11,29 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//
-//
-// For full documentation, see
-// https://getreuer.info/posts/keyboards/caps-word
+
+/**
+ * @file caps_word.c
+ * @brief Caps Word implementation
+ *
+ * For full documentation, see
+ * <https://getreuer.info/posts/keyboards/caps-word>
+ */
 
 #include "caps_word.h"
 
 static bool caps_word_active = false;
 
-#pragma message "Caps Word is now a core QMK feature! To use it, update your QMK set up and see https://docs.qmk.fm/#/feature_caps_word"
+#pragma message \
+    "Caps Word is now a core QMK feature! To use it, update your QMK set up and see https://docs.qmk.fm/#/feature_caps_word"
 
 // Many keyboards enable the Command feature, which by default is also activated
 // by Left Shift + Right Shift. It can be configured to use a different key
 // combination by defining IS_COMMAND(). We make a non-fatal warning if Command
 // is enabled but IS_COMMAND() is *not* defined.
 #if defined(COMMAND_ENABLE) && !defined(IS_COMMAND)
-#pragma message "Caps Word and Command should not be enabled at the same time, since both use the Left Shift + Right Shift key combination. Please disable Command, or ensure that `IS_COMMAND` is not set to (get_mods() == MOD_MASK_SHIFT)."
+#pragma message \
+    "Caps Word and Command should not be enabled at the same time, since both use the Left Shift + Right Shift key combination. Please disable Command, or ensure that `IS_COMMAND` is not set to (get_mods() == MOD_MASK_SHIFT)."
 #endif  // defined(COMMAND_ENABLE) && !defined(IS_COMMAND)
 
 #if CAPS_WORD_IDLE_TIMEOUT > 0
@@ -46,15 +52,61 @@ void caps_word_task(void) {
 }
 #endif  // CAPS_WORD_IDLE_TIMEOUT > 0
 
+#ifdef CAPS_WORD_INVERT_ON_SHIFT
+static uint8_t held_mods = 0;
+
+static bool handle_shift(uint16_t keycode, keyrecord_t* record) {
+#ifndef NO_ACTION_TAPPING
+  switch (keycode) {
+    case QK_MOD_TAP ... QK_MOD_TAP_MAX:
+      if (record->tap.count == 0) {  // Mod-tap key is held.
+        switch (QK_MOD_TAP_GET_MODS(keycode)) {
+          case MOD_LSFT:
+            keycode = KC_LSFT;
+            break;
+          case MOD_RSFT:
+            keycode = KC_RSFT;
+            break;
+        }
+      }
+  }
+#endif  // NO_ACTION_TAPPING
+
+  if (keycode == KC_LSFT || keycode == KC_RSFT) {
+    const uint8_t mod = MOD_BIT(keycode);
+
+    if (is_caps_word_on()) {
+      if (record->event.pressed) {
+        held_mods |= mod;
+      } else {
+        held_mods &= ~mod;
+      }
+      return false;
+    } else if ((held_mods & mod) != 0) {
+      held_mods &= ~mod;
+      del_mods(mod);
+      return record->event.pressed;
+    }
+  }
+
+  return true;
+}
+#endif  // CAPS_WORD_INVERT_ON_SHIFT
+
 bool process_caps_word(uint16_t keycode, keyrecord_t* record) {
 #ifdef CAPS_WORD_TOGGLE_KEY
-  if (keycode == CAPSWRD) {  // Pressing CAPSWRD toggles Caps Word.
+  if (keycode == CW_TOGG) {  // Pressing CW_TOGG toggles Caps Word.
     if (record->event.pressed) {
       caps_word_toggle();
     }
     return false;
   }
 #endif  // CAPS_WORD_TOGGLE_KEY
+#ifdef CAPS_WORD_INVERT_ON_SHIFT
+  if (!handle_shift(keycode, record)) {
+    return false;
+  }
+#endif  // CAPS_WORD_INVERT_ON_SHIFT
 
 #ifndef NO_ACTION_ONESHOT
   const uint8_t mods = get_mods() | get_oneshot_mods();
@@ -75,7 +127,9 @@ bool process_caps_word(uint16_t keycode, keyrecord_t* record) {
 #endif  // CAPS_WORD_IDLE_TIMEOUT > 0
   }
 
-  if (!record->event.pressed) { return true; }
+  if (!record->event.pressed) {
+    return true;
+  }
 
   if (!(mods & ~(MOD_MASK_SHIFT | MOD_BIT(KC_RALT)))) {
     switch (keycode) {
@@ -99,7 +153,7 @@ bool process_caps_word(uint16_t keycode, keyrecord_t* record) {
           // * For Shift + AltGr (MOD_RSFT | MOD_RALT), pass RSFT(KC_RALT).
           // * AltGr (MOD_RALT) is ignored.
           // * Otherwise stop Caps Word.
-          const uint8_t mods = (keycode >> 8) & 0x1f;
+          const uint8_t mods = QK_MOD_TAP_GET_MODS(keycode);
           switch (mods) {
             case MOD_LSFT:
               keycode = KC_LSFT;
@@ -113,43 +167,60 @@ bool process_caps_word(uint16_t keycode, keyrecord_t* record) {
             default:
               if (mods != MOD_RALT) {
                 caps_word_off();
+#ifdef CAPS_WORD_INVERT_ON_SHIFT
+                add_mods(held_mods);
+#endif  // CAPS_WORD_INVERT_ON_SHIFT
               }
               return true;
           }
         } else {
-          keycode &= 0xff;
+          keycode = QK_MOD_TAP_GET_TAP_KEYCODE(keycode);
         }
         break;
 
 #ifndef NO_ACTION_LAYER
       case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
 #endif  // NO_ACTION_LAYER
-        if (record->tap.count == 0) { return true; }
-        keycode &= 0xff;
+        if (record->tap.count == 0) {
+          return true;
+        }
+        keycode = QK_LAYER_TAP_GET_TAP_KEYCODE(keycode);
         break;
 #endif  // NO_ACTION_TAPPING
 
 #ifdef SWAP_HANDS_ENABLE
       case QK_SWAP_HANDS ... QK_SWAP_HANDS_MAX:
-        if (keycode > 0x56F0 || record->tap.count == 0) { return true; }
-        keycode &= 0xff;
+        if (IS_SWAP_HANDS_KEYCODE(keycode) || record->tap.count == 0) {
+          return true;
+        }
+        keycode = QK_SWAP_HANDS_GET_TAP_KEYCODE(keycode);
         break;
 #endif  // SWAP_HANDS_ENABLE
     }
 
     clear_weak_mods();
     if (caps_word_press_user(keycode)) {
+#ifdef CAPS_WORD_INVERT_ON_SHIFT
+      if (held_mods) {
+        set_weak_mods(get_weak_mods() ^ MOD_BIT(KC_LSFT));
+      }
+#endif  // CAPS_WORD_INVERT_ON_SHIFT
       send_keyboard_report();
       return true;
     }
   }
 
   caps_word_off();
+#ifdef CAPS_WORD_INVERT_ON_SHIFT
+  add_mods(held_mods);
+#endif  // CAPS_WORD_INVERT_ON_SHIFT
   return true;
 }
 
 void caps_word_on(void) {
-  if (caps_word_active) { return; }
+  if (caps_word_active) {
+    return;
+  }
 
   clear_mods();
 #ifndef NO_ACTION_ONESHOT
@@ -164,7 +235,9 @@ void caps_word_on(void) {
 }
 
 void caps_word_off(void) {
-  if (!caps_word_active) { return; }
+  if (!caps_word_active) {
+    return;
+  }
 
   unregister_weak_mods(MOD_BIT(KC_LSFT));  // Make sure weak shift is off.
   caps_word_active = false;
@@ -202,4 +275,3 @@ __attribute__((weak)) bool caps_word_press_user(uint16_t keycode) {
       return false;  // Deactivate Caps Word.
   }
 }
-

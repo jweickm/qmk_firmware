@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2022-2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,10 +11,14 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-//
-//
-// For full documentation, see
-// https://getreuer.info/posts/keyboards/achordion
+
+/**
+ * @file achordion.c
+ * @brief Achordion implementation
+ *
+ * For full documentation, see
+ * <https://getreuer.info/posts/keyboards/achordion>
+ */
 
 #include "achordion.h"
 
@@ -50,34 +54,35 @@ static void recursively_process_record(keyrecord_t* record, uint8_t state) {
   achordion_state = state;
 }
 
-// Sends hold press event and settles the active tap-hold key as held.
-static void settle_as_hold(void) {
-  eager_mods = 0;
-  // Create hold press event.
-  recursively_process_record(&tap_hold_record, STATE_HOLDING);
-}
-
 // Clears eagerly-applied mods.
 static void clear_eager_mods(void) {
   unregister_mods(eager_mods);
   eager_mods = 0;
 }
 
+// Sends hold press event and settles the active tap-hold key as held.
+static void settle_as_hold(void) {
+  clear_eager_mods();
+  // Create hold press event.
+  recursively_process_record(&tap_hold_record, STATE_HOLDING);
+}
+
 bool process_achordion(uint16_t keycode, keyrecord_t* record) {
   // Don't process events that Achordion generated.
-  if (achordion_state == STATE_RECURSING) { return true; }
+  if (achordion_state == STATE_RECURSING) {
+    return true;
+  }
 
   // Determine whether the current event is for a mod-tap or layer-tap key.
-  const bool is_mt = QK_MOD_TAP <= keycode && keycode <= QK_MOD_TAP_MAX;
-  const bool is_tap_hold =
-      is_mt || (QK_LAYER_TAP <= keycode && keycode <= QK_LAYER_TAP_MAX);
+  const bool is_mt = IS_QK_MOD_TAP(keycode);
+  const bool is_tap_hold = is_mt || IS_QK_LAYER_TAP(keycode);
   // Check key position to avoid acting on combos.
-  const bool is_physical_pos = (record->event.key.row < 254
-                             && record->event.key.col < 254);
+  const bool is_physical_pos = (record->event.key.row < KEYLOC_COMBO &&
+                                record->event.key.col < KEYLOC_COMBO);
 
   if (achordion_state == STATE_RELEASED) {
-    if (is_tap_hold && record->tap.count == 0 &&
-        record->event.pressed && is_physical_pos) {
+    if (is_tap_hold && record->tap.count == 0 && record->event.pressed &&
+        is_physical_pos) {
       // A tap-hold key is pressed and considered by QMK as "held".
       const uint16_t timeout = achordion_timeout(keycode);
       if (timeout > 0) {
@@ -88,15 +93,15 @@ bool process_achordion(uint16_t keycode, keyrecord_t* record) {
         hold_timer = record->event.time + timeout;
 
         if (is_mt) {  // Apply mods immediately if they are "eager."
-          uint8_t mod = (tap_hold_keycode >> 8) & 0x1f;
+          uint8_t mod = mod_config(QK_MOD_TAP_GET_MODS(tap_hold_keycode));
           if (achordion_eager_mod(mod)) {
             eager_mods = ((mod & 0x10) == 0) ? mod : (mod << 4);
             register_mods(eager_mods);
           }
         }
 
-        dprintf("Achordion: Key 0x%04X pressed.%s\n",
-            keycode, eager_mods ? " Set eager mods." : "");
+        dprintf("Achordion: Key 0x%04X pressed.%s\n", keycode,
+                eager_mods ? " Set eager mods." : "");
         return false;  // Skip default handling.
       }
     }
@@ -113,7 +118,7 @@ bool process_achordion(uint16_t keycode, keyrecord_t* record) {
       recursively_process_record(&tap_hold_record, STATE_RELEASED);
     } else {
       dprintf("Achordion: Key released.%s\n",
-          eager_mods ? " Clearing eager mods." : "");
+              eager_mods ? " Clearing eager mods." : "");
       if (is_mt) {
         clear_eager_mods();
       }
@@ -179,15 +184,15 @@ static bool on_left_hand(keypos_t pos) {
 #ifdef SPLIT_KEYBOARD
   return pos.row < MATRIX_ROWS / 2;
 #else
-  return (MATRIX_COLS > MATRIX_ROWS)
-      ? pos.col < MATRIX_COLS / 2 : pos.row < MATRIX_ROWS / 2;
+  return (MATRIX_COLS > MATRIX_ROWS) ? pos.col < MATRIX_COLS / 2
+                                     : pos.row < MATRIX_ROWS / 2;
 #endif
 }
 
 bool achordion_opposite_hands(const keyrecord_t* tap_hold_record,
                               const keyrecord_t* other_record) {
-  return on_left_hand(tap_hold_record->event.key)
-      != on_left_hand(other_record->event.key);
+  return on_left_hand(tap_hold_record->event.key) !=
+         on_left_hand(other_record->event.key);
 }
 
 // By default, use the BILATERAL_COMBINATIONS rule to consider the tap-hold key
@@ -204,17 +209,7 @@ __attribute__((weak)) uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
   return 1000;
 }
 
-// By default, hold Shift and Ctrl mods eagerly.
+// By default, Shift and Ctrl mods are eager, and Alt and GUI are not.
 __attribute__((weak)) bool achordion_eager_mod(uint8_t mod) {
-  switch (mod) {
-    case MOD_LSFT:
-    case MOD_RSFT:
-    case MOD_LCTL:
-    case MOD_RCTL:
-      return true;
-
-    default:
-      return false;
-  }
+  return (mod & (MOD_LALT | MOD_LGUI)) == 0;
 }
-
