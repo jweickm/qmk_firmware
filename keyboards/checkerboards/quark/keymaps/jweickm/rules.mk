@@ -16,8 +16,8 @@ COMBO_ENABLE 		= yes
 VPATH				+= keyboards/gboards/
 
 #ifdef ACHORDION
-SRC += features/achordion.c
-SRC += features/layer_lock.c
+SRC += features_/getreuer/achordion.c # use older version saved locally
+SRC += features/getreuer/layer_lock.c
 #endif
 
 #reduce firmware size by enabling link time optimization

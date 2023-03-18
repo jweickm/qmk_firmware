@@ -365,8 +365,6 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
         case LOWER_DE:
         case RAISE:
         case RAISE_DE:
-        case D_KEY:
-        case H_KEY:
             return true; // force hold and disable key repeating for homerow shift
         default:
             return false; // allow hold and key repeating by default
@@ -450,10 +448,10 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
             case COMMDOT_CPSWRD:
             case HDOT_RALT:
             case EDOT_BSPC:
-            /* case NRAISE: */
-            /* case ERAISE: */
-            /* case RAISECOMM_TAB: */
-            /* case RSE_H_NUM: // combo to disable num_layer */
+            case NRAISE:
+            case ERAISE:
+            case RAISECOMM_TAB:
+            case RSE_H_NUM: // combo to disable num_layer
                 return false;
             default:
                 return true; // keep the combos activated for these layers

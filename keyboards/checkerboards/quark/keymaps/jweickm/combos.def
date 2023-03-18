@@ -18,6 +18,7 @@ COMB(HDOT_RALT,     KC_RALT,        H_KEY, DOT_KEY)
 COMB(COMMDOT_CPSWRD,CAPS_WORD,      COMM_KEY, DOT_KEY)
 COMB(EDOT_BSPC,     C(KC_BSPC),     E_KEY, DOT_KEY)
 COMB(SCLNBSLS_BSPC, KC_BSPC,        SCLN_KEY, BSLS_KEY)
+COMB(YSCLN_TAB,     KC_TAB,         Y_KEY, SCLN_KEY)
 
 // ---------------------- MEDIA COMBOS ---------------------------
 //   name           result          combo keys
@@ -31,7 +32,7 @@ COMB(DELUP_MAIL,    KC_MAIL,        DEL_KEY, UP_KEY) // mutes the mic with batch
 //   name           result          combo keys
 COMB(LWR_RSE_ADJ,   LLOCK_ADJUST,   LOWER, RAISE)
 COMB(LWR_D_MOUSE,   LLOCK_MOUSE,    LOWER, D_KEY)
-COMB(RSE_H_NUM,     LLOCK_NUM,      RAISE, H_KEY)
+COMB(ESLSH_H_NUM,   LLOCK_NUM,      E_KEY, SLSH_KEY)
 COMB(BS_DEL_DUALF,  TOGGLE_DUALF,   BS_KEY, DEL_KEY)
 
 // --------------------- DUAL HAND COMBOS -------------------------------
@@ -60,9 +61,10 @@ COMB(LOWERC_APP,    KC_APP,         LOWER, C_KEY)
 
 /* // -------------------- RAISE COMBOS ----------------------------- */
 /* //   name           result          combo keys */
-COMB(QUOTRAISE,     AE_QUOT,        RAISE, QUOT_KEY)
-COMB(BSLSRAISE,     UE_BSLS,        RAISE, BSLS_KEY)
-COMB(SCLNRAISE,     OE_SCLN,        RAISE, SCLN_KEY)
-COMB(NRAISE,        KC_KP_MINUS,    RAISE, N_KEY)
-COMB(ERAISE,        KC_KP_EQUAL,    RAISE, E_KEY)
-COMB(RAISECOMM_TAB, KC_TAB,         RAISE, COMM_KEY)
+/* COMB(QUOTRAISE,     AE_QUOT,        RAISE, QUOT_KEY) */
+/* COMB(BSLSRAISE,     UE_BSLS,        RAISE, BSLS_KEY) */
+/* COMB(SCLNRAISE,     OE_SCLN,        RAISE, SCLN_KEY) */
+/* COMB(NRAISE,        KC_KP_MINUS,    RAISE, N_KEY) */
+/* COMB(ERAISE,        KC_KP_EQUAL,    RAISE, E_KEY) */
+/* COMB(RAISECOMM_TAB, KC_TAB,         RAISE, COMM_KEY) */
+

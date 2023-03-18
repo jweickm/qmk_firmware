@@ -1,7 +1,7 @@
  /* Copyright 2022 Jakob Weickmann
- * CHECKERBOARDS/QUARK
+ * PLANCK/REV6
  *
- * This program is free software: you can redistribute it and/or modify
+ This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
@@ -14,160 +14,46 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include "jweickm.h"
 
-#include QMK_KEYBOARD_H
-#include "keymap_german.h"
+// =========================================================================================
 
-enum planck_layers {
-    _COLEMAK = 0,
-    _EN_DUALF,
-    _COLEMAK_DE,
-    _DE_DUALF,
-    _UMLAUTS,
-    _NUM,
-    /* _NAV, */
-    _ADJUST,
-    _RAISE,
-    _RAISE_DE,
-    _LOWER,
-    _LOWER_DE,
-    _MOUSE,
-};
+#ifdef NAGINATA_ENABLE
+// 薙刀式
+void matrix_init_user(void) {
+  uint16_t ngonkeys[]  = {NG_DUMMY, NG_DUMMY};
+  uint16_t ngoffkeys[] = {NG_DUMMY, NG_DUMMY};
+  set_naginata(_NAGINATA, ngonkeys, ngoffkeys);
+// set_naginata(_NAGINATA);
+}
+// 薙刀式
+#endif
 
-// Define key names here
-#define Q_KEY LT(0, KC_Q)
-#define W_KEY LT(0, KC_W)
-#define F_KEY LT(0, KC_F)
-#define P_KEY LT(0, KC_P)
-#define B_KEY LT(0, KC_B)
-#define J_KEY LT(0, KC_J)
-#define L_KEY LT(0, KC_L)
-#define U_KEY LT(0, KC_U)
-#define Y_KEY LT(0, KC_Y)
-#define Y_KEY_DE LT(1, DE_Y)
-#define SCLN_KEY LT(0, KC_SCLN)
+#include "jweickm.c"
 
-#define G_KEY LT(_NUM, KC_G)
-#define M_KEY LT(_MOUSE, KC_M)
+#ifdef KEY_OVERRIDE_ENABLE
+    const key_override_t combo_delete_key_override  = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
+    const key_override_t lalt_k_kana_override       = ko_make_with_layers_and_negmods(
+            MOD_BIT(KC_LALT),   // Trigger mods: LALT
+            K_KEY,              // Trigger key: K
+            A(KC_GRV),          // Replacement key: KANA
+            ~0,                 // Activate on all layers
+            MOD_MASK_CSG        // Do not activate when Ctrl, Shift or GUI are pressed
+            ); // this override allows us to switch kana by pressing ralt and esc
 
-#define A_KEY LGUI_T(KC_A)
-#define R_KEY LALT_T(KC_R)
-#define S_KEY LSFT_T(KC_S)
-#define T_KEY LCTL_T(KC_T)
-#define N_KEY RCTL_T(KC_N)
-#define E_KEY RSFT_T(KC_E)
-#define I_KEY LALT_T(KC_I)
-#define O_KEY RGUI_T(KC_O)
-
-#define D_KEY LT(_UMLAUTS, KC_D)
-#define H_KEY LT(_UMLAUTS, KC_H)
-
-#define Z_KEY LT(0, KC_Z)
-#define Z_KEY_DE LT(1, DE_Z)
-#define X_KEY LT(0, KC_X)
-#define C_KEY LT(0, KC_C)
-#define V_KEY LT(0, KC_V)
-
-#define K_KEY KC_K
-
-//=====================================
-
-// define the secondary function of the lower and raise keys here
-#define LOWER LT(_LOWER, KC_BSPC)
-#define RAISE LT(_RAISE, KC_SPC)
-#define LOWER_DE LT(_LOWER_DE, KC_BSPC)
-#define RAISE_DE LT(_RAISE_DE, KC_SPC)
-
-#define DOWN_KEY LT(_LOWER, KC_DOWN)
-#define UP_KEY LT(_LOWER, KC_UP)
-
-#define ESC_KEY     LALT_T(KC_ESC)
-
-#define BSLS_KEY    LALT_T(KC_BSLS)
-#define UE_KEY      LALT_T(DE_UDIA)
-
-#define TAB_KEY     LCTL_T(KC_TAB)
-#define QUOT_KEY    RCTL_T(KC_QUOT)
-
-#define DOT_KEY     LT(0, KC_DOT)
-#define COMM_KEY    LT(0, KC_COMM)
-#define SLSH_KEY    LT(0, KC_SLSH)
-
-#define NAVSPACE    LT(_ADJUST, KC_SPC)
-#define ENT_KEY     RGUI_T(KC_ENT)
-#define CAPS_KEY    LGUI_T(KC_CAPS)
-
-#define BS_KEY      LT(_NUM, KC_BSPC)
-#define DEL_KEY     LT(_MOUSE, KC_DEL)
-
-#define UNDO        C(KC_Z)
-#define REDO        C(KC_Y)
-
-#define LLOCK_ADJUST LT(_ADJUST, KC_NO)
-#define LLOCK_NUM LT(_NUM, KC_NO)
-#define LLOCK_MOUSE LT(_MOUSE, KC_NO)
-
-#define NUM_2 LT(0, KC_KP_2)
-#define NUM_3 LT(0, KC_KP_3)
-
-#define KB_LANG_SWITCH TG(_COLEMAK_DE)
-#define LANG_SWITCH S(KC_LALT)
-
-enum planck_keycodes {
-    COLEMAK = SAFE_RANGE,
-    VIM_O,
-    ALT_TAB,
-    KC_ACC_GRV,
-    KC_ACC_ACUT,
-    /* KB_LANG_SWITCH, */
-    /* LANG_SWITCH, */
-    UMLAUT_SWITCH,
-    /* UMLAUT_RALT, */
-    LLOCK, // layer lock key
-    SZ_KEY,
-    KC_DEG,
-    TOGGLE_DUALF,
-    AE_QUOT,
-    OE_SCLN,
-    UE_BSLS,
-    AE_QUOT_CAPS,
-    OE_SCLN_CAPS,
-    UE_BSLS_CAPS,
-    /* LLOCK_ADJUST, */
-};
-
-// =============== HELPER VARIABLES
-// logical variable to differentiate between the German and the English input mode
-bool de_layout_active  = false;
-
-// declaring several logical variables
-bool caps_lock_on;
-bool num_lock_on;
-// controls which of the two languages (en/ge) is used for coding and which is used for typing German
-// English by default
-bool de_en_switched     = false;
-
-
-// ============ TAP DANCE ================
-// Tap Dance declarations
-#ifdef TAP_DANCE_ENABLE
-enum tap_dance_codes {
-    TD_LPRN,     // round brackets (parentheses)
-    TD_LBRC,     // square brackets
-    TD_LCBR,     // curly brackets
-    TD_LABK,     // angling brackets
+// This globally defines all key overrides to be used
+const key_override_t **key_overrides = (const key_override_t *[]){
+    &lalt_k_kana_override,
+    /* &combo_delete_key_override, */
+    /* &lalt_esc_kana_override, */
+    NULL // Null terminate the array of overrides!
 };
 #endif
 
-// ==== PROCESS RECORD USER
-#include "g/keymap_combo.h"
-#include "jweickm_process_record_user.c"
-
-// for leader functionality
 #ifdef LEADER_ENABLE
 LEADER_EXTERNS();
 #endif
-// ===============================================
+
 void matrix_scan_user(void) {
 
 #ifdef LEADER_ENABLE
@@ -179,32 +65,136 @@ void matrix_scan_user(void) {
 #endif
 }
 
+#ifdef RGBLIGHT_ENABLE
+// Set RGB to change with layer changes
+#define HSV_DARKORANGE 10, 255, 255
+#define HSV_GRASS 57, 255, 100
+#define HSV_OCEAN 148, 255, 100
+#define HSV_DARKMAGENTA 201, 255, 255
+#define HSV_DARKRED 0, 255, 100
+#define HSV_EGGSHELL 30, 10, 255
+
+// Light LEDs 1 to 10 in green when COLEMAK is active
+const rgblight_segment_t PROGMEM my_layer0_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_OCEAN});
+// Light LEDs 1 to 10 in green when de_layout_active is true
+const rgblight_segment_t PROGMEM my_layer1_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_GRASS});
+// Light LEDs 1 to 10 in darkorange when QWERTY layer is active
+const rgblight_segment_t PROGMEM my_layer2_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_DARKORANGE});
+// Light LEDs 1 to 10 in red when GAMING layer is active
+const rgblight_segment_t PROGMEM my_layer3_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_DARKRED});
+// Light LEDs 1 to 10 in goldenrod when _MOUSE is active
+const rgblight_segment_t PROGMEM my_layer4_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_ORANGE});
+// Light LEDs 1 to 10 in white when _NUM is active
+const rgblight_segment_t PROGMEM my_layer5_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 10, HSV_DARKMAGENTA});
+// Light bottom LEDs in eggshell when _ADJUST layer is active
+const rgblight_segment_t PROGMEM my_layer6_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 2, HSV_EGGSHELL}, {7, 3, HSV_EGGSHELL});
+// Light bottom LEDs and corner LEDs in darkorange when caps lock is active. Hard to ignore!
+const rgblight_segment_t PROGMEM my_capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 4, HSV_DARKORANGE}, {6, 3, HSV_DARKORANGE});
+// Light LEDs 1 to 10 in green when recording a macro
+const rgblight_segment_t PROGMEM my_macro_layer[] = RGBLIGHT_LAYER_SEGMENTS({0, 4, HSV_GREEN}, {6, 3, HSV_GREEN});
+
+// Now define the array of layers. Later layers take precedence
+const rgblight_segment_t *const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(my_layer0_layer,   // 1 colemak
+                                                                               my_layer1_layer,   // 2 de_layout
+                                                                               my_layer2_layer,   // 3 qwerty
+                                                                               my_layer3_layer,   // 4 gaming
+                                                                               my_layer4_layer,   // 5 mouse
+                                                                               my_layer5_layer,   // 6 _num
+                                                                               my_layer6_layer,   // 7 adjust
+                                                                               my_capslock_layer, // 8 capslock
+                                                                               my_macro_layer     // 9 recording macro
+);
+
+#endif
+
+void keyboard_post_init_user(void) {
+#ifdef RGBLIGHT_ENABLE
+    // Enable the LED layers
+    rgblight_layers = my_rgb_layers;
+#endif
+}
+
 bool led_update_user(led_t led_state) {
-    caps_lock_on = led_state.caps_lock;
-    num_lock_on  = led_state.num_lock;
+#ifdef RGBLIGHT_ENABLE
+#ifdef DYNAMIC_MACRO_ENABLE
+    rgblight_set_layer_state(8, isRecording); // turn on the adjust layer when recording otf macros
+#endif
+    rgblight_set_layer_state(7, led_state.caps_lock);
+    rgblight_set_layer_state(1, de_layout_active);
+#endif
+    caps_lock_on    = led_state.caps_lock;
+    num_lock_on     = led_state.num_lock;
     return true;
 }
 
+#ifdef RGBLIGHT_ENABLE
+layer_state_t layer_state_set_user(layer_state_t state) {
+    rgblight_set_layer_state(1, de_layout_active);
+    rgblight_set_layer_state(2, layer_state_cmp(state, _QWERTY));
+    rgblight_set_layer_state(3, layer_state_cmp(state, _GAMING));
+    rgblight_set_layer_state(4, layer_state_cmp(state, _MOUSE));
+    rgblight_set_layer_state(5, layer_state_cmp(state, _NUM));
+    rgblight_set_layer_state(6, layer_state_cmp(state, _ADJUST));
+#ifdef NAGINATA_ENABLE
+    rgblight_set_layer_state(2, layer_state_cmp(state, _NAGINATA));
+    if (layer_state_cmp(state, _NAGINATA)) {
+        naginata_active = true;
+    } else {
+        naginata_active = false;
+    }
+#endif
+    //if (layer_state_cmp(state, _LOWER) && layer_state_cmp(state, _RAISE))  {
+    //    return state | (1UL << _ADJUST);
+    //} else {
+    //    return state & ~(1UL << _ADJUST);
+    //}
+    // state = update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+    //rgblight_set_layer_state(5, layer_state_cmp(state, _ADJUST));
+    return state;
+}
+
+layer_state_t default_layer_state_set_user(layer_state_t state) {
+    rgblight_set_layer_state(0, layer_state_cmp(state, _COLEMAK));
+    return state;
+}
+#endif
+
+
+void led_set_user(uint8_t usb_led) {
+}
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+/* ================================================================================================
+*  ================================================================================================
+* NARROW HAND POSITION (3) for MT3 SUSUWATARI
+     * ,-----------------------------------------------------------------------------------.
+     * |      |      |      |      |      |      |      |      |      |      |      |      |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * |      |      |      |      |  __  |      |      |  __  |      |      |      |      |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * |      |      |      |      |      |      |      |      |      |      |      |      |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * |      |      |      |      |      |             |      |      |      |      |      |
+     * `-----------------------------------------------------------------------------------'
+     */
+
 /* ----------------------------------------------------------------------------------------
 * _COLEMAK
      * ,-----------------------------------------------------------------------------------.
+     * | ESC  |   Q  |   W  |   F  |   P  |   B  |   J  |   L  |   U  |   Y  |  ;:  |  \|  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ESC  |   Q  |   W  |   F  |   P  |   B  |   J  |   L  |   U  |   Y  |   ;: |   \| |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | TAB  |   A  |   R  |   S  |   T  |   G  |   M  |   N  |   E  |   I  |   O  |   '" |
+     * | TAB  |   A  |   R  |   S  |   T  |   G  |   M  |   N  |   E  |   I  |   O  |  '"  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | LSFT |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  | RSFT |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |C-CAPS|  WIN |  LALT|  BS  |LOWER |   NAV-SPC   | RAISE|  DEL | DOWN |  UP  |  ENT | 1x2uC
+     * |C-CAPS|  WIN |  LALT|  BS  |LOWER |   NAV-SPC   | RAISE|  DEL | Mo ↓ | Mo ↑ |  ENT | 1x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_COLEMAK] = LAYOUT_planck_mit(
-        ESC_KEY, Q_KEY, W_KEY, F_KEY, P_KEY, B_KEY, J_KEY, L_KEY, U_KEY, Y_KEY, SCLN_KEY, BSLS_KEY,
-        TAB_KEY, A_KEY, R_KEY, S_KEY, T_KEY, G_KEY, M_KEY, N_KEY, E_KEY, I_KEY, O_KEY, QUOT_KEY,
+        ESC_KEY, Q_KEY, W_KEY, F_KEY, P_KEY, B_KEY, J_KEY, L_KEY, U_KEY, Y_KEY, SCLN_KEY, BSLS_KEY, // LT(0, DE_UDIA),
+        TAB_KEY, A_KEY, R_KEY, S_KEY, T_KEY, G_KEY, M_KEY, N_KEY, E_KEY, I_KEY, O_KEY, QUOT_KEY, // KC_QUOT,
         OSM(MOD_LSFT), Z_KEY, X_KEY, C_KEY, D_KEY, V_KEY, K_KEY, H_KEY, COMM_KEY, DOT_KEY, SLSH_KEY, OSM(MOD_RSFT)/*ENT_KEY*/,
         KC_LCTL, KC_LGUI, KC_LALT, BS_KEY, LOWER,   NAVSPACE   , RAISE, DEL_KEY, DOWN_KEY, UP_KEY, ENT_KEY/*FN_KEY*/
-        /* LCTL_T(KC_CAPS), KC_LGUI, KC_LALT, BS_KEY, LOWER, NAVSPACE, RAISE, DEL_KEY, DOWN_KEY, UP_KEY, ENT_KEY */
     ),
 
 /* ----------------------------------------------------------------------------------------
@@ -241,7 +231,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_COLEMAK_DE] = LAYOUT_planck_mit(
-        _______, Q_KEY, W_KEY, F_KEY, P_KEY, B_KEY, J_KEY, L_KEY, U_KEY, Y_KEY_DE, SCLN_KEY, UE_KEY,
+        _______, Q_KEY, W_KEY, F_KEY, P_KEY, B_KEY, J_KEY, L_KEY, U_KEY, Y_KEY_DE, SCLN_KEY, UE_KEY,//BSLS_KEY,
         _______, A_KEY, R_KEY, S_KEY, T_KEY, G_KEY, M_KEY, N_KEY, E_KEY, I_KEY, O_KEY, QUOT_KEY,
         _______, Z_KEY_DE, X_KEY, C_KEY, D_KEY, V_KEY, K_KEY, H_KEY, COMM_KEY, DOT_KEY, SLSH_KEY, _______,
         _______, _______, _______, _______, LOWER_DE,   NAVSPACE   ,RAISE_DE, _______, _______, _______, _______
@@ -286,6 +276,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
+// ----------------------------------------------------------------------------------------
+#ifdef NAGINATA_ENABLE
+/* 薙刀式
+     * ,----------------------------------------------------------------------------------.
+     * | ____ |  小  |き  ぬ|て  り|し  む|  <-  |  ->  |さ  え|う　わ|す  ゆ|へ  ：| TATE |
+     * +------|------+------+------+------+------+------+------+------+------+------+------|
+     * | ____ |あ  せ|け  め|と  に|か゛ま|っ  ち|く  や|の゛ー|る　も|い　よ|お  つ| KOTI |
+     * +------|------+------+------+------+------+------+------+------+------+------+------|
+     * | ____ |  ほ  |  ひ  |は  を|こ゜、|そ  み|た  ろ|な゜。|ん  ね|ら  ふ|れ　ふ| ____ |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | EISU | ____ | ____ | ____ | ____ |   NGSHFT    | ____ | ____ | ____ | ____ | ____ | 1x2uC
+     * `-----------------------------------------------------------------------------------'
+     */
+    [_NAGINATA] = LAYOUT_planck_mit(
+       _______, NG_Q, NG_W, NG_E, NG_R, NG_T, NG_Y, NG_U, NG_I, NG_O, NG_P, NG_TAYO,
+       _______, NG_A, NG_S, NG_D, NG_F, NG_G, NG_H, NG_J, NG_K, NG_L, NG_SCLN, NG_KOTI,
+       _______, NG_Z, NG_X, NG_C, NG_V, NG_B, NG_N, NG_M, NG_COMM, NG_DOT, NG_SLSH, _______,
+        EISU, _______, _______, _______, _______, NG_SHFT, _______, _______, _______, _______, _______
+        EISU, _______, _______, _______, NG_SHFT2, NG_SHFT, _______, _______, _______, _______, _______
+    ),
+// 薙刀式
+#endif
+
 /* ----------------------------------------------------------------------------------------
 * _NUM
      * ,-----------------------------------------------------------------------------------.
@@ -304,46 +317,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, KC_DEG, DE_EURO, _______, _______, KC_KP_MINUS, KC_KP_1, NUM_2, NUM_3, KC_KP_SLASH, KC_UNDS,
         _______, _______, _______, _______, KC_BSPC, _______, KC_KP_0, DOT_KEY, COMM_KEY, KC_KP_EQUAL, _______
     ),
-
-    /* ======================== PLAN FOR SPLITTING UP _ADJUST AND _NAV LAYERS ========================== */
-/* ----------------------------------------------------------------------------------------
-* _NAV
-     * ,-----------------------------------------------------------------------------------.
-     * | LLOCK| ____ | C(->)|  MEH | HYPR | C(<-)| ____ | REDO | UNDO | ____ | ____ | ____ |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |A(TAB)| LGUI | LALT | LSFT | LCTL |CPYALL| LEFT | DOWN |  UP  | RIGHT| VIM_O| ____ |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ |DESK<-| WHLUP| WHLDN|DESK->| HOME | PGDN | PGUP |  END | ____ | ____ |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ | ____ | ____ | LOWER|     ____    | RAISE| ____ | BRI- | BRI+ | ____ | 2x2uC
-     * `-----------------------------------------------------------------------------------'
-     */
-    /* [_NAV] = LAYOUT_planck_mit( */
-    /*     LLOCK, _______, C(KC_RIGHT), OSM(MOD_MEH), OSM(MOD_HYPR), C(KC_LEFT), _______, REDO, UNDO, _______, _______, _______, */
-    /*     ALT_TAB, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, COPY_ALL, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, _______, */
-    /*     OSM(MOD_LSFT), _______, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_HOME, KC_PGDN, KC_PGUP, KC_END, _______, _______, */
-    /*     _______, _______, _______, _______, LOWER, _______, RAISE, _______, KC_BRID, KC_BRIU, _______ */
-    /* ), */
-
-/* ----------------------------------------------------------------------------------------
-* _ADJUST
-     * ,-----------------------------------------------------------------------------------.
-     * | LLOCK| PRINT| C(->)|  MEH | HYPR | C(<-)| KANA | REDO | UNDO | LANG |KBLANG| DUALF|
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |  F6  |  F1  |  F2  |  F3  |  F4  |  F5  | LEFT | DOWN |  UP  | RIGHT| VIM_O|  INS |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |  F12 |  F7  |  F8  |  F9  |  F10 |  F11 |   `  |   >  |   ,  |NUMLCK|UML_SW| CAPS |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |EEPRST| FLASH|REBOOT| ____ | LOWER|     ____    | RAISE| ____ | BRI- | BRI+ | ____ | 2x2uC
-     * `-----------------------------------------------------------------------------------'
-     */
-    /* [_ADJUST] = LAYOUT_planck_mit( */
-    /*     LLOCK, KC_PSCR, C(KC_RIGHT), OSM(MOD_MEH), OSM(MOD_HYPR), C(KC_LEFT), A(KC_GRV), REDO, UNDO, LANG_SWITCH, KB_LANG_SWITCH, TOGGLE_DUALF, */
-    /*     ALT_TAB, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, COPY_ALL, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, KC_INS, */
-    /*     OSM(MOD_LSFT), KC_NUM_LOCK, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_HOME, KC_PGDN, KC_PGUP, KC_END, UMLAUT_SWITCH, KC_CAPS, */
-    /*     QK_CLEAR_EEPROM, QK_BOOT, QK_REBOOT, _______, LOWER, _______, RAISE, _______, KC_BRID, KC_BRIU, _______ */
-    /* ), */
-/* ======================== PLAN FOR SPLITTING UP _ADJUST AND _NAV LAYERS ========================== */
 
 /* ----------------------------------------------------------------------------------------
 * _ADJUST
@@ -445,9 +418,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ,-----------------------------------------------------------------------------------.
      * | LLOCK|C-HOME| BTN4 | M ↑  | BTN5 | C-END|  F16 |  F17 |  F18 |  F19 |  F20 |  F21 |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ |DESK<-| M <- | M ↓  | M -> |DESK->|  F15 | RCTL | RSFT | LALT | RGUI | ____ |
+     * | ____ |WHL <-| M <- | M ↓  | M -> |WHL ->|  F15 | RCTL | RSFT | LALT | RGUI | ____ |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | LSFT |WHL <-|WHL ↑ |WHL ↓ |WHL ->|  F14 |  F13 | BTN4 | BTN5 |SCRLCK| ____ |
+     * | ____ | LSFT |DESK<-|WHL ↑ |WHL ↓ |DESK->|  F14 |  F13 | BTN4 | BTN5 |SCRLCK| ____ |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | ____ | ____ | BTN 3| BTN 2|    BTN 1    | LLOCK|  SPC | VOL- | VOL+ | ____ | 2x2uC
      * `-----------------------------------------------------------------------------------'
@@ -459,4 +432,3 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, KC_BTN3, KC_BTN2, KC_BTN1, LLOCK, KC_SPC, KC_VOLD, KC_VOLU, _______
     ),
 };
-

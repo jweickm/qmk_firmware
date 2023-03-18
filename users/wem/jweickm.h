@@ -1,22 +1,20 @@
 #pragma once
-
 #include QMK_KEYBOARD_H
-/* #include "muse.h" */
+
 #include "keymap_german.h"
 
+#include "g/keymap_combo.h"
+
+#include "features/getreuer/achordion.h"
+#include "features/getreuer/layer_lock.h"
+
 enum planck_layers {
-    _COLEMAK = 0,
+    _COLEMAK=0,
     _EN_DUALF,
     _COLEMAK_DE,
     _DE_DUALF,
     _UMLAUTS,
-#ifdef NAGINATA_ENABLE
-    // 薙刀式
-    _NAGINATA, // 薙刀式入力レイヤー
-    // 薙刀式
-#endif
     _NUM,
-    /* _NAV, */
     _ADJUST,
     _RAISE,
     _RAISE_DE,
@@ -24,13 +22,6 @@ enum planck_layers {
     _LOWER_DE,
     _MOUSE,
 };
-
-#ifdef NAGINATA_ENABLE
-// 薙刀式
-#include "features/naginata/naginata.h"
-NGKEYS naginata_keys;
-// 薙刀式
-#endif
 
 #define Q_KEY LT(0, KC_Q)
 #define W_KEY LT(0, KC_W)
@@ -117,17 +108,7 @@ NGKEYS naginata_keys;
 #define LANG_SWITCH S(KC_LALT)
 
 enum planck_keycodes {
-#ifdef NAGINATA_ENABLE
-    // 薙刀式: SAFE_RANGE -> NG_SAFE_RANGE
-    COLEMAK = NG_SAFE_RANGE,
-    EISU,
-    KANA2,
-    NG_DUMMY,
-    NAGINATA_SWITCH,
-    // 薙刀式
-#else
     COLEMAK = SAFE_RANGE,
-#endif
     VIM_O,
     ALT_TAB,
     KC_ACC_GRV,
@@ -170,37 +151,3 @@ bool de_en_switched = false;
 
 bool caps_lock_on;
 bool num_lock_on;
-
-// NAGINATA AND AUDIO STUFF
-#ifdef NAGINATA_ENABLE
-bool naginata_active    = false;
-bool come_from_naginata = false;
-#endif
-
-#ifdef AUDIO_ENABLE
-bool     muse_mode      = false;
-uint8_t  last_muse_note = 0;
-uint16_t muse_counter   = 0;
-uint8_t  muse_offset    = 70;
-uint16_t muse_tempo     = 50;
-
-float macro_on_song[][2]        = SONG(SCROLL_LOCK_ON_SOUND);
-float macro_off_song[][2]       = SONG(SCROLL_LOCK_OFF_SOUND);
-float tone_caps_on[][2]         = SONG(CAPS_LOCK_ON_SOUND);
-float tone_caps_off[][2]        = SONG(CAPS_LOCK_OFF_SOUND);
-float colemak_de_song[][2]      = SONG(PLANCK_SOUND);
-float colemak_en_song[][2]      = SONG(COLEMAK_SOUND);
-float gaming_song[][2]          = SONG(CHROMATIC_SOUND);
-float chat_song[][2]            = SONG(VOICE_CHANGE_SOUND);
-
-float coding_de_song[][2]       = SONG(PLOVER_SOUND);
-float coding_en_song[][2]       = SONG(PLOVER_GOODBYE_SOUND);
-float umlaut_on_song[][2]       = SONG(DVORAK_SOUND);
-float umlaut_off_song[][2]      = SONG(WORKMAN_SOUND);
-
-#ifdef NAGINATA_ENABLE
-float naginata_on_sound[][2]    = SONG(PLOVER_SOUND);
-float naginata_off_sound[][2]   = SONG(PLOVER_GOODBYE_SOUND);
-#endif
-#endif
-
