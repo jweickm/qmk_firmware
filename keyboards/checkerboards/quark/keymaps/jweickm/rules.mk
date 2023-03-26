@@ -16,7 +16,7 @@ COMBO_ENABLE 		= yes
 VPATH				+= keyboards/gboards/
 
 #ifdef ACHORDION
-SRC += features_/getreuer/achordion.c # use older version saved locally
+SRC += features/getreuer/achordion.c # use older version saved locally
 SRC += features/getreuer/layer_lock.c
 #endif
 

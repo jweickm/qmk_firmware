@@ -21,7 +21,7 @@ COMBO_ENABLE = yes 			# Enable Keyboard Combos 1,764 bytes
 VPATH += keyboards/gboards/ # Enable gboard combo engine
 
 #ifdef ACHORDION
-SRC += features_/getreuer/achordion.c # add the achordion feature # using legacy version
+SRC += features/getreuer/achordion.c # add the achordion feature # using legacy version
 SRC += features/getreuer/layer_lock.c # add the layer lock feature
 #endif
 
