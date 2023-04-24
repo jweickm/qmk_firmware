@@ -28,6 +28,9 @@
 // if defined, sets the layout to wide_layout.c, else it's the narrow_layout.c
 #define WIDE_LAYOUT
 
+// if defined, allows the usage of the non-dualfunction layers
+#define DUALFUNC
+
 // CAPS WORD SETTINGS
 /* #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD // works only on left shift */
 #define CAPS_WORD_IDLE_TIMEOUT 5000 // 5 seconds = default

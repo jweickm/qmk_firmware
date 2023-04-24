@@ -603,10 +603,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KB_LANG_SWITCH: // TG(_COLEMAK_DE): switches only kb lang
             if (record->event.pressed) {
                 de_layout_active = !de_layout_active;
+#ifdef DUALFUNC
                 if (dualf_is_off) {
                     layer_invert(_DE_DUALF);
                     layer_invert(_EN_DUALF);
                 }
+#endif
             }
             return true; // toggle _COLEMAK_DE
 
@@ -614,10 +616,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 layer_invert(_COLEMAK_DE);
                 de_layout_active = !de_layout_active;  // toggle bool
+#ifdef DUALFUNC
                 if (dualf_is_off) {
                     layer_invert(_DE_DUALF);
                     layer_invert(_EN_DUALF);
                 }
+#endif
             }
             return true; //sends A(KC_LSFT) to change OS language
 
@@ -641,6 +645,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         /*         } */
         /*     } */
         /*     return false; */
+#ifdef DUALFUNC
         case TOGGLE_DUALF: // toggle dual function keys on key release
             if (!record->event.pressed) {
                 dualf_is_off = !dualf_is_off;
@@ -651,6 +656,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;
+#endif
 
         case UMLAUT_SWITCH:
             if (record->event.pressed) {
