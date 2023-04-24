@@ -284,6 +284,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case LOWER_DE:
         case RAISE:
         case RAISE_DE:
+        case ESC_KEY:
+        case TAB_KEY:
             return TAPPING_TERM * thumb_factor;
         case NAVSPACE:
             return TAPPING_TERM * (thumb_factor + 0.1);
@@ -309,7 +311,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case C_KEY:
         case U_KEY:
         case COMM_KEY:
-        case NUM_2:
+        /* case NUM_2: */
             return TAPPING_TERM * middle_factor;
 
         // ring finger keys
@@ -320,11 +322,11 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case Y_KEY_DE:
         case I_KEY:
         case DOT_KEY:
-        case NUM_3:
+        /* case NUM_3: */
             return TAPPING_TERM * ring_factor;
 
         // pinky keys
-        case ESC_KEY:
+        /* case ESC_KEY: */
         case Q_KEY:
         case A_KEY:
         case O_KEY:
@@ -334,13 +336,15 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case SLSH_KEY:
             return TAPPING_TERM * pinky_factor;
         case CAPS_KEY:
+#ifndef WIDE_LAYOUT
         case OSM(MOD_LSFT):
         case OSM(MOD_RSFT):
-        case ENT_KEY:
         case BSLS_KEY:
         case UE_KEY:
-        case QUOT_KEY:
         case TAB_KEY:
+#endif
+        case QUOT_KEY:
+        case ENT_KEY:
             return TAPPING_TERM; // prefer these ones to be shorter
 
         // tap dance actions
@@ -699,6 +703,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
 
 // add shift to OSL(_UMLAUTS) when held
+#ifndef WIDE_LAYOUT
         case OSL(_UMLAUTS):
             if (record->event.pressed) {
                 if (record->tap.count < 1) { // when key is held
@@ -709,6 +714,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
             break;
+#endif
 // ------------------------ SPECIAL FUNCTION KEYS ------------------------------------
         case VIM_O:
             if (record->event.pressed) {
@@ -865,6 +871,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // the next case allows us to use alt_tab without a timer
         case NAVSPACE:
         case ENT_KEY:
+        case TAB_KEY:
             if (!record->event.pressed && is_alt_tab_active) {
                 unregister_mods(MOD_BIT(KC_LALT));
                 is_alt_tab_active = false;
