@@ -1,5 +1,5 @@
 // OLKB PLANCK REV6
-// COMBOS FOR THE WIDE LAYOUT
+// COMBOS FOR THE NARROW LAYOUT
 // ---------------------- GENERAL FUNCTION COMBOS  ----------------
 //   name           result          combo keys
 // LEFT HAND
@@ -9,49 +9,50 @@ COMB(XS_DEL,        C(KC_DEL),      X_KEY, S_KEY)
 COMB(WF_TAB,        KC_TAB,         W_KEY, F_KEY)
 COMB(XC_CPSWRD,     CAPS_WORD,      X_KEY, C_KEY)
 COMB(ZS_SZ,         SZ_KEY,         Z_KEY, S_KEY)
+COMB(WP_UMLAUT,     OSL(_UMLAUTS),  W_KEY, P_KEY)
 COMB(QF_WINSFT,     G(KC_LSFT),     Q_KEY, F_KEY)
-COMB(QW_DEL,        KC_DEL,         Q_KEY, W_KEY)
+COMB(ESCQ_DEL,      KC_DEL,         ESC_KEY, Q_KEY)
 
 // RIGHT HAND
 COMB(HCOMM_ENT,     KC_ENT,         H_KEY, COMM_KEY)
 COMB(HDOT_RALT,     KC_RALT,        H_KEY, DOT_KEY)
 COMB(COMMDOT_CPSWRD,CAPS_WORD,      COMM_KEY, DOT_KEY)
 COMB(EDOT_BSPC,     C(KC_BSPC),     E_KEY, DOT_KEY)
-COMB(YQUOT,         KC_BSPC,        Y_KEY, QUOT_KEY)
-//COMB(YSCLN_TAB,     KC_TAB,         Y_KEY, SCLN_KEY)
+COMB(SCLNBSLS_BSPC, KC_BSPC,        SCLN_KEY, BSLS_KEY)
+COMB(YSCLN_TAB,     KC_TAB,         Y_KEY, SCLN_KEY)
 
 // ---------------------- MEDIA COMBOS ---------------------------
 //   name           result          combo keys
-//COMB(DOWNDEL_MNXT,  KC_MNXT,        DOWN_KEY, DEL_KEY)
-COMB(VOLUBRIU_MNXT, KC_MNXT,        KC_VOLU, KC_BRIU)
-COMB(VOLDBRID_MPRV, KC_MPRV,        KC_VOLD, KC_BRID)
-//COMB(LOWDEL_MPRV,   KC_MPRV,        LOWER, DOWN_KEY)
-//COMB(DOWNUP_MPLY,   KC_MPLY,        DOWN_KEY, UP_KEY)
-COMB(BRIDBRIU_MPLY, KC_MPLY,        KC_BRID, KC_BRIU)
-//COMB(DOWNENT_MUTE,  KC_MUTE,        DOWN_KEY, ENT_KEY)
-COMB(DELUP_MUTE,    KC_MUTE,        DEL_KEY, UP_KEY) // mutes the mic with batch script
+COMB(DOWNDEL_MPRV,  KC_MPRV,        DOWN_KEY, DEL_KEY)
+COMB(UPFN_MNXT,     KC_MNXT,        UP_KEY, ENT_KEY)
+COMB(DOWNUP_MPLY,   KC_MPLY,        DOWN_KEY, UP_KEY)
+COMB(DOWNENT_MUTE,  KC_MUTE,        DOWN_KEY, ENT_KEY)
+COMB(DELUP_MAIL,    KC_MAIL,        DEL_KEY, UP_KEY) // mutes the mic with batch script
 
 // ---------------------- LAYER COMBOS ---------------------------
 //   name           result          combo keys
 COMB(LWR_RSE_ADJ,   LLOCK_ADJUST,   LOWER, RAISE)
 COMB(LWR_D_MOUSE,   LLOCK_MOUSE,    LOWER, D_KEY)
 COMB(ESLSH_H_NUM,   LLOCK_NUM,      E_KEY, SLSH_KEY)
-//COMB(BS_DEL_DUALF,  TOGGLE_DUALF,   BS_KEY, DEL_KEY)
+COMB(BS_DEL_DUALF,  TOGGLE_DUALF,   BS_KEY, DEL_KEY)
 
 // --------------------- DUAL HAND COMBOS -------------------------------
 //   name           result          combo keys
-COMB(QQUOT_ALTF4,   A(KC_F4),       Q_KEY, QUOT_KEY)
+COMB(ESCBSLS_ALTF4, A(KC_F4),       ESC_KEY, BSLS_KEY)
 COMB(GM_APP,        KC_APP,         G_KEY, M_KEY)
-//COMB(LRSHIFT_CAPS,  KC_CAPS,        OSM(MOD_LSFT), OSM(MOD_RSFT))
-//COMB(DH_ENT,        KC_ENT,         D_KEY, H_KEY)
+COMB(LRSHIFT_CAPS,  KC_CAPS,        OSM(MOD_LSFT), OSM(MOD_RSFT))
+COMB(DH_ENT,        KC_ENT,         D_KEY, H_KEY)
 
 // --------------------- MOUSE COMBOS -------------------------------
 //   name           result          combo keys
-COMB(CAPSAPP_WH_UP,  KC_MS_WH_UP,    KC_CAPS, KC_APP)
-COMB(VOL_WH_DN,      KC_MS_WH_DOWN,  KC_VOLD, KC_VOLU)
+COMB(VK_WH_UP,      KC_MS_WH_UP,    V_KEY, K_KEY)
+COMB(BJ_WH_DN,      KC_MS_WH_DOWN,  B_KEY, J_KEY)
 
 /* // -------------------- LOWER COMBOS ----------------------------- */
 /* //   name           result          combo keys */
+COMB(QUOTLOWER,     AE_QUOT_CAPS,   LOWER, QUOT_KEY)
+COMB(BSLSLOWER,     UE_BSLS_CAPS,   LOWER, BSLS_KEY)
+COMB(SCLNLOWER,     OE_SCLN_CAPS,   LOWER, SCLN_KEY)
 COMB(NLOWER,        KC_UNDS,        LOWER, N_KEY)
 COMB(ELOWER,        KC_KP_PLUS,     LOWER, E_KEY)
 COMB(QLOWER,        KC_EXLM,        LOWER, Q_KEY)

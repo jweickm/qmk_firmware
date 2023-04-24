@@ -304,10 +304,10 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
         // middle finger keys
         case F_KEY:
+        case E_KEY:
         case S_KEY:
         case C_KEY:
         case U_KEY:
-        case E_KEY:
         case COMM_KEY:
         case NUM_2:
             return TAPPING_TERM * middle_factor;
@@ -359,14 +359,16 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case S_KEY:
         case E_KEY:
+        case S_KEY:
         case LOWER:
         case LOWER_DE:
         case RAISE:
         case RAISE_DE:
         case D_KEY:
         case H_KEY:
+        case ENT_KEY:
+        case ESC_KEY:
             return true; // force hold and disable key repeating for homerow shift
         default:
             return false; // allow hold and key repeating by default
@@ -375,8 +377,8 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
 
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) { // allows hold + tap within the tapping term (but hold must be held longer than tap)
     switch (keycode) {
-        case S_KEY:
         case E_KEY:
+        case S_KEY:
         case LOWER:
         case LOWER_DE:
         case RAISE:
@@ -444,6 +446,15 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
             default:
                 return false;
         }
+#ifdef WIDE_LAYOUT
+    } else if (layer_state_is(_LOWER) || layer_state_is(_LOWER_DE) || layer_state_is(_RAISE) || layer_state_is(_RAISE_DE)) {
+    switch (combo_index) {
+        case YQUOT:
+            return false;
+        default:
+            return true;
+    }
+#endif
     } else if (layer_state_is(_NUM)) {
         switch (combo_index) {
             case HCOMM_ENT:
@@ -528,8 +539,8 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case X_KEY:
         case C_KEY:
         case V_KEY:
-        case NUM_2:
-        case NUM_3:
+        /* case NUM_2: */
+        /* case NUM_3: */
         /* case G_KEY: */
         /* case M_KEY: */
             return TAPPING_TERM + 60; // return a shorter timeout for these keys (tap event when held) results in 220 ms with current tapping term of 160 ms
@@ -748,10 +759,33 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case Y_KEY_DE:
         case Y_KEY:
             return process_tap_long_press_key(record, KC_9);
+
+
+#ifdef WIDE_LAYOUT
+        case QUOT_KEY: // case for the base English Colemak Layer (continues in the next case)
+            if (!process_tap_long_press_key(record, KC_0)) {
+                return false;
+            }
+        case KC_QUOT: // case DE_ADIA:
+            // process the key normally when de_en is not switched
+            if (IS_LAYER_ON(_UMLAUTS)) {
+                return process_german_keycode(record, keycode);
+            }
+            if (!de_en_switched) {
+                if (de_layout_active) {
+                    return register_unregister_shifted_key(record, DE_QUOT, DE_DQUO);
+                }
+                return true;
+            }
+            return process_german_keycode(record, DE_ADIA);// sending Ä
+            break;
+
+#else
         case SCLN_KEY: // case for the base English Colemak Layer (continues in the next case)
             if (!process_tap_long_press_key(record, KC_0)) {
                 return false;
             }
+#endif
         case KC_SCLN: // case DE_ODIA:
             // first process the DE_ODIA case in the _UMLAUTS layer
             if (IS_LAYER_ON(_UMLAUTS)) {
@@ -759,14 +793,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             // then process the key normally when de_en is not switched
             if (!de_en_switched) {
+                if (de_layout_active) {
+                    return register_unregister_shifted_key(record, DE_SCLN, DE_COLN);
+                }
                 return true;
-            }
-            if (de_layout_active) {
-                return register_unregister_shifted_key(record, DE_SCLN, DE_COLN);
             }
             return process_german_keycode(record, DE_ODIA);// sending Ö
             break;
 
+#ifndef WIDE_LAYOUT
         case BSLS_KEY: // LALT when held LALT_T(KC_BSLS); only for English layout
             /* if (!process_tap_long_press_key(record, KC_APP)) { return false; } */
             if (!de_en_switched || !record->tap.count) { return true; }
@@ -787,12 +822,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return process_german_keycode(record, DE_ADIA); // sending Ä
             break;
+#endif
 
 // comma and dot for the num pad when held
-        case NUM_2:
-            return process_tap_long_press_key(record, KC_COMM);
-        case NUM_3:
-            return process_tap_long_press_key(record, KC_DOT);
+        /* case NUM_2: */
+        /*     return process_tap_long_press_key(record, KC_COMM); */
+        /* case NUM_3: */
+        /*     return process_tap_long_press_key(record, KC_DOT); */
 
 // ================ FROM ADJUST LAYER =================
         case UNDO:
@@ -822,6 +858,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         // the next case allows us to use alt_tab without a timer
         case NAVSPACE:
+        case ENT_KEY:
             if (!record->event.pressed && is_alt_tab_active) {
                 unregister_mods(MOD_BIT(KC_LALT));
                 is_alt_tab_active = false;
@@ -829,13 +866,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
 
         case ESC_KEY:
-            /* if (!process_tap_long_press_key(record, KC_LGUI)) { */
-            /*     return false; */
-            /* } */
-        /* case KC_LEAD: */
+            if (!record->event.pressed && is_alt_tab_active) {
+                unregister_mods(MOD_BIT(KC_LALT));
+                is_alt_tab_active = false;
+            }
         case KC_ESC:
         /* case KC_ENT: */
-        /* case ENT_KEY: */
             if (caps_lock_on && record->event.pressed) {
                 tap_code(KC_CAPS);
             }
@@ -939,7 +975,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
 
         // ===== PROCESS_GERMAN_KEYCODE =======
-        case DE_ADIA:
         case DE_UDIA:
             if (IS_LAYER_ON(_UMLAUTS)) {
                 return process_german_keycode(record, keycode);
@@ -1010,6 +1045,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return process_german_keycode(record, DE_UDIA);
             }
             return false;
+
 
 #ifdef NO_SEPARATE_GERMAN_LAYERS
         case KC_AT: // @

@@ -10,11 +10,6 @@ enum planck_layers {
     _COLEMAK_DE,
     _DE_DUALF,
     _UMLAUTS,
-#ifdef NAGINATA_ENABLE
-    // 薙刀式
-    _NAGINATA, // 薙刀式入力レイヤー
-    // 薙刀式
-#endif
     _NUM,
     /* _NAV, */
     _ADJUST,
@@ -25,13 +20,6 @@ enum planck_layers {
     _MOUSE,
 };
 
-#ifdef NAGINATA_ENABLE
-// 薙刀式
-#include "features/naginata/naginata.h"
-NGKEYS naginata_keys;
-// 薙刀式
-#endif
-
 #define Q_KEY LT(0, KC_Q)
 #define W_KEY LT(0, KC_W)
 #define F_KEY LT(0, KC_F)
@@ -41,7 +29,6 @@ NGKEYS naginata_keys;
 #define L_KEY LT(0, KC_L)
 #define U_KEY LT(0, KC_U)
 #define Y_KEY LT(0, KC_Y)
-#define SCLN_KEY LT(0, KC_SCLN)
 
 #define G_KEY LT(_NUM, KC_G)
 #define M_KEY LT(_MOUSE, KC_M)
@@ -65,6 +52,26 @@ NGKEYS naginata_keys;
 
 #define K_KEY KC_K
 
+// ==== LAYOUT-DEPENDENT KEY MAPPINGS
+#ifdef WIDE_LAYOUT
+#define QUOT_KEY    LT(0, KC_QUOT)
+#define SCLN_KEY    RCTL_T(KC_SCLN)
+#define BSLS_KEY    KC_BSLS
+#define ESC_KEY     LT(_ADJUST, KC_ESC)
+#define ENT_KEY     LT(_ADJUST, KC_ENT)
+#define TAB_KEY     LT(_NUM, KC_TAB)
+#define NAVSPACE    LT(_ADJUST, KC_SPC)
+#else
+#define SCLN_KEY    LT(0, KC_SCLN)
+#define BSLS_KEY    LALT_T(KC_BSLS)
+#define ESC_KEY     LALT_T(KC_ESC)
+#define ENT_KEY     RGUI_T(KC_ENT)
+#define QUOT_KEY    RCTL_T(KC_QUOT)
+#define TAB_KEY     LCTL_T(KC_TAB)
+#define NAVSPACE    LT(_ADJUST, KC_SPC)
+#endif
+
+
 // define the secondary function of the lower and raise keys here
 #define LOWER       LT(_LOWER, KC_BSPC)
 #define RAISE       LT(_RAISE, KC_SPC)
@@ -77,20 +84,14 @@ NGKEYS naginata_keys;
 #define LEFT_KEY KC_LEFT
 #define RIGHT_KEY KC_RIGHT
 
-#define ESC_KEY     LALT_T(KC_ESC)
 
-#define BSLS_KEY    LALT_T(KC_BSLS)
 #define UE_KEY      LALT_T(DE_UDIA)
 
-#define TAB_KEY     LCTL_T(KC_TAB)
-#define QUOT_KEY    RCTL_T(KC_QUOT)
 
 #define DOT_KEY     LT(0, KC_DOT)
 #define COMM_KEY    LT(0, KC_COMM)
 #define SLSH_KEY    LT(0, KC_SLSH)
 
-#define NAVSPACE    LT(_ADJUST, KC_SPC)
-#define ENT_KEY     RGUI_T(KC_ENT)
 
 #define CAPS_KEY    LGUI_T(KC_CAPS)
 
@@ -117,17 +118,7 @@ NGKEYS naginata_keys;
 #define LANG_SWITCH S(KC_LALT)
 
 enum planck_keycodes {
-#ifdef NAGINATA_ENABLE
-    // 薙刀式: SAFE_RANGE -> NG_SAFE_RANGE
-    COLEMAK = NG_SAFE_RANGE,
-    EISU,
-    KANA2,
-    NG_DUMMY,
-    NAGINATA_SWITCH,
-    // 薙刀式
-#else
     COLEMAK = SAFE_RANGE,
-#endif
     VIM_O,
     ALT_TAB,
     KC_ACC_GRV,
@@ -171,12 +162,6 @@ bool de_en_switched = false;
 bool caps_lock_on;
 bool num_lock_on;
 
-// NAGINATA AND AUDIO STUFF
-#ifdef NAGINATA_ENABLE
-bool naginata_active    = false;
-bool come_from_naginata = false;
-#endif
-
 #ifdef AUDIO_ENABLE
 bool     muse_mode      = false;
 uint8_t  last_muse_note = 0;
@@ -198,9 +183,5 @@ float coding_en_song[][2]       = SONG(PLOVER_GOODBYE_SOUND);
 float umlaut_on_song[][2]       = SONG(DVORAK_SOUND);
 float umlaut_off_song[][2]      = SONG(WORKMAN_SOUND);
 
-#ifdef NAGINATA_ENABLE
-float naginata_on_sound[][2]    = SONG(PLOVER_SOUND);
-float naginata_off_sound[][2]   = SONG(PLOVER_GOODBYE_SOUND);
-#endif
 #endif
 
