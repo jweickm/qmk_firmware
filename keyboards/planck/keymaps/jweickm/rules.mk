@@ -14,6 +14,7 @@ SWAP_HANDS_ENABLE 	= no 		# Allow swapping hands of keyboard
 CAPS_WORD_ENABLE	= yes   	# Enables caps word (use with CAPS_WORD keycode)
 SPACE_CADET_ENABLE 	= no		# save space, never used this
 GRAVE_ESC_ENABLE 	= no		# save space, never used this
+SEND_STRING_ENABLE  = no 		# Disable the String sending functionality to save space
 
 # SRC += muse.c
 

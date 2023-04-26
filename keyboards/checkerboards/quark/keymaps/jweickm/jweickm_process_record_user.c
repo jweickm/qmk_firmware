@@ -1,3 +1,4 @@
+// QUARK
 #include "features/getreuer/achordion.h"
 #include "features/getreuer/layer_lock.h"
 
@@ -31,6 +32,16 @@ bool register_unregister_key(keyrecord_t* record, uint16_t keycode) {
         register_code16(keycode);
     } else {
         unregister_code16(keycode);
+    }
+    return false;
+}
+
+bool register_unregister_double(keyrecord_t *record, uint16_t keycode1, uint16_t keycode2) {
+    if (record->event.pressed) {
+        tap_code16(keycode1);
+        register_code16(keycode2);
+    } else {
+        unregister_code16(keycode2);
     }
     return false;
 }
@@ -269,9 +280,9 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case RAISE_DE:
         case DEL_KEY:
         case ESC_KEY:
-        case TAB_KEY:
             return TAPPING_TERM * thumb_factor;
         case NAVSPACE:
+        case TAB_KEY:
             return TAPPING_TERM * (thumb_factor + 0.1);
 
         // index finger keys
@@ -851,6 +862,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
 
         // ===== COMBOS ====
+#ifndef WIDE_LAYOUT
         case AE_QUOT_CAPS: // for the combo with lower to produce capital letters
             shifted = true;
         case AE_QUOT:
@@ -878,6 +890,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return process_german_keycode(record, DE_UDIA);
             }
             return false;
+#endif
 
 // ------------------------- GERMAN KEYMAP -----------------------------------------
         case Z_KEY_DE:
@@ -952,6 +965,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return process_tap_long_press_key(record, KC_9);
 
 #ifdef WIDE_LAYOUT
+        case LARROW:
+            return register_unregister_double(record, KC_LABK, KC_MINS);
+        case LARROW_DE:
+            return register_unregister_double(record, DE_LABK, DE_MINS);
+        case RPIPE:
+            return register_unregister_double(record, KC_PIPE, KC_RABK);
+        case RPIPE_DE:
+            return register_unregister_double(record, DE_PIPE, DE_RABK);
+
         case QUOT_KEY: // case for the base English Colemak Layer (continues in the next case)
             if (!process_tap_long_press_key(record, KC_0)) {
                 return false;

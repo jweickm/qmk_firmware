@@ -11,6 +11,7 @@ KEY_LOCK_ENABLE 	= no    # enables the use of KC_LOCK
 CAPS_WORD_ENABLE 	= yes	# 446 bytes
 SPACE_CADET_ENABLE 	= no
 GRAVE_ESC_ENABLE 	= no
+SEND_STRING_ENABLE  = no 		# Disable the String sending functionality to save space
 
 COMBO_ENABLE 		= yes
 VPATH				+= keyboards/gboards/

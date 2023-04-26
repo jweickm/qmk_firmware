@@ -62,16 +62,16 @@ enum planck_layers {
 #define QUOT_KEY    LT(0, KC_QUOT)
 #define SCLN_KEY    RCTL_T(KC_SCLN)
 #define BSLS_KEY    KC_BSLS
-#define ESC_KEY     LT(_ADJUST, KC_ESC)
+#define ESC_KEY     LT(_NUM, KC_ESC)
 #define ENT_KEY     LT(_ADJUST, KC_ENT)
 #define TAB_KEY     LT(_ADJUST, KC_TAB)
-#define NAVSPACE    LT(_ADJUST, KC_SPC)
 // define the secondary function of the lower and raise keys here
-#define LOWER       LT(_LOWER, KC_SPC)
+#define LOWER       LT(_LOWER, KC_BSPC)
 #define RAISE       LT(_RAISE, KC_SPC)
 // GERMAN VERSIONS OF THE KEYS
-#define LOWER_DE    LT(_LOWER_DE, KC_SPC)
+#define LOWER_DE    LT(_LOWER_DE, KC_BSPC)
 #define RAISE_DE    LT(_RAISE_DE, KC_SPC)
+
 #else
 #define SCLN_KEY    LT(0, KC_SCLN)
 #define BSLS_KEY    LALT_T(KC_BSLS)
@@ -79,7 +79,6 @@ enum planck_layers {
 #define ENT_KEY     RGUI_T(KC_ENT)
 #define QUOT_KEY    RCTL_T(KC_QUOT)
 #define TAB_KEY     LCTL_T(KC_TAB)
-#define NAVSPACE    LT(_ADJUST, KC_SPC)
 // define the secondary function of the lower and raise keys here
 #define LOWER       LT(_LOWER, KC_BSPC)
 #define RAISE       LT(_RAISE, KC_SPC)
@@ -88,6 +87,7 @@ enum planck_layers {
 #define RAISE_DE    LT(_RAISE_DE, KC_SPC)
 #endif
 
+#define NAVSPACE    LT(_ADJUST, KC_SPC)
 
 
 #define DOWN_KEY LT(_LOWER, KC_DOWN)
@@ -141,18 +141,24 @@ enum planck_keycodes {
     LLOCK, // layer lock key
     SZ_KEY,
     KC_DEG,
-#ifdef DUALFUNC
-    TOGGLE_DUALF,
-    /* DUALF_ON, */
-    /* DUALF_OFF, */
-#endif
-    /* LLOCK_ADJUST, */
+#ifdef WIDE_LAYOUT
+    LARROW, 
+    RPIPE,
+    LARROW_DE, 
+    RPIPE_DE,
+#else
     AE_QUOT,
     OE_SCLN,
     UE_BSLS,
     AE_QUOT_CAPS,
     OE_SCLN_CAPS,
     UE_BSLS_CAPS,
+#endif
+#ifdef DUALFUNC
+    TOGGLE_DUALF,
+    /* DUALF_ON, */
+    /* DUALF_OFF, */
+#endif
 };
 
 // Tap Dance declarations
