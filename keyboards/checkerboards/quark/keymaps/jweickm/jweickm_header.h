@@ -1,3 +1,6 @@
+ /* Copyright 2022 Jakob Weickmann
+ * CHECKERBOARDS/QUARK
+ */
 #pragma once
 
 #include QMK_KEYBOARD_H

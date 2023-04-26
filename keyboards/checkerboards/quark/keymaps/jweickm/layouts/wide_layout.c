@@ -101,7 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* ----------------------------------------------------------------------------------------
      * _NUM
      * ,-----------------------------------------------------------------------------------.
-     * |   1  |   2  |   3  |   4  |   5  | LLOCK|   F  |   6  |   7  |   8  |   9  |   0  |
+     * |   1  |   2  |   3  |   4  |   5  | LLOCK| ____ |   6  |   7  |   8  |   9  |   0  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ |   .  |   ,  | LCTL | ____ | ____ |   %  |   +  |   4  |   5  |   6  |   *  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -112,7 +112,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_NUM] = LAYOUT_planck_mit(
         KC_KP_1, KC_KP_2, KC_KP_3, KC_KP_4, KC_KP_5, LLOCK, _______, KC_KP_6, KC_KP_7, KC_KP_8, KC_KP_9, KC_KP_0, 
-        _______, DOT_KEY, COMM_KEY, OSM(MOD_LCTL), _______, _______, KC_PERC, KC_KP_PLUS, KC_KP_4, KC_KP_5, KC_KP_6, KC_KP_ASTERISK, 
+        _______, DOT_KEY, COMM_KEY, KC_LCTL, _______, _______, KC_PERC, KC_KP_PLUS, KC_KP_4, KC_KP_5, KC_KP_6, KC_KP_ASTERISK, 
         _______, KC_DEG, DE_EURO,  _______, _______, _______, KC_UNDS, KC_KP_MINUS, KC_KP_1, NUM_2, NUM_3, KC_KP_SLASH, 
         _______, _______, KC_BSPC, _______, _______,  _______,  _______, KC_KP_0, DOT_KEY, COMM_KEY, KC_KP_EQUAL
         ),

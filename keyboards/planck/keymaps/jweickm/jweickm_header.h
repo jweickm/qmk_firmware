@@ -1,3 +1,6 @@
+ /* Copyright 2022 Jakob Weickmann
+ * PLANCK/REV6
+ */
 #pragma once
 
 #include QMK_KEYBOARD_H
