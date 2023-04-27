@@ -62,7 +62,7 @@ enum planck_layers {
 #define QUOT_KEY    LT(0, KC_QUOT)
 #define SCLN_KEY    RCTL_T(KC_SCLN)
 #define BSLS_KEY    KC_BSLS
-#define ESC_KEY     LT(_NUM, KC_ESC)
+#define ESC_KEY     LCTL_T(KC_ESC)
 #define ENT_KEY     LT(_ADJUST, KC_ENT)
 #define TAB_KEY     LT(_ADJUST, KC_TAB)
 // define the secondary function of the lower and raise keys here

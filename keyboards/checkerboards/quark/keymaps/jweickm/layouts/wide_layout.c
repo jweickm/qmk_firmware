@@ -1,5 +1,5 @@
 /* Copyright 2022 Jakob Weickmann
-* PLANCK/REV6
+* QUARK
 *
 This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -41,14 +41,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |   Z  |   X  |   C  |   D  |   V  | CAPS |  APP |   K  |   H  |   ,  |   .  |  /?  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | LCTL | LALT |  ESC | LOWER|  SPC |     TAB     |  SPC | RAISE|  DEL | RGUI |  ENT | 
+     * |  ESC | LALT |   BS | LOWER|  SPC |     TAB     |  SPC | RAISE|  DEL | RGUI |  ENT | 
      * `-----------------------------------------------------------------------------------'
      */
     [_COLEMAK] = LAYOUT_planck_mit(
         Q_KEY, W_KEY, F_KEY, P_KEY, B_KEY, KC_VOLD, KC_VOLU, J_KEY, L_KEY, U_KEY, Y_KEY, QUOT_KEY,
         A_KEY, R_KEY, S_KEY, T_KEY, G_KEY, KC_BRID, KC_BRIU, M_KEY, N_KEY, E_KEY, I_KEY, O_KEY,
         Z_KEY, X_KEY, C_KEY, D_KEY, V_KEY, KC_CAPS, KC_APP, K_KEY, H_KEY, COMM_KEY, DOT_KEY, SLSH_KEY,
-        KC_LCTL, KC_LALT, ESC_KEY, LOWER, NAVSPACE, TAB_KEY, NAVSPACE, RAISE, DEL_KEY, KC_RGUI, KC_ENT
+        ESC_KEY, KC_LALT, BS_KEY, LOWER, NAVSPACE, TAB_KEY, NAVSPACE, RAISE, DEL_KEY, KC_RGUI, KC_ENT
         ),
 
 
@@ -80,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |   Ä  | ____ | ____ | ____ | ____ | ____ | ____ | ____ | ____ | ____ | ____ |   Ö  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |   ß  | ____ | ____ |  BS  | ____ | ____ | ____ | ____ |  DEL | ____ | ____ | ____ |
+     * |   ß  | ____ | ____ | ____ | ____ | ____ | ____ | ____ | ____ | ____ | ____ | ____ |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | ____ | ____ | ____ | ____ |     ____    | ____ | ____ | ____ | ____ | ____ | 
      * `-----------------------------------------------------------------------------------'
@@ -88,7 +88,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_UMLAUTS] = LAYOUT_planck_mit(
         _______, _______, _______, _______, _______, _______, _______, _______, _______, DE_UDIA, _______, _______,
         DE_ADIA, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, DE_ODIA,
-        SZ_KEY,  _______, _______, KC_BSPC, _______, _______, _______, _______, KC_DEL, _______, _______, _______,
+        SZ_KEY,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______,     _______,       _______, _______, _______,  _______, _______ 
         ),
 
@@ -114,20 +114,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* ----------------------------------------------------------------------------------------
      * _ADJUST
      * ,-----------------------------------------------------------------------------------.
-     * | LLOCK| C(->)|  MEH | HYPR | C(<-)| PRNT | ____ | KANA | REDO | UNDO | LANG |KBLANG|
+     * |A(TAB)| C(->)|  MEH | HYPR | C(<-)| PRNT | ____ | KANA | REDO | UNDO | LANG |KBLANG|
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |A(TAB)| LALT | LSFT | LCTL | LGUI | RALT |  INS | LEFT | DOWN |  UP  | RIGHT| VIM_O|
+     * | LGUI | LALT | LSFT | LCTL | LGUI | RALT |  INS | LEFT | DOWN |  UP  | RIGHT| VIM_O|
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | LSFT |DESK<-| WHLUP| WHLDN|DESK->|NUMLCK| UMLSW| HOME | PGDN | PGUP |  END | CAPS |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |EEPRST| FLASH| ____ | LOWER| ____ |     ____    | ____ | RAISE| ____ | BRI- | BRI+ | 
+     * |EEPRST| FLASH| ____ | LOWER| LLOCK|     ____    | LLOCK| RAISE| ____ | BRI- | BRI+ | 
      * `-----------------------------------------------------------------------------------'
      */
     [_ADJUST] = LAYOUT_planck_mit(
-        LLOCK, C(KC_RIGHT), OSM(MOD_MEH), OSM(MOD_HYPR), C(KC_LEFT), KC_PSCR, _______, A(KC_GRV), REDO, UNDO, LANG_SWITCH, KB_LANG_SWITCH, 
-        ALT_TAB, KC_LALT, KC_LSFT, KC_LCTL, KC_LGUI, KC_RALT, KC_INS, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O,
+        ALT_TAB, C(KC_RIGHT), OSM(MOD_MEH), OSM(MOD_HYPR), C(KC_LEFT), KC_PSCR, _______, A(KC_GRV), REDO, UNDO, LANG_SWITCH, KB_LANG_SWITCH, 
+        KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_LGUI, KC_RALT, KC_INS, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O,
         OSM(MOD_LSFT), C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_NUM_LOCK, UMLAUT_SWITCH, KC_HOME, KC_PGDN, KC_PGUP, KC_END, KC_CAPS, 
-        QK_CLEAR_EEPROM, QK_BOOT, _______, _______, _______, _______, _______, _______, _______, KC_BRID, KC_BRIU
+        QK_CLEAR_EEPROM, QK_BOOT, _______, _______, LLOCK, _______, LLOCK, _______, _______, KC_BRID, KC_BRIU
         ),
 
     /* ----------------------------------------------------------------------------------------
