@@ -441,9 +441,9 @@ bool caps_word_press_user(uint16_t keycode) {
             return true;
 
         default:
-            if (shifted) {
-                return true;
-            }
+            /* if (shifted) { */
+            /*     return true; */
+            /* } */
             return false;  // Deactivate Caps Word.
     }
 }
@@ -528,12 +528,12 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case DOWN_KEY:
         case UP_KEY:
         case ENT_KEY:
-        case Z_KEY_DE:
         case KC_LCTL:
         case KC_LALT:
         case KC_LGUI:
             return 0; // bypass Achordion for these keys
         case Z_KEY:
+        case Z_KEY_DE:
         case COMM_KEY:
         case DOT_KEY:
         case SLSH_KEY:
@@ -832,6 +832,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return process_german_keycode(record, DE_ODIA);// sending Ö
             break;
+            
+        case DE_BSLS: 
+            if (de_layout_active) {
+                return register_unregister_shifted_key(record, DE_BSLS, DE_PIPE);
+            }
+            return true;
 
 #ifndef WIDE_LAYOUT
         case BSLS_KEY: // LALT when held LALT_T(KC_BSLS); only for English layout
@@ -940,6 +946,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
 
 // ------------------------- GERMAN KEYMAP -----------------------------------------
+#ifndef WIDE_LAYOUT
         case Z_KEY_DE:
             return process_tap_long_press_key(record, DE_SS);
         case Z_KEY: // Z - ß
@@ -948,6 +955,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
             break;
+#endif
+
         case COMM_KEY:
             if (de_layout_active) {
                 if (!process_tap_long_press_key(record, DE_SCLN)) { // long press ;
