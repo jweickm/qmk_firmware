@@ -49,8 +49,6 @@ enum planck_layers {
 #define D_KEY LT(_UMLAUTS, KC_D)
 #define H_KEY LT(_UMLAUTS, KC_H)
 
-#define Z_KEY LT(0, KC_Z)
-#define Z_KEY_DE LT(1, DE_Z)
 #define X_KEY LT(0, KC_X)
 #define C_KEY LT(0, KC_C)
 #define V_KEY LT(0, KC_V)
