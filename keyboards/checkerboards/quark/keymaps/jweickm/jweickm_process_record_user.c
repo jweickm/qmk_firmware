@@ -360,21 +360,19 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-bool get_tapping_force_hold(uint16_t keycode, keyrecord_t* record) {
+uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case S_KEY:
         case E_KEY:
+        case S_KEY:
         case LOWER:
         case LOWER_DE:
         case RAISE:
         case RAISE_DE:
         case D_KEY:
         case H_KEY:
-        case ESC_KEY:
-        case ENT_KEY:
-            return true; // force hold and disable key repeating for homerow shift
+            return 80; // force hold and disable key repeating
         default:
-            return false; // allow hold and key repeating by default
+            return QUICK_TAP_TERM; // allow hold and key repeating by default
     }
 }
 
@@ -454,6 +452,9 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
     } else if (layer_state_is(_LOWER) || layer_state_is(_LOWER_DE) || layer_state_is(_RAISE) || layer_state_is(_RAISE_DE)) {
         switch (combo_index) {
             case YQUOT:
+            case QW_ESC:
+            case PB_DEL:
+            case JL_TAB:
                 return false;
             default:
                 return true;

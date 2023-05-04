@@ -14,14 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 #pragma once
 
 // settings for HOME ROW MODS
 #define TAPPING_TERM 160 // 200 ms is the default value
 #define TAPPING_TERM_PER_KEY
 #define IGNORE_MOD_TAP_INTERRUPT
-#define TAPPING_FORCE_HOLD_PER_KEY
+#define QUICK_TAP_TERM_PER_KEY
 #define PERMISSIVE_HOLD_PER_KEY
 
 #define ACHORDION
@@ -30,7 +29,7 @@
 #define WIDE_LAYOUT
 
 // if defined, allows the usage of the non-dualfunction layers
-#define DUALFUNC
+// #define DUALFUNC
 
 // CAPS WORD SETTINGS
 /* #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD // works only on left shift */

@@ -46,6 +46,7 @@ COMB(QQUOT_ALTF4,   A(KC_F4),       Q_KEY, QUOT_KEY)
 COMB(GM_APP,        KC_APP,         G_KEY, M_KEY)
 //COMB(LRSHIFT_CAPS,  KC_CAPS,        OSM(MOD_LSFT), OSM(MOD_RSFT))
 //COMB(DH_ENT,        KC_ENT,         D_KEY, H_KEY)
+COMB(ZSLSH_CAPS,     KC_CAPS,       Z_KEY, SLSH_KEY)
 
 // --------------------- MOUSE COMBOS -------------------------------
 //   name           result          combo keys

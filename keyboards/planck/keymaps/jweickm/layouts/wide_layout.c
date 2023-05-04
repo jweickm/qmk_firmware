@@ -126,14 +126,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | LSFT |DESK<-| WHLUP| WHLDN|DESK->|NUMLCK| UMLSW| HOME | PGDN | PGUP |  END | CAPS |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |EEPRST| FLASH| ____ | LOWER| LLOCK|     ____    | LLOCK| RAISE| ____ | BRI- | BRI+ | 
+     * |EEPRST| FLASH| ____ | LOWER| ____ |     ____    | ____ | RAISE| ____ | BRI- | BRI+ | 
      * `-----------------------------------------------------------------------------------'
      */
     [_ADJUST] = LAYOUT_planck_mit(
         ALT_TAB, C(KC_RIGHT), OSM(MOD_MEH), OSM(MOD_HYPR), C(KC_LEFT), KC_PSCR, _______, A(KC_GRV), REDO, UNDO, LANG_SWITCH, KB_LANG_SWITCH, 
         KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_LGUI, KC_RALT, KC_INS, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O,
         OSM(MOD_LSFT), C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_NUM_LOCK, UMLAUT_SWITCH, KC_HOME, KC_PGDN, KC_PGUP, KC_END, KC_CAPS, 
-        QK_CLEAR_EEPROM, QK_BOOT, _______, _______, LLOCK, _______, LLOCK, _______, _______, KC_BRID, KC_BRIU
+        QK_CLEAR_EEPROM, QK_BOOT, _______, _______, _______, _______, _______, _______, _______, KC_BRID, KC_BRIU
         ),
 
     /* ----------------------------------------------------------------------------------------
