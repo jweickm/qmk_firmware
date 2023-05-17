@@ -4,8 +4,8 @@
 #pragma once
 
 #include QMK_KEYBOARD_H
-/* #include "muse.h" */
 #include "keymap_german.h"
+/* #include "muse.h" */
 
 enum planck_layers {
     _COLEMAK = 0,
@@ -17,14 +17,15 @@ enum planck_layers {
     _UMLAUTS,
     _NUM,
     /* _NAV, */
-    _ADJUST,
     _RAISE,
     _RAISE_DE,
     _LOWER,
     _LOWER_DE,
+    _ADJUST,
     _MOUSE,
 };
 
+// Define key names here
 #define Q_KEY LT(0, KC_Q)
 #define W_KEY LT(0, KC_W)
 #define F_KEY LT(0, KC_F)
@@ -61,8 +62,8 @@ enum planck_layers {
 #define QUOT_KEY    LT(0, KC_QUOT)
 #define SCLN_KEY    RCTL_T(KC_SCLN)
 #define BSLS_KEY    KC_BSLS
-#define ESC_KEY     LCTL_T(KC_ESC)
-#define ENT_KEY     LT(_ADJUST, KC_ENT)
+#define ESC_KEY     LALT_T(KC_ESC)
+#define ENT_KEY     RGUI_T(KC_ENT)
 #define TAB_KEY     LT(_ADJUST, KC_TAB)
 // define the secondary function of the lower and raise keys here
 #define LOWER       LT(_LOWER, KC_BSPC)
@@ -72,6 +73,8 @@ enum planck_layers {
 #define RAISE_DE    LT(_RAISE_DE, KC_SPC)
 #define Z_KEY       LSFT_T(KC_Z)
 #define Z_KEY_DE    LSFT_T(DE_Z)
+#define SLSH_KEY    LT(_NUM, KC_SLSH)
+#define DEL_KEY     LT(_ADJUST, KC_DEL)
 
 #else
 #define SCLN_KEY    LT(0, KC_SCLN)
@@ -88,29 +91,25 @@ enum planck_layers {
 #define RAISE_DE    LT(_RAISE_DE, KC_SPC)
 #define Z_KEY       LT(0, KC_Z)
 #define Z_KEY_DE    LT(1, DE_Z)
+#define SLSH_KEY    LT(0, KC_SLSH)
+#define DEL_KEY     LT(_MOUSE, KC_DEL)
 #endif
 
 #define NAVSPACE    LT(_ADJUST, KC_SPC)
-
 
 #define DOWN_KEY LT(_LOWER, KC_DOWN)
 #define UP_KEY   LT(_LOWER, KC_UP)
 #define LEFT_KEY KC_LEFT
 #define RIGHT_KEY KC_RIGHT
 
-
 #define UE_KEY      LALT_T(DE_UDIA)
-
 
 #define DOT_KEY     LT(0, KC_DOT)
 #define COMM_KEY    LT(0, KC_COMM)
-#define SLSH_KEY    LT(0, KC_SLSH)
-
 
 #define CAPS_KEY    LGUI_T(KC_CAPS)
 
 #define BS_KEY      LT(_NUM, KC_BSPC)
-#define DEL_KEY     LT(_MOUSE, KC_DEL)
 
 // ======================================================
 // GERMAN VERSIONS OF THE KEYS
@@ -120,9 +119,11 @@ enum planck_layers {
 #define REDO C(KC_Y)
 #define UNDO C(KC_Z)
 
-#define LLOCK_ADJUST LT(_ADJUST, KC_NO)
+// #define LLOCK_ADJUST LT(_ADJUST, KC_NO)
 #define LLOCK_NUM LT(_NUM, KC_NO)
 #define LLOCK_MOUSE LT(_MOUSE, KC_NO)
+
+#define ADJUST MO(_ADJUST)
 
 /* #define NUM_2 LT(0, KC_KP_2) */
 /* #define NUM_3 LT(0, KC_KP_3) */
@@ -148,6 +149,7 @@ enum planck_keycodes {
     RPIPE,
     LARROW_DE, 
     RPIPE_DE,
+    REPEAT, 
 #else
     AE_QUOT,
     OE_SCLN,
@@ -163,6 +165,17 @@ enum planck_keycodes {
 #endif
 };
 
+// =============== HELPER VARIABLES
+// logical variable to differentiate between the German and the English input mode
+bool de_layout_active = false;
+
+// controls which of the two languages (en/ge) is used for coding and which is used for typing German
+// English by default
+bool de_en_switched = false;
+
+bool caps_lock_on = false;
+bool num_lock_on = false;
+
 // Tap Dance declarations
 #ifdef TAP_DANCE_ENABLE
 enum tap_dance_codes {
@@ -172,16 +185,6 @@ enum tap_dance_codes {
     TD_LABK,     // angling brackets
 };
 #endif
-
-// logical variable to differentiate between the German and the English input mode
-bool de_layout_active = false;
-
-// controls which of the two languages (en/ge) is used for coding and which is used for typing German
-// English by default
-bool de_en_switched = false;
-
-bool caps_lock_on;
-bool num_lock_on;
 
 #ifdef AUDIO_ENABLE
 bool     muse_mode      = false;

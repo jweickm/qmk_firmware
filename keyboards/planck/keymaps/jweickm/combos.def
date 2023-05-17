@@ -34,22 +34,22 @@ COMB(DELUP_MUTE,    KC_MUTE,        DEL_KEY, UP_KEY) // mutes the mic with batch
 
 // ---------------------- LAYER COMBOS ---------------------------
 //   name           result          combo keys
-COMB(LWR_RSE_ADJ,   LLOCK_ADJUST,   LOWER, RAISE)
+//COMB(LWR_RSE_ADJ,   LLOCK_ADJUST,   LOWER, RAISE)
 COMB(LWR_D_MOUSE,   LLOCK_MOUSE,    LOWER, D_KEY)
 COMB(ESLSH_H_NUM,   LLOCK_NUM,      E_KEY, SLSH_KEY)
 //COMB(BS_DEL_DUALF,  TOGGLE_DUALF,   BS_KEY, DEL_KEY)
 
 // --------------------- DUAL HAND COMBOS -------------------------------
 //   name           result          combo keys
-COMB(QQUOT_ALTF4,   A(KC_F4),       Q_KEY, QUOT_KEY)
-COMB(GM_APP,        KC_APP,         G_KEY, M_KEY)
+//COMB(QQUOT_ALTF4,   A(KC_F4),       Q_KEY, QUOT_KEY)
+//COMB(GM_APP,        KC_APP,         G_KEY, M_KEY)
 //COMB(LRSHIFT_CAPS,  KC_CAPS,        OSM(MOD_LSFT), OSM(MOD_RSFT))
 //COMB(DH_ENT,        KC_ENT,         D_KEY, H_KEY)
 COMB(ZSLSH_CAPS,     KC_CAPS,       Z_KEY, SLSH_KEY)
 
 // --------------------- MOUSE COMBOS -------------------------------
 //   name           result          combo keys
-COMB(CAPSAPP_WH_UP,  KC_MS_WH_UP,    KC_CAPS, KC_APP)
+COMB(INSAPP_WH_UP,   KC_MS_WH_UP,    KC_INS, KC_APP)
 COMB(VOL_WH_DN,      KC_MS_WH_DOWN,  KC_VOLD, KC_VOLU)
 
 /* // -------------------- LOWER COMBOS ----------------------------- */

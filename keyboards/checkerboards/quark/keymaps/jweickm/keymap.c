@@ -17,28 +17,7 @@
 #include "jweickm_header.h"
 #include "g/keymap_combo.h"
 
-// =============== HELPER VARIABLES
-// logical variable to differentiate between the German and the English input mode
-bool de_layout_active  = false;
 
-// declaring several logical variables
-bool caps_lock_on;
-bool num_lock_on;
-// controls which of the two languages (en/ge) is used for coding and which is used for typing German
-// English by default
-bool de_en_switched     = false;
-
-
-// ============ TAP DANCE ================
-// Tap Dance declarations
-#ifdef TAP_DANCE_ENABLE
-enum tap_dance_codes {
-    TD_LPRN,     // round brackets (parentheses)
-    TD_LBRC,     // square brackets
-    TD_LCBR,     // curly brackets
-    TD_LABK,     // angling brackets
-};
-#endif
 
 // ==== PROCESS RECORD USER
 #include "jweickm_process_record_user.c"

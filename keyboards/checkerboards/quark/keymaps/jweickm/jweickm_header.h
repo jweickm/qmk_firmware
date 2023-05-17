@@ -1,4 +1,4 @@
- /* Copyright 2022 Jakob Weickmann
+/* Copyright 2022 Jakob Weickmann
  * CHECKERBOARDS/QUARK
  */
 #pragma once
@@ -57,18 +57,18 @@ enum planck_layers {
 
 // ==== LAYOUT-DEPENDENT KEY MAPPINGS
 #ifdef WIDE_LAYOUT
-#define QUOT_KEY LT(0, KC_QUOT)
-#define SCLN_KEY RCTL_T(KC_SCLN)
-#define BSLS_KEY KC_BSLS
-#define ESC_KEY LCTL_T(KC_ESC)
-#define ENT_KEY LT(_ADJUST, KC_ENT)
-#define TAB_KEY LT(_ADJUST, KC_TAB)
+#define QUOT_KEY    LT(0, KC_QUOT)
+#define SCLN_KEY    RCTL_T(KC_SCLN)
+#define BSLS_KEY    KC_BSLS
+#define ESC_KEY     LALT_T(KC_ESC)
+#define ENT_KEY     RGUI_T(KC_ENT)
+#define TAB_KEY     LT(_ADJUST, KC_TAB)
 // define the secondary function of the lower and raise keys here
-#define LOWER LT(_LOWER, KC_BSPC)
-#define RAISE LT(_RAISE, KC_SPC)
+#define LOWER       LT(_LOWER, KC_BSPC)
+#define RAISE       LT(_RAISE, KC_SPC)
 // GERMAN VERSIONS OF THE KEYS
-#define LOWER_DE LT(_LOWER_DE, KC_BSPC)
-#define RAISE_DE LT(_RAISE_DE, KC_SPC)
+#define LOWER_DE    LT(_LOWER_DE, KC_BSPC)
+#define RAISE_DE    LT(_RAISE_DE, KC_SPC)
 #define Z_KEY       LSFT_T(KC_Z)
 #define Z_KEY_DE    LSFT_T(DE_Z)
 
@@ -85,8 +85,8 @@ enum planck_layers {
 // GERMAN VERSIONS OF THE KEYS
 #define LOWER_DE LT(_LOWER_DE, KC_BSPC)
 #define RAISE_DE LT(_RAISE_DE, KC_SPC)
-#define Z_KEY       LT(0, KC_Z)
-#define Z_KEY_DE    LT(1, DE_Z)
+#define Z_KEY LT(0, KC_Z)
+#define Z_KEY_DE LT(1, DE_Z)
 #endif
 
 #define NAVSPACE LT(_ADJUST, KC_SPC)
@@ -95,24 +95,26 @@ enum planck_layers {
 #define DOWN_KEY LT(_LOWER, KC_DOWN)
 #define UP_KEY LT(_LOWER, KC_UP)
 
-#define UE_KEY      LALT_T(DE_UDIA)
+#define UE_KEY LALT_T(DE_UDIA)
 
-#define DOT_KEY     LT(0, KC_DOT)
-#define COMM_KEY    LT(0, KC_COMM)
-#define SLSH_KEY    LT(0, KC_SLSH)
+#define DOT_KEY LT(0, KC_DOT)
+#define COMM_KEY LT(0, KC_COMM)
+#define SLSH_KEY LT(0, KC_SLSH)
 
-#define NAVSPACE    LT(_ADJUST, KC_SPC)
-#define CAPS_KEY    LGUI_T(KC_CAPS)
+#define NAVSPACE LT(_ADJUST, KC_SPC)
+#define CAPS_KEY LGUI_T(KC_CAPS)
 
-#define BS_KEY      LT(_NUM, KC_BSPC)
-#define DEL_KEY     LT(_MOUSE, KC_DEL)
+#define BS_KEY LT(_NUM, KC_BSPC)
+#define DEL_KEY LT(_MOUSE, KC_DEL)
 
-#define UNDO        C(KC_Z)
-#define REDO        C(KC_Y)
+#define UNDO C(KC_Z)
+#define REDO C(KC_Y)
 
-#define LLOCK_ADJUST LT(_ADJUST, KC_NO)
+// #define LLOCK_ADJUST LT(_ADJUST, KC_NO)
 #define LLOCK_NUM LT(_NUM, KC_NO)
 #define LLOCK_MOUSE LT(_MOUSE, KC_NO)
+
+#define ADJUST MO(_ADJUST)
 
 /* #define NUM_2 LT(0, KC_KP_2) */
 /* #define NUM_3 LT(0, KC_KP_3) */
@@ -133,9 +135,6 @@ enum planck_keycodes {
     LLOCK, // layer lock key
     SZ_KEY,
     KC_DEG,
-#ifdef DUALFUNC
-    TOGGLE_DUALF,
-#endif
 #ifdef WIDE_LAYOUT
     LARROW,
     RPIPE,
@@ -148,6 +147,31 @@ enum planck_keycodes {
     AE_QUOT_CAPS,
     OE_SCLN_CAPS,
     UE_BSLS_CAPS,
-    /* LLOCK_ADJUST, */
+/* LLOCK_ADJUST, */
+#endif
+#ifdef DUALFUNC
+    TOGGLE_DUALF,
 #endif
 };
+
+// =============== HELPER VARIABLES
+// logical variable to differentiate between the German and the English input mode
+bool de_layout_active = false;
+
+// declaring several logical variables
+bool caps_lock_on = false;
+bool num_lock_on  = false;
+// controls which of the two languages (en/ge) is used for coding and which is used for typing German
+// English by default
+bool de_en_switched = false;
+
+// ============ TAP DANCE ================
+// Tap Dance declarations
+#ifdef TAP_DANCE_ENABLE
+enum tap_dance_codes {
+    TD_LPRN, // round brackets (parentheses)
+    TD_LBRC, // square brackets
+    TD_LCBR, // curly brackets
+    TD_LABK, // angling brackets
+};
+#endif

@@ -6,7 +6,6 @@ KEY_OVERRIDE_ENABLE = no 		# Enable key override functionality
 NKRO 				= yes 		# Enable n-key rollover
 BOOTMAGIC_ENABLE 	= no		# Enable Bootmagic
 COMMAND_ENABLE 		= no		# Enable Command/Magic
-UNICODE_ENABLE 		= no		# Enable "direct" unicode output using Wincompose
 MIDI_ENABLE 		= no		# MIDI output
 AUDIO_ENABLE 		= no		# Enables audio features
 RGBLIGHT_ENABLE 	= no		# Enables RGB backlight
@@ -15,6 +14,7 @@ CAPS_WORD_ENABLE	= yes   	# Enables caps word (use with CAPS_WORD keycode)
 SPACE_CADET_ENABLE 	= no		# save space, never used this
 GRAVE_ESC_ENABLE 	= no		# save space, never used this
 SEND_STRING_ENABLE  = no 		# Disable the String sending functionality to save space
+UNICODE_ENABLE 		= no		# Enable "direct" unicode output using Wincompose, requires SEND_STRING_ENABLE
 
 # SRC += muse.c
 
@@ -24,6 +24,7 @@ VPATH += keyboards/gboards/ # Enable gboard combo engine
 #ifdef ACHORDION
 SRC += features/getreuer/achordion.c # add the achordion feature # using legacy version
 SRC += features/getreuer/layer_lock.c # add the layer lock feature
+SRC += features/getreuer/repeat_key.c # add the repeat key feature
 #endif
 
 #ifdef NAGINATA_ENABLE 		# enabled in config.h
