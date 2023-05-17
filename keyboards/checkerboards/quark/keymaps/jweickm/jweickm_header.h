@@ -14,11 +14,11 @@ enum planck_layers {
     _UMLAUTS,
     _NUM,
     /* _NAV, */
-    _ADJUST,
     _RAISE,
     _RAISE_DE,
     _LOWER,
     _LOWER_DE,
+    _ADJUST,
     _MOUSE,
 };
 
@@ -71,6 +71,8 @@ enum planck_layers {
 #define RAISE_DE    LT(_RAISE_DE, KC_SPC)
 #define Z_KEY       LSFT_T(KC_Z)
 #define Z_KEY_DE    LSFT_T(DE_Z)
+#define SLSH_KEY    LT(_NUM, KC_SLSH)
+#define DEL_KEY     LT(_ADJUST, KC_DEL)
 
 #else
 #define SCLN_KEY LT(0, KC_SCLN)
@@ -87,6 +89,8 @@ enum planck_layers {
 #define RAISE_DE LT(_RAISE_DE, KC_SPC)
 #define Z_KEY LT(0, KC_Z)
 #define Z_KEY_DE LT(1, DE_Z)
+#define SLSH_KEY    LT(0, KC_SLSH)
+#define DEL_KEY     LT(_MOUSE, KC_DEL)
 #endif
 
 #define NAVSPACE LT(_ADJUST, KC_SPC)
@@ -99,13 +103,10 @@ enum planck_layers {
 
 #define DOT_KEY LT(0, KC_DOT)
 #define COMM_KEY LT(0, KC_COMM)
-#define SLSH_KEY LT(0, KC_SLSH)
 
-#define NAVSPACE LT(_ADJUST, KC_SPC)
 #define CAPS_KEY LGUI_T(KC_CAPS)
 
 #define BS_KEY LT(_NUM, KC_BSPC)
-#define DEL_KEY LT(_MOUSE, KC_DEL)
 
 #define UNDO C(KC_Z)
 #define REDO C(KC_Y)
@@ -140,6 +141,7 @@ enum planck_keycodes {
     RPIPE,
     LARROW_DE,
     RPIPE_DE,
+    REPEAT, 
 #else
     AE_QUOT,
     OE_SCLN,

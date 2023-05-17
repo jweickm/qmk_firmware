@@ -1,6 +1,7 @@
 // QUARK
 #include "features/getreuer/achordion.h"
 #include "features/getreuer/layer_lock.h"
+#include "features/getreuer/repeat_key.h"
 
 bool is_alt_tab_active  = false;
 
@@ -36,34 +37,49 @@ bool register_unregister_key(keyrecord_t* record, uint16_t keycode) {
     return false;
 }
 
-bool register_unregister_double(keyrecord_t *record, uint16_t keycode1, uint16_t keycode2) {
+bool register_unregister_double(keyrecord_t* record, uint16_t keycode1, uint16_t keycode2) {
     if (record->event.pressed) {
         tap_code16(keycode1);
-        register_code16(keycode2);
-    } else {
-        unregister_code16(keycode2);
     }
-    return false;
+    return register_unregister_key(record, keycode2);
 }
 
 bool register_unregister_shifted_key(keyrecord_t* record, uint16_t keycode, uint16_t shifted_keycode) {
-    if (record->event.pressed) {
-        if (shifted) {
-            clear_mods();
-            clear_oneshot_mods();
-            register_code16(shifted_keycode);
-            set_mods(mod_state);
-        } else {
-            register_code16(keycode);
-        }
+    if (shifted) {
+        clear_mods();
+        clear_oneshot_mods();
+        register_unregister_key(record, shifted_keycode);
+        set_mods(mod_state);
     } else {
-        unregister_code16(keycode);
-        unregister_code16(shifted_keycode);
+        register_unregister_key(record, keycode);
     }
+    #ifdef CAPS_WORD_ENABLE
+        caps_word_off(); // break caps_word
+    #endif
+        return false;
+}
+
+// Helper for implementing taps and long-press keys. Given a tap-hold key event,
+// replaces the hold function with `long_press_keycode`.
+static bool process_tap_long_press_key(keyrecord_t* record, uint16_t long_press_keycode) {
+    if (record->tap.count < 1) { // Key is being held.
+        if (record->event.pressed) {
+            tap_code16(long_press_keycode);
+        }
 #ifdef CAPS_WORD_ENABLE
-    caps_word_off(); // break caps_word
+        caps_word_off(); // break caps_word
 #endif
-    return false;
+        return false; // Skip default handling.
+    }
+    return true; // Continue default handling for tapped keys
+}
+
+bool process_tap_long_press_shifted_key(keyrecord_t* record, uint16_t long_press_keycode, uint16_t long_press_shifted_keycode) {
+    if (shifted) {
+        return process_tap_long_press_key(record, long_press_shifted_keycode);
+    } else {
+        return process_tap_long_press_key(record, long_press_keycode);
+    }
 }
 
 bool process_unicode_alt(uint16_t keycode) {
@@ -274,15 +290,14 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         // thumb keys
         case BS_KEY:
+        case DEL_KEY:
         case LOWER:
         case RAISE:
         case LOWER_DE:
         case RAISE_DE:
-        case DEL_KEY:
-        case ESC_KEY:
+        case TAB_KEY:
             return TAPPING_TERM * thumb_factor;
         case NAVSPACE:
-        case TAB_KEY:
             return TAPPING_TERM * (thumb_factor + 0.1);
 
         // index finger keys
@@ -317,6 +332,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case Y_KEY_DE:
         case I_KEY:
         case DOT_KEY:
+        case ENT_KEY:
+        case ESC_KEY:
         /* case NUM_3: */
             return TAPPING_TERM * ring_factor;
 
@@ -338,15 +355,9 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case BSLS_KEY:
         case UE_KEY:
 #endif
-        case ENT_KEY:
         case QUOT_KEY:
             return TAPPING_TERM; // prefer these ones to be shorter
 
-        // tap-dance actions
-        /* case TD(TD_LARROW): */
-        /* case TD(TD_VIM_GG): */
-        /* case TD(TD_F4): */
-        /* case TD(TD_RARROW): */
 #ifdef TAP_DANCE_ENABLE
         case TD(TD_PRN):
         case TD(TD_BRC):
@@ -567,21 +578,6 @@ bool achordion_eager_mod(uint8_t mod) {
 
 #endif
 
-// Helper for implementing taps and long-press keys. Given a tap-hold key event,
-// replaces the hold function with `long_press_keycode`.
-static bool process_tap_long_press_key(keyrecord_t* record, uint16_t long_press_keycode) {
-    if (record->tap.count < 1) { // Key is being held.
-                if (record->event.pressed) {
-                    tap_code16(long_press_keycode);
-                }
-#ifdef CAPS_WORD_ENABLE
-        caps_word_off(); // break caps_word
-#endif
-        return false; // Skip default handling.
-    }
-    return true; // Continue default handling for tapped keys
-}
-
 // =================================================================
 // +++++++++++++++++++ PROCESS RECORD USER +++++++++++++++++++++++++
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -600,6 +596,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     // for the custom layer lock key from Getreuer
     if (!process_layer_lock(keycode, record, LLOCK)) { return false; }
+
+    // for the REPEAT_KEY feature
+    if (!process_repeat_key(keycode, record, REPEAT)) { return false; }
 
     // make sure that num_lock is turned on, when on the _NUM layer
     if (IS_LAYER_ON(_NUM)) {
@@ -659,12 +658,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 // requires LAYER_LOCK by Getreuer
         // move to the _ADJUST LAYER and llock it
         // if it's already active deactivate it
-        case LLOCK_ADJUST:
-            if (key_tapped) {
-                return toggle_lock_layer(_ADJUST);
-            }
-            return true;
-            break;
+        // case LLOCK_ADJUST:
+        //     if (key_tapped) {
+        //         return toggle_lock_layer(_ADJUST);
+        //     }
+        //     return true;
+        //     break;
 
         // move to the _NUM LAYER and llock it
         // if it's already active deactivate it
@@ -756,7 +755,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // the next case allows us to use alt_tab without a timer
         case NAVSPACE:
         case TAB_KEY:
-        case ENT_KEY:
+        case DEL_KEY:
             if (!record->event.pressed && is_alt_tab_active) {
                 unregister_mods(MOD_BIT(KC_LALT));
                 is_alt_tab_active = false;
@@ -929,17 +928,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
 
+#ifdef WIDE_LAYOUT
+        case SLSH_KEY:
+            if (key_tapped && de_layout_active) {
+                return register_unregister_shifted_key(record, DE_SLSH, DE_QUES);
+                }
+            return true;
+            break;
+#else
         case SLSH_KEY:
             if (de_layout_active) {
-                if (!process_tap_long_press_key(record, DE_QUES)) { // long press ;
+                if (!process_tap_long_press_key(record, DE_MINS)) { // long press ;
                     return false;
                 } else {
                     return register_unregister_shifted_key(record, DE_SLSH, DE_QUES);
                 }
             } else {
-                return (process_tap_long_press_key(record, KC_QUES)); // ?
+                return (process_tap_long_press_key(record, KC_MINS)); // ?
             }
             break;
+#endif
 
         /* case KC_MINS: // - */
         /*     if (de_layout_active) { */

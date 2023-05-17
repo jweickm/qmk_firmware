@@ -71,23 +71,6 @@ bool register_unregister_shifted_key(keyrecord_t* record, uint16_t keycode, uint
         caps_word_off(); // break caps_word
     #endif
         return false;
-        //     if (record->event.pressed) {
-        //         if (shifted) {
-        //             clear_mods();
-        //             clear_oneshot_mods();
-        //             register_code16(shifted_keycode);
-        //             set_mods(mod_state);
-        //         } else {
-        //             register_code16(keycode);
-        //         }
-        //     } else {
-        //         unregister_code16(keycode);
-        //         unregister_code16(shifted_keycode);
-        //     }
-        // #ifdef CAPS_WORD_ENABLE
-        //     caps_word_off(); // break caps_word
-        // #endif
-        //     return false;
 }
 
 // Helper for implementing taps and long-press keys. Given a tap-hold key event,
@@ -918,7 +901,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         // the next case allows us to use alt_tab without a timer
         case NAVSPACE:
-        case ENT_KEY:
+        case DEL_KEY:
         case TAB_KEY:
             if (!record->event.pressed && is_alt_tab_active) {
                 unregister_mods(MOD_BIT(KC_LALT));

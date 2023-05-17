@@ -17,7 +17,7 @@
 #include "jweickm_header.h"
 #include "g/keymap_combo.h"
 
-// =========================================================================================
+// ============================================================================
 #include "jweickm_process_record_user.c"
 
 void matrix_scan_user(void) {

@@ -17,8 +17,6 @@
 #include "jweickm_header.h"
 #include "g/keymap_combo.h"
 
-
-
 // ==== PROCESS RECORD USER
 #include "jweickm_process_record_user.c"
 
