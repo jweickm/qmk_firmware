@@ -82,6 +82,19 @@ bool process_tap_long_press_shifted_key(keyrecord_t* record, uint16_t long_press
     }
 }
 
+bool my_tristate_update(keyrecord_t* record, layer_state_t layer) {
+    if (record->event.pressed && IS_LAYER_ON(layer) && record->tap.count < 1) {
+        layer_on(_ADJUST);
+    } else if (!(record->event.pressed) && IS_LAYER_ON(layer)) {
+        layer_off(_ADJUST);
+        if (is_alt_tab_active) {
+            unregister_mods(MOD_BIT(KC_LALT));
+            is_alt_tab_active = false;
+        }
+    }
+    return true;
+}
+
 bool process_unicode_alt(uint16_t keycode) {
 //  function to process the unicode characters using windows alt + numpad combos (doesn't work usually, hence switching to wincompose)
     bool processed = false;
@@ -490,6 +503,20 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
     }
 }
 
+// #ifdef WIDE_LAYOUT
+// layer_state_t layer_state_set_user(layer_state_t state) {
+// // custom implementation of the tristate update
+//     if (
+//     ( layer_state_cmp(state, _LOWER) && layer_state_cmp(state, _RAISE) ) ||
+//     ( layer_state_cmp(state, _LOWER_DE) && layer_state_cmp(state, _RAISE_DE) )
+//     ) {
+//         return state | (1UL<<_ADJUST);
+//     } else {
+//         return state & ~(1UL<<_ADJUST);
+//     }
+// }
+// #endif
+
 // ===================== ACHORDION ================================
 #ifdef ACHORDION
 bool achordion_chord(uint16_t tap_hold_keycode,
@@ -608,6 +635,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
 
 // ------------------------------- LANGUAGES & LAYERS --------------------------
+// Custom cases to activate _ADJUST layer by pressing LOWER and RAISE together, but still allowing the access of _ADJUST layer directly
+        case LOWER:
+            return my_tristate_update(record, _RAISE);
+            break;
+        case RAISE:
+            return my_tristate_update(record, _LOWER);
+            break;
+        case LOWER_DE:
+            return my_tristate_update(record, _RAISE_DE);
+            break;
+        case RAISE_DE:
+            return my_tristate_update(record, _LOWER_DE);
+            break;
+
         case KB_LANG_SWITCH: // TG(_COLEMAK_DE): switches only kb lang
             if (record->event.pressed) {
                 // invert the state of de_layout_active
