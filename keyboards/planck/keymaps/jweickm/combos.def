@@ -30,7 +30,7 @@ COMB(VOLDBRID_MPRV, KC_MPRV,        KC_VOLD, KC_BRID)
 //COMB(DOWNUP_MPLY,   KC_MPLY,        DOWN_KEY, UP_KEY)
 COMB(BRIDBRIU_MPLY, KC_MPLY,        KC_BRID, KC_BRIU)
 //COMB(DOWNENT_MUTE,  KC_MUTE,        DOWN_KEY, ENT_KEY)
-COMB(DELUP_MUTE,    KC_MUTE,        DEL_KEY, UP_KEY) // mutes the mic with batch script
+//COMB(DELUP_MUTE,    KC_MUTE,        DEL_KEY, UP_KEY) // mutes the mic with batch script
 
 // ---------------------- LAYER COMBOS ---------------------------
 //   name           result          combo keys

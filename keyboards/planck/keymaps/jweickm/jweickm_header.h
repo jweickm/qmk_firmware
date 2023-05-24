@@ -145,18 +145,15 @@ enum planck_keycodes {
     SZ_KEY,
     KC_DEG,
 #ifdef WIDE_LAYOUT
-    LARROW, 
-    RPIPE,
-    LARROW_DE, 
-    RPIPE_DE,
     REPEAT, 
+    ALTREP,
 #else
-    AE_QUOT,
-    OE_SCLN,
-    UE_BSLS,
-    AE_QUOT_CAPS,
-    OE_SCLN_CAPS,
-    UE_BSLS_CAPS,
+    // AE_QUOT,
+    // OE_SCLN,
+    // UE_BSLS,
+    // AE_QUOT_CAPS,
+    // OE_SCLN_CAPS,
+    // UE_BSLS_CAPS,
 #endif
 #ifdef DUALFUNC
     TOGGLE_DUALF,
@@ -171,7 +168,9 @@ bool de_layout_active = false;
 
 // controls which of the two languages (en/ge) is used for coding and which is used for typing German
 // English by default
+#ifndef WIDE_LAYOUT
 bool de_en_switched = false;
+#endif
 
 bool caps_lock_on = false;
 bool num_lock_on = false;

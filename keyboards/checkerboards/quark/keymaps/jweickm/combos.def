@@ -31,7 +31,8 @@ COMB(VOLDBRID_MPRV, KC_MPRV,        KC_VOLD, KC_BRID)
 //COMB(DOWNUP_MPLY,   KC_MPLY,        DOWN_KEY, UP_KEY)
 COMB(BRIDBRIU_MPLY, KC_MPLY,        KC_BRID, KC_BRIU)
 //COMB(DOWNENT_MUTE,  KC_MUTE,        DOWN_KEY, ENT_KEY)
-COMB(DELUP_MUTE,    KC_MUTE,        DEL_KEY, UP_KEY) // mutes the mic with batch script
+//COMB(DELUP_MUTE,    KC_MUTE,        DEL_KEY, UP_KEY) // mutes the mic with batch script
+
 
 // ---------------------- LAYER COMBOS ---------------------------
 //   name           result          combo keys
@@ -50,7 +51,7 @@ COMB(ZSLSH_CAPS,     KC_CAPS,       Z_KEY, SLSH_KEY)
 
 // --------------------- MOUSE COMBOS -------------------------------
 //   name           result          combo keys
-COMB(CAPSAPP_WH_UP,  KC_MS_WH_UP,    KC_CAPS, KC_APP)
+COMB(INSAPP_WH_UP,   KC_MS_WH_UP,    KC_INS, KC_APP)
 COMB(VOL_WH_DN,      KC_MS_WH_DOWN,  KC_VOLD, KC_VOLU)
 
 /* // -------------------- LOWER COMBOS ----------------------------- */

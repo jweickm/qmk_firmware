@@ -620,12 +620,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         if (!process_achordion(keycode, record)) { return false; }
     }
 #endif
-
+    // for the REPEAT_KEY feature
+    // if (!process_repeat_key(keycode, record, REPEAT)) { return false; }
+    if (!process_repeat_key_with_alt(keycode, record, REPEAT, ALTREP)) { return false; }
     // for the custom layer lock key from Getreuer
     if (!process_layer_lock(keycode, record, LLOCK)) { return false; }
-
-    // for the REPEAT_KEY feature
-    if (!process_repeat_key(keycode, record, REPEAT)) { return false; }
 
     // make sure that num_lock is turned on, when on the _NUM layer
     if (IS_LAYER_ON(_NUM)) {
@@ -688,12 +687,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
 #endif
 
+#ifndef WIDE_LAYOUT
         case UMLAUT_SWITCH: // switches the state of de_en_switched
             if (record->event.pressed) {
                 de_en_switched = !de_en_switched;
             }
             return false;
             break;
+#endif
 
 // ------------------------------- ACTION COMBOS --------------------
 // requires LAYER_LOCK by Getreuer
@@ -862,16 +863,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         /*     return true; */
 
             // make dead keys send immediately on german keyboard when de_en_switched
-        case DE_GRV:
-        case DE_CIRC:
-            if (record->event.pressed) {
-                if (de_layout_active && de_en_switched) {
-                    tap_code16(keycode);
-                    tap_code(KC_SPC);
-                    return false;
-                }
-            }
-            return true;
 
             // sends Ralt + " für Umlaute mit Wincompose
         /* case UMLAUT_RALT: */
@@ -971,9 +962,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 #ifdef WIDE_LAYOUT
         case SLSH_KEY:
-            if (key_tapped && de_layout_active) {
+            if (de_layout_active &&record->tap.count > 0) {
                 return register_unregister_shifted_key(record, DE_SLSH, DE_QUES);
-                }
+            }
             return true;
             break;
 #else
@@ -1018,15 +1009,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return process_tap_long_press_key(record, KC_9);
 
 #ifdef WIDE_LAYOUT
-        case LARROW:
-            return register_unregister_double(record, KC_LABK, KC_MINS);
-        case LARROW_DE:
-            return register_unregister_double(record, DE_LABK, DE_MINS);
-        case RPIPE:
-            return register_unregister_double(record, KC_PIPE, KC_RABK);
-        case RPIPE_DE:
-            return register_unregister_double(record, DE_PIPE, DE_RABK);
-
         case QUOT_KEY: // case for the base English Colemak Layer (continues in the next case)
             if (!process_tap_long_press_key(record, KC_0)) {
                 return false;
@@ -1036,21 +1018,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (IS_LAYER_ON(_UMLAUTS)) {
                 return process_german_keycode(record, keycode);
             }
-            if (!de_en_switched) {
-                if (de_layout_active) {
-                    return register_unregister_shifted_key(record, DE_QUOT, DE_DQUO);
-                }
-                return true;
+            if (de_layout_active) {
+                return register_unregister_shifted_key(record, DE_QUOT, DE_DQUO);
             }
-            return process_german_keycode(record, DE_ADIA); // sending Ä
+            return true;
             break;
 
+        case KC_SCLN: // case DE_ODIA:
+            // first process the DE_ODIA case in the _UMLAUTS layer
+            if (IS_LAYER_ON(_UMLAUTS)) {
+                return process_german_keycode(record, keycode);
+            }
+            // then process the key normally when de_en is not switched
+            if (de_layout_active) {
+                return register_unregister_shifted_key(record, DE_SCLN, DE_COLN);
+            }
+            return true;
+            break;
+            
 #else
         case SCLN_KEY: // case for the base English Colemak Layer (continues in the next case)
             if (!process_tap_long_press_key(record, KC_0)) {
                 return false;
             }
-#endif
         case KC_SCLN: // case DE_ODIA:
             // first process the DE_ODIA case in the _UMLAUTS layer
             if (IS_LAYER_ON(_UMLAUTS)) {
@@ -1066,6 +1056,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return process_german_keycode(record, DE_UDIA); // sending Ü
             break;
             
+#endif
         case DE_BSLS: 
             if (de_layout_active) {
                 return register_unregister_shifted_key(record, DE_BSLS, DE_PIPE);

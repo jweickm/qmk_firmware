@@ -253,14 +253,15 @@ uint16_t get_alt_repeat_key_keycode(void) {
       // and a few others, supporting several core hotkeys used in Emacs, Vim,
       // less, and other programs.
       // clang-format off
-      static const uint8_t pairs[][2] PROGMEM = {
-          {KC_F   , KC_B   },  // Forward / Backward.
-          {KC_D   , KC_U   },  // Down / Up.
-          {KC_N   , KC_P   },  // Next / Previous.
-          {KC_A   , KC_E   },  // Home / End.
-      };
-      // clang-format on
-      alt_keycode = find_alt_keycode(pairs, sizeof(pairs), keycode);
+      // Disable this one as I don't use Emacs.
+      // static const uint8_t pairs[][2] PROGMEM = {
+      //     {KC_F   , KC_B   },  // Forward / Backward.
+      //     {KC_D   , KC_U   },  // Down / Up.
+      //     {KC_N   , KC_P   },  // Next / Previous.
+      //     {KC_A   , KC_E   },  // Home / End.
+      // };
+      // // clang-format on
+      // alt_keycode = find_alt_keycode(pairs, sizeof(pairs), keycode);
     } else {
       // The last key was pressed with no mods or only Shift. The following map
       // a few more Vim hotkeys.

@@ -33,9 +33,9 @@
 
 // CAPS WORD SETTINGS
 /* #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD // works only on left shift */
-#define CAPS_WORD_IDLE_TIMEOUT 5000 // 5 seconds = default
+#define CAPS_WORD_IDLE_TIMEOUT 0 // 5 seconds = default
 #define CAPS_WORD_INVERT_ON_SHIFT
-#define ONESHOT_TIMEOUT 5000 // Time in ms before the one shot key is released
+#define ONESHOT_TIMEOUT 0 // Time in ms before the one shot key is released
 
 // turns the lower and raise keys into oneshot shift keys 124-130 bytes
 /* #define THUMB_SHIFT */
@@ -60,6 +60,8 @@
 #define NO_ACTION_FUNCTION
 #undef LOCKING_SUPPORT_ENABLE
 #undef LOCKING_RESYNC_ENABLE
+
+#define DYNAMIC_MACRO_SIZE 64
 
 // Mouse key speed and acceleration.
 #undef MOUSEKEY_DELAY
