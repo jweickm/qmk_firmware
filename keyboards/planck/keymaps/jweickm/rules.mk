@@ -1,7 +1,8 @@
 CONSOLE_ENABLE 		= no        # Console for debug
 LEADER_ENABLE 		= no 		# enable leader key functionality, use espanso instead
 TAP_DANCE_ENABLE 	= no		# enable tap dance functionality
-DYNAMIC_MACRO_ENABLE = yes 		# QMK support for temporary macros
+DYNAMIC_MACRO_ENABLE = no 		# QMK support for temporary macros
+MOUSEKEY_ENABLE 	= yes 
 KEY_OVERRIDE_ENABLE = no 		# Enable key override functionality
 NKRO 				= yes 		# Enable n-key rollover
 BOOTMAGIC_ENABLE 	= no		# Enable Bootmagic

@@ -15,6 +15,7 @@ enum planck_layers {
     _DE_DUALF,
 #endif
     _UMLAUTS,
+    _UMLAUTS_DE,
     _NUM,
     /* _NAV, */
     _RAISE,
@@ -139,11 +140,11 @@ enum planck_keycodes {
     KC_ACC_ACUT,
     /* KB_LANG_SWITCH, */
     /* LANG_SWITCH, */
-    UMLAUT_SWITCH,
+    // UMLAUT_SWITCH,
     /* UMLAUT_RALT, */
     LLOCK, // layer lock key
     SZ_KEY,
-    KC_DEG,
+    // KC_DEG,
 #ifdef WIDE_LAYOUT
     REPEAT, 
     ALTREP,

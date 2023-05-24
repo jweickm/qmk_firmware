@@ -61,7 +61,7 @@
 #undef LOCKING_SUPPORT_ENABLE
 #undef LOCKING_RESYNC_ENABLE
 
-#define DYNAMIC_MACRO_SIZE 64
+#define DYNAMIC_MACRO_SIZE 16
 
 // Mouse key speed and acceleration.
 #undef MOUSEKEY_DELAY

@@ -44,7 +44,7 @@
 #define LEADER_TIMEOUT 280
 #define LEADER_NO_TIMEOUT
 
-#define DYNAMIC_MACRO_SIZE 256
+#define DYNAMIC_MACRO_SIZE 128
 
 // settings for COMBOS
 #define COMBO_TERM 35

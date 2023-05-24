@@ -78,78 +78,49 @@ bool process_repeat_key_with_alt(uint16_t keycode, keyrecord_t* record,
  */
 int8_t get_repeat_key_count(void);
 
-/** @brief Keycode of the key to be repeated. */
-uint16_t get_repeat_key_keycode(void);
-/** @brief Mods to be applied when repeating. */
-uint8_t get_repeat_key_mods(void);
-/** @brief Sets the keycode to repeat. */
-void set_repeat_key_keycode(uint16_t keycode);
-/** @brief Sets the mods to repeat. */
-void set_repeat_key_mods(uint8_t mods);
+/** @brief Keycode of the last key. */
+uint16_t get_last_keycode(void);
+/** @brief Mods that were active with the last key. */
+uint8_t get_last_mods(void);
+/** @brief Sets the last keycode. */
+void set_last_keycode(uint16_t keycode);
+/** @brief Sets the last mods. */
+void set_last_mods(uint8_t mods);
 
 /**
- * @brief Callback defining which keys are eligible for repeating.
+ * @brief Callback defining which keys are remembered.
  *
- * The callback is called on every key press. Returning true means the key may
- * be repeated, and returning false means the key is ignored.
+ * @param keycode          Keycode that was just pressed
+ * @param record           keyrecord_t structure
+ * @param remembered_mods  Mods that will be remembered with this key
+ * @return true            Key is remembered (eligible for repeating)
+ * @return false           Key is ignored
  *
- * Here is the default implementation, which ignores modifier and layer switch
- * keys so that it is possible to set some mods and change layers between
- * pressing a key and repeating it:
+ * Modifier and layer switch keys are always ignored. For all other keys, this
+ * callback is called on every key press. Returning true means that the key is
+ * remembered, false means it is ignored. By default, all non-modifier,
+ * non-layer switch keys are remembered.
  *
- *     bool get_repeat_key_eligible(uint16_t keycode, keyrecord_t* record) {
- *       switch (keycode) {
- *         // Ignore MO, TO, TG, and TT layer switch keys.
- *         case QK_MOMENTARY ... QK_MOMENTARY_MAX:
- *         case QK_TO ... QK_TO_MAX:
- *         case QK_TOGGLE_LAYER ... QK_TOGGLE_LAYER_MAX:
- *         case QK_LAYER_TAP_TOGGLE ... QK_LAYER_TAP_TOGGLE_MAX:
- *         // Ignore mod keys.
- *         case KC_LCTL ... KC_RGUI:
- *         case KC_HYPR:
- *         case KC_MEH:
- *         // Ignore one-shot keys.
- *     #ifndef NO_ACTION_ONESHOT
- *         case QK_ONE_SHOT_LAYER ... QK_ONE_SHOT_LAYER_MAX:
- *         case QK_ONE_SHOT_MOD ... QK_ONE_SHOT_MOD_MAX:
- *     #endif  // NO_ACTION_ONESHOT
- *           return false;
+ * The `remembered_mods` arg represents the mods that will be remembered with
+ * this key. It can be modified to forget certain mods, for instance to forget
+ * capitalization when repeating shifted letters:
  *
- *         // Ignore hold events on tap-hold keys.
- *     #ifndef NO_ACTION_TAPPING
- *         case QK_MOD_TAP ... QK_MOD_TAP_MAX:
- *     #ifndef NO_ACTION_LAYER
- *         case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
- *     #endif  // NO_ACTION_LAYER
- *           if (record->tap.count == 0) {
- *             return false;
- *           }
- *           break;
- *     #endif  // NO_ACTION_TAPPING
- *
- *     #ifdef SWAP_HANDS_ENABLE
- *         case QK_SWAP_HANDS ... QK_SWAP_HANDS_MAX:
- *           if (IS_SWAP_HANDS_KEYCODE(keycode) || record->tap.count == 0) {
- *             return false;
- *           }
- *           break;
- *     #endif  // SWAP_HANDS_ENABLE
- *       }
- *
- *       return true;
+ *     // Forget Shift on letter keys.
+ *     if (KC_A <= keycode && keycode <= KC_Z &&
+ *         (*remembered_mods & ~MOD_MASK_SHIFT) == 0) {
+ *       *remembered_mods = 0;
  *     }
- *
- * To customize, copy the above function into your keymap and edit.
  */
-bool get_repeat_key_eligible(uint16_t keycode, keyrecord_t* record);
+bool remember_last_key_user(uint16_t keycode, keyrecord_t* record,
+                            uint8_t* remembered_mods);
 
 /**
  * @brief Keycode to be used for alternate repeating.
  *
  * Alternate Repeat performs this keycode based on the last eligible pressed key
- * and mods, get_repeat_key_keycode() and get_repeat_key_mods(). For example,
- * when the last key was KC_UP, this function returns KC_DOWN. The function
- * returns KC_NO if the last key doesn't have a defined alternate.
+ * and mods, get_last_keycode() and get_last_mods(). For example, when the last
+ * key was KC_UP, this function returns KC_DOWN. The function returns KC_NO if
+ * the last key doesn't have a defined alternate.
  */
 uint16_t get_alt_repeat_key_keycode(void);
 
@@ -209,30 +180,44 @@ bool alt_repeat_key_tap(void);
 // Deprecated APIs.
 
 /** @deprecated Use `process_repeat_key_with_alt()` instead. */
-static inline bool process_repeat_key_with_rev(
-    uint16_t keycode, keyrecord_t* record,
-    uint16_t repeat_keycode,
-    uint16_t rev_repeat_keycode) {
-  return process_repeat_key_with_alt(keycode, record,
-      repeat_keycode, rev_repeat_keycode);
+static inline bool process_repeat_key_with_rev(uint16_t keycode,
+                                               keyrecord_t* record,
+                                               uint16_t repeat_keycode,
+                                               uint16_t rev_repeat_keycode) {
+  return process_repeat_key_with_alt(keycode, record, repeat_keycode,
+                                     rev_repeat_keycode);
 }
 
 /** @deprecated Use `get_repeat_key_count()` instead. */
 static inline int8_t repeat_key_count(void) { return get_repeat_key_count(); }
 
-/** @deprecated Use `get_repeat_key_keycode()` instead. */
-static inline uint16_t repeat_key_keycode(void) {
-  return get_repeat_key_keycode();
+/** @deprecated Use `get_last_keycode()` instead. */
+static inline uint16_t get_repeat_key_keycode(void) {
+  return get_last_keycode();
 }
+/** @deprecated Use `get_last_keycode()` instead. */
+static inline uint16_t repeat_key_keycode(void) { return get_last_keycode(); }
+/** @deprecated Use `get_last_mods()` instead. */
+static inline uint8_t get_repeat_key_mods(void) { return get_last_mods(); }
+/** @deprecated Use `get_last_mods()` instead. */
+static inline uint8_t repeat_key_mods(void) { return get_last_mods(); }
+/** @deprecated Use `set_last_keycode()` instead. */
+static inline void set_repeat_key_keycode(uint16_t keycode) {
+  set_last_keycode(keycode);
+}
+/** @deprecated Use `set_last_mods()` instead. */
+static inline void set_repeat_key_mods(uint8_t mods) { set_last_mods(mods); }
 
-/** @deprecated Use `get_repeat_key_mods()` instead. */
-static inline uint8_t repeat_key_mods(void) { return get_repeat_key_mods(); }
+/** @deprecated Use `remember_last_key_user()` instead. */
+bool get_repeat_key_eligible_user(uint16_t keycode, keyrecord_t* record,
+                                  uint8_t* remembered_mods);
+/** @deprecated Use `remember_last_key_user()` instead. */
+bool get_repeat_key_eligible(uint16_t keycode, keyrecord_t* record);
 
 /** @deprecated Use `get_alt_repeat_key_keycode()` instead. */
 static inline uint16_t rev_repeat_key_keycode(void) {
   return get_alt_repeat_key_keycode();
 }
-
 /** @deprecated Use `get_alt_repeat_key_keycode()` instead. */
 static inline uint16_t get_rev_repeat_key_keycode(void) {
   return get_alt_repeat_key_keycode();
@@ -252,9 +237,7 @@ static inline bool rev_repeat_key_unregister(void) {
 }
 
 /** @deprecated Use `alt_repeat_key_tap()` instead. */
-static inline bool rev_repeat_key_tap(void) {
-  return alt_repeat_key_tap();
-}
+static inline bool rev_repeat_key_tap(void) { return alt_repeat_key_tap(); }
 
 #ifdef __cplusplus
 }

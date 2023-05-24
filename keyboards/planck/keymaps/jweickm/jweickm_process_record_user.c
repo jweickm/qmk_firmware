@@ -157,13 +157,13 @@ bool process_unicode_alt(uint16_t keycode) {
             }
             processed = true;
             break;
-        case DE_EURO:
-            tap_code(KC_P0);
-            tap_code(KC_P1);
-            tap_code(KC_P2);
-            tap_code(KC_P8);  // €
-            processed = true;
-            break;
+        // case DE_EURO:
+        //     tap_code(KC_P0);
+        //     tap_code(KC_P1);
+        //     tap_code(KC_P2);
+        //     tap_code(KC_P8);  // €
+        //     processed = true;
+        //     break;
         case SZ_KEY:
             tap_code(KC_P0);
             tap_code(KC_P2);
@@ -171,12 +171,12 @@ bool process_unicode_alt(uint16_t keycode) {
             tap_code(KC_P3);  // ß
             processed = true;
             break;
-        case KC_DEG:
-            tap_code(KC_P2);
-            tap_code(KC_P4);
-            tap_code(KC_P8);
-            processed = true;
-            break;
+        // case KC_DEG:
+        //     tap_code(KC_P2);
+        //     tap_code(KC_P4);
+        //     tap_code(KC_P8);
+        //     processed = true;
+        //     break;
         default:
             processed = false;
             break;
@@ -218,21 +218,21 @@ bool process_winc(uint16_t keycode) {
             }
             processed = true;
             break;
-        case DE_EURO:
-            tap_code(KC_EQL);
-            tap_code(KC_E); // €
-            processed = true;
-            break;
+        // case DE_EURO:
+        //     tap_code(KC_EQL);
+        //     tap_code(KC_E); // €
+        //     processed = true;
+        //     break;
         case SZ_KEY:
             tap_code(KC_S);
             tap_code(KC_S); // ß
             processed = true;
             break;
-        case KC_DEG:
-            tap_code(KC_O);
-            tap_code(KC_O);
-            processed = true;
-            break;
+        // case KC_DEG:
+        //     tap_code(KC_O);
+        //     tap_code(KC_O);
+        //     processed = true;
+        //     break;
         default:
             processed = false;
             break;
@@ -493,8 +493,8 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
         switch (combo_index) {
             case YQUOT:
             case QW_ESC:
-            case PB_DEL:
-            case JL_TAB:
+            // case PB_DEL:
+            // case JL_TAB:
                 return false;
             default:
                 return true;
@@ -618,6 +618,8 @@ bool achordion_eager_mod(uint8_t mod) {
             return false; // Wait out the tapping term for the other mods.
     }
 }
+
+// =========================== REPEAT KEYS ==================================
 
 // =================================================================
 // +++++++++++++++++++ PROCESS RECORD USER +++++++++++++++++++++++++
@@ -951,10 +953,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
 
         case ESC_KEY:
-            if (!record->event.pressed && is_alt_tab_active) {
-                unregister_mods(MOD_BIT(KC_LALT));
-                is_alt_tab_active = false;
-            }
         case KC_ESC:
         /* case KC_ENT: */
             if (caps_lock_on && record->event.pressed) {
@@ -1071,16 +1069,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return process_german_keycode(record, keycode);
             }
             return true;
-        case KC_DEG:
-            if (de_layout_active) {
-                return register_unregister_key(record, DE_DEG);
-            }
+        // case KC_DEG:
+        //     if (de_layout_active) {
+        //         return register_unregister_key(record, DE_DEG);
+        //     }
         case SZ_KEY:
             if (de_layout_active) {
                 return register_unregister_key(record, DE_SS);
             }
-        case DE_EURO:
-            return process_german_keycode(record, keycode); // returns true for de_layout_active
+        // case DE_EURO:
+        //     return process_german_keycode(record, keycode); // returns true for de_layout_active
         // ===== PROCESS_GERMAN_KEYCODE =======
 
         case KC_KP_EQUAL: // =
