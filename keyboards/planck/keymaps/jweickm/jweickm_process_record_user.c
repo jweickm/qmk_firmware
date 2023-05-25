@@ -840,7 +840,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     return false;
                 }
         case KC_QUOT: // case DE_ADIA:
-            // process the key normally when de_en is not switched
             if (IS_LAYER_ON(_UMLAUTS)) {
                 return process_german_keycode(record, keycode);
             }
@@ -1077,6 +1076,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (de_layout_active) {
                 return register_unregister_key(record, DE_SS);
             }
+            return process_german_keycode(record, keycode); // returns true for de_layout_active
+            break;
         // case DE_EURO:
         //     return process_german_keycode(record, keycode); // returns true for de_layout_active
         // ===== PROCESS_GERMAN_KEYCODE =======

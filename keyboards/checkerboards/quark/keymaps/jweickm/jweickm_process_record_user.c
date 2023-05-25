@@ -834,9 +834,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (de_layout_active) {
                 return register_unregister_key(record, DE_SS);
             }
-        // case DE_EURO:
-        //     return process_german_keycode(record, keycode); // returns true for de_layout_active
-        // ===== PROCESS_GERMAN_KEYCODE =======
+            return process_german_keycode(record, keycode); // returns true for de_layout_active
+            break;
+            // case DE_EURO:
+            //     return process_german_keycode(record, keycode); // returns true for de_layout_active
+            // ===== PROCESS_GERMAN_KEYCODE =======
 
         case KC_KP_EQUAL:
             if (de_layout_active) {
