@@ -47,7 +47,7 @@ bool register_unregister_double(keyrecord_t* record, uint16_t keycode1, uint16_t
 bool register_unregister_shifted_key(keyrecord_t* record, uint16_t keycode, uint16_t shifted_keycode) {
     if (shifted) {
         clear_mods();
-        clear_oneshot_mods();
+        // clear_oneshot_mods();
         register_unregister_key(record, shifted_keycode);
         set_mods(mod_state);
     } else {
@@ -235,7 +235,7 @@ bool process_german_keycode(keyrecord_t* record, uint16_t keycode) {
         }
         turn_num_lock_on();
         clear_mods();
-        clear_oneshot_mods();
+        //clear_oneshot_mods();
         /* processed = process_unicode_alt(keycode); */
         processed = process_winc(keycode);
         set_mods(mod_state);
@@ -566,7 +566,7 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case SLSH_KEY:
         case SCLN_KEY:
         case BSLS_KEY:
-        case UE_KEY:
+        // case UE_KEY:
         case QUOT_KEY:
         case Q_KEY:
         case W_KEY:
@@ -612,8 +612,8 @@ bool achordion_eager_mod(uint8_t mod) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     mod_state = get_mods();
-    osmod_state = get_oneshot_mods();
-    shifted = (mod_state & MOD_MASK_SHIFT) || (osmod_state & MOD_MASK_SHIFT);
+    // osmod_state = get_oneshot_mods();
+    shifted = (mod_state & MOD_MASK_SHIFT); //|| (osmod_state & MOD_MASK_SHIFT);
     key_tapped = record->event.pressed && record->tap.count;
 
 #ifdef ACHORDION
@@ -743,7 +743,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 if (shifted) {
                     clear_mods();
-                    clear_oneshot_mods();
+                    // clear_oneshot_mods();
                     tap_code(KC_HOME);
                     tap_code(KC_ENT);
                     tap_code(KC_UP);
@@ -939,6 +939,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
             break;
 #endif            
+        case S(KC_Z):
+            if (IS_LAYER_ON(_NUM) && de_layout_active) {
+                return register_unregister_key(record, (S(DE_Z)));
+            }
+            return true;
+            break;
 
         case COMM_KEY:
             if (de_layout_active) {

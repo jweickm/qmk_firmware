@@ -12,6 +12,7 @@ enum planck_layers {
     _COLEMAK_DE,
     _DE_DUALF,
     _UMLAUTS,
+    // _UMLAUTS_DE,
     _NUM,
     /* _NAV, */
     _RAISE,
@@ -62,7 +63,7 @@ enum planck_layers {
 #define BSLS_KEY    KC_BSLS
 #define ESC_KEY     LALT_T(KC_ESC)
 #define ENT_KEY     RGUI_T(KC_ENT)
-#define TAB_KEY     LT(_ADJUST, KC_TAB)
+#define TAB_KEY     LT(_NUM, KC_TAB)
 // define the secondary function of the lower and raise keys here
 #define LOWER       LT(_LOWER, KC_BSPC)
 #define RAISE       LT(_RAISE, KC_SPC)

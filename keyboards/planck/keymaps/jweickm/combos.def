@@ -36,7 +36,8 @@ COMB(ESLSH_H_NUM,   LLOCK_NUM,      E_KEY, SLSH_KEY)
 //   name           result          combo keys
 //COMB(GM_APP,        KC_APP,         G_KEY, M_KEY)
 //COMB(LRSHIFT_CAPS,  KC_CAPS,        OSM(MOD_LSFT), OSM(MOD_RSFT))
-COMB(ZSLSH_CAPS,     KC_CAPS,       Z_KEY, SLSH_KEY)
+COMB(ZSLSH_CAPS,      KC_CAPS,        Z_KEY, SLSH_KEY)
+COMB(DH_ENT,          KC_ENT,         D_KEY, H_KEY)
 
 // --------------------- MOUSE COMBOS -------------------------------
 //   name           result          combo keys
@@ -59,3 +60,8 @@ COMB(LOWERC_APP,    KC_APP,         LOWER, C_KEY)
 /* COMB(NRAISE,        KC_KP_MINUS,    RAISE, N_KEY) */
 /* COMB(ERAISE,        KC_KP_EQUAL,    RAISE, E_KEY) */
 /* COMB(RAISECOMM_TAB, KC_TAB,         RAISE, COMM_KEY) */
+
+/* ----------------------- UMLAUT COMBOS ------------------------------ */
+// COMB(ALTREP_UE,        DE_UDIA,         ALTREP, U_KEY)
+// COMB(ALTREP_OE,        DE_ODIA,         ALTREP, O_KEY)
+// COMB(ALTREP_AE,        DE_ADIA,         ALTREP, A_KEY)
