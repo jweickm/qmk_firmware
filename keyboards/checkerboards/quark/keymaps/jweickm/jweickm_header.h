@@ -12,7 +12,6 @@ enum planck_layers {
     _COLEMAK_DE,
     _DE_DUALF,
     _UMLAUTS,
-    // _UMLAUTS_DE,
     _NUM,
     /* _NAV, */
     _RAISE,
