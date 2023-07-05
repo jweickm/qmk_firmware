@@ -308,27 +308,27 @@ uint16_t get_alt_repeat_key_keycode(void) {
             // and a few others, supporting several core hotkeys used in Emacs, Vim,
             // less, and other programs.
             // clang-format off
-      static const uint8_t pairs[][2] PROGMEM = {
-          {KC_F   , KC_B   },  // Forward / Backward.
-          {KC_D   , KC_U   },  // Down / Up.
-          {KC_E   , KC_Y   },  // Line Down / Up.
-          // {KC_N   , KC_P   },  // Next / Previous.
-          // {KC_A   , KC_E   },  // Home / End.
-          {KC_O   , KC_I   },  // Vim jumplist Older / Newer.
-      };
+            static const uint8_t pairs[][2] PROGMEM = {
+                {KC_F   , KC_B   },  // Forward / Backward.
+                {KC_D   , KC_U   },  // Down / Up.
+                {KC_E   , KC_Y   },  // Line Down / Up.
+                // {KC_N   , KC_P   },  // Next / Previous.
+                // {KC_A   , KC_E   },  // Home / End.
+                {KC_O   , KC_I   },  // Vim jumplist Older / Newer.
+            };
             // clang-format on
             alt_keycode = find_alt_keycode(pairs, sizeof(pairs), keycode);
         } else {
             // The last key was pressed with no mods or only Shift. The following map
             // a few more Vim hotkeys.
             // clang-format off
-      static const uint8_t pairs[][2] PROGMEM = {
-          {KC_J   , KC_K   },  // Down / Up.
-          {KC_H   , KC_L   },  // Left / Right.
-          // These two lines map W and E to B, and B to W.
-          {KC_W   , KC_B   },  // Forward / Backward by word.
-          {KC_E   , KC_B   },  // Forward / Backward by word.
-      };
+            static const uint8_t pairs[][2] PROGMEM = {
+                {KC_J   , KC_K   },  // Down / Up.
+                {KC_H   , KC_L   },  // Left / Right.
+                // These two lines map W and E to B, and B to W.
+                {KC_W   , KC_B   },  // Forward / Backward by word.
+                {KC_E   , KC_B   },  // Forward / Backward by word.
+            };
             // clang-format on
             alt_keycode = find_alt_keycode(pairs, sizeof(pairs), keycode);
         }
@@ -336,27 +336,27 @@ uint16_t get_alt_repeat_key_keycode(void) {
         if (!alt_keycode) {
             // The following key pairs are considered with any mods.
             // clang-format off
-      static const uint8_t pairs[][2] PROGMEM = {
-          {KC_LEFT, KC_RGHT},  // Left / Right Arrow.
-          {KC_UP  , KC_DOWN},  // Up / Down Arrow.
-          {KC_HOME, KC_END },  // Home / End.
-          {KC_PGUP, KC_PGDN},  // Page Up / Page Down.
-          {KC_BSPC, KC_DEL },  // Backspace / Delete.
-          {KC_LBRC, KC_RBRC},  // Brackets [ ] and { }.
-#ifdef EXTRAKEY_ENABLE
-          {KC_WBAK, KC_WFWD},  // Browser Back / Forward.
-          {KC_MNXT, KC_MPRV},  // Next / Previous Media Track.
-          {KC_MFFD, KC_MRWD},  // Fast Forward / Rewind Media.
-          {KC_VOLU, KC_VOLD},  // Volume Up / Down.
-          {KC_BRIU, KC_BRID},  // Brightness Up / Down.
-#endif  // EXTRAKEY_ENABLE
-#ifdef MOUSEKEY_ENABLE
-          {KC_MS_L, KC_MS_R},  // Mouse Cursor Left / Right.
-          {KC_MS_U, KC_MS_D},  // Mouse Cursor Up / Down.
-          {KC_WH_L, KC_WH_R},  // Mouse Wheel Left / Right.
-          {KC_WH_U, KC_WH_D},  // Mouse Wheel Up / Down.
-#endif  // MOUSEKEY_ENABLE
-      };
+            static const uint8_t pairs[][2] PROGMEM = {
+                {KC_LEFT, KC_RGHT},  // Left / Right Arrow.
+                {KC_UP  , KC_DOWN},  // Up / Down Arrow.
+                {KC_HOME, KC_END },  // Home / End.
+                {KC_PGUP, KC_PGDN},  // Page Up / Page Down.
+                {KC_BSPC, KC_DEL },  // Backspace / Delete.
+                {KC_LBRC, KC_RBRC},  // Brackets [ ] and { }.
+        #ifdef EXTRAKEY_ENABLE
+                {KC_WBAK, KC_WFWD},  // Browser Back / Forward.
+                {KC_MNXT, KC_MPRV},  // Next / Previous Media Track.
+                {KC_MFFD, KC_MRWD},  // Fast Forward / Rewind Media.
+                {KC_VOLU, KC_VOLD},  // Volume Up / Down.
+                {KC_BRIU, KC_BRID},  // Brightness Up / Down.
+        #endif  // EXTRAKEY_ENABLE
+        #ifdef MOUSEKEY_ENABLE
+                {KC_MS_L, KC_MS_R},  // Mouse Cursor Left / Right.
+                {KC_MS_U, KC_MS_D},  // Mouse Cursor Up / Down.
+                {KC_WH_L, KC_WH_R},  // Mouse Wheel Left / Right.
+                {KC_WH_U, KC_WH_D},  // Mouse Wheel Up / Down.
+        #endif  // MOUSEKEY_ENABLE
+            };
             // clang-format on
             alt_keycode = find_alt_keycode(pairs, sizeof(pairs), keycode);
         }
