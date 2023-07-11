@@ -20,16 +20,7 @@
 // ==== PROCESS RECORD USER
 #include "jweickm_process_record_user.c"
 
-// for leader functionality
-#ifdef LEADER_ENABLE
-LEADER_EXTERNS();
-#endif
-// ===============================================
 void matrix_scan_user(void) {
-
-#ifdef LEADER_ENABLE
-#include "leader_dictionary.c"
-#endif
 
 #ifdef ACHORDION
     achordion_task();

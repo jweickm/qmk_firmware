@@ -110,14 +110,11 @@ enum planck_layers {
 #define UNDO C(KC_Z)
 #define REDO C(KC_Y)
 
-// #define LLOCK_ADJUST LT(_ADJUST, KC_NO)
 #define LLOCK_NUM LT(_NUM, KC_NO)
 #define LLOCK_MOUSE LT(_MOUSE, KC_NO)
 
 #define ADJUST MO(_ADJUST)
 
-/* #define NUM_2 LT(0, KC_KP_2) */
-/* #define NUM_3 LT(0, KC_KP_3) */
 
 #define KB_LANG_SWITCH TG(_COLEMAK_DE)
 #define LANG_SWITCH S(KC_LALT)
@@ -128,16 +125,9 @@ enum planck_keycodes {
     ALT_TAB,
     KC_ACC_GRV,
     KC_ACC_ACUT,
-    /* KB_LANG_SWITCH, */
-    /* LANG_SWITCH, */
-    // UMLAUT_SWITCH,
-    /* UMLAUT_RALT, */
     LLOCK, // layer lock key
     SZ_KEY,
-    // KC_DEG,
 #ifdef WIDE_LAYOUT
-    // REPEAT, 
-    // ALTREP,
     AE_KEY,
     UE_KEY,
     OE_KEY,
@@ -148,20 +138,12 @@ enum planck_keycodes {
     AE_QUOT_CAPS,
     OE_SCLN_CAPS,
     UE_BSLS_CAPS,
-/* LLOCK_ADJUST, */
 #endif
 #ifdef DUALFUNC
     TOGGLE_DUALF,
 #endif
 };
 
-// =============== HELPER VARIABLES
-// logical variable to differentiate between the German and the English input mode
-bool de_layout_active = false;
-
-// declaring several logical variables
-bool caps_lock_on = false;
-bool num_lock_on  = false;
 // controls which of the two languages (en/ge) is used for coding and which is used for typing German
 // English by default
 #ifndef WIDE_LAYOUT
