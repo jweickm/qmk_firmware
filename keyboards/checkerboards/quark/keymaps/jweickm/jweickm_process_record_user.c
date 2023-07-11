@@ -1,16 +1,17 @@
 // QUARK
 #include "features/getreuer/achordion.h"
 #include "features/getreuer/layer_lock.h"
-#include "features/getreuer/repeat_key.h"
+// #include "features/getreuer/repeat_key.h"
 
 bool is_alt_tab_active  = false;
 
 // initialize the mod_state and the oneshotmod_state variables
 uint8_t mod_state;
 uint8_t osmod_state;
-bool shifted;
-bool key_tapped;
-bool dualf_is_off;
+bool    shifted;
+bool    shifted_prev; // for the alt repeat key and umlauts
+bool    key_tapped;
+bool    dualf_is_off;
 
 bool toggle_lock_layer(layer_state_t layer) {
     if (!IS_LAYER_ON(layer)) {
@@ -615,6 +616,29 @@ bool achordion_eager_mod(uint8_t mod) {
 #endif
 
 // =========================== REPEAT KEYS ==================================
+uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
+    // only pass when key pressed alone or with shift
+    if (!((mods & MOD_MASK_CTRL) || (mods & MOD_MASK_ALT) || (mods &MOD_MASK_GUI))) {
+        shifted_prev = (mods & MOD_MASK_SHIFT); // was shift held?
+        switch (keycode) {
+            case A_KEY:
+                tap_code(KC_BSPC);
+                return AE_KEY;
+            case O_KEY:
+                tap_code(KC_BSPC);
+                return OE_KEY;
+            case U_KEY:
+                tap_code(KC_BSPC);
+                return UE_KEY;
+            case Z_KEY:
+            case Z_KEY_DE:
+            case S_KEY:
+                tap_code(KC_BSPC);
+                return SZ_KEY;
+        }
+    }
+    return KC_TRNS; // Defer to default definitions.
+}
 
 // =================================================================
 // +++++++++++++++++++ PROCESS RECORD USER +++++++++++++++++++++++++
@@ -633,7 +657,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
     // for the REPEAT_KEY feature
     // if (!process_repeat_key(keycode, record, REPEAT)) { return false; }
-    if (!process_repeat_key_with_alt(keycode, record, REPEAT, ALTREP)) { return false; }
+    // if (!process_repeat_key_with_alt(keycode, record, REPEAT, ALTREP)) { return false; }
     // for the custom layer lock key from Getreuer
     if (!process_layer_lock(keycode, record, LLOCK)) { return false; }
 
@@ -828,12 +852,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
             break;
 
-        // ===== PROCESS_GERMAN_KEYCODE =======
-        case DE_UDIA:
-            if (IS_LAYER_ON(_UMLAUTS)) {
-                return process_german_keycode(record, keycode);
-            }
-            return true;
 
         // case KC_DEG:
         //     if (de_layout_active) {
@@ -1065,13 +1083,35 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
             break;
-            
+        // keycodes to be used with the alternative repeat key
+        case AE_KEY:
+            shifted = shifted_prev;
+            if (de_layout_active) {
+                register_unregister_shifted_key(record, DE_ADIA, S(DE_ADIA));
+            }
+            process_german_keycode(record, DE_ADIA);
+            return false;
+        case UE_KEY:
+            shifted = shifted_prev;
+            if (de_layout_active) {
+                register_unregister_shifted_key(record, DE_UDIA, S(DE_UDIA));
+            }
+            process_german_keycode(record, DE_UDIA);
+            return false;
+        case OE_KEY:
+            shifted = shifted_prev;
+            if (de_layout_active) {
+                register_unregister_shifted_key(record, DE_ODIA, S(DE_ODIA));
+            }
+            process_german_keycode(record, DE_ODIA);
+            return false;
+
 #else
         case SCLN_KEY: // case for the base English Colemak Layer (continues in the next case)
             if (!process_tap_long_press_key(record, KC_0)) {
                 return false;
             }
-        case KC_SCLN: // case DE_ODIA:
+        case KC_SCLN: // case DE_UDIA:
             // first process the DE_ODIA case in the _UMLAUTS layer
             if (IS_LAYER_ON(_UMLAUTS)) {
                 return process_german_keycode(record, keycode);
@@ -1090,6 +1130,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case DE_BSLS: 
             if (de_layout_active) {
                 return register_unregister_shifted_key(record, DE_BSLS, DE_PIPE);
+            }
+            return true;
+        // ===== PROCESS_GERMAN_KEYCODE =======
+        case DE_UDIA:
+            if (IS_LAYER_ON(_UMLAUTS)) {
+                return process_german_keycode(record, keycode);
             }
             return true;
 

@@ -18,8 +18,8 @@ enum planck_layers {
     _RAISE_DE,
     _LOWER,
     _LOWER_DE,
-    _ADJUST,
     _MOUSE,
+    _ADJUST,
 };
 
 // Define key names here
@@ -91,6 +91,7 @@ enum planck_layers {
 #define Z_KEY_DE LT(1, DE_Z)
 #define SLSH_KEY    LT(0, KC_SLSH)
 #define DEL_KEY     LT(_MOUSE, KC_DEL)
+#define UE_KEY LALT_T(DE_UDIA)
 #endif
 
 #define NAVSPACE LT(_ADJUST, KC_SPC)
@@ -98,8 +99,6 @@ enum planck_layers {
 
 #define DOWN_KEY LT(_LOWER, KC_DOWN)
 #define UP_KEY LT(_LOWER, KC_UP)
-
-#define UE_KEY LALT_T(DE_UDIA)
 
 #define DOT_KEY LT(0, KC_DOT)
 #define COMM_KEY LT(0, KC_COMM)
@@ -137,8 +136,11 @@ enum planck_keycodes {
     SZ_KEY,
     // KC_DEG,
 #ifdef WIDE_LAYOUT
-    REPEAT, 
-    ALTREP,
+    // REPEAT, 
+    // ALTREP,
+    AE_KEY,
+    UE_KEY,
+    OE_KEY,
 #else
     AE_QUOT,
     OE_SCLN,

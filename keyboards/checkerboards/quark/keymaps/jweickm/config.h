@@ -19,7 +19,7 @@
 // settings for HOME ROW MODS
 #define TAPPING_TERM 160 // 200 ms is the default value
 #define TAPPING_TERM_PER_KEY
-#define IGNORE_MOD_TAP_INTERRUPT
+// #define IGNORE_MOD_TAP_INTERRUPT
 #define QUICK_TAP_TERM_PER_KEY
 #define PERMISSIVE_HOLD_PER_KEY
 

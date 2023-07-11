@@ -13,6 +13,7 @@ KEY_LOCK_ENABLE 	= no    # enables the use of KC_LOCK
 SPACE_CADET_ENABLE 	= no
 GRAVE_ESC_ENABLE 	= no
 SEND_STRING_ENABLE  = no 		# Disable the String sending functionality to save space
+REPEAT_KEY_ENABLE 	= yes 	# Enables the new repeat key feature
 
 COMBO_ENABLE 		= yes
 VPATH				+= keyboards/gboards/
@@ -20,7 +21,7 @@ VPATH				+= keyboards/gboards/
 #ifdef ACHORDION
 SRC += features/getreuer/achordion.c # use older version saved locally
 SRC += features/getreuer/layer_lock.c
-SRC += features/getreuer/repeat_key.c # add the repeat key feature
+# SRC += features/getreuer/repeat_key.c # add the repeat key feature
 #endif
 
 #reduce firmware size by enabling link time optimization
