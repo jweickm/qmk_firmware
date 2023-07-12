@@ -128,6 +128,8 @@ enum planck_keycodes {
     LLOCK, // layer lock key
     SZ_KEY,
 #ifdef WIDE_LAYOUT
+    QK_REPEAT_KEY,
+    QK_ALT_REPEAT_KEY,
     AE_KEY,
     UE_KEY,
     OE_KEY,

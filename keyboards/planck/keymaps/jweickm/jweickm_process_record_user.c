@@ -1,7 +1,7 @@
 // PLANCK REV6
 #include "features/getreuer/achordion.h"
 #include "features/getreuer/layer_lock.h"
-// #include "features/getreuer/repeat_key.h"
+#include "features/getreuer/repeat_key.h"
 
 // =============== HELPER VARIABLES
 // logical variable to differentiate between the German and the English input mode
@@ -659,8 +659,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 #endif
     // for the REPEAT_KEY feature
-    // if (!process_repeat_key(keycode, record, REPEAT)) { return false; }
-    // if (!process_repeat_key_with_alt(keycode, record, REPEAT, ALTREP)) { return false; }
+    if (!process_repeat_key_with_alt(keycode, record, QK_REPEAT_KEY, QK_ALT_REPEAT_KEY)) { return false; }
     // for the custom layer lock key from Getreuer
     if (!process_layer_lock(keycode, record, LLOCK)) {
         return false;
