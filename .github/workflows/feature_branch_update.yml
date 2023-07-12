@@ -18,7 +18,6 @@ jobs:
       matrix:
         branch:
         - xap
-        - riot
 
     steps:
     - uses: actions/checkout@v3
