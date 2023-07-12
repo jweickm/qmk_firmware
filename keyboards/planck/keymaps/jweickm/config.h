@@ -19,7 +19,7 @@
 // settings for HOME ROW MODS
 #define TAPPING_TERM 160 // 200 ms is the default value
 #define TAPPING_TERM_PER_KEY
-#define IGNORE_MOD_TAP_INTERRUPT
+// #define IGNORE_MOD_TAP_INTERRUPT // is now the default
 #define QUICK_TAP_TERM_PER_KEY
 #define PERMISSIVE_HOLD_PER_KEY
 
@@ -34,15 +34,8 @@
 // CAPS WORD SETTINGS
 /* #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD // works only on left shift */
 #define CAPS_WORD_IDLE_TIMEOUT 0 // 5 seconds = default
-#define CAPS_WORD_INVERT_ON_SHIFT
+// #define CAPS_WORD_INVERT_ON_SHIFT
 #define ONESHOT_TIMEOUT 0 // Time in ms before the one shot key is released
-
-// ================= TAP DANCE ===============================
-
-// settings for LEADER key
-#define LEADER_PER_KEY_TIMING
-#define LEADER_TIMEOUT 280
-#define LEADER_NO_TIMEOUT
 
 #define DYNAMIC_MACRO_SIZE 128
 

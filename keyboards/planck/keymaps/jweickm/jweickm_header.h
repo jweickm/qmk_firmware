@@ -5,25 +5,21 @@
 
 #include QMK_KEYBOARD_H
 #include "keymap_german.h"
-/* #include "muse.h" */
 
 enum planck_layers {
     _COLEMAK = 0,
-    _COLEMAK_DE,
-#ifdef DUALFUNC
     _EN_DUALF,
+    _COLEMAK_DE,
     _DE_DUALF,
-#endif
     _UMLAUTS,
-    _UMLAUTS_DE,
     _NUM,
     /* _NAV, */
     _RAISE,
     _RAISE_DE,
     _LOWER,
     _LOWER_DE,
-    _ADJUST,
     _MOUSE,
+    _ADJUST,
 };
 
 // Define key names here
@@ -36,6 +32,7 @@ enum planck_layers {
 #define L_KEY LT(0, KC_L)
 #define U_KEY LT(0, KC_U)
 #define Y_KEY LT(0, KC_Y)
+#define Y_KEY_DE LT(1, DE_Y)
 
 #define G_KEY LT(_NUM, KC_G)
 #define M_KEY LT(_MOUSE, KC_M)
@@ -78,56 +75,46 @@ enum planck_layers {
 #define DEL_KEY     LT(_ADJUST, KC_DEL)
 
 #else
-#define SCLN_KEY    LT(0, KC_SCLN)
-#define BSLS_KEY    LALT_T(KC_BSLS)
-#define ESC_KEY     LALT_T(KC_ESC)
-#define ENT_KEY     RGUI_T(KC_ENT)
-#define QUOT_KEY    RCTL_T(KC_QUOT)
-#define TAB_KEY     LCTL_T(KC_TAB)
+#define SCLN_KEY LT(0, KC_SCLN)
+#define BSLS_KEY LALT_T(KC_BSLS)
+#define ESC_KEY LALT_T(KC_ESC)
+#define ENT_KEY RGUI_T(KC_ENT)
+#define QUOT_KEY RCTL_T(KC_QUOT)
+#define TAB_KEY LCTL_T(KC_TAB)
 // define the secondary function of the lower and raise keys here
-#define LOWER       LT(_LOWER, KC_BSPC)
-#define RAISE       LT(_RAISE, KC_SPC)
+#define LOWER LT(_LOWER, KC_BSPC)
+#define RAISE LT(_RAISE, KC_SPC)
 // GERMAN VERSIONS OF THE KEYS
-#define LOWER_DE    LT(_LOWER_DE, KC_BSPC)
-#define RAISE_DE    LT(_RAISE_DE, KC_SPC)
-#define Z_KEY       LT(0, KC_Z)
-#define Z_KEY_DE    LT(1, DE_Z)
+#define LOWER_DE LT(_LOWER_DE, KC_BSPC)
+#define RAISE_DE LT(_RAISE_DE, KC_SPC)
+#define Z_KEY LT(0, KC_Z)
+#define Z_KEY_DE LT(1, DE_Z)
 #define SLSH_KEY    LT(0, KC_SLSH)
 #define DEL_KEY     LT(_MOUSE, KC_DEL)
-#define UE_KEY      LALT_T(DE_UDIA)
+#define UE_KEY LALT_T(DE_UDIA)
 #endif
 
-#define NAVSPACE    LT(_ADJUST, KC_SPC)
+#define NAVSPACE LT(_ADJUST, KC_SPC)
+//=====================================
 
 #define DOWN_KEY LT(_LOWER, KC_DOWN)
-#define UP_KEY   LT(_LOWER, KC_UP)
-#define LEFT_KEY KC_LEFT
-#define RIGHT_KEY KC_RIGHT
+#define UP_KEY LT(_LOWER, KC_UP)
 
+#define DOT_KEY LT(0, KC_DOT)
+#define COMM_KEY LT(0, KC_COMM)
 
-#define DOT_KEY     LT(0, KC_DOT)
-#define COMM_KEY    LT(0, KC_COMM)
+#define CAPS_KEY LGUI_T(KC_CAPS)
 
-#define CAPS_KEY    LGUI_T(KC_CAPS)
+#define BS_KEY LT(_NUM, KC_BSPC)
 
-#define BS_KEY      LT(_NUM, KC_BSPC)
-
-// ======================================================
-// GERMAN VERSIONS OF THE KEYS
-#define Y_KEY_DE    LT(1, DE_Y)
-
-// OS keys
-#define REDO C(KC_Y)
 #define UNDO C(KC_Z)
+#define REDO C(KC_Y)
 
-// #define LLOCK_ADJUST LT(_ADJUST, KC_NO)
 #define LLOCK_NUM LT(_NUM, KC_NO)
 #define LLOCK_MOUSE LT(_MOUSE, KC_NO)
 
 #define ADJUST MO(_ADJUST)
 
-/* #define NUM_2 LT(0, KC_KP_2) */
-/* #define NUM_3 LT(0, KC_KP_3) */
 
 #define KB_LANG_SWITCH TG(_COLEMAK_DE)
 #define LANG_SWITCH S(KC_LALT)
@@ -138,34 +125,24 @@ enum planck_keycodes {
     ALT_TAB,
     KC_ACC_GRV,
     KC_ACC_ACUT,
-    /* KB_LANG_SWITCH, */
-    /* LANG_SWITCH, */
-    // UMLAUT_SWITCH,
-    /* UMLAUT_RALT, */
     LLOCK, // layer lock key
     SZ_KEY,
-    // KC_DEG,
 #ifdef WIDE_LAYOUT
-    REPEAT, 
-    ALTREP,
+    AE_KEY,
+    UE_KEY,
+    OE_KEY,
 #else
-    // AE_QUOT,
-    // OE_SCLN,
-    // UE_BSLS,
-    // AE_QUOT_CAPS,
-    // OE_SCLN_CAPS,
-    // UE_BSLS_CAPS,
+    AE_QUOT,
+    OE_SCLN,
+    UE_BSLS,
+    AE_QUOT_CAPS,
+    OE_SCLN_CAPS,
+    UE_BSLS_CAPS,
 #endif
 #ifdef DUALFUNC
     TOGGLE_DUALF,
-    /* DUALF_ON, */
-    /* DUALF_OFF, */
 #endif
 };
-
-// =============== HELPER VARIABLES
-// logical variable to differentiate between the German and the English input mode
-bool de_layout_active = false;
 
 // controls which of the two languages (en/ge) is used for coding and which is used for typing German
 // English by default
@@ -173,16 +150,14 @@ bool de_layout_active = false;
 bool de_en_switched = false;
 #endif
 
-bool caps_lock_on = false;
-bool num_lock_on = false;
-
+// ============ TAP DANCE ================
 // Tap Dance declarations
 #ifdef TAP_DANCE_ENABLE
 enum tap_dance_codes {
-    TD_LPRN,     // round brackets (parentheses)
-    TD_LBRC,     // square brackets
-    TD_LCBR,     // curly brackets
-    TD_LABK,     // angling brackets
+    TD_LPRN, // round brackets (parentheses)
+    TD_LBRC, // square brackets
+    TD_LCBR, // curly brackets
+    TD_LABK, // angling brackets
 };
 #endif
 

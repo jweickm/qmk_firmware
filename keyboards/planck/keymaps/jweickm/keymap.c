@@ -17,7 +17,7 @@
 #include "jweickm_header.h"
 #include "g/keymap_combo.h"
 
-// ============================================================================
+// ==== PROCESS RECORD USER
 #include "jweickm_process_record_user.c"
 
 void matrix_scan_user(void) {
@@ -27,16 +27,10 @@ void matrix_scan_user(void) {
 #endif
 }
 
-void keyboard_post_init_user(void) {
-}
-
 bool led_update_user(led_t led_state) {
-    caps_lock_on    = led_state.caps_lock;
-    num_lock_on     = led_state.num_lock;
+    caps_lock_on = led_state.caps_lock;
+    num_lock_on  = led_state.num_lock;
     return true;
-}
-
-void led_set_user(uint8_t usb_led) {
 }
 
 #ifdef WIDE_LAYOUT

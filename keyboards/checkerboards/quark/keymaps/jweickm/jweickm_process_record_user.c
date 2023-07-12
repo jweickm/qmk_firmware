@@ -565,15 +565,10 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case DEL_KEY:
         case BS_KEY:
         case CAPS_KEY:
-        case OSM(MOD_LSFT):
-        case OSM(MOD_RSFT):
         case ESC_KEY:
         case DOWN_KEY:
         case UP_KEY:
         case ENT_KEY:
-        case KC_LCTL:
-        case KC_LALT:
-        case KC_LGUI:
             return 0; // bypass Achordion for these keys
         case Z_KEY:
         case Z_KEY_DE:
@@ -605,6 +600,7 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
     }
     return 400; // otherwise use a timeout of 400 ms.
 }
+
 
 bool achordion_eager_mod(uint8_t mod) {
     switch (mod) {

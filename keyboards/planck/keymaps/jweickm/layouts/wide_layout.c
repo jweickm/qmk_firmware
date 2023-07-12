@@ -54,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         Q_KEY, W_KEY, F_KEY, P_KEY, B_KEY, KC_VOLD, KC_VOLU, J_KEY, L_KEY, U_KEY, Y_KEY, QUOT_KEY,
         A_KEY, R_KEY, S_KEY, T_KEY, G_KEY, KC_BRID, KC_BRIU, M_KEY, N_KEY, E_KEY, I_KEY, O_KEY,
         Z_KEY, X_KEY, C_KEY, D_KEY, V_KEY, KC_MS_WH_DOWN, KC_MS_WH_UP, K_KEY, H_KEY, COMM_KEY, DOT_KEY, SLSH_KEY,
-        KC_LCTL, ESC_KEY, TAB_KEY, LOWER, REPEAT, NAVSPACE, ALTREP, RAISE, DEL_KEY, ENT_KEY, KC_BSLS
+        KC_LCTL, ESC_KEY, TAB_KEY, LOWER, QK_REPEAT_KEY, NAVSPACE, QK_ALT_REPEAT_KEY, RAISE, DEL_KEY, ENT_KEY, KC_BSLS
         ),
 
 
@@ -92,8 +92,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_UMLAUTS] = LAYOUT_planck_mit(
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, DE_UDIA, _______, DE_ADIA,
-        DE_ADIA, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, DE_ODIA,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, UE_KEY, _______, AE_KEY,
+        AE_KEY, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, OE_KEY,
         SZ_KEY,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______,     _______,       _______, _______, _______,  _______, _______ 
         ),
@@ -194,6 +194,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     /* ----------------------------------------------------------------------------------------
+     * _MOUSE
+     * ,-----------------------------------------------------------------------------------.
+     * |  ESC | BTN4 | M ↑  | BTN5 |  F13 |  F14 |  F15 |  F16 |  F17 |  F18 |  F19 |  F20 |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * |WHL <-| M <- | M ↓  | M -> |WHL ->| NUM  | SCRL |  F21 | RCTL | RSFT | LALT | RGUI |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | LSFT |DESK<-|WHL ↑ |WHL ↓ |DESK->| PLY1 | PLY2 |  F22 |  F23 | BTN4 | BTN5 | RSFT |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | ____ | ____ | BTN 3| BTN 2| BTN 1|    _____    | RSFT | RCTL | LLOCK| VOL- | VOL+ |
+     * `-----------------------------------------------------------------------------------'
+     */
+    [_MOUSE] = LAYOUT_planck_mit(
+        KC_ESC, KC_BTN4, KC_MS_U, KC_BTN5, KC_F13, KC_F14, KC_F15, KC_F16, KC_F17, KC_F18, KC_F19, KC_F20, 
+        KC_WH_L, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_R, KC_NUM_LOCK, KC_SCROLL_LOCK, KC_F21, KC_RCTL, OSM(MOD_RSFT), OSM(MOD_LALT), OSM(MOD_RGUI), 
+        KC_LSFT, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), DM_PLY1, DM_PLY2, KC_F22, KC_F23, KC_BTN4, KC_BTN5, KC_RSFT,
+        _______, _______, KC_BTN3, KC_BTN2, KC_BTN1, _______, KC_RSFT, KC_RCTL, LLOCK, KC_VOLD, KC_VOLU
+        ),
+
+    /* ----------------------------------------------------------------------------------------
      * _ADJUST
      * ,-----------------------------------------------------------------------------------.
      * |A(TAB)| C(->)|  INS | PSCR | C(<-)| MPLY | MUTE | KANA | REDO | UNDO | LANG |KBLANG|
@@ -212,22 +231,4 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         QK_CLEAR_EEPROM, QK_BOOT, _______, _______, _______, _______, _______, _______, _______, KC_BRID, KC_BRIU
         ),
 
-    /* ----------------------------------------------------------------------------------------
-     * _MOUSE
-     * ,-----------------------------------------------------------------------------------.
-     * | LLOCK| BTN4 | M ↑  | BTN5 |  F13 |  F14 |  F15 |  F16 |  F17 |  F18 |  F19 |  F20 |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |WHL <-| M <- | M ↓  | M -> |WHL ->| NUM  | SCRL |  F21 | RCTL | RSFT | LALT | RGUI |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | LSFT |DESK<-|WHL ↑ |WHL ↓ |DESK->| PLY1 | PLY2 |  F22 |  F23 | BTN4 | BTN5 | RSFT |
-     * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ | BTN 3| BTN 2| BTN 1|    _____    | RSFT | RCTL | LLOCK| VOL- | VOL+ |
-     * `-----------------------------------------------------------------------------------'
-     */
-    [_MOUSE] = LAYOUT_planck_mit(
-        LLOCK, KC_BTN4, KC_MS_U, KC_BTN5, KC_F13, KC_F14, KC_F15, KC_F16, KC_F17, KC_F18, KC_F19, KC_F20, 
-        KC_WH_L, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_R, KC_NUM_LOCK, KC_SCROLL_LOCK, KC_F21, KC_RCTL, OSM(MOD_RSFT), OSM(MOD_LALT), OSM(MOD_RGUI), 
-        KC_LSFT, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), DM_PLY1, DM_PLY2, KC_F22, KC_F23, KC_BTN4, KC_BTN5, KC_RSFT,
-        _______, _______, KC_BTN3, KC_BTN2, KC_BTN1, _______, KC_RSFT, KC_RCTL, LLOCK, KC_VOLD, KC_VOLU
-        ),
 };

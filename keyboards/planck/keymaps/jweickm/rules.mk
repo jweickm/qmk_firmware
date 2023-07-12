@@ -16,6 +16,7 @@ SPACE_CADET_ENABLE 	= no		# save space, never used this
 GRAVE_ESC_ENABLE 	= no		# save space, never used this
 SEND_STRING_ENABLE  = no 		# Disable the String sending functionality to save space
 UNICODE_ENABLE 		= no		# Enable "direct" unicode output using Wincompose, requires SEND_STRING_ENABLE
+REPEAT_KEY_ENABLE 	= yes 		# Enable the new repeat key feature
 
 # SRC += muse.c
 
@@ -25,7 +26,7 @@ VPATH += keyboards/gboards/ # Enable gboard combo engine
 #ifdef ACHORDION
 SRC += features/getreuer/achordion.c # add the achordion feature # using legacy version
 SRC += features/getreuer/layer_lock.c # add the layer lock feature
-SRC += features/getreuer/repeat_key.c # add the repeat key feature
+# SRC += features/getreuer/repeat_key.c # add the repeat key feature
 #endif
 
 #ifdef NAGINATA_ENABLE 		# enabled in config.h
