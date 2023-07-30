@@ -177,7 +177,7 @@ bool process_unicode_alt(uint16_t keycode) {
 bool process_winc(uint16_t keycode) {
     //  function to process the unicode characters using wincompose
     bool processed = false;
-    tap_code(KC_RALT);
+    tap_code(KC_COMPOSE);
     switch (keycode) {
         case DE_ADIA:
             tap_code16(KC_DQUO);
@@ -496,7 +496,7 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
         switch (combo_index) {
             case HCOMM_ENT:
             case COMMDOT_CPSWRD:
-            case HDOT_RALT:
+            case HDOT_COMPOSE:
             case EDOT_BSPC:
                 /* case NRAISE: */
                 /* case ERAISE: */
@@ -914,7 +914,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_ACC_GRV:  // ` (dead)
         case KC_ACC_ACUT: // ´ (dead)
             if (record->event.pressed) {
-                tap_code(KC_RALT); // using wincompose when on the English Layout
+                tap_code(KC_COMPOSE); // using wincompose when on the English Layout
                 switch (keycode) {
                     case KC_ACC_ACUT: // ´ (dead)
                         tap_code(KC_QUOT);

@@ -55,13 +55,15 @@ enum planck_layers {
 
 #define K_KEY KC_K
 
+#define KC_COMPOSE KC_PAUSE // KC_RALT
+
 // ==== LAYOUT-DEPENDENT KEY MAPPINGS
 #ifdef WIDE_LAYOUT
 #define QUOT_KEY    LT(0, KC_QUOT)
 #define SCLN_KEY    RCTL_T(KC_SCLN)
 #define BSLS_KEY    KC_BSLS
 #define ESC_KEY     LALT_T(KC_ESC)
-#define ENT_KEY     RGUI_T(KC_ENT)
+#define ENT_KEY     RALT_T(KC_ENT)
 #define TAB_KEY     LT(_NUM, KC_TAB)
 // define the secondary function of the lower and raise keys here
 #define LOWER       LT(_LOWER, KC_BSPC)
@@ -114,7 +116,6 @@ enum planck_layers {
 #define LLOCK_MOUSE LT(_MOUSE, KC_NO)
 
 #define ADJUST MO(_ADJUST)
-
 
 #define KB_LANG_SWITCH TG(_COLEMAK_DE)
 #define LANG_SWITCH S(KC_LALT)
