@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "jweickm_header.h"
+#include "header.h"
 #include "g/keymap_combo.h"
 
 // ==== PROCESS RECORD USER
-#include "jweickm_process_record_user.c"
+#include "process_record_user.c"
 
 void matrix_scan_user(void) {
 
