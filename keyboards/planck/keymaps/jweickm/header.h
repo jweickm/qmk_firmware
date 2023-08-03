@@ -63,7 +63,7 @@ enum planck_layers {
 #define SCLN_KEY    RCTL_T(KC_SCLN)
 #define BSLS_KEY    KC_BSLS
 #define ESC_KEY     LALT_T(KC_ESC)
-#define ENT_KEY     RALT_T(KC_ENT)
+#define ENT_KEY     KC_ENT
 #define TAB_KEY     LT(_NUM, KC_TAB)
 // define the secondary function of the lower and raise keys here
 #define LOWER       LT(_LOWER, KC_BSPC)
@@ -148,6 +148,8 @@ enum planck_keycodes {
 #endif
     KC_AFK,
 };
+
+#define AFK_KEY KC_MS_D
 
 // controls which of the two languages (en/ge) is used for coding and which is used for typing German
 // English by default

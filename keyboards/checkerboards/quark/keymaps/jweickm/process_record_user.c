@@ -445,6 +445,9 @@ bool caps_word_press_user(uint16_t keycode) {
             if (de_layout_active) {
                 return false;
             } else {
+                if (!IS_LAYER_ON(_RAISE)) {
+                    add_weak_mods(MOD_BIT(KC_LSFT)); // Apply shift to next key.
+                }
                 return true;
             }
         case DE_MINS:
@@ -516,8 +519,10 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
 uint16_t get_combo_term(uint16_t index, combo_t *combo) {
     // decide by combo->keycode
     switch (combo->keycode) {
+#ifdef DH_ENT
         case DH_ENT:
             return 50;
+#endif
     }
     return COMBO_TERM; // default value
 }
@@ -571,14 +576,23 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case DOWN_KEY:
         case UP_KEY:
         case ENT_KEY:
+        case KC_LCTL:
+        case KC_LALT:
+        case KC_LGUI:
+        case KC_LBRC: 
+        case KC_RBRC:
+        case KC_BSLS:
+        case KC_MINS:
+        case KC_LEFT:
+        case KC_RIGHT:
             return 0; // bypass Achordion for these keys
+
         case Z_KEY:
         case Z_KEY_DE:
         case COMM_KEY:
         case DOT_KEY:
         case SLSH_KEY:
         case SCLN_KEY:
-        case BSLS_KEY:
         // case UE_KEY:
         case QUOT_KEY:
         case Q_KEY:
@@ -646,7 +660,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     // Disable afk mode if it is on
     if (afk) {
-        unregister_code(KC_F24);
+        unregister_code(AFK_KEY);
         afk = false;
     }
 
@@ -1212,6 +1226,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
 
+        case DE_MINS:
+            if (de_layout_active) {
+                if (!IS_LAYER_ON(_RAISE_DE) && is_caps_word_on()) {
+                    shifted = true;
+                }
+                register_unregister_shifted_key(record, DE_MINS, DE_UNDS);
+                return false;
+            }
+            return true;
+
+        case DE_LBRC:
+            if (de_layout_active) {
+                register_unregister_shifted_key(record, DE_LBRC, DE_LCBR);
+#ifdef CAPS_WORD_ENABLE
+                caps_word_off(); // break caps_word
+#endif
+                return false;
+            }
+            return true;
+
+        case DE_RBRC:
+            if (de_layout_active) {
+                register_unregister_shifted_key(record, DE_RBRC, DE_RCBR);
+#ifdef CAPS_WORD_ENABLE
+                caps_word_off(); // break caps_word
+#endif
+                return false;
+            }
+            return true;
+
 #ifndef WIDE_LAYOUT
         case BSLS_KEY: // LALT when held LALT_T(KC_BSLS); only for English layout
             /* if (!process_tap_long_press_key(record, KC_APP)) { return false; } */
@@ -1265,9 +1309,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
 
-        case KC_AFK: // holds down KC_F24 until next key is pressed
-            if (record->event.pressed) {
-                register_code(KC_F24);
+        case KC_AFK: // moves mouse until next key is pressed
+            if (!record->event.pressed) { // register on key release to only send one keyboard report to the host pc
+                register_code16(AFK_KEY);
                 afk = true;
             }
             return false;

@@ -9,11 +9,9 @@ COMB(XS_DEL,        C(KC_DEL),      X_KEY, S_KEY)
 COMB(WF_TAB,        KC_TAB,         W_KEY, F_KEY)
 COMB(XC_CPSWRD,     QK_CAPS_WORD_TOGGLE,      X_KEY, C_KEY)
 COMB(ZS_SZ,         SZ_KEY,         Z_KEY, S_KEY)
-//COMB(QF_WINSFT,     G(KC_LSFT),     Q_KEY, F_KEY)
 COMB(QW_ESC,        KC_ESC,         Q_KEY, W_KEY)
-//COMB(PB_DEL,        KC_DEL,         P_KEY, B_KEY)
-COMB(CTL_ESC_GUI,   KC_LGUI,        KC_LCTL, ESC_KEY)
-COMB(ENT_BSLS_APP,  KC_APP,         ENT_KEY, BSLS_KEY)
+COMB(ZX_DEL,        KC_DEL,         Z_KEY, X_KEY)
+COMB(ENT_GUI_APP,   KC_APP,         KC_LGUI, KC_ENT)
 
 // RIGHT HAND
 COMB(HCOMM_ENT,     KC_ENT,         H_KEY, COMM_KEY)
@@ -21,18 +19,17 @@ COMB(HDOT_COMPOSE,  KC_COMPOSE,        H_KEY, DOT_KEY)
 COMB(COMMDOT_CPSWRD,QK_CAPS_WORD_TOGGLE,      COMM_KEY, DOT_KEY)
 COMB(EDOT_BSPC,     C(KC_BSPC),     E_KEY, DOT_KEY)
 COMB(YQUOT,         KC_BSPC,        Y_KEY, QUOT_KEY)
-//COMB(JL_TAB,        KC_TAB,         J_KEY, L_KEY)
 
 // ---------------------- MEDIA COMBOS ---------------------------
 //   name           result          combo keys
-COMB(VOLURIGHT_NXT, KC_MNXT,        KC_VOLU, KC_RIGHT)
-COMB(VOLDLEFT_PRV,  KC_MPRV,        KC_VOLD, KC_LEFT)
-COMB(BRIDBRIU_MPLY, KC_MPLY,        KC_LEFT, KC_RIGHT)
+COMB(LBRC_BSLS,     KC_MPRV,        KC_LBRC, KC_BSLS)
+COMB(RBRC_MINS,     KC_MNXT,        KC_RBRC, KC_MINS)
+COMB(BSLS_MINS,     KC_MPLY,        KC_BSLS, KC_MINS)
 
 // --------------------- MOUSE COMBOS -------------------------------
 //   name           result          combo keys
-COMB(COMB_WH_UP,     KC_MS_WH_UP,    KC_DOWN, KC_UP)
-COMB(COMB_WH_DN,     KC_MS_WH_DOWN,  KC_VOLD, KC_VOLU)
+COMB(LEFT_RIGHT,    KC_MS_WH_UP,    KC_LEFT, KC_RIGHT)
+COMB(LBRC_RBRC,     KC_MS_WH_DOWN,  KC_LBRC, KC_RBRC)
 
 // ---------------------- LAYER COMBOS ---------------------------
 //   name           result          combo keys
@@ -41,10 +38,7 @@ COMB(ESLSH_H_NUM,   LLOCK_NUM,      E_KEY, SLSH_KEY)
 
 // --------------------- DUAL HAND COMBOS -------------------------------
 //   name           result          combo keys
-//COMB(GM_APP,        KC_APP,         G_KEY, M_KEY)
-//COMB(LRSHIFT_CAPS,  KC_CAPS,        OSM(MOD_LSFT), OSM(MOD_RSFT))
 COMB(ZSLSH_CAPS,      KC_CAPS,        Z_KEY, SLSH_KEY)
-COMB(DH_ENT,          KC_ENT,         D_KEY, H_KEY)
 
 /* // -------------------- LOWER COMBOS ----------------------------- */
 /* //   name           result          combo keys */
@@ -52,18 +46,3 @@ COMB(QLOWER,        KC_EXLM,        LOWER, Q_KEY)
 COMB(WLOWER,        KC_AT,          LOWER, W_KEY)
 COMB(FLOWER,        KC_HASH,        LOWER, F_KEY)
 COMB(PLOWER,        KC_DLR,         LOWER, P_KEY)
-COMB(LOWERC_APP,    KC_APP,         LOWER, C_KEY)
-
-/* // -------------------- RAISE COMBOS ----------------------------- */
-/* //   name           result          combo keys */
-/* COMB(QUOTRAISE,     AE_QUOT,        RAISE, QUOT_KEY) */
-/* COMB(BSLSRAISE,     UE_BSLS,        RAISE, BSLS_KEY) */
-/* COMB(SCLNRAISE,     OE_SCLN,        RAISE, SCLN_KEY) */
-/* COMB(NRAISE,        KC_KP_MINUS,    RAISE, N_KEY) */
-/* COMB(ERAISE,        KC_KP_EQUAL,    RAISE, E_KEY) */
-/* COMB(RAISECOMM_TAB, KC_TAB,         RAISE, COMM_KEY) */
-
-/* ----------------------- UMLAUT COMBOS ------------------------------ */
-// COMB(ALTREP_UE,        DE_UDIA,         ALTREP, U_KEY)
-// COMB(ALTREP_OE,        DE_ODIA,         ALTREP, O_KEY)
-// COMB(ALTREP_AE,        DE_ADIA,         ALTREP, A_KEY)
