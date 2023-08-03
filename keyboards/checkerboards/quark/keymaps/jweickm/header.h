@@ -145,6 +145,7 @@ enum planck_keycodes {
 #ifdef DUALFUNC
     TOGGLE_DUALF,
 #endif
+    KC_AFK,
 };
 
 // controls which of the two languages (en/ge) is used for coding and which is used for typing German

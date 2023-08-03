@@ -10,6 +10,8 @@ static bool caps_lock_on      = false;
 static bool num_lock_on       = false;
 bool        is_alt_tab_active = false;
 
+static bool afk = false;
+
 // initialize the mod_state and the oneshotmod_state variables
 uint8_t mod_state;
 uint8_t osmod_state;
@@ -645,6 +647,13 @@ uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
 // =================================================================
 // +++++++++++++++++++ PROCESS RECORD USER +++++++++++++++++++++++++
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+
+    // Disable afk mode if it is on
+    if (afk) {
+        unregister_code(KC_F24);
+        afk = false;
+    }
+
     mod_state = get_mods();
     // osmod_state = get_oneshot_mods();
     shifted    = (mod_state & MOD_MASK_SHIFT); //|| (osmod_state & MOD_MASK_SHIFT);
@@ -914,22 +923,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             /*     } */
             /*     return false; */
 
-        case KC_ACC_GRV:  // ` (dead)
-        case KC_ACC_ACUT: // ´ (dead)
-            if (record->event.pressed) {
-                tap_code(KC_COMPOSE); // using wincompose when on the English Layout
-                switch (keycode) {
-                    case KC_ACC_ACUT: // ´ (dead)
-                        tap_code(KC_QUOT);
-                        break;
-                    case KC_ACC_GRV: // ` (dead)
-                        tap_code(KC_GRV);
-                        break;
-                    default:
-                        break;
-                }
-            }
-            return false;
+        // case KC_ACC_GRV:  // ` (dead)
+        // case KC_ACC_ACUT: // ´ (dead)
+        //     if (record->event.pressed) {
+        //         tap_code(KC_COMPOSE); // using wincompose when on the English Layout
+        //         switch (keycode) {
+        //             case KC_ACC_ACUT: // ´ (dead)
+        //                 tap_code(KC_QUOT);
+        //                 break;
+        //             case KC_ACC_GRV: // ` (dead)
+        //                 tap_code(KC_GRV);
+        //                 break;
+        //             default:
+        //                 break;
+        //         }
+        //     }
+        //     return false;
 
             // ===== COMBOS ====
 #ifndef WIDE_LAYOUT
@@ -1258,6 +1267,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code(KC_CAPS);
             }
             return true;
+
+        case KC_AFK: // holds down KC_F24 until the next key is pressed
+            if (record->event.pressed) {
+                register_code(KC_F24);
+                afk = true;
+            }
+            return false;
 
     } // switch(keycode)
 

@@ -37,18 +37,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |   Q  |   W  |   F  |   P  |   B  | VOL- | VOL+ |   J  |   L  |   U  |   Y  |  '"  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |   A  |   R  |   S  |   T  |   G  | BRI- | BRI+ |   M  |   N  |   E  |   I  |   O  |
+     * |   A  |   R  |   S  |   T  |   G  |   <- |   -> |   M  |   N  |   E  |   I  |   O  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |   Z  |   X  |   C  |   D  |   V  | MWHD | MWHU |   K  |   H  |  ,<  |  .>  |  /?  |
+     * |   Z  |   X  |   C  |   D  |   V  |   ↓  |   ↑  |   K  |   H  |  ,<  |  .>  |  /?  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | LCTL |  ESC |  TAB | LOWER|REPEAT|     SPC     |ALTREP| RAISE|  DEL |  ENT |  \|  | 
      * `-----------------------------------------------------------------------------------'
      */
     [_COLEMAK] = LAYOUT_planck_mit(
         Q_KEY, W_KEY, F_KEY, P_KEY, B_KEY, KC_VOLD, KC_VOLU, J_KEY, L_KEY, U_KEY, Y_KEY, QUOT_KEY,
-        A_KEY, R_KEY, S_KEY, T_KEY, G_KEY, KC_BRID, KC_BRIU, M_KEY, N_KEY, E_KEY, I_KEY, O_KEY,
-        Z_KEY, X_KEY, C_KEY, D_KEY, V_KEY, KC_MS_WH_DOWN, KC_MS_WH_UP, K_KEY, H_KEY, COMM_KEY, DOT_KEY, SLSH_KEY,
-        KC_LCTL, ESC_KEY, TAB_KEY, LOWER, QK_REPEAT_KEY, NAVSPACE, QK_ALT_REPEAT_KEY, RAISE, DEL_KEY, ENT_KEY, KC_BSLS
+        A_KEY, R_KEY, S_KEY, T_KEY, G_KEY, KC_LEFT, KC_RIGHT, M_KEY, N_KEY, E_KEY, I_KEY, O_KEY,
+        Z_KEY, X_KEY, C_KEY, D_KEY, V_KEY, KC_DOWN, KC_UP, K_KEY, H_KEY, COMM_KEY, DOT_KEY, SLSH_KEY,
+        KC_LCTL, ESC_KEY, TAB_KEY, LOWER, QK_REPEAT_KEY, NAVSPACE, QK_ALT_REPEAT_KEY, RAISE, DEL_KEY, ENT_KEY, BSLS_KEY
         ),
 
     /* ----------------------------------------------------------------------------------------
@@ -113,87 +113,87 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* ----------------------------------------------------------------------------------------
      * _RAISE
      * ,-----------------------------------------------------------------------------------.
-     * |   1  |   2  |   3  |   4  |   5  |   ~  |   \  |   6  |   7  |   8  |   9  |   0  |
+     * |   1  |   2  |   3  |   4  |   5  | ____ | ____ |   6  |   7  |   8  |   9  |   0  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  <-  |   <  |   -  |   =  |   [  |   ]  |
+     * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  | ____ |   <  |   -  |   =  |   [  |   ]  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |   ´  |   \  |   ~  |   ,  |   .  |   /  |
+     * |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 | ____ |   \  |   ~  |   ,  |   .  |   /  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ | ____ | ____ | ____ |     ___     | ____ | ____ | ____ | ____ | ____ | 
+     * | ____ | ____ | ____ | ____ | ____ |     SPC     | ____ | ____ | ____ | ____ | ____ | 
      * `-----------------------------------------------------------------------------------'
      */
     [_RAISE] = LAYOUT_planck_mit(
-        KC_1,  KC_2,  KC_3,  KC_4,   KC_5,   KC_TILD, KC_BSLS,     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    
-        KC_F1, KC_F2, KC_F3, KC_F4,  KC_F5,  KC_F6,   _______,      KC_LABK, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, 
-        KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12,  KC_ACC_ACUT, KC_BSLS, KC_TILD, _______, _______, _______, 
+        KC_1,  KC_2,  KC_3,  KC_4,   KC_5,   _______, _______, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    
+        KC_F1, KC_F2, KC_F3, KC_F4,  KC_F5,  KC_F6,   _______, KC_LABK, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, 
+        KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12,  _______, KC_BSLS, KC_TILD, _______, _______, _______, 
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
         ),
 
     /* ----------------------------------------------------------------------------------------
      * _RAISE_DE
      * ,-----------------------------------------------------------------------------------.
-     * |   1  |   2  |   3  |   4  |   5  |   ~  |   \  |   6  |   7  |   8  |   9  |   0  |
+     * |   1  |   2  |   3  |   4  |   5  | ____ | ____ |   6  |   7  |   8  |   9  |   0  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  <-  |   <  |   -  |   =  |   [  |   ]  |
+     * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  | ____ |   <  |   -  |   =  |   [  |   ]  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |   ´  |   \  |   ~  |   ,  |   .  |   /  |
+     * |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 | ____ |   \  |   ~  |   ,  |   .  |   /  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | ____ | ____ | ____ | ____ |     ___     | ____ | ____ | ____ | ____ | ____ | 
      * `-----------------------------------------------------------------------------------'
      */
     [_RAISE_DE] = LAYOUT_planck_mit(
-        KC_1,  KC_2,  KC_3,  KC_4,   KC_5,   DE_TILD, DE_BSLS, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    
+        KC_1,  KC_2,  KC_3,  KC_4,   KC_5,   _______, _______, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    
         KC_F1, KC_F2, KC_F3, KC_F4,  KC_F5,  KC_F6,   _______, DE_LABK, DE_MINS, DE_EQL,  DE_LBRC, DE_RBRC, 
-        KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12,  DE_ACUT, DE_BSLS, DE_TILD, _______, _______, _______, 
+        KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12,  _______, DE_BSLS, DE_TILD, _______, _______, _______, 
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
     /* ----------------------------------------------------------------------------------------
      * _LOWER
      * ,-----------------------------------------------------------------------------------.
-     * |   !  |   @  |   #  |   $  |   %  |   `  |   |  |   ^  |   &  |   *  |   (  |   )  |
+     * |   !  |   @  |   #  |   $  |   %  | ____ | ____ |   ^  |   &  |   *  |   (  |   )  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   '  |   "  |   _  |   +  |   {  |   }  |
+     * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  | ____ |   "  |   _  |   +  |   {  |   }  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 | ACC_`|   |  |   `  |   ;  |   :  |   \  |
+     * |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 | ____ |   |  |   `  |   ;  |   :  |   \  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | ____ | ____ | ____ | ____ |     SPC     | ____ | ____ | ____ | ____ |   >  | 
      * `-----------------------------------------------------------------------------------'
      */
     [_LOWER] = LAYOUT_planck_mit(
-        KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC, KC_GRV, KC_PIPE,    KC_CIRC, KC_AMPR,  KC_ASTR, KC_LPRN, KC_RPRN, 
-        KC_F1,   KC_F2, KC_F3,   KC_F4,  KC_F5,   KC_F6,  KC_QUOT,      KC_DQUO,  KC_UNDS,  KC_PLUS, KC_LCBR, KC_RCBR, 
-        KC_F7,   KC_F8, KC_F9,   KC_F10, KC_F11,  KC_F12, KC_ACC_GRV, KC_PIPE, KC_GRV, KC_SCLN, KC_COLN, KC_BSLS, 
+        KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC, _______, _______, KC_CIRC, KC_AMPR,  KC_ASTR, KC_LPRN, KC_RPRN, 
+        KC_F1,   KC_F2, KC_F3,   KC_F4,  KC_F5,   KC_F6,   _______, KC_DQUO,  KC_UNDS,  KC_PLUS, KC_LCBR, KC_RCBR, 
+        KC_F7,   KC_F8, KC_F9,   KC_F10, KC_F11,  KC_F12,  _______, KC_PIPE, KC_GRV, KC_SCLN, KC_COLN, KC_BSLS, 
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_RABK
         ),
 
     /* ----------------------------------------------------------------------------------------
      * _LOWER_DE
      * ,-----------------------------------------------------------------------------------.
-     * |   !  |   @  |   #  |   $  |   %  |   `  |   |  |   ^  |   &  |   *  |   (  |   )  |
+     * |   !  |   @  |   #  |   $  |   %  | ____ | ____ |   ^  |   &  |   *  |   (  |   )  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   '  |   "  |   _  |   +  |   {  |   }  |
+     * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  | ____ |   "  |   _  |   +  |   {  |   }  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |   `  |   |  |   `  |   ;  |   :  |   \  |
+     * |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 | ____ |   |  |   `  |   ;  |   :  |   \  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | ____ | ____ | ____ | ____ |     SPC     | ____ | ____ | ____ | ____ |   >  | 
      * `-----------------------------------------------------------------------------------'
      */
     [_LOWER_DE] = LAYOUT_planck_mit(
-        DE_EXLM, DE_AT, DE_HASH, DE_DLR, DE_PERC, DE_GRV, DE_PIPE, DE_CIRC, DE_AMPR, DE_ASTR, DE_LPRN, DE_RPRN, 
-        KC_F1,   KC_F2, KC_F3,   KC_F4,  KC_F5,   KC_F6,  DE_QUOT, DE_DQUO, DE_UNDS, DE_PLUS, DE_LCBR, DE_RCBR, 
-        KC_F7,   KC_F8, KC_F9,   KC_F10, KC_F11,  KC_F12, DE_GRV,  DE_PIPE,  DE_GRV, DE_SCLN, DE_COLN, DE_BSLS, 
+        DE_EXLM, DE_AT, DE_HASH, DE_DLR, DE_PERC, _______, _______, DE_CIRC, DE_AMPR, DE_ASTR, DE_LPRN, DE_RPRN, 
+        KC_F1,   KC_F2, KC_F3,   KC_F4,  KC_F5,   KC_F6,   _______, DE_DQUO, DE_UNDS, DE_PLUS, DE_LCBR, DE_RCBR, 
+        KC_F7,   KC_F8, KC_F9,   KC_F10, KC_F11,  KC_F12,  _______,  DE_PIPE,  DE_GRV, DE_SCLN, DE_COLN, DE_BSLS, 
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, DE_RABK
     ),
 
     /* ----------------------------------------------------------------------------------------
      * _MOUSE
      * ,-----------------------------------------------------------------------------------.
-     * | ESC  | BTN4 | M ↑  | BTN5 |  F13 |  F14 |  F15 |  F16 |  F17 |  F18 |  F19 |  F20 |
+     * |  ESC | BTN4 | M ↑  | BTN5 |  F13 |  F14 |  F15 |  F16 |  F17 |  F18 |  F19 |  F20 |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |WHL <-| M <- | M ↓  | M -> |WHL ->| NUM  | SCRL |  F21 | RCTL | RSFT | LALT | RGUI |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | LSFT |DESK<-|WHL ↑ |WHL ↓ |DESK->| PLY1 | PLY2 |  F22 |  F23 | BTN4 | BTN5 | RSFT |
+     * | LSFT |DESK<-|WHL ↑ |WHL ↓ |DESK->| ____ | ____ |  F22 |  F23 | BTN4 | BTN5 | RSFT |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | ____ | BTN 3| BTN 2| BTN 1|    _____    | RSFT | RCTL | LLOCK| VOL- | VOL+ |
      * `-----------------------------------------------------------------------------------'
@@ -201,27 +201,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_MOUSE] = LAYOUT_planck_mit(
         KC_ESC, KC_BTN4, KC_MS_U, KC_BTN5, KC_F13, KC_F14, KC_F15, KC_F16, KC_F17, KC_F18, KC_F19, KC_F20, 
         KC_WH_L, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_R, KC_NUM_LOCK, KC_SCROLL_LOCK, KC_F21, KC_RCTL, OSM(MOD_RSFT), OSM(MOD_LALT), OSM(MOD_RGUI), 
-        KC_LSFT, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), DM_PLY1, DM_PLY2, KC_F22, KC_F23, KC_BTN4, KC_BTN5, KC_RSFT,
+        KC_LSFT, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), _______, _______, KC_F22, KC_F23, KC_BTN4, KC_BTN5, KC_RSFT,
         _______, _______, KC_BTN3, KC_BTN2, KC_BTN1, _______, KC_RSFT, KC_RCTL, LLOCK, KC_VOLD, KC_VOLU
         ),
 
     /* ----------------------------------------------------------------------------------------
      * _ADJUST
      * ,-----------------------------------------------------------------------------------.
-     * |A(TAB)| C(->)|  INS | PSCR | C(<-)| MPLY | MUTE | KANA | REDO | UNDO | LANG |KBLANG|
+     * |A(TAB)| C(->)|  INS | PSCR | C(<-)| BRI- | BRI+ | KANA | REDO | UNDO | LANG |KBLANG|
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | LGUI | LALT | LSFT | LCTL |C-HOME|C-END | RSTP | LEFT | DOWN |  UP  | RIGHT| VIM_O|
+     * | LGUI | LALT | LSFT | LCTL |C-END |C-HOME| MUTE | LEFT | DOWN |  UP  | RIGHT| VIM_O|
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | LSFT |DESK<-| WHLUP| WHLDN|DESK->| REC1 | REC2 | HOME | PGDN | PGUP |  END | CAPS |
+     * | LSFT |DESK<-| WHLUP| WHLDN|DESK->|MPREV |MNEXT | HOME | PGDN | PGUP |  END | CAPS |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |EEPRST| FLASH| ____ | ____ | ____ |     ____    | ____ | ____ | ____ | BRI- | BRI+ | 
+     * |EEPRST| FLASH| ____ | ____ | ____ |     ____    | ____ | ____ | ____ | ____ | LOCK | 
      * `-----------------------------------------------------------------------------------'
      */
     [_ADJUST] = LAYOUT_planck_mit(
-        ALT_TAB, C(KC_RIGHT), KC_INS, KC_PSCR, C(KC_LEFT), KC_MPLY, KC_MUTE, A(KC_GRV), REDO, UNDO, LANG_SWITCH, KB_LANG_SWITCH, 
-        KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, C(KC_HOME), C(KC_END), DM_RSTP, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O,
-        OSM(MOD_LSFT), C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), DM_REC1, DM_REC2, KC_HOME, KC_PGDN, KC_PGUP, KC_END, KC_CAPS, 
-        QK_CLEAR_EEPROM, QK_BOOT, _______, _______, _______, _______, _______, _______, _______, KC_BRID, KC_BRIU
+        ALT_TAB, C(KC_RIGHT), KC_INS, KC_PSCR, C(KC_LEFT), KC_BRID, KC_BRIU, A(KC_GRV), REDO, UNDO, LANG_SWITCH, KB_LANG_SWITCH, 
+        KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, C(KC_END), C(KC_HOME), KC_MUTE, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O,
+        OSM(MOD_LSFT), C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_MPRV, KC_MNXT, KC_HOME, KC_PGDN, KC_PGUP, KC_END, KC_CAPS, 
+        QK_CLEAR_EEPROM, QK_BOOT, _______, _______, _______, _______, _______, _______, _______, _______, KC_AFK
         ),
-
 };
