@@ -569,9 +569,17 @@ bool achordion_chord(uint16_t tap_hold_keycode, keyrecord_t *tap_hold_record, ui
     if (other_record->event.key.row % (MATRIX_ROWS / 2) >= 3) {
         return true;
     }
+    // also ignore the center columns if wide layout
+    #ifdef WIDE_LAYOUT
+    if (other_record->event.key.row <= 2 && other_record->event.key.col >= 5) {
+        return true;
+    } else if (other_record->event.key.row >= 5 && other_record->event.key.col <= 0) {
+        return true;
+    }
+    #endif
 
-    // Otherwise, follow the opposite hands rule.
-    return achordion_opposite_hands(tap_hold_record, other_record);
+        // Otherwise, follow the opposite hands rule.
+        return achordion_opposite_hands(tap_hold_record, other_record);
 }
 
 uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
