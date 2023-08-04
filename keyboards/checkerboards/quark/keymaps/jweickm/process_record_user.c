@@ -29,6 +29,17 @@ bool toggle_lock_layer(layer_state_t layer) {
     return false;
 }
 
+void altrep_preprocess(keyrecord_t *record) {
+    // update the shifted state for alt rep
+    if (!shifted) {
+        shifted = (shifted_prev && !IS_LAYER_ON(_UMLAUTS)) || (is_caps_word_on());
+    }
+    // also delete the previous character
+    if (get_repeat_key_count() == -1 && record->event.pressed) { // first alt repeat
+        tap_code(KC_BSPC);
+    }
+}
+
 void turn_num_lock_on(void) {
     // check the host_keybord's num_lock state and turn num_lock on if it is off
     if (!num_lock_on) {
@@ -1157,34 +1168,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         // keycodes to be used with the alternative repeat key
         case AE_KEY:
-            if (!shifted) {
-                shifted = shifted_prev || is_caps_word_on();
-            }
-            if (get_repeat_key_count() == -1 && record->event.pressed) { // first alt repeat
-                tap_code(KC_BSPC);
-            }
+            altrep_preprocess(record);
             if (de_layout_active) {
                 return register_unregister_shifted_key(record, DE_ADIA, S(DE_ADIA));
             }
             return process_german_keycode(record, DE_ADIA);
         case UE_KEY:
-            if (!shifted) {
-                shifted = shifted_prev || is_caps_word_on();
-            }
-            if (get_repeat_key_count() == -1 && record->event.pressed) { // first alt repeat
-                tap_code(KC_BSPC);
-            }
+            altrep_preprocess(record);
             if (de_layout_active) {
                 return register_unregister_shifted_key(record, DE_UDIA, S(DE_UDIA));
             }
             return process_german_keycode(record, DE_UDIA);
         case OE_KEY:
-            if (!shifted) {
-                shifted = shifted_prev || is_caps_word_on();
-            }
-            if (get_repeat_key_count() == -1 && record->event.pressed) { // first alt repeat
-                tap_code(KC_BSPC);
-            }
+            altrep_preprocess(record);
             if (de_layout_active) {
                 return register_unregister_shifted_key(record, DE_ODIA, S(DE_ODIA));
             }
