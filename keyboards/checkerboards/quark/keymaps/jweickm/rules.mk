@@ -14,6 +14,7 @@ SPACE_CADET_ENABLE 	= no
 GRAVE_ESC_ENABLE 	= no
 SEND_STRING_ENABLE  = no 		# Disable the String sending functionality to save space
 REPEAT_KEY_ENABLE 	= no 	# Enables the new repeat key feature
+SWAP_HANDS_ENABLE 	= no 	# swap sides of the keyboard
 
 COMBO_ENABLE 		= yes
 VPATH				+= keyboards/gboards/

@@ -16,7 +16,7 @@ SPACE_CADET_ENABLE 	= no		# save space, never used this
 GRAVE_ESC_ENABLE 	= no		# save space, never used this
 SEND_STRING_ENABLE  = no 		# Disable the String sending functionality to save space
 UNICODE_ENABLE 		= no		# Enable "direct" unicode output using Wincompose, requires SEND_STRING_ENABLE
-REPEAT_KEY_ENABLE 	= no 		# Enable the new repeat key feature
+REPEAT_KEY_ENABLE 	= no 		# Enable the new repeat key feature, use Getreuer version instead
 KEY_LOCK_ENABLE		= no		# Enable QK_LOCK lock key
 
 # SRC += muse.c
