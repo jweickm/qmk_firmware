@@ -27,7 +27,9 @@ VPATH += keyboards/gboards/ # Enable gboard combo engine
 #ifdef ACHORDION
 SRC += features/getreuer/achordion.c # add the achordion feature # using legacy version
 SRC += features/getreuer/layer_lock.c # add the layer lock feature
+#ifdef GETREUER_REP_KEY_ENABLE
 SRC += features/getreuer/repeat_key.c # add the repeat key feature
+#endif
 #endif
 
 #ifdef NAGINATA_ENABLE 		# enabled in config.h

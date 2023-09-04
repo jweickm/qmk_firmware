@@ -16,7 +16,9 @@ static bool afk = false;
 uint8_t mod_state;
 uint8_t osmod_state;
 bool    shifted;
+#ifdef GETREUER_REP_KEY_ENABLE
 bool    shifted_prev; // for the alt repeat key and umlauts
+#endif
 bool    key_tapped;
 bool    dualf_is_off;
 
@@ -29,6 +31,7 @@ bool toggle_lock_layer(layer_state_t layer) {
     return false;
 }
 
+#ifdef GETREUER_REP_KEY_ENABLE
 void altrep_preprocess(keyrecord_t *record) {
     // update the shifted state for alt rep
     if (!shifted) {
@@ -39,6 +42,7 @@ void altrep_preprocess(keyrecord_t *record) {
         tap_code(KC_BSPC);
     }
 }
+#endif
 
 void turn_num_lock_on(void) {
     // check the host_keybord's num_lock state and turn num_lock on if it is off
@@ -100,9 +104,9 @@ bool process_tap_long_press_shifted_key(keyrecord_t *record, uint16_t long_press
 
 bool my_tristate_update(keyrecord_t *record, layer_state_t layer) {
     if (record->event.pressed && IS_LAYER_ON(layer) && record->tap.count < 1) {
-        layer_on(_ADJUST);
+        layer_on(_NAV);
     } else if (!(record->event.pressed) && IS_LAYER_ON(layer)) {
-        layer_off(_ADJUST);
+        layer_off(_NAV);
         if (is_alt_tab_active) {
             unregister_mods(MOD_BIT(KC_LALT));
             is_alt_tab_active = false;
@@ -457,9 +461,11 @@ bool caps_word_press_user(uint16_t keycode) {
             if (!de_layout_active) { // filter for other names in English
                 return false;
             }
+#ifdef GETREUER_REP_KEY_ENABLE
         case AE_KEY:
         case OE_KEY:
         case UE_KEY:
+#endif
         case KC_A ... KC_Z:
             add_weak_mods(MOD_BIT(KC_LSFT)); // Apply shift to next key.
             return true;
@@ -484,8 +490,10 @@ bool caps_word_press_user(uint16_t keycode) {
         case KC_KP_1 ... KC_KP_0:
         case KC_BSPC:
         case KC_DEL:
+#ifdef GETREUER_REP_KEY_ENABLE
         case QK_REPEAT_KEY:
         case QK_ALT_REPEAT_KEY:
+#endif
             return true;
 
         default:
@@ -559,9 +567,9 @@ uint16_t get_combo_term(uint16_t index, combo_t *combo) {
 //     ( layer_state_cmp(state, _LOWER) && layer_state_cmp(state, _RAISE) ) ||
 //     ( layer_state_cmp(state, _LOWER_DE) && layer_state_cmp(state, _RAISE_DE) )
 //     ) {
-//         return state | (1UL<<_ADJUST);
+//         return state | (1UL<<_NAV);
 //     } else {
-//         return state & ~(1UL<<_ADJUST);
+//         return state & ~(1UL<<_NAV);
 //     }
 // }
 // #endif
@@ -668,6 +676,7 @@ bool achordion_eager_mod(uint8_t mod) {
 #endif
 
 // =========================== REPEAT KEYS ==================================
+#ifdef GETREUER_REP_KEY_ENABLE
 uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
     // only pass when key pressed alone or with shift
     if (!((mods & MOD_MASK_CTRL) || (mods & MOD_MASK_ALT) || (mods & MOD_MASK_GUI))) {
@@ -687,6 +696,7 @@ uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
     }
     return KC_TRNS; // Defer to default definitions.
 }
+#endif
 
 // =================================================================
 // +++++++++++++++++++ PROCESS RECORD USER +++++++++++++++++++++++++
@@ -711,9 +721,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 #endif
     // for the REPEAT_KEY feature
+#ifdef GETREUER_REP_KEY_ENABLE
     if (!process_repeat_key_with_alt(keycode, record, QK_REPEAT_KEY, QK_ALT_REPEAT_KEY)) {
         return false;
     }
+#endif
     // for the custom layer lock key from Getreuer
     if (!process_layer_lock(keycode, record, LLOCK)) {
         return false;
@@ -726,7 +738,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     switch (keycode) {
             // ------------------------------- LANGUAGES & LAYERS --------------------------
-            // Custom cases to activate _ADJUST layer by pressing LOWER and RAISE together, but still allowing the access of _ADJUST layer directly
+            // Custom cases to activate _NAV layer by pressing LOWER and RAISE together, but still allowing the access of _NAV layer directly
         case LOWER:
             return my_tristate_update(record, _RAISE);
             break;
@@ -790,11 +802,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
             // ------------------------------- ACTION COMBOS --------------------
             // requires LAYER_LOCK by Getreuer
-            // move to the _ADJUST LAYER and llock it
+            // move to the _NAV LAYER and llock it
             // if it's already active deactivate it
             // case LLOCK_ADJUST:
             //     if (key_tapped) {
-            //         return toggle_lock_layer(_ADJUST);
+            //         return toggle_lock_layer(_NAV);
             //     }
             //     return true;
             //     break;
@@ -898,7 +910,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
             // make a rule so that we can use it for alt-tabbing without changing the language
         case OSM(MOD_LSFT):
-            if (IS_LAYER_ON(_ADJUST)) { // using the add_mods function to not trigger the language change
+            if (IS_LAYER_ON(_NAV)) { // using the add_mods function to not trigger the language change
                 if (record->event.pressed) {
                     add_mods(MOD_BIT(KC_LSFT));
                 } else {
@@ -1175,6 +1187,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         //     return true;
 
         // keycodes to be used with the alternative repeat key
+#ifdef GETREUER_REP_KEY_ENABLE
         case AE_KEY:
             altrep_preprocess(record);
             if (de_layout_active) {
@@ -1193,6 +1206,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return register_unregister_shifted_key(record, DE_ODIA, S(DE_ODIA));
             }
             return process_german_keycode(record, DE_ODIA);
+#endif
 
 #else
         case SCLN_KEY: // case for the base English Colemak Layer (continues in the next case)

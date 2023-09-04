@@ -19,7 +19,8 @@ enum planck_layers {
     _LOWER,
     _LOWER_DE,
     _MOUSE,
-    _ADJUST,
+    _NAV,
+    _FN,
 };
 
 // Define key names here
@@ -55,7 +56,8 @@ enum planck_layers {
 
 #define K_KEY KC_K
 
-#define KC_COMPOSE KC_PAUSE // KC_RALT
+#define KC_COMPOSE KC_RALT
+#define KC_MMIC KC_F20 // mute mic
 
 // ==== LAYOUT-DEPENDENT KEY MAPPINGS
 #ifdef WIDE_LAYOUT
@@ -64,6 +66,8 @@ enum planck_layers {
 #define BSLS_KEY    KC_BSLS
 #define ESC_KEY     LALT_T(KC_ESC)
 #define ENT_KEY     KC_ENT
+#define FN_KEY      LT(_FN, KC_APP)
+#define NAVGUI      LT(_NAV, KC_LGUI)
 
 #ifdef SWAP_HANDS_ENABLE
 #define TAB_KEY     SH_T(KC_TAB)
@@ -79,7 +83,7 @@ enum planck_layers {
 #define Z_KEY       LSFT_T(KC_Z)
 #define Z_KEY_DE    LSFT_T(DE_Z)
 #define SLSH_KEY    LT(_NUM, KC_SLSH)
-#define DEL_KEY     LT(_ADJUST, KC_DEL)
+#define DEL_KEY     KC_DEL
 
 #else
 #define SCLN_KEY LT(0, KC_SCLN)
@@ -101,7 +105,7 @@ enum planck_layers {
 #define UE_KEY LALT_T(DE_UDIA)
 #endif
 
-#define NAVSPACE LT(_ADJUST, KC_SPC)
+#define NAVSPACE LT(_NAV, KC_SPC)
 //=====================================
 
 #define DOWN_KEY LT(_LOWER, KC_DOWN)
@@ -112,7 +116,7 @@ enum planck_layers {
 
 #define CAPS_KEY LGUI_T(KC_CAPS)
 
-#define BS_KEY LT(_NUM, KC_BSPC)
+#define BS_KEY KC_BSPC
 
 #define UNDO C(KC_Z)
 #define REDO C(KC_Y)
@@ -120,11 +124,11 @@ enum planck_layers {
 #define LLOCK_NUM LT(_NUM, KC_NO)
 #define LLOCK_MOUSE LT(_MOUSE, KC_NO)
 
-#define ADJUST MO(_ADJUST)
+#define ADJUST MO(_NAV)
 
 
 #define KB_LANG_SWITCH TG(_COLEMAK_DE)
-#define LANG_SWITCH S(KC_LALT)
+#define LANG_SWITCH G(KC_SPC)
 
 enum planck_keycodes {
     COLEMAK = SAFE_RANGE,
@@ -135,8 +139,10 @@ enum planck_keycodes {
     LLOCK, // layer lock key
     SZ_KEY,
 #ifdef WIDE_LAYOUT
+#ifdef GETREUER_REP_KEY_ENABLE
     QK_REPEAT_KEY,
     QK_ALT_REPEAT_KEY,
+#endif
     AE_KEY,
     UE_KEY,
     OE_KEY,
