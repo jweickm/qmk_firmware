@@ -47,14 +47,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |   Z  |   X  |   C  |   D  |   V  |  <-  |  ->  |   K  |   H  |  ,<  |  .>  |  /?  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | LCTL |  ALT |  BS  |OSMSFT| LOWER|     GUI     | RAISE|NAVSPC|  DEL | APPFN|  GUI | 
+     * | LCTL | LALT | LGUI | LOWER|  ESC |     SPC     |  TAB | RAISE|  DEL | APPFN|  ENT | 
      * `-----------------------------------------------------------------------------------'
      */
     [_COLEMAK] = LAYOUT_planck_mit(
         Q_KEY, W_KEY, F_KEY, P_KEY, B_KEY, KC_BSLS, KC_ESC, J_KEY, L_KEY, U_KEY, Y_KEY, QUOT_KEY,
         A_KEY, R_KEY, S_KEY, T_KEY, G_KEY, KC_TAB,  KC_ENT, M_KEY, N_KEY, E_KEY, I_KEY, O_KEY,
         Z_KEY, X_KEY, C_KEY, D_KEY, V_KEY, KC_LEFT, KC_RIGHT, K_KEY, H_KEY, COMM_KEY, DOT_KEY, SLSH_KEY,
-        KC_LCTL, KC_LALT, BS_KEY, OSM(MOD_LSFT), LOWER, NAVGUI, RAISE, NAVSPACE, DEL_KEY, FN_KEY, KC_LGUI
+        KC_LCTL, KC_LALT, KC_LGUI, LOWER, ESC_KEY, NAVSPACE, TAB_KEY, RAISE, DEL_KEY, FN_KEY, ENT_KEY
         ),
 
     /* ----------------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |   Z  |   X  |   C  |   D  |   V  |  <-  |  ->  |   K  |   H  |  ,<  |  .>  |  /?  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ | ____ | ____ |LWR_DE|     ___     |RSE_DE| ____ | ____ | ____ |  ENT |
+     * | ____ | ____ | ____ |LWR_DE| ____ |     ___     | ____ |RSE_DE| ____ | ____ | ____ |
      * `-----------------------------------------------------------------------------------'
      */
     [_COLEMAK_DE] = LAYOUT_planck_mit(

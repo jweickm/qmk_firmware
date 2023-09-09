@@ -64,16 +64,11 @@ enum planck_layers {
 #define QUOT_KEY    LT(0, KC_QUOT)
 #define SCLN_KEY    RCTL_T(KC_SCLN)
 #define BSLS_KEY    KC_BSLS
-#define ESC_KEY     LALT_T(KC_ESC)
+#define ESC_KEY     LSFT_T(KC_ESC)
 #define ENT_KEY     KC_ENT
 #define FN_KEY      LT(_FN, KC_APP)
-#define NAVGUI      LT(_NAV, KC_LGUI)
+#define TAB_KEY     RSFT_T(KC_TAB)
 
-#ifdef SWAP_HANDS_ENABLE
-#define TAB_KEY     SH_T(KC_TAB)
-#else
-#define TAB_KEY     LT(_NUM, KC_TAB)
-#endif
 // define the secondary function of the lower and raise keys here
 #define LOWER       LT(_LOWER, KC_BSPC)
 #define RAISE       LT(_RAISE, KC_SPC)
