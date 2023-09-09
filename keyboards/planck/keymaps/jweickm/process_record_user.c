@@ -1,7 +1,9 @@
 // PLANCK REV6
 #include "features/getreuer/achordion.h"
 #include "features/getreuer/layer_lock.h"
+#ifdef GETREUER_REP_KEY_ENABLE
 #include "features/getreuer/repeat_key.h"
+#endif
 
 // =============== HELPER VARIABLES
 // logical variable to differentiate between the German and the English input mode
@@ -68,14 +70,30 @@ bool register_unregister_double(keyrecord_t *record, uint16_t keycode1, uint16_t
 }
 
 bool register_unregister_shifted_key(keyrecord_t *record, uint16_t keycode, uint16_t shifted_keycode) {
-    if (shifted) {
-        clear_mods();
-        // clear_oneshot_mods();
-        register_unregister_key(record, shifted_keycode);
-        set_mods(mod_state);
+    if (record->event.pressed) {
+        if (shifted) {
+            clear_mods();
+            #ifndef NO_ACTION_ONESHOT
+            clear_oneshot_mods();
+            #endif
+            register_code16(shifted_keycode);
+            set_mods(mod_state);
+        } else {
+            register_code16(keycode);
+        }
     } else {
-        register_unregister_key(record, keycode);
+        // release both keycodes, to not have any stuck keys
+        unregister_code16(shifted_keycode);
+        unregister_code16(keycode);
     }
+    // if (shifted) {
+    //     clear_mods();
+    //     // clear_oneshot_mods();
+    //     register_unregister_key(record, shifted_keycode);
+    //     set_mods(mod_state);
+    // } else {
+    //     register_unregister_key(record, keycode);
+    // }
     return false;
 }
 
@@ -104,9 +122,9 @@ bool process_tap_long_press_shifted_key(keyrecord_t *record, uint16_t long_press
 
 bool my_tristate_update(keyrecord_t *record, layer_state_t layer) {
     if (record->event.pressed && IS_LAYER_ON(layer) && record->tap.count < 1) {
-        layer_on(_NAV);
+        layer_on(_ADJUST);
     } else if (!(record->event.pressed) && IS_LAYER_ON(layer)) {
-        layer_off(_NAV);
+        layer_off(_ADJUST);
         if (is_alt_tab_active) {
             unregister_mods(MOD_BIT(KC_LALT));
             is_alt_tab_active = false;
@@ -513,7 +531,7 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
         switch (combo_index) {
             case CD_ESC:
             case HCOMM_ENT:
-            case LWR_D_MOUSE:
+            case MOUSE_COMB:
                 return true;
             default:
                 return false;
@@ -567,9 +585,9 @@ uint16_t get_combo_term(uint16_t index, combo_t *combo) {
 //     ( layer_state_cmp(state, _LOWER) && layer_state_cmp(state, _RAISE) ) ||
 //     ( layer_state_cmp(state, _LOWER_DE) && layer_state_cmp(state, _RAISE_DE) )
 //     ) {
-//         return state | (1UL<<_NAV);
+//         return state | (1UL<<_ADJUST);
 //     } else {
-//         return state & ~(1UL<<_NAV);
+//         return state & ~(1UL<<_ADJUST);
 //     }
 // }
 // #endif
@@ -612,22 +630,18 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case RAISE_DE:
         case DEL_KEY:
         case BS_KEY:
-        case CAPS_KEY:
         case OSM(MOD_LSFT):
-        case OSM(MOD_RSFT):
         case ESC_KEY:
-        case DOWN_KEY:
-        case UP_KEY:
         case ENT_KEY:
         case KC_LCTL:
         case KC_LALT:
         case KC_LGUI:
-        case KC_LBRC: 
-        case KC_RBRC:
         case KC_BSLS:
-        case KC_MINS:
+        case KC_SCLN:
         case KC_LEFT:
         case KC_RIGHT:
+        case KC_DOWN:
+        case KC_UP:
             return 0; // bypass Achordion for these keys
 
         case Z_KEY:
@@ -738,7 +752,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     switch (keycode) {
             // ------------------------------- LANGUAGES & LAYERS --------------------------
-            // Custom cases to activate _NAV layer by pressing LOWER and RAISE together, but still allowing the access of _NAV layer directly
+            // Custom cases to activate _ADJUST layer by pressing LOWER and RAISE together, but still allowing the access of _ADJUST layer directly
         case LOWER:
             return my_tristate_update(record, _RAISE);
             break;
@@ -802,11 +816,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
             // ------------------------------- ACTION COMBOS --------------------
             // requires LAYER_LOCK by Getreuer
-            // move to the _NAV LAYER and llock it
+            // move to the _ADJUST LAYER and llock it
             // if it's already active deactivate it
             // case LLOCK_ADJUST:
             //     if (key_tapped) {
-            //         return toggle_lock_layer(_NAV);
+            //         return toggle_lock_layer(_ADJUST);
             //     }
             //     return true;
             //     break;
@@ -900,8 +914,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         // the next case allows us to use alt_tab without a timer
         case NAVSPACE:
-        case TAB_KEY:
-        case DEL_KEY:
+        case FN_KEY:
             if (!record->event.pressed && is_alt_tab_active) {
                 unregister_mods(MOD_BIT(KC_LALT));
                 is_alt_tab_active = false;
@@ -910,7 +923,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
             // make a rule so that we can use it for alt-tabbing without changing the language
         case OSM(MOD_LSFT):
-            if (IS_LAYER_ON(_NAV)) { // using the add_mods function to not trigger the language change
+            if (IS_LAYER_ON(_ADJUST)) { // using the add_mods function to not trigger the language change
                 if (record->event.pressed) {
                     add_mods(MOD_BIT(KC_LSFT));
                 } else {
@@ -1187,28 +1200,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         //     return true;
 
         // keycodes to be used with the alternative repeat key
-#ifdef GETREUER_REP_KEY_ENABLE
         case AE_KEY:
+#ifdef GETREUER_REP_KEY_ENABLE
             altrep_preprocess(record);
+#endif
             if (de_layout_active) {
                 return register_unregister_shifted_key(record, DE_ADIA, S(DE_ADIA));
             }
             return process_german_keycode(record, DE_ADIA);
         case UE_KEY:
+#ifdef GETREUER_REP_KEY_ENABLE
             altrep_preprocess(record);
+#endif
             if (de_layout_active) {
                 return register_unregister_shifted_key(record, DE_UDIA, S(DE_UDIA));
             }
             return process_german_keycode(record, DE_UDIA);
         case OE_KEY:
+#ifdef GETREUER_REP_KEY_ENABLE
             altrep_preprocess(record);
+#endif
             if (de_layout_active) {
                 return register_unregister_shifted_key(record, DE_ODIA, S(DE_ODIA));
             }
             return process_german_keycode(record, DE_ODIA);
-#endif
 
-#else
+#else // #ifndef WIDE_LAYOUT
         case SCLN_KEY: // case for the base English Colemak Layer (continues in the next case)
             if (!process_tap_long_press_key(record, KC_0)) {
                 return false;
@@ -1240,9 +1257,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 #endif
         case SZ_KEY:
+#ifdef GETREUER_REP_KEY_ENABLE
             if (get_repeat_key_count() == -1 && record->event.pressed) { // first alt repeat
                 tap_code(KC_BSPC);
             }
+#endif
             if (de_layout_active) {
                 return register_unregister_key(record, DE_SS);
             }

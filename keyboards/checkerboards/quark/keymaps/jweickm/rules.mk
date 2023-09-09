@@ -22,7 +22,9 @@ VPATH				+= keyboards/gboards/
 #ifdef ACHORDION
 SRC += features/getreuer/achordion.c # use older version saved locally
 SRC += features/getreuer/layer_lock.c
+#ifdef GETREUER_REP_KEY_ENABLE
 SRC += features/getreuer/repeat_key.c # add the repeat key feature
+#endif
 #endif
 
 #reduce firmware size by enabling link time optimization

@@ -8,19 +8,15 @@
 
 enum planck_layers {
     _COLEMAK = 0,
-    _EN_DUALF,
     _COLEMAK_DE,
-    _DE_DUALF,
     _UMLAUTS,
     _NUM,
-    /* _NAV, */
     _RAISE,
     _RAISE_DE,
     _LOWER,
     _LOWER_DE,
     _MOUSE,
-    _NAV,
-    _FN,
+    _ADJUST,
 };
 
 // Define key names here
@@ -62,12 +58,11 @@ enum planck_layers {
 // ==== LAYOUT-DEPENDENT KEY MAPPINGS
 #ifdef WIDE_LAYOUT
 #define QUOT_KEY    LT(0, KC_QUOT)
-#define SCLN_KEY    RCTL_T(KC_SCLN)
-#define BSLS_KEY    KC_BSLS
 #define ESC_KEY     LSFT_T(KC_ESC)
 #define ENT_KEY     KC_ENT
-#define FN_KEY      LT(_FN, KC_APP)
+#define FN_KEY      LT(_ADJUST, KC_APP)
 #define TAB_KEY     RSFT_T(KC_TAB)
+#define SCLN_KEY    LT(0, KC_SCLN)
 
 // define the secondary function of the lower and raise keys here
 #define LOWER       LT(_LOWER, KC_BSPC)
@@ -79,6 +74,14 @@ enum planck_layers {
 #define Z_KEY_DE    LSFT_T(DE_Z)
 #define SLSH_KEY    LT(_NUM, KC_SLSH)
 #define DEL_KEY     KC_DEL
+
+// define the center column
+#define CENT11   KC_HOME
+#define CENT12   KC_END
+#define CENT21   KC_LEFT
+#define CENT22   KC_RIGHT
+#define CENT31   KC_DOWN
+#define CENT32   KC_UP
 
 #else
 #define SCLN_KEY LT(0, KC_SCLN)
@@ -100,7 +103,7 @@ enum planck_layers {
 #define UE_KEY LALT_T(DE_UDIA)
 #endif
 
-#define NAVSPACE LT(_NAV, KC_SPC)
+#define NAVSPACE LT(_ADJUST, KC_SPC)
 //=====================================
 
 #define DOWN_KEY LT(_LOWER, KC_DOWN)
@@ -119,7 +122,7 @@ enum planck_layers {
 #define LLOCK_NUM LT(_NUM, KC_NO)
 #define LLOCK_MOUSE LT(_MOUSE, KC_NO)
 
-#define ADJUST MO(_NAV)
+#define ADJUST MO(_ADJUST)
 
 
 #define KB_LANG_SWITCH TG(_COLEMAK_DE)

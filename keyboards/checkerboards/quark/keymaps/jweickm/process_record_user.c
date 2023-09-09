@@ -1,11 +1,13 @@
 // QUARK
 #include "features/getreuer/achordion.h"
 #include "features/getreuer/layer_lock.h"
+#ifdef GETREUER_REP_KEY_ENABLE
 #include "features/getreuer/repeat_key.h"
+#endif
 
 // =============== HELPER VARIABLES
 // logical variable to differentiate between the German and the English input mode
-bool de_layout_active = false;
+bool        de_layout_active  = false;
 static bool caps_lock_on      = false;
 static bool num_lock_on       = false;
 bool        is_alt_tab_active = false;
@@ -16,7 +18,9 @@ static bool afk = false;
 uint8_t mod_state;
 uint8_t osmod_state;
 bool    shifted;
+#ifdef GETREUER_REP_KEY_ENABLE
 bool    shifted_prev; // for the alt repeat key and umlauts
+#endif
 bool    key_tapped;
 bool    dualf_is_off;
 
@@ -29,6 +33,7 @@ bool toggle_lock_layer(layer_state_t layer) {
     return false;
 }
 
+#ifdef GETREUER_REP_KEY_ENABLE
 void altrep_preprocess(keyrecord_t *record) {
     // update the shifted state for alt rep
     if (!shifted) {
@@ -39,6 +44,7 @@ void altrep_preprocess(keyrecord_t *record) {
         tap_code(KC_BSPC);
     }
 }
+#endif
 
 void turn_num_lock_on(void) {
     // check the host_keybord's num_lock state and turn num_lock on if it is off
@@ -64,14 +70,30 @@ bool register_unregister_double(keyrecord_t *record, uint16_t keycode1, uint16_t
 }
 
 bool register_unregister_shifted_key(keyrecord_t *record, uint16_t keycode, uint16_t shifted_keycode) {
-    if (shifted) {
-        clear_mods();
-        // clear_oneshot_mods();
-        register_unregister_key(record, shifted_keycode);
-        set_mods(mod_state);
+    if (record->event.pressed) {
+        if (shifted) {
+            clear_mods();
+            #ifndef NO_ACTION_ONESHOT
+            clear_oneshot_mods();
+            #endif
+            register_code16(shifted_keycode);
+            set_mods(mod_state);
+        } else {
+            register_code16(keycode);
+        }
     } else {
-        register_unregister_key(record, keycode);
+        // release both keycodes, to not have any stuck keys
+        unregister_code16(shifted_keycode);
+        unregister_code16(keycode);
     }
+    // if (shifted) {
+    //     clear_mods();
+    //     // clear_oneshot_mods();
+    //     register_unregister_key(record, shifted_keycode);
+    //     set_mods(mod_state);
+    // } else {
+    //     register_unregister_key(record, keycode);
+    // }
     return false;
 }
 
@@ -452,9 +474,11 @@ bool caps_word_press_user(uint16_t keycode) {
             if (!de_layout_active) { // filter for other names in English
                 return false;
             }
+#ifdef GETREUER_REP_KEY_ENABLE
         case AE_KEY:
         case OE_KEY:
         case UE_KEY:
+#endif
         case KC_A ... KC_Z:
             add_weak_mods(MOD_BIT(KC_LSFT)); // Apply shift to next key.
             return true;
@@ -479,8 +503,10 @@ bool caps_word_press_user(uint16_t keycode) {
         case KC_KP_1 ... KC_KP_0:
         case KC_BSPC:
         case KC_DEL:
+#ifdef GETREUER_REP_KEY_ENABLE
         case QK_REPEAT_KEY:
         case QK_ALT_REPEAT_KEY:
+#endif
             return true;
 
         default:
@@ -500,7 +526,7 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
         switch (combo_index) {
             case CD_ESC:
             case HCOMM_ENT:
-            case LWR_D_MOUSE:
+            case MOUSE_COMB:
                 return true;
             default:
                 return false;
@@ -572,18 +598,20 @@ bool achordion_chord(uint16_t tap_hold_keycode, keyrecord_t *tap_hold_record, ui
 
     // Also allow same-hand holds when the other key is in the rows below the
     // alphas.
-    if (other_record->event.key.row % (MATRIX_ROWS) >= 3) {
+    if (other_record->event.key.row % (MATRIX_ROWS / 2) >= 3) {
         return true;
     }
     // also ignore the center columns if wide layout
     #ifdef WIDE_LAYOUT
-    if (other_record->event.key.col >= 5 && other_record->event.key.col <= 6) {
+    if (other_record->event.key.row <= 2 && other_record->event.key.col >= 5) {
+        return true;
+    } else if (other_record->event.key.row >= 5 && other_record->event.key.col <= 0) {
         return true;
     }
     #endif
 
-    // Otherwise, follow the opposite hands rule.
-    return achordion_opposite_hands(tap_hold_record, other_record);
+        // Otherwise, follow the opposite hands rule.
+        return achordion_opposite_hands(tap_hold_record, other_record);
 }
 
 uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
@@ -597,20 +625,18 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case RAISE_DE:
         case DEL_KEY:
         case BS_KEY:
-        case CAPS_KEY:
+        case OSM(MOD_LSFT):
         case ESC_KEY:
-        case DOWN_KEY:
-        case UP_KEY:
         case ENT_KEY:
         case KC_LCTL:
         case KC_LALT:
         case KC_LGUI:
-        case KC_LBRC: 
-        case KC_RBRC:
         case KC_BSLS:
-        case KC_MINS:
+        case KC_SCLN:
         case KC_LEFT:
         case KC_RIGHT:
+        case KC_DOWN:
+        case KC_UP:
             return 0; // bypass Achordion for these keys
 
         case Z_KEY:
@@ -643,7 +669,6 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
     return 400; // otherwise use a timeout of 400 ms.
 }
 
-
 bool achordion_eager_mod(uint8_t mod) {
     switch (mod) {
         case MOD_LSFT:
@@ -660,6 +685,7 @@ bool achordion_eager_mod(uint8_t mod) {
 #endif
 
 // =========================== REPEAT KEYS ==================================
+#ifdef GETREUER_REP_KEY_ENABLE
 uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
     // only pass when key pressed alone or with shift
     if (!((mods & MOD_MASK_CTRL) || (mods & MOD_MASK_ALT) || (mods & MOD_MASK_GUI))) {
@@ -679,14 +705,14 @@ uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
     }
     return KC_TRNS; // Defer to default definitions.
 }
+#endif
 
 // =================================================================
 // +++++++++++++++++++ PROCESS RECORD USER +++++++++++++++++++++++++
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-
     // Disable afk mode if it is on
     if (afk) {
-        unregister_code(AFK_KEY);
+        unregister_code16(AFK_KEY);
         afk = false;
     }
 
@@ -704,8 +730,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 #endif
     // for the REPEAT_KEY feature
-    // if (!process_repeat_key(keycode, record, REPEAT)) { return false; }
-    if (!process_repeat_key_with_alt(keycode, record, QK_REPEAT_KEY, QK_ALT_REPEAT_KEY)) { return false; }
+#ifdef GETREUER_REP_KEY_ENABLE
+    if (!process_repeat_key_with_alt(keycode, record, QK_REPEAT_KEY, QK_ALT_REPEAT_KEY)) {
+        return false;
+    }
+#endif
     // for the custom layer lock key from Getreuer
     if (!process_layer_lock(keycode, record, LLOCK)) {
         return false;
@@ -880,8 +909,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         // the next case allows us to use alt_tab without a timer
         case NAVSPACE:
-        case TAB_KEY:
-        case DEL_KEY:
+        case FN_KEY:
             if (!record->event.pressed && is_alt_tab_active) {
                 unregister_mods(MOD_BIT(KC_LALT));
                 is_alt_tab_active = false;
@@ -960,22 +988,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             /*     } */
             /*     return false; */
 
-        // case KC_ACC_GRV:  // ` (dead)
-        // case KC_ACC_ACUT: // ´ (dead)
-        //     if (record->event.pressed) {
-        //         tap_code(KC_COMPOSE); // using wincompose when on the English Layout
-        //         switch (keycode) {
-        //             case KC_ACC_ACUT: // ´ (dead)
-        //                 tap_code(KC_QUOT);
-        //                 break;
-        //             case KC_ACC_GRV: // ` (dead)
-        //                 tap_code(KC_GRV);
-        //                 break;
-        //             default:
-        //                 break;
-        //         }
-        //     }
-        //     return false;
+            // case KC_ACC_GRV:  // ` (dead)
+            // case KC_ACC_ACUT: // ´ (dead)
+            //     if (record->event.pressed) {
+            //         tap_code(KC_COMPOSE); // using wincompose when on the English Layout
+            //         switch (keycode) {
+            //             case KC_ACC_ACUT: // ´ (dead)
+            //                 tap_code(KC_QUOT);
+            //                 break;
+            //             case KC_ACC_GRV: // ` (dead)
+            //                 tap_code(KC_GRV);
+            //                 break;
+            //             default:
+            //                 break;
+            //         }
+            //     }
+            //     return false;
 
             // ===== COMBOS ====
 #ifndef WIDE_LAYOUT
@@ -1168,25 +1196,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         // keycodes to be used with the alternative repeat key
         case AE_KEY:
+#ifdef GETREUER_REP_KEY_ENABLE
             altrep_preprocess(record);
+#endif
             if (de_layout_active) {
                 return register_unregister_shifted_key(record, DE_ADIA, S(DE_ADIA));
             }
             return process_german_keycode(record, DE_ADIA);
         case UE_KEY:
+#ifdef GETREUER_REP_KEY_ENABLE
             altrep_preprocess(record);
+#endif
             if (de_layout_active) {
                 return register_unregister_shifted_key(record, DE_UDIA, S(DE_UDIA));
             }
             return process_german_keycode(record, DE_UDIA);
         case OE_KEY:
+#ifdef GETREUER_REP_KEY_ENABLE
             altrep_preprocess(record);
+#endif
             if (de_layout_active) {
                 return register_unregister_shifted_key(record, DE_ODIA, S(DE_ODIA));
             }
             return process_german_keycode(record, DE_ODIA);
 
-#else
+#else // #ifndef WIDE_LAYOUT
         case SCLN_KEY: // case for the base English Colemak Layer (continues in the next case)
             if (!process_tap_long_press_key(record, KC_0)) {
                 return false;
@@ -1218,9 +1252,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 #endif
         case SZ_KEY:
+#ifdef GETREUER_REP_KEY_ENABLE
             if (get_repeat_key_count() == -1 && record->event.pressed) { // first alt repeat
                 tap_code(KC_BSPC);
             }
+#endif
             if (de_layout_active) {
                 return register_unregister_key(record, DE_SS);
             }
@@ -1327,7 +1363,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
 
-        } // switch(keycode) 
+    } // switch(keycode)
 
     return true;
 }

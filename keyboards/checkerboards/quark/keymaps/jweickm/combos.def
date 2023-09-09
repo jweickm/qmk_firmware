@@ -1,4 +1,4 @@
-// OLKB PLANCK REV6
+// CHECKERBOARDS QUARK
 // COMBOS FOR THE WIDE LAYOUT
 // ---------------------- GENERAL FUNCTION COMBOS  ----------------
 //   name           result          combo keys
@@ -10,35 +10,34 @@ COMB(WF_TAB,        KC_TAB,         W_KEY, F_KEY)
 COMB(XC_CPSWRD,     QK_CAPS_WORD_TOGGLE,      X_KEY, C_KEY)
 COMB(ZS_SZ,         SZ_KEY,         Z_KEY, S_KEY)
 COMB(QW_ESC,        KC_ESC,         Q_KEY, W_KEY)
-COMB(ZX_DEL,        KC_DEL,         Z_KEY, X_KEY)
-COMB(ENT_GUI_APP,   KC_APP,         KC_LGUI, KC_ENT)
+//COMB(ZX_DEL,        KC_DEL,         Z_KEY, X_KEY)
 
 // RIGHT HAND
 COMB(HCOMM_ENT,     KC_ENT,         H_KEY, COMM_KEY)
-COMB(HDOT_COMPOSE,  KC_COMPOSE,        H_KEY, DOT_KEY)
+COMB(HDOT_COMPOSE,  KC_COMPOSE,     H_KEY, DOT_KEY)
 COMB(COMMDOT_CPSWRD,QK_CAPS_WORD_TOGGLE,      COMM_KEY, DOT_KEY)
 COMB(EDOT_BSPC,     C(KC_BSPC),     E_KEY, DOT_KEY)
 COMB(YQUOT,         KC_BSPC,        Y_KEY, QUOT_KEY)
 
 // ---------------------- MEDIA COMBOS ---------------------------
 //   name           result          combo keys
-COMB(LBRC_BSLS,     KC_MPRV,        KC_LBRC, KC_BSLS)
-COMB(RBRC_MINS,     KC_MNXT,        KC_RBRC, KC_MINS)
-COMB(BSLS_MINS,     KC_MPLY,        KC_BSLS, KC_MINS)
+COMB(MPEV_COMB,     KC_MPRV,        CENT11, CENT21)
+COMB(MNXT_COMB,     KC_MNXT,        CENT12, CENT22)
+COMB(MPLY_COMB,     KC_MPLY,        CENT21, CENT22)
 
 // --------------------- MOUSE COMBOS -------------------------------
 //   name           result          combo keys
-COMB(LEFT_RIGHT,    KC_MS_WH_UP,    KC_LEFT, KC_RIGHT)
-COMB(LBRC_RBRC,     KC_MS_WH_DOWN,  KC_LBRC, KC_RBRC)
+COMB(CENT_BOTTOM,   KC_MS_WH_UP,    CENT31, CENT32)
+COMB(CENT_TOP,      KC_MS_WH_DOWN,  CENT11, CENT12)
 
 // ---------------------- LAYER COMBOS ---------------------------
 //   name           result          combo keys
-COMB(LWR_D_MOUSE,   LLOCK_MOUSE,    LOWER, D_KEY)
-COMB(ESLSH_H_NUM,   LLOCK_NUM,      E_KEY, SLSH_KEY)
+COMB(MOUSE_COMB,    LLOCK_MOUSE,    LOWER, KC_LGUI)
+COMB(NUM_COMB,      LLOCK_NUM,      RAISE, DEL_KEY)
 
 // --------------------- DUAL HAND COMBOS -------------------------------
 //   name           result          combo keys
-COMB(ZSLSH_CAPS,      KC_CAPS,        Z_KEY, SLSH_KEY)
+COMB(CAPS_COMB,     KC_CAPS,        Z_KEY, SLSH_KEY)
 
 /* // -------------------- LOWER COMBOS ----------------------------- */
 /* //   name           result          combo keys */

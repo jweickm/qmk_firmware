@@ -8,12 +8,9 @@
 
 enum planck_layers {
     _COLEMAK = 0,
-    _EN_DUALF,
     _COLEMAK_DE,
-    _DE_DUALF,
     _UMLAUTS,
     _NUM,
-    /* _NAV, */
     _RAISE,
     _RAISE_DE,
     _LOWER,
@@ -55,21 +52,18 @@ enum planck_layers {
 
 #define K_KEY KC_K
 
-#define KC_COMPOSE KC_PAUSE // KC_RALT
+#define KC_COMPOSE KC_RALT
+#define KC_MMIC KC_F20 // mute mic
 
 // ==== LAYOUT-DEPENDENT KEY MAPPINGS
 #ifdef WIDE_LAYOUT
 #define QUOT_KEY    LT(0, KC_QUOT)
-#define SCLN_KEY    RCTL_T(KC_SCLN)
-#define BSLS_KEY    KC_BSLS
-#define ESC_KEY     LALT_T(KC_ESC)
+#define ESC_KEY     LSFT_T(KC_ESC)
 #define ENT_KEY     KC_ENT
+#define FN_KEY      LT(_ADJUST, KC_APP)
+#define TAB_KEY     RSFT_T(KC_TAB)
+#define SCLN_KEY    LT(0, KC_SCLN)
 
-#ifdef SWAP_HANDS_ENABLE
-#define TAB_KEY     SH_T(KC_TAB)
-#else
-#define TAB_KEY     LT(_NUM, KC_TAB)
-#endif
 // define the secondary function of the lower and raise keys here
 #define LOWER       LT(_LOWER, KC_BSPC)
 #define RAISE       LT(_RAISE, KC_SPC)
@@ -79,7 +73,15 @@ enum planck_layers {
 #define Z_KEY       LSFT_T(KC_Z)
 #define Z_KEY_DE    LSFT_T(DE_Z)
 #define SLSH_KEY    LT(_NUM, KC_SLSH)
-#define DEL_KEY     LT(_ADJUST, KC_DEL)
+#define DEL_KEY     KC_DEL
+
+// define the center column
+#define CENT11   KC_HOME
+#define CENT12   KC_END
+#define CENT21   KC_LEFT
+#define CENT22   KC_RIGHT
+#define CENT31   KC_DOWN
+#define CENT32   KC_UP
 
 #else
 #define SCLN_KEY LT(0, KC_SCLN)
@@ -112,7 +114,7 @@ enum planck_layers {
 
 #define CAPS_KEY LGUI_T(KC_CAPS)
 
-#define BS_KEY LT(_NUM, KC_BSPC)
+#define BS_KEY KC_BSPC
 
 #define UNDO C(KC_Z)
 #define REDO C(KC_Y)
@@ -122,8 +124,9 @@ enum planck_layers {
 
 #define ADJUST MO(_ADJUST)
 
+
 #define KB_LANG_SWITCH TG(_COLEMAK_DE)
-#define LANG_SWITCH S(KC_LALT)
+#define LANG_SWITCH G(KC_SPC)
 
 enum planck_keycodes {
     COLEMAK = SAFE_RANGE,
@@ -134,8 +137,10 @@ enum planck_keycodes {
     LLOCK, // layer lock key
     SZ_KEY,
 #ifdef WIDE_LAYOUT
+#ifdef GETREUER_REP_KEY_ENABLE
     QK_REPEAT_KEY,
     QK_ALT_REPEAT_KEY,
+#endif
     AE_KEY,
     UE_KEY,
     OE_KEY,
