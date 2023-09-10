@@ -61,8 +61,11 @@ enum planck_layers {
 #define ESC_KEY     LSFT_T(KC_ESC)
 #define ENT_KEY     KC_ENT
 #define FN_KEY      LT(_ADJUST, KC_APP)
-#define TAB_KEY     LT(_ADJUST, KC_TAB)
+#define TAB_KEY     KC_TAB
 #define SCLN_KEY    LT(0, KC_SCLN)
+
+#define LTHUMB      LSFT_T(KC_LBRC)
+#define RTHUMB      LT(_ADJUST, KC_RBRC)
 
 // define the secondary function of the lower and raise keys here
 #define LOWER       LT(_LOWER, KC_BSPC)
@@ -104,6 +107,7 @@ enum planck_layers {
 #endif
 
 #define NAVSPACE LT(_ADJUST, KC_SPC)
+#define NAVGUI   LT(_ADJUST, KC_LGUI)
 //=====================================
 
 #define DOWN_KEY LT(_LOWER, KC_DOWN)

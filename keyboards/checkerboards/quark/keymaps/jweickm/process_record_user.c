@@ -346,9 +346,12 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case RAISE:
         case LOWER_DE:
         case RAISE_DE:
-        case TAB_KEY:
+        // case TAB_KEY:
+        case LTHUMB:
+        case RTHUMB:
             return TAPPING_TERM * thumb_factor;
         case NAVSPACE:
+        case NAVGUI:
             return TAPPING_TERM * (thumb_factor + 0.1);
 
         // index finger keys
@@ -432,6 +435,7 @@ uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
         case RAISE_DE:
         case D_KEY:
         case H_KEY:
+        case NAVGUI:
             return 80; // force hold and disable key repeating
         default:
             return QUICK_TAP_TERM; // allow hold and key repeating by default
@@ -619,6 +623,7 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         // add all keys here that should NOT be handled by ACHORDION
         case TAB_KEY:
         case NAVSPACE:
+        case NAVGUI:
         case LOWER:
         case RAISE:
         case LOWER_DE:
@@ -645,6 +650,8 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case DOT_KEY:
         case SLSH_KEY:
         case SCLN_KEY:
+        case LTHUMB:
+        case RTHUMB:
         // case UE_KEY:
         case QUOT_KEY:
         case Q_KEY:
@@ -906,6 +913,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         // the next case allows us to use alt_tab without a timer
         case NAVSPACE:
+        case NAVGUI:
         case FN_KEY:
             if (!record->event.pressed && is_alt_tab_active) {
                 unregister_mods(MOD_BIT(KC_LALT));
@@ -1096,6 +1104,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
 
 #ifdef WIDE_LAYOUT
+        case LTHUMB:
+            if (de_layout_active && record->tap.count > 0) {
+                register_unregister_shifted_key(record, DE_LBRC, DE_LCBR);
+#    ifdef CAPS_WORD_ENABLE
+                caps_word_off(); // break caps_word
+#    endif
+                return false;
+            }
+            return true;
+            break;
+
+        case RTHUMB:
+            if (de_layout_active && record->tap.count > 0) {
+                register_unregister_shifted_key(record, DE_RBRC, DE_RCBR);
+#    ifdef CAPS_WORD_ENABLE
+                caps_word_off(); // break caps_word
+#    endif
+                return false;
+            }
+            return true;
+            break;
+
         case SLSH_KEY:
             if (de_layout_active && record->tap.count > 0) {
                 register_unregister_shifted_key(record, DE_SLSH, DE_QUES);

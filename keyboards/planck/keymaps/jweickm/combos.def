@@ -32,7 +32,7 @@ COMB(CENT_TOP,      KC_MS_WH_DOWN,  CENT11, CENT12)
 
 // ---------------------- LAYER COMBOS ---------------------------
 //   name           result          combo keys
-COMB(MOUSE_COMB,    LLOCK_MOUSE,    LOWER, KC_LGUI)
+COMB(MOUSE_COMB,    LLOCK_MOUSE,    LOWER, TAB_KEY)
 COMB(NUM_COMB,      LLOCK_NUM,      RAISE, DEL_KEY)
 
 // --------------------- DUAL HAND COMBOS -------------------------------
