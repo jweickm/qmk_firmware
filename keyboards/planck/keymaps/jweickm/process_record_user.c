@@ -607,6 +607,7 @@ bool achordion_chord(uint16_t tap_hold_keycode, keyrecord_t *tap_hold_record, ui
 
     // Also allow same-hand holds when the other key is in the rows below the
     // alphas.
+    // MATRIX_ROWS = 8 (0-7), bottom rows are 3 and 8
     if (other_record->event.key.row % (MATRIX_ROWS / 2) >= 3) {
         return true;
     }
@@ -647,6 +648,8 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case KC_RIGHT:
         case KC_DOWN:
         case KC_UP:
+        case LTHUMB:
+        case RTHUMB:
             return 0; // bypass Achordion for these keys
 
         case Z_KEY:
@@ -655,8 +658,6 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case DOT_KEY:
         case SLSH_KEY:
         case SCLN_KEY:
-        case LTHUMB:
-        case RTHUMB:
         // case UE_KEY:
         case QUOT_KEY:
         case Q_KEY:

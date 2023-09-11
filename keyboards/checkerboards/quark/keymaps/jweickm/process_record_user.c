@@ -602,20 +602,19 @@ bool achordion_chord(uint16_t tap_hold_keycode, keyrecord_t *tap_hold_record, ui
 
     // Also allow same-hand holds when the other key is in the rows below the
     // alphas.
-    if (other_record->event.key.row % (MATRIX_ROWS / 2) >= 3) {
+    // MATRIX_ROWS = 4 (0-3), bottom row is 3
+    if (other_record->event.key.row % (MATRIX_ROWS) >= 3) {
         return true;
     }
     // also ignore the center columns if wide layout
     #ifdef WIDE_LAYOUT
-    if (other_record->event.key.row <= 2 && other_record->event.key.col >= 5) {
-        return true;
-    } else if (other_record->event.key.row >= 5 && other_record->event.key.col <= 0) {
+    if (other_record->event.key.col >= 5 && other_record->event.key.col <= 6) {
         return true;
     }
     #endif
 
-        // Otherwise, follow the opposite hands rule.
-        return achordion_opposite_hands(tap_hold_record, other_record);
+    // Otherwise, follow the opposite hands rule.
+    return achordion_opposite_hands(tap_hold_record, other_record);
 }
 
 uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
@@ -642,6 +641,8 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case KC_RIGHT:
         case KC_DOWN:
         case KC_UP:
+        case LTHUMB:
+        case RTHUMB:
             return 0; // bypass Achordion for these keys
 
         case Z_KEY:
@@ -650,8 +651,6 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case DOT_KEY:
         case SLSH_KEY:
         case SCLN_KEY:
-        case LTHUMB:
-        case RTHUMB:
         // case UE_KEY:
         case QUOT_KEY:
         case Q_KEY:
