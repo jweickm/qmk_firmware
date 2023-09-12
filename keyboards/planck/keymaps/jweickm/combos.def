@@ -18,6 +18,7 @@ COMB(HDOT_COMPOSE,  KC_COMPOSE,     H_KEY, DOT_KEY)
 COMB(COMMDOT_CPSWRD,QK_CAPS_WORD_TOGGLE,      COMM_KEY, DOT_KEY)
 COMB(EDOT_BSPC,     C(KC_BSPC),     E_KEY, DOT_KEY)
 COMB(YQUOT,         KC_BSPC,        Y_KEY, QUOT_KEY)
+COMB(ENT_COMB,      KC_ENT,         FN_KEY, GUI_KEY)
 
 // ---------------------- MEDIA COMBOS ---------------------------
 //   name           result          combo keys

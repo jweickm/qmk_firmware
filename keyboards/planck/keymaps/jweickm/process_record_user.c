@@ -1112,7 +1112,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef WIDE_LAYOUT
         case LTHUMB:
             if (de_layout_active && record->tap.count > 0) {
-                register_unregister_shifted_key(record, DE_LBRC, DE_LCBR);
+                register_unregister_shifted_key(record, DE_BSLS, DE_PIPE);
 #    ifdef CAPS_WORD_ENABLE
                 caps_word_off(); // break caps_word
 #    endif
@@ -1123,7 +1123,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case RTHUMB:
             if (de_layout_active && record->tap.count > 0) {
-                register_unregister_shifted_key(record, DE_RBRC, DE_RCBR);
+                register_unregister_shifted_key(record, DE_EQL, DE_PLUS);
 #    ifdef CAPS_WORD_ENABLE
                 caps_word_off(); // break caps_word
 #    endif
