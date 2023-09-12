@@ -484,7 +484,9 @@ bool caps_word_press_user(uint16_t keycode) {
         case UE_KEY:
 #endif
         case KC_A ... KC_Z:
+        case RTHUMB:
             add_weak_mods(MOD_BIT(KC_LSFT)); // Apply shift to next key.
+            shifted = true;
             return true;
 
         // Keycodes that continue Caps Word, without shifting.
@@ -495,6 +497,7 @@ bool caps_word_press_user(uint16_t keycode) {
             } else {
                 if (!IS_LAYER_ON(_RAISE)) {
                     add_weak_mods(MOD_BIT(KC_LSFT)); // Apply shift to next key.
+                    shifted = true;
                 }
                 return true;
             }
@@ -972,42 +975,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
 
-            /* case KC_COLN: */
-            /*     if (IS_LAYER_ON(_NUM) && de_layout_active) { */
-            /*         return register_unregister_key(record, DE_COLN); */
-            /*     } */
-            /*     return true; */
-
-            // make dead keys send immediately on german keyboard when de_en_switched
-
-            // sends Ralt + " für Umlaute mit Wincompose
-            /* case UMLAUT_RALT: */
-            /*     if (record->event.pressed) { */
-            /*         tap_code16(KC_RALT); */
-            /*         if (de_layout_active) { */
-            /*             tap_code16(DE_DQUO); */
-            /*         } else { */
-            /*             tap_code16(KC_DQUO); */
-            /*         } */
-            /*     } */
-            /*     return false; */
-
-            // case KC_ACC_GRV:  // ` (dead)
-            // case KC_ACC_ACUT: // ´ (dead)
-            //     if (record->event.pressed) {
-            //         tap_code(KC_COMPOSE); // using wincompose when on the English Layout
-            //         switch (keycode) {
-            //             case KC_ACC_ACUT: // ´ (dead)
-            //                 tap_code(KC_QUOT);
-            //                 break;
-            //             case KC_ACC_GRV: // ` (dead)
-            //                 tap_code(KC_GRV);
-            //                 break;
-            //             default:
-            //                 break;
-            //         }
-            //     }
-            //     return false;
+        case KC_LABK: // make it a tap so that it works better with KC_MINS
+            if (IS_LAYER_ON(_RAISE)) {
+                if (record->event.pressed) {
+                    tap_code16(KC_LABK);
+                }
+                return false;
+            }
+            return true;
 
             // ===== COMBOS ====
 #ifndef WIDE_LAYOUT
@@ -1115,11 +1090,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
 
         case RTHUMB:
+            if (!record->event.pressed && is_alt_tab_active) {
+                unregister_mods(MOD_BIT(KC_LALT));
+                is_alt_tab_active = false;
+            }
             if (de_layout_active && record->tap.count > 0) {
-                register_unregister_shifted_key(record, DE_EQL, DE_PLUS);
 #    ifdef CAPS_WORD_ENABLE
-                caps_word_off(); // break caps_word
+                if (is_caps_word_on()) {
+                    shifted = true; // set to true so that it will be properly capitalized
+                }
 #    endif
+                register_unregister_shifted_key(record, DE_MINS, DE_UNDS);
                 return false;
             }
             return true;
