@@ -104,10 +104,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_NUM] = LAYOUT_planck_mit(
-        S(KC_Q),   S(KC_W), S(KC_F),  S(KC_P), S(KC_B), _______, _______, KC_E, KC_KP_7, KC_KP_8, KC_KP_9, KC_KP_0, 
-        S(KC_A), S(KC_R), S(KC_S), S(KC_T), S(KC_G), _______, KC_UNDS, KC_KP_PLUS, KC_KP_4, KC_KP_5, KC_KP_6, KC_KP_ASTERISK, 
-        S(KC_Z), S(KC_X), S(KC_C),  S(KC_D), S(KC_V), _______, KC_PERC, KC_KP_EQUAL, KC_KP_1, KC_KP_2, KC_KP_3, KC_KP_SLASH, 
-        _______, _______, _______,  _______, KC_SPC, _______, _______,  KC_KP_0, DOT_KEY, COMM_KEY, _______
+        _______,   _______, _______,  _______, _______, _______, _______, KC_E, KC_KP_7, KC_KP_8, KC_KP_9, KC_KP_0, 
+        _______, _______, _______, _______, _______, _______, KC_UNDS, KC_KP_PLUS, KC_KP_4, KC_KP_5, KC_KP_6, KC_KP_ASTERISK, 
+        _______, _______, _______,  _______, _______, _______, KC_PERC, KC_KP_EQUAL, KC_KP_1, KC_KP_2, KC_KP_3, KC_KP_SLASH, 
+        _______, _______, _______,  _______, _______, _______, _______,  KC_KP_0, DOT_KEY, COMM_KEY, _______
         ),
 
     /* ----------------------------------------------------------------------------------------

@@ -76,7 +76,7 @@ enum planck_layers {
 #define RAISE_DE    LT(_RAISE_DE, KC_SPC)
 #define Z_KEY       LSFT_T(KC_Z)
 #define Z_KEY_DE    LSFT_T(DE_Z)
-#define SLSH_KEY    LT(_NUM, KC_SLSH)
+#define SLSH_KEY    RSFT_T(KC_SLSH)
 #define DEL_KEY     KC_DEL
 
 // define the center column
