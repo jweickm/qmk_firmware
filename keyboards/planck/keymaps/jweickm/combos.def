@@ -22,14 +22,12 @@ COMB(ENT_COMB,      KC_ENT,         FN_KEY, GUI_KEY)
 
 // ---------------------- MEDIA COMBOS ---------------------------
 //   name           result          combo keys
-COMB(MPEV_COMB,     KC_MPRV,        CENT11, CENT21)
+COMB(MPRV_COMB,     KC_MPRV,        CENT31, CENT32)
 COMB(MNXT_COMB,     KC_MNXT,        CENT12, CENT22)
-COMB(MPLY_COMB,     KC_MPLY,        CENT21, CENT22)
+COMB(MPLY_COMB,     KC_MPLY,        CENT11, CENT12)
 
 // --------------------- MOUSE COMBOS -------------------------------
 //   name           result          combo keys
-COMB(CENT_BOTTOM,   KC_MS_WH_UP,    CENT31, CENT32)
-COMB(CENT_TOP,      KC_MS_WH_DOWN,  CENT11, CENT12)
 
 // ---------------------- LAYER COMBOS ---------------------------
 //   name           result          combo keys

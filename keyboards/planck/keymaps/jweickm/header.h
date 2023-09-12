@@ -80,8 +80,8 @@ enum planck_layers {
 #define DEL_KEY     KC_DEL
 
 // define the center column
-#define CENT11   KC_HOME
-#define CENT12   KC_END
+#define CENT11   KC_MS_WH_DOWN
+#define CENT12   KC_MS_WH_UP
 #define CENT21   KC_LEFT
 #define CENT22   KC_RIGHT
 #define CENT31   KC_DOWN
