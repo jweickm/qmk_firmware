@@ -209,7 +209,7 @@ bool process_unicode_alt(uint16_t keycode) {
     return processed;
 }
 
-bool process_winc(uint16_t keycode) {
+bool process_compose(uint16_t keycode) {
     //  function to process the unicode characters using wincompose
     bool processed = false;
     tap_code(KC_COMPOSE);
@@ -275,7 +275,7 @@ bool process_german_keycode(keyrecord_t *record, uint16_t keycode) {
         clear_mods();
         // clear_oneshot_mods();
         /* processed = process_unicode_alt(keycode); */
-        processed = process_winc(keycode);
+        processed = process_compose(keycode);
         set_mods(mod_state);
     } else {
         return true;
@@ -1267,13 +1267,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 #endif
         case SZ_KEY:
+            if (record->tap.count < 1) { // key is held
+                return true; // process key normally
+            }
 #ifdef GETREUER_REP_KEY_ENABLE
             if (get_repeat_key_count() == -1 && record->event.pressed) { // first alt repeat
                 tap_code(KC_BSPC);
             }
 #endif
             if (de_layout_active) {
-                return register_unregister_key(record, DE_SS);
+                // return register_unregister_key(record, DE_SS);
+                return true;
             }
             return process_german_keycode(record, keycode); // returns true for de_layout_active
             break;

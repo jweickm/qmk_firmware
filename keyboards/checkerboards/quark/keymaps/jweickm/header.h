@@ -65,7 +65,7 @@ enum planck_layers {
 #define TAB_KEY     KC_TAB
 #define SCLN_KEY    LT(0, KC_SCLN)
 
-#define LTHUMB      LSFT_T(KC_BSLS)
+#define LTHUMB      LT(_UMLAUTS, KC_BSLS)
 #define RTHUMB      LT(_ADJUST, KC_MINS)
 
 // define the secondary function of the lower and raise keys here
@@ -78,6 +78,8 @@ enum planck_layers {
 #define Z_KEY_DE    LSFT_T(DE_Z)
 #define SLSH_KEY    RSFT_T(KC_SLSH)
 #define DEL_KEY     KC_DEL
+
+#define SZ_KEY      LSFT_T(DE_SS)
 
 // define the center column
 #define CENT11   KC_MS_WH_DOWN
@@ -129,7 +131,6 @@ enum planck_layers {
 
 #define ADJUST MO(_ADJUST)
 
-
 #define KB_LANG_SWITCH TG(_COLEMAK_DE)
 #define LANG_SWITCH G(KC_SPC)
 
@@ -140,7 +141,7 @@ enum planck_keycodes {
     KC_ACC_GRV,
     KC_ACC_ACUT,
     LLOCK, // layer lock key
-    SZ_KEY,
+    //SZ_KEY,
 #ifdef WIDE_LAYOUT
 #ifdef GETREUER_REP_KEY_ENABLE
     QK_REPEAT_KEY,
