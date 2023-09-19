@@ -273,7 +273,7 @@ bool process_german_keycode(keyrecord_t *record, uint16_t keycode) {
         }
         turn_num_lock_on();
         clear_mods();
-        // clear_oneshot_mods();
+        clear_oneshot_mods();
         /* processed = process_unicode_alt(keycode); */
         processed = process_compose(keycode);
         set_mods(mod_state);
@@ -581,20 +581,6 @@ uint16_t get_combo_term(uint16_t index, combo_t *combo) {
     return COMBO_TERM; // default value
 }
 
-// #ifdef WIDE_LAYOUT
-// layer_state_t layer_state_set_user(layer_state_t state) {
-// // custom implementation of the tristate update
-//     if (
-//     ( layer_state_cmp(state, _LOWER) && layer_state_cmp(state, _RAISE) ) ||
-//     ( layer_state_cmp(state, _LOWER_DE) && layer_state_cmp(state, _RAISE_DE) )
-//     ) {
-//         return state | (1UL<<_ADJUST);
-//     } else {
-//         return state & ~(1UL<<_ADJUST);
-//     }
-// }
-// #endif
-
 // ===================== ACHORDION ================================
 #ifdef ACHORDION
 bool achordion_chord(uint16_t tap_hold_keycode, keyrecord_t *tap_hold_record, uint16_t other_keycode, keyrecord_t *other_record) {
@@ -633,7 +619,6 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case RAISE_DE:
         case DEL_KEY:
         case BS_KEY:
-        case OSM(MOD_LSFT):
         case ESC_KEY:
         case ENT_KEY:
         case KC_LCTL:
@@ -645,6 +630,7 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case KC_RIGHT:
         case KC_DOWN:
         case KC_UP:
+        // case OSM(MOD_LSFT):
         case LTHUMB:
         case RTHUMB:
             return 0; // bypass Achordion for these keys
@@ -714,6 +700,22 @@ uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
 }
 #endif
 
+#ifdef OSM_LOWER
+bool tap_shift(keyrecord_t *record) {
+    if (record->tap.count > 0) {
+        if (!record->event.pressed) {
+            if (shifted) {
+                clear_oneshot_mods();
+            } else {
+                set_oneshot_mods(MOD_LSFT);
+            }
+        }
+        return false;
+    }
+    return true;
+}
+#endif
+
 // =================================================================
 // +++++++++++++++++++ PROCESS RECORD USER +++++++++++++++++++++++++
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -724,8 +726,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     mod_state = get_mods();
-    // osmod_state = get_oneshot_mods();
-    shifted    = (mod_state & MOD_MASK_SHIFT); //|| (osmod_state & MOD_MASK_SHIFT);
+    osmod_state = get_oneshot_mods();
+    shifted    = (mod_state & MOD_MASK_SHIFT) || (osmod_state & MOD_MASK_SHIFT);
     key_tapped = record->event.pressed && record->tap.count;
 
 #ifdef ACHORDION
@@ -756,13 +758,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             // ------------------------------- LANGUAGES & LAYERS --------------------------
             // Custom cases to activate _ADJUST layer by pressing LOWER and RAISE together, but still allowing the access of _ADJUST layer directly
         case LOWER:
-            return my_tristate_update(record, _RAISE);
+            my_tristate_update(record, _RAISE);
+        #ifdef OSM_LOWER
+            return tap_shift(record);
+        #endif
+            return true;
             break;
         case RAISE:
             return my_tristate_update(record, _LOWER);
             break;
         case LOWER_DE:
-            return my_tristate_update(record, _RAISE_DE);
+            my_tristate_update(record, _RAISE_DE);
+        #ifdef OSM_LOWER
+            return tap_shift(record);
+        #endif
+            return true;
             break;
         case RAISE_DE:
             return my_tristate_update(record, _LOWER_DE);
@@ -772,12 +782,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 // invert the state of de_layout_active
                 de_layout_active = !de_layout_active;
-#ifdef DUALFUNC
-                if (dualf_is_off) {
-                    layer_invert(_DE_DUALF);
-                    layer_invert(_EN_DUALF);
-                }
-#endif
             }
             return true;
 
@@ -786,26 +790,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 // change keyboard language
                 layer_invert(_COLEMAK_DE);
                 de_layout_active = !de_layout_active;
-#ifdef DUALFUNC
-                if (dualf_is_off) {
-                    layer_invert(_DE_DUALF);
-                    layer_invert(_EN_DUALF);
-                }
-#endif
             }
             return true;
-#ifdef DUALFUNC
-        case TOGGLE_DUALF: // toggle dual function keys on key release
-            if (!record->event.pressed) {
-                dualf_is_off = !dualf_is_off;
-                if (de_layout_active) {
-                    layer_invert(_DE_DUALF);
-                } else {
-                    layer_invert(_EN_DUALF);
-                }
-            }
-            return false;
-#endif
 
 #ifndef WIDE_LAYOUT
         case UMLAUT_SWITCH: // switches the state of de_en_switched
@@ -925,7 +911,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
 
             // make a rule so that we can use it for alt-tabbing without changing the language
-        case OSM(MOD_LSFT):
+        case KC_LSFT:
             if (IS_LAYER_ON(_ADJUST)) { // using the add_mods function to not trigger the language change
                 if (record->event.pressed) {
                     add_mods(MOD_BIT(KC_LSFT));
@@ -936,14 +922,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return true;
             break;
-
-            // case KC_DEG:
-            //     if (de_layout_active) {
-            //         return register_unregister_key(record, DE_DEG);
-            //     }
-            // case DE_EURO:
-            //     return process_german_keycode(record, keycode); // returns true for de_layout_active
-            // ===== PROCESS_GERMAN_KEYCODE =======
 
         case KC_KP_EQUAL:
             if (de_layout_active) {
@@ -1079,16 +1057,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
 
 #ifdef WIDE_LAYOUT
-        case LTHUMB:
-            if (de_layout_active && record->tap.count > 0) {
-                register_unregister_shifted_key(record, DE_BSLS, DE_PIPE);
-#    ifdef CAPS_WORD_ENABLE
-                caps_word_off(); // break caps_word
-#    endif
-                return false;
-            }
-            return true;
-            break;
+//         case LTHUMB:
+//             if (de_layout_active && record->tap.count > 0) {
+//                 register_unregister_shifted_key(record, DE_BSLS, DE_PIPE);
+// #    ifdef CAPS_WORD_ENABLE
+//                 caps_word_off(); // break caps_word
+// #    endif
+//                 return false;
+//             }
+//             return true;
+//             break;
 
         case RTHUMB:
             if (!record->event.pressed && is_alt_tab_active) {
@@ -1194,13 +1172,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             return true;
-
-        // case DE_UDIA: // case KC_LBRC
-        //     // first process the case in the _UMLAUTS layer
-        //     if (IS_LAYER_ON(_UMLAUTS)) {
-        //         return process_german_keycode(record, keycode);
-        //     }
-        //     return true;
 
         // keycodes to be used with the alternative repeat key
         case AE_KEY:
@@ -1351,12 +1322,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return process_german_keycode(record, DE_ADIA); // sending Ä
             break;
 #endif
-
-            // comma and dot for the num pad when held
-        /* case NUM_2: */
-        /*     return process_tap_long_press_key(record, KC_COMM); */
-        /* case NUM_3: */
-        /*     return process_tap_long_press_key(record, KC_DOT); */
 
         // these keys turn off caps lock, if it was active
         case ESC_KEY:
