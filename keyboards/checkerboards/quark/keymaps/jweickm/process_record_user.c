@@ -542,7 +542,7 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
 #ifdef WIDE_LAYOUT
     } else if (layer_state_is(_LOWER) || layer_state_is(_LOWER_DE) || layer_state_is(_RAISE) || layer_state_is(_RAISE_DE)) {
         switch (combo_index) {
-            case YQUOT:
+            case YQUOT_COMB:
             case QW_ESC:
                 // case PB_DEL:
                 // case JL_TAB:
@@ -564,6 +564,14 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
                 return false;
             default:
                 return true; // keep the combos activated for these layers
+        }
+    } else if (layer_state_is(_GAMING)) {
+        switch (combo_index) {
+            case HCOMM_ENT:
+            case YQUOT_COMB:
+                return true;
+            default:
+                return false; // keep the combos activated for these layers
         }
     } else {
         return true;
@@ -1326,6 +1334,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // these keys turn off caps lock, if it was active
         case ESC_KEY:
         case KC_ESC:
+#ifdef CAPS_WORD_ENABLE
+        case QK_CAPS_WORD_TOGGLE:
+#endif
             /* case KC_ENT: */
             /* case ENT_KEY: */
             if (caps_lock_on && record->event.pressed) {

@@ -9,6 +9,7 @@
 enum planck_layers {
     _COLEMAK = 0,
     _COLEMAK_DE,
+    _GAMING,
     _UMLAUTS,
     _NUM,
     _RAISE,
