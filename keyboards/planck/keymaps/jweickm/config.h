@@ -28,7 +28,7 @@
 // #define GETREUER_REP_KEY_ENABLE
 
 // if defined, sets the layout to wide_layout.c, else it's the narrow_layout.c
-#define WIDE_LAYOUT
+//#define WIDE_LAYOUT
 
 // if set, LOWER sends a oneshot shift mod on tap
 // #define OSM_LOWER

@@ -57,66 +57,68 @@ enum planck_layers {
 #define KC_MMIC KC_F20 // mute mic
 
 // ==== LAYOUT-DEPENDENT KEY MAPPINGS
-#ifdef WIDE_LAYOUT
-#define QUOT_KEY    LT(0, KC_QUOT)
-#define ESC_KEY     LSFT_T(KC_ESC)
-#define ENT_KEY     KC_ENT
-#define GUI_KEY     KC_LGUI
 #define FN_KEY      LT(_ADJUST, KC_APP)
-#define TAB_KEY     KC_TAB
-#define SCLN_KEY    LT(0, KC_SCLN)
 
-#define LTHUMB      OSM(MOD_LSFT)
-#define RTHUMB      LT(_UMLAUTS, KC_MINS)
-// #define RTHUMB      OSL(_UMLAUTS)
+#ifdef WIDE_LAYOUT
+    #define QUOT_KEY    LT(0, KC_QUOT)
+    #define ESC_KEY     LSFT_T(KC_ESC)
+    #define ENT_KEY     KC_ENT
+    #define GUI_KEY     KC_LGUI
+    #define TAB_KEY     KC_TAB
+    #define SCLN_KEY    LT(0, KC_SCLN)
 
-// define the secondary function of the lower and raise keys here
-#define LOWER       LT(_LOWER, KC_BSPC)
-#define RAISE       LT(_RAISE, KC_SPC)
-// GERMAN VERSIONS OF THE KEYS
-#define LOWER_DE    LT(_LOWER_DE, KC_BSPC)
-#define RAISE_DE    LT(_RAISE_DE, KC_SPC)
+    #define LTHUMB      OSM(MOD_LSFT)
+    #define RTHUMB      LT(_UMLAUTS, KC_MINS)
+    // #define RTHUMB      OSL(_UMLAUTS)
 
-#define Z_KEY       LSFT_T(KC_Z)
-#define Z_KEY_DE    LSFT_T(DE_Z)
-// #define Z_KEY       LT(0, KC_Z)
-// #define Z_KEY_DE    LT(1, DE_Z)
+    // define the secondary function of the lower and raise keys here
+    #define LOWER       LT(_LOWER, KC_BSPC)
+    #define RAISE       LT(_RAISE, KC_SPC)
+    // GERMAN VERSIONS OF THE KEYS
+    #define LOWER_DE    LT(_LOWER_DE, KC_BSPC)
+    #define RAISE_DE    LT(_RAISE_DE, KC_SPC)
 
-#define SLSH_KEY    RSFT_T(KC_SLSH)
-#define DEL_KEY     KC_DEL
+    #define Z_KEY       LSFT_T(KC_Z)
+    #define Z_KEY_DE    LSFT_T(DE_Z)
+    // #define Z_KEY       LT(0, KC_Z)
+    // #define Z_KEY_DE    LT(1, DE_Z)
+
+    #define SLSH_KEY    RSFT_T(KC_SLSH)
+    #define DEL_KEY     KC_DEL
+
+
+    // define the center column
+    #define CENT11   KC_MS_WH_DOWN
+    #define CENT12   KC_MS_WH_UP
+    #define CENT21   KC_LEFT
+    #define CENT22   KC_RIGHT
+    #define CENT31   KC_DOWN
+    #define CENT32   KC_UP
+
+#else // narrow layout
+
+    #define ENT_KEY     KC_ENT
+    #define ESC_KEY     KC_ESC
+    #define SCLN_KEY    LT(0, KC_SCLN) // sends ö on German layer
+    #define BSLS_KEY    LT(0, KC_BSLS)
+    #define EQL_KEY     LT(0, KC_EQL)
+    #define QUOT_KEY    LT(0, KC_QUOT) // sends ä on German layer
+    #define TAB_KEY     LCTL_T(KC_TAB)
+    // define the secondary function of the lower and raise keys here
+    #define LOWER       LT(_LOWER, KC_BSPC)
+    #define RAISE       LT(_RAISE, KC_SPC)
+    // GERMAN VERSIONS OF THE KEYS
+    #define LOWER_DE    LT(_LOWER_DE, KC_BSPC)
+    #define RAISE_DE    LT(_RAISE_DE, KC_SPC)
+    #define Z_KEY       LT(0, KC_Z)
+    #define Z_KEY_DE    LT(1, DE_Z)
+    #define SLSH_KEY    LT(0, KC_SLSH)
+    #define DEL_KEY     KC_DEL
+#endif // narrow layout
 
 #define SZ_KEY      LSFT_T(DE_SS)
-
-// define the center column
-#define CENT11   KC_MS_WH_DOWN
-#define CENT12   KC_MS_WH_UP
-#define CENT21   KC_LEFT
-#define CENT22   KC_RIGHT
-#define CENT31   KC_DOWN
-#define CENT32   KC_UP
-
-#else
-#define SCLN_KEY LT(0, KC_SCLN)
-#define BSLS_KEY LALT_T(KC_BSLS)
-#define ESC_KEY LALT_T(KC_ESC)
-#define ENT_KEY RGUI_T(KC_ENT)
-#define QUOT_KEY RCTL_T(KC_QUOT)
-#define TAB_KEY LCTL_T(KC_TAB)
-// define the secondary function of the lower and raise keys here
-#define LOWER LT(_LOWER, KC_BSPC)
-#define RAISE LT(_RAISE, KC_SPC)
-// GERMAN VERSIONS OF THE KEYS
-#define LOWER_DE LT(_LOWER_DE, KC_BSPC)
-#define RAISE_DE LT(_RAISE_DE, KC_SPC)
-#define Z_KEY LT(0, KC_Z)
-#define Z_KEY_DE LT(1, DE_Z)
-#define SLSH_KEY    LT(0, KC_SLSH)
-#define DEL_KEY     LT(_MOUSE, KC_DEL)
-#define UE_KEY LALT_T(DE_UDIA)
-#endif
-
-#define NAVSPACE LT(_ADJUST, KC_SPC)
-#define NAVGUI   LT(_ADJUST, KC_LGUI)
+#define NAVSPACE    LT(_ADJUST, KC_SPC)
+#define NAVGUI      LT(_ADJUST, KC_LGUI)
 //=====================================
 
 #define DOWN_KEY LT(_LOWER, KC_DOWN)
@@ -124,8 +126,6 @@ enum planck_layers {
 
 #define DOT_KEY LT(0, KC_DOT)
 #define COMM_KEY LT(0, KC_COMM)
-
-#define CAPS_KEY LGUI_T(KC_CAPS)
 
 #define BS_KEY KC_BSPC
 
@@ -136,7 +136,6 @@ enum planck_layers {
 #define LLOCK_MOUSE LT(_MOUSE, KC_NO)
 
 #define ADJUST MO(_ADJUST)
-
 
 #define KB_LANG_SWITCH TG(_COLEMAK_DE)
 #define LANG_SWITCH G(KC_SPC)
@@ -154,17 +153,10 @@ enum planck_keycodes {
     QK_REPEAT_KEY,
     QK_ALT_REPEAT_KEY,
 #endif
+#endif
     AE_KEY,
     UE_KEY,
     OE_KEY,
-#else
-    AE_QUOT,
-    OE_SCLN,
-    UE_BSLS,
-    AE_QUOT_CAPS,
-    OE_SCLN_CAPS,
-    UE_BSLS_CAPS,
-#endif
 #ifdef DUALFUNC
     TOGGLE_DUALF,
 #endif
