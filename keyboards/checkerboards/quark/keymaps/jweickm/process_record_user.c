@@ -71,6 +71,11 @@ bool register_unregister_double(keyrecord_t *record, uint16_t keycode1, uint16_t
 
 bool register_unregister_shifted_key(keyrecord_t *record, uint16_t keycode, uint16_t shifted_keycode) {
     if (record->event.pressed) {
+        #ifdef CAPS_WORD_ENABLE
+        if (is_caps_word_on()) {
+            shifted = true; // make sure the shifted flag is properly set for caps_word
+        }
+        #endif
         if (shifted) {
             clear_mods();
             #ifndef NO_ACTION_ONESHOT
@@ -213,6 +218,11 @@ bool process_compose(uint16_t keycode) {
     //  function to process the unicode characters using ralt wincompose/compose
     bool processed = false;
     tap_code(KC_COMPOSE);
+    #ifdef CAPS_WORD_ENABLE
+    if (is_caps_word_on()) {
+        shifted = true; // make sure shifted is set to true for caps_word
+    }
+    #endif
     switch (keycode) {
         case DE_ADIA:
             tap_code16(KC_DQUO);
@@ -479,11 +489,9 @@ bool caps_word_press_user(uint16_t keycode) {
             if (!de_layout_active) { // filter for other names in English
                 return false;
             }
-#ifdef GETREUER_REP_KEY_ENABLE
         case AE_KEY:
         case OE_KEY:
         case UE_KEY:
-#endif
         case KC_A ... KC_Z:
         case RTHUMB:
             add_weak_mods(MOD_BIT(KC_LSFT)); // Apply shift to next key.
@@ -534,7 +542,7 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
         switch (combo_index) {
             case CD_ESC:
             case HCOMM_ENT:
-            case MOUSE_COMB:
+            // case MOUSE_COMB:
                 return true;
             default:
                 return false;
@@ -585,6 +593,8 @@ uint16_t get_combo_term(uint16_t index, combo_t *combo) {
         case DH_ENT:
             return 50;
 #endif
+    case CAPS_COMB:
+        return 60;
     }
     return COMBO_TERM; // default value
 }

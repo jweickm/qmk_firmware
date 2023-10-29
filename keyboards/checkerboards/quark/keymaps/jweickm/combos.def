@@ -34,12 +34,13 @@ COMB(MPRV_COMB,     KC_MPRV,        CENT31, CENT32)
 
 // ---------------------- LAYER COMBOS ---------------------------
 //   name           result          combo keys
-COMB(MOUSE_COMB,    LLOCK_MOUSE,    LOWER, TAB_KEY)
-COMB(NUM_COMB,      LLOCK_NUM,      RAISE, DEL_KEY)
+//COMB(MOUSE_COMB,    LLOCK_MOUSE,    LOWER, TAB_KEY)
+//COMB(NUM_COMB,      LLOCK_NUM,      RAISE, DEL_KEY)
 
 // --------------------- DUAL HAND COMBOS -------------------------------
 //   name           result          combo keys
 COMB(CAPS_COMB,     KC_CAPS,        Z_KEY, SLSH_KEY)
+COMB(DH_ENT,        KC_ENT,         D_KEY, H_KEY)
 
 /* // -------------------- LOWER COMBOS ----------------------------- */
 /* //   name           result          combo keys */
