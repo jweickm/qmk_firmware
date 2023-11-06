@@ -405,8 +405,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case SCLN_KEY:
         case SLSH_KEY:
         case EQL_KEY:
-        case UDIA_KEY:
-        case ADIA_KEY:
+        // case UDIA_KEY:
+        // case ADIA_KEY:
             return TAPPING_TERM * pinky_factor;
 #ifndef WIDE_LAYOUT
         case OSM(MOD_LSFT):

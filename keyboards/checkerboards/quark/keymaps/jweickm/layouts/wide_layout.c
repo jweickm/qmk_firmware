@@ -41,14 +41,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |   Z  |   X  |   C  |   D  |   V  |   ↓  |   ↑  |   K  |   H  |  ,<  |  .>  |  /?  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | LCTL | LALT |  TAB | LOWER|  SFT |     SPC     | _UML | RAISE|  DEL | APPFN|  GUI | 
+     * | LCTL | LALT |  -_  | LOWER|  SFT |     SPC     | _UML | RAISE|  DEL | APPFN|  GUI | 
      * `-----------------------------------------------------------------------------------'
      */
     [_COLEMAK] = LAYOUT_planck_mit(
         Q_KEY, W_KEY, F_KEY, P_KEY, B_KEY, CENT11, CENT12, J_KEY, L_KEY, U_KEY, Y_KEY, QUOT_KEY,
         A_KEY, R_KEY, S_KEY, T_KEY, G_KEY, CENT21, CENT22, M_KEY, N_KEY, E_KEY,    I_KEY,   O_KEY,
         Z_KEY, X_KEY, C_KEY, D_KEY, V_KEY, CENT31, CENT32, K_KEY, H_KEY, COMM_KEY, DOT_KEY, SLSH_KEY,
-        KC_LCTL, KC_LALT, TAB_KEY, LOWER, LTHUMB, NAVSPACE, RTHUMB, RAISE, DEL_KEY, FN_KEY, GUI_KEY
+        KC_LCTL, KC_LALT, KC_MINS, LOWER, LTHUMB, NAVSPACE, RTHUMB, RAISE, DEL_KEY, FN_KEY, GUI_KEY
         ),
 
     /* ----------------------------------------------------------------------------------------
@@ -61,14 +61,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |   Z  |   X  |   C  |   D  |   V  |   ↓  |   ↑  |   K  |   H  |  ,<  |  .>  |  /?  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ | ____ |LWR_DE| ____ |     ___     | ____ |RSE_DE| ____ | ____ | ____ |
+     * | ____ | ____ |  -_  |LWR_DE| ____ |     ___     | ____ |RSE_DE| ____ | ____ | ____ |
      * `-----------------------------------------------------------------------------------'
      */
     [_COLEMAK_DE] = LAYOUT_planck_mit(
         Q_KEY, W_KEY, F_KEY, P_KEY, B_KEY,    _______, _______, J_KEY, L_KEY, U_KEY, Y_KEY_DE, QUOT_KEY, 
         A_KEY, R_KEY, S_KEY, T_KEY, G_KEY,    _______, _______, M_KEY, N_KEY, E_KEY, I_KEY, O_KEY, 
         Z_KEY_DE, X_KEY, C_KEY, D_KEY, V_KEY, _______, _______, K_KEY, H_KEY, _______, _______, _______, 
-        _______, _______, _______, LOWER_DE, _______, _______, _______, RAISE_DE, _______, _______, _______
+        _______, _______, DE_MINS, LOWER_DE, _______, _______, _______, RAISE_DE, _______, _______, _______
         ),
 
     /* ----------------------------------------------------------------------------------------
@@ -239,7 +239,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_ADJUST] = LAYOUT_planck_mit(
         ALT_TAB, C(KC_RIGHT), KC_INS,  KC_PSCR, C(KC_LEFT), KC_VOLD, KC_VOLU, A(KC_GRV), REDO, UNDO, LANG_SWITCH, KB_LANG_SWITCH, 
-        KC_LGUI, KC_LALT,     KC_LSFT, KC_LCTL, C(KC_END),  KC_BRID, KC_BRIU, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O,
+        KC_LGUI, KC_LALT,     KC_LSFT, KC_LCTL, G(A(KC_LCTL)),  KC_BRID, KC_BRIU, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O,
         KC_LSFT, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_MUTE, KC_MMIC, KC_HOME, KC_PGDN, KC_PGUP, KC_END, KC_CAPS, 
         QK_CLEAR_EEPROM, QK_BOOT, _______, _______, _______, _______, _______, _______, _______, TG(_GAMING), KC_AFK
         ),

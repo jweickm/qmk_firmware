@@ -493,7 +493,7 @@ bool caps_word_press_user(uint16_t keycode) {
         case OE_KEY:
         case UE_KEY:
         case KC_A ... KC_Z:
-        case RTHUMB:
+        // case RTHUMB:
             add_weak_mods(MOD_BIT(KC_LSFT)); // Apply shift to next key.
             shifted = true;
             return true;
@@ -1086,22 +1086,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 //             return true;
 //             break;
 
-        case RTHUMB:
-            if (!record->event.pressed && is_alt_tab_active) {
-                unregister_mods(MOD_BIT(KC_LALT));
-                is_alt_tab_active = false;
-            }
-            if (de_layout_active && record->tap.count > 0) {
-#    ifdef CAPS_WORD_ENABLE
-                if (is_caps_word_on()) {
-                    shifted = true; // set to true so that it will be properly capitalized
-                }
-#    endif
-                register_unregister_shifted_key(record, DE_MINS, DE_UNDS);
-                return false;
-            }
-            return true;
-            break;
+
+//         case RTHUMB: // only required when RTHUMB is KC_MINS
+//             if (!record->event.pressed && is_alt_tab_active) {
+//                 unregister_mods(MOD_BIT(KC_LALT));
+//                 is_alt_tab_active = false;
+//             }
+//             if (de_layout_active && record->tap.count > 0) {
+// #    ifdef CAPS_WORD_ENABLE
+//                 if (is_caps_word_on()) {
+//                     shifted = true; // set to true so that it will be properly capitalized
+//                 }
+// #    endif
+//                 register_unregister_shifted_key(record, DE_MINS, DE_UNDS);
+//                 return false;
+//             }
+//             return true;
+//             break;
 
         case SLSH_KEY:
             if (de_layout_active && record->tap.count > 0) {
