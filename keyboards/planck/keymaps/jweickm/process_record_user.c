@@ -404,6 +404,9 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case Z_KEY_DE:
         case SCLN_KEY:
         case SLSH_KEY:
+        case EQL_KEY:
+        case UDIA_KEY:
+        case ADIA_KEY:
             return TAPPING_TERM * pinky_factor;
 #ifndef WIDE_LAYOUT
         case OSM(MOD_LSFT):
@@ -1158,11 +1161,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 
 #else // #ifndef WIDE_LAYOUT
+        case EQL_KEY: // sends = on the base English Layer and 0 when held
         case SCLN_KEY: // sends Ö on the German layer
             if (!process_tap_long_press_key(record, KC_0)) {
                 return false;
             }
             return true;
+        case UDIA_KEY: 
+            return process_tap_long_press_shifted_key(record, DE_BSLS, DE_PIPE);
+            break;
+        case ADIA_KEY:
+            return process_tap_long_press_shifted_key(record, DE_QUOT, DE_DQUO);
+            break;
 #endif
 
         case SZ_KEY:

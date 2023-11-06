@@ -57,7 +57,8 @@ enum planck_layers {
 #define KC_MMIC KC_F20 // mute mic
 
 // ==== LAYOUT-DEPENDENT KEY MAPPINGS
-#define FN_KEY      LT(_ADJUST, KC_APP)
+#define FN_KEY      OSL(_ADJUST)
+#define MENU_KEY    MEH_T(KC_APP) // ctrl + shift + alt
 
 #ifdef WIDE_LAYOUT
     #define QUOT_KEY    LT(0, KC_QUOT)
@@ -100,9 +101,11 @@ enum planck_layers {
     #define ENT_KEY     KC_ENT
     #define ESC_KEY     KC_ESC
     #define SCLN_KEY    LT(0, KC_SCLN) // sends ö on German layer
-    #define BSLS_KEY    LT(0, KC_BSLS)
+    #define BSLS_KEY    KC_BSLS
     #define EQL_KEY     LT(0, KC_EQL)
-    #define QUOT_KEY    LT(0, KC_QUOT) // sends ä on German layer
+    #define QUOT_KEY    KC_QUOT // sends ä on German layer
+    #define UDIA_KEY    LT(0, DE_UDIA) // sends ü and bsls when held
+    #define ADIA_KEY    LT(0, DE_ADIA) // sends ä and quot
     #define TAB_KEY     LCTL_T(KC_TAB)
     // define the secondary function of the lower and raise keys here
     #define LOWER       LT(_LOWER, KC_BSPC)
