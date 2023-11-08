@@ -116,7 +116,9 @@ enum planck_layers {
     #define Z_KEY       LT(0, KC_Z)
     #define Z_KEY_DE    LT(1, DE_Z)
     #define SLSH_KEY    LT(0, KC_SLSH)
-    #define DEL_KEY     KC_DEL
+    #define DEL_KEY     LT(_ADJUST, KC_DEL)
+    #define MINS_KEY    LT(_ADJUST, KC_MINS)
+    #define MINS_KEY_DE LT(_ADJUST, DE_MINS)
 #endif // narrow layout
 
 #define SZ_KEY      LSFT_T(DE_SS)
