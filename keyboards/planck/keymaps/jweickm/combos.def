@@ -38,7 +38,7 @@ COMB(MPRV_COMB,     KC_MPRV,        DEL_KEY, MENU_KEY)
 
 // --------------------- DUAL HAND COMBOS -------------------------------
 //   name           result          combo keys
-COMB(CAPS_COMB,     KC_CAPS,        Z_KEY, SLSH_KEY)
+COMB(CAPS_COMB,     KC_CAPS,        OSM(MOD_LSFT), OSM(MOD_RSFT))
 COMB(DH_ENT,        KC_ENT,         D_KEY, H_KEY)
 
 /* // -------------------- LOWER COMBOS ----------------------------- */
