@@ -594,7 +594,8 @@ uint16_t get_combo_term(uint16_t index, combo_t *combo) {
         case DH_ENT:
             return 50;
 #endif
-    case CAPS_COMB:
+    case CAPS_COMB1:
+    case CAPS_COMB2:
         return 60;
     }
     return COMBO_TERM; // default value
@@ -611,7 +612,7 @@ bool achordion_chord(uint16_t tap_hold_keycode, keyrecord_t *tap_hold_record, ui
 
     // Also allow same-hand holds when the other key is in the rows below the
     // alphas.
-    // MATRIX_ROWS = 8 (0-7), bottom rows are 3 and 8
+    // MATRIX_ROWS = 8 (0-7), bottom rows are 3 and 7
     if (other_record->event.key.row % (MATRIX_ROWS / 2) >= 3) {
         return true;
     }
@@ -633,8 +634,8 @@ bool achordion_chord(uint16_t tap_hold_keycode, keyrecord_t *tap_hold_record, ui
 
 #endif
 
-        // Otherwise, follow the opposite hands rule.
-        return achordion_opposite_hands(tap_hold_record, other_record);
+    // Otherwise, follow the opposite hands rule.
+    return achordion_opposite_hands(tap_hold_record, other_record);
 }
 
 uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
@@ -666,6 +667,8 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
     #else
         case OSM(MOD_LSFT):
         case OSM(MOD_RSFT):
+        case MENU_KEY:
+        case MINS_KEY:
     #endif
             return 0; // bypass Achordion for these keys
 
