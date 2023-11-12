@@ -53,12 +53,12 @@ enum planck_layers {
 
 #define K_KEY KC_K
 
-#define KC_COMPOSE KC_RALT
+#define KC_COMPOSE KC_SCRL
 #define KC_MMIC KC_F20 // mute mic
 
 // ==== LAYOUT-DEPENDENT KEY MAPPINGS
 #define FN_KEY      OSL(_ADJUST)
-#define MENU_KEY    MEH_T(KC_APP) // ctrl + shift + alt
+#define MENU_KEY    RALT_T(KC_APP) // RALT
 
 #ifdef WIDE_LAYOUT
     #define QUOT_KEY    LT(0, KC_QUOT)
@@ -113,9 +113,12 @@ enum planck_layers {
     // GERMAN VERSIONS OF THE KEYS
     #define LOWER_DE    LT(_LOWER_DE, KC_BSPC)
     #define RAISE_DE    LT(_RAISE_DE, KC_SPC)
-    #define Z_KEY       LT(0, KC_Z)
-    #define Z_KEY_DE    LT(1, DE_Z)
-    #define SLSH_KEY    LT(0, KC_SLSH)
+    // #define Z_KEY       LT(0, KC_Z)
+    // #define Z_KEY_DE    LT(1, DE_Z)
+    #define Z_KEY       LSFT_T(KC_Z)
+    #define Z_KEY_DE    LSFT_T(DE_Z)
+    // #define SLSH_KEY    LT(0, KC_SLSH)
+    #define SLSH_KEY    RSFT_T(KC_SLSH)
     #define DEL_KEY     LT(_ADJUST, KC_DEL)
     #define MINS_KEY    LT(_ADJUST, KC_MINS)
     #define MINS_KEY_DE LT(_ADJUST, DE_MINS)
