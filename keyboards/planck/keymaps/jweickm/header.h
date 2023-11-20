@@ -39,7 +39,7 @@ enum planck_layers {
 #define R_KEY LALT_T(KC_R)
 #define S_KEY LSFT_T(KC_S)
 #define T_KEY LCTL_T(KC_T)
-#define N_KEY RCTL_T(KC_N)
+#define N_KEY LCTL_T(KC_N)
 #define E_KEY RSFT_T(KC_E)
 #define I_KEY LALT_T(KC_I)
 #define O_KEY RGUI_T(KC_O)
@@ -53,7 +53,7 @@ enum planck_layers {
 
 #define K_KEY KC_K
 
-#define KC_COMPOSE KC_SCRL
+#define KC_COMPOSE KC_RCTL
 #define KC_MMIC KC_F20 // mute mic
 
 // ==== LAYOUT-DEPENDENT KEY MAPPINGS
@@ -106,7 +106,6 @@ enum planck_layers {
     #define QUOT_KEY    KC_QUOT // sends ä on German layer
     #define UDIA_KEY    LT(0, DE_UDIA) // sends ü and bsls when held
     #define ADIA_KEY    LT(0, DE_ADIA) // sends ä and quot
-    #define TAB_KEY     LCTL_T(KC_TAB)
     // define the secondary function of the lower and raise keys here
     #define LOWER       LT(_LOWER, KC_BSPC)
     #define RAISE       LT(_RAISE, KC_SPC)
@@ -120,8 +119,7 @@ enum planck_layers {
     // #define SLSH_KEY    LT(0, KC_SLSH)
     #define SLSH_KEY    RSFT_T(KC_SLSH)
     #define DEL_KEY     LT(_ADJUST, KC_DEL)
-    #define MINS_KEY    LT(_ADJUST, KC_MINS)
-    #define MINS_KEY_DE LT(_ADJUST, DE_MINS)
+    #define TAB_KEY    LT(_ADJUST, KC_TAB)
 #endif // narrow layout
 
 #define SZ_KEY      LSFT_T(DE_SS)

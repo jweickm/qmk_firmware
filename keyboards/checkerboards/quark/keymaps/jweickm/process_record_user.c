@@ -504,10 +504,6 @@ bool caps_word_press_user(uint16_t keycode) {
             if (de_layout_active) {
                 return false;
             } else {
-                if (!IS_LAYER_ON(_RAISE)) {
-                    add_weak_mods(MOD_BIT(KC_LSFT)); // Apply shift to next key.
-                    shifted = true;
-                }
                 return true;
             }
         case DE_MINS:
@@ -921,6 +917,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // the next case allows us to use alt_tab without a timer
         case NAVSPACE:
         case NAVGUI:
+        case DEL_KEY:
+        case TAB_KEY:
         case FN_KEY:
             if (!record->event.pressed && is_alt_tab_active) {
                 unregister_mods(MOD_BIT(KC_LALT));

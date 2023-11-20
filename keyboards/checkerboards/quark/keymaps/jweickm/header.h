@@ -39,7 +39,7 @@ enum planck_layers {
 #define R_KEY LALT_T(KC_R)
 #define S_KEY LSFT_T(KC_S)
 #define T_KEY LCTL_T(KC_T)
-#define N_KEY RCTL_T(KC_N)
+#define N_KEY LCTL_T(KC_N)
 #define E_KEY RSFT_T(KC_E)
 #define I_KEY LALT_T(KC_I)
 #define O_KEY RGUI_T(KC_O)
@@ -53,17 +53,17 @@ enum planck_layers {
 
 #define K_KEY KC_K
 
-#define KC_COMPOSE KC_RALT
+#define KC_COMPOSE KC_RCTL
 #define KC_MMIC KC_F20 // mute mic
 
 // ==== LAYOUT-DEPENDENT KEY MAPPINGS
 #ifdef WIDE_LAYOUT
 #define QUOT_KEY    LT(0, KC_QUOT)
 #define ESC_KEY     LSFT_T(KC_ESC)
-#define ENT_KEY     KC_ENT
+#define ENT_KEY     LT(_UMLAUTS, KC_ENT)
 #define GUI_KEY     KC_LGUI
 #define FN_KEY      LT(_ADJUST, KC_APP)
-#define TAB_KEY     KC_TAB
+#define TAB_KEY     LT(_ADJUST, KC_TAB)
 #define SCLN_KEY    LT(0, KC_SCLN)
 
 #define LTHUMB      OSM(MOD_LSFT)
@@ -83,7 +83,7 @@ enum planck_layers {
 // #define Z_KEY_DE    LT(1, DE_Z)
 
 #define SLSH_KEY    RSFT_T(KC_SLSH)
-#define DEL_KEY     KC_DEL
+#define DEL_KEY     LT(_ADJUST, KC_DEL)
 
 #define SZ_KEY      LSFT_T(DE_SS)
 
@@ -96,23 +96,24 @@ enum planck_layers {
 #define CENT32   KC_UP
 
 #else
-#define SCLN_KEY LT(0, KC_SCLN)
-#define BSLS_KEY LALT_T(KC_BSLS)
-#define ESC_KEY LALT_T(KC_ESC)
-#define ENT_KEY RGUI_T(KC_ENT)
-#define QUOT_KEY RCTL_T(KC_QUOT)
-#define TAB_KEY LCTL_T(KC_TAB)
-// define the secondary function of the lower and raise keys here
-#define LOWER LT(_LOWER, KC_BSPC)
-#define RAISE LT(_RAISE, KC_SPC)
-// GERMAN VERSIONS OF THE KEYS
-#define LOWER_DE LT(_LOWER_DE, KC_BSPC)
-#define RAISE_DE LT(_RAISE_DE, KC_SPC)
-#define Z_KEY LT(0, KC_Z)
-#define Z_KEY_DE LT(1, DE_Z)
-#define SLSH_KEY    LT(0, KC_SLSH)
-#define DEL_KEY     LT(_MOUSE, KC_DEL)
-#define UE_KEY LALT_T(DE_UDIA)
+    #define SCLN_KEY LT(0, KC_SCLN)
+    #define BSLS_KEY LALT_T(KC_BSLS)
+    #define ESC_KEY LALT_T(KC_ESC)
+    #define ENT_KEY RGUI_T(KC_ENT)
+    #define QUOT_KEY LCTL_T(KC_QUOT)
+    #define TAB_KEY    LT(_ADJUST, KC_TAB)
+
+    // define the secondary function of the lower and raise keys here
+    #define LOWER LT(_LOWER, KC_BSPC)
+    #define RAISE LT(_RAISE, KC_SPC)
+    // GERMAN VERSIONS OF THE KEYS
+    #define LOWER_DE LT(_LOWER_DE, KC_BSPC)
+    #define RAISE_DE LT(_RAISE_DE, KC_SPC)
+    #define Z_KEY LT(0, KC_Z)
+    #define Z_KEY_DE LT(1, DE_Z)
+    #define SLSH_KEY    LT(0, KC_SLSH)
+    #define DEL_KEY     LT(_ADJUST, KC_DEL)
+    #define UE_KEY LALT_T(DE_UDIA)
 #endif
 
 #define NAVSPACE LT(_ADJUST, KC_SPC)
