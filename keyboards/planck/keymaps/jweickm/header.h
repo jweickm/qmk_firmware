@@ -159,6 +159,7 @@ enum planck_keycodes {
     QK_REPEAT_KEY,
     QK_ALT_REPEAT_KEY,
 #endif
+#else 
 #endif
     AE_KEY,
     UE_KEY,

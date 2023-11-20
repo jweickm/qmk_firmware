@@ -226,9 +226,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* ----------------------------------------------------------------------------------------
 * _ADJUST
      * ,-----------------------------------------------------------------------------------.
-     * |A(TAB)| ____ | C(->)|  INS | PSCR | C(<-)| KANA | REDO | UNDO | LANG |KBLANG| ____ |
+     * |A(TAB)| ____ | C(->)|  INS | PSCR | C(<-)| KANA | REDO | UNDO | LANG |KBLANG|  INS |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |A(TAB)| LGUI | LALT | LSFT | LCTL |  GAC | LEFT | DOWN |  UP  | RIGHT| VIM_O|  INS |
+     * | ____ | LGUI | LALT | LSFT | LCTL |  GAC | LEFT | DOWN |  UP  | RIGHT| VIM_O| RALT |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ |NUMLCK|DESK<-| WHLUP| WHLDN|DESK->| HOME | PGDN | PGUP |  END | ____ | CAPS |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -236,8 +236,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_ADJUST] = LAYOUT_planck_2x2u(
-        ALT_TAB, _______, C(KC_RIGHT), KC_INS, KC_PSCR, C(KC_LEFT), A(KC_GRV), REDO, UNDO, LANG_SWITCH, KB_LANG_SWITCH, _______,
-        ALT_TAB, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, G(A(KC_LCTL)), KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, KC_INS,
+        ALT_TAB, _______, C(KC_RIGHT), KC_INS, KC_PSCR, C(KC_LEFT), A(KC_GRV), REDO, UNDO, LANG_SWITCH, KB_LANG_SWITCH, KC_INS,
+        _______, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, G(A(KC_LCTL)), KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, OSM(MOD_RALT),
         _______, KC_NUM_LOCK, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_HOME, KC_PGDN, KC_PGUP, KC_END, _______, KC_CAPS,
         QK_CLEAR_EEPROM, QK_BOOT, _______,         _______,     _______,                  _______, KC_VOLD, KC_VOLU, TG(_GAMING), KC_AFK
     ),
