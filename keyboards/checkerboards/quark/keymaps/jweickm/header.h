@@ -67,7 +67,7 @@ enum planck_layers {
 #define SCLN_KEY    LT(0, KC_SCLN)
 
 #define LTHUMB      OSM(MOD_LSFT)
-#define RTHUMB      LT(_UMLAUTS, KC_TAB)
+#define RTHUMB      LT(_UMLAUTS, KC_ESC)
 // #define RTHUMB      OSL(_UMLAUTS)
 
 // define the secondary function of the lower and raise keys here

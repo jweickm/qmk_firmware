@@ -137,14 +137,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |  F12 |  F7  |  F8  |  F9  |  F10 |  F11 |   >  |   ~  |   ,  |   .  |   /  | ____ |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ | ____ | ____ |     ____    |     ____    | BRI- | BRI+ | ____ | ____ | 2x2uC
+     * | ____ | ____ | ____ |  SPC |     ____    |     ____    | BRI- | BRI+ | ____ | ____ | 2x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_RAISE] = LAYOUT_planck_2x2u(
         KC_TILD, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_BSLS,
         KC_F6, LGUI_T(KC_F1), LALT_T(KC_F2), LSFT_T(KC_F3), LCTL_T(KC_F4), KC_F5, KC_LABK, KC_MINS, KC_EQL, KC_LBRC, KC_RBRC, KC_QUOT,
         KC_F12, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_RABK, KC_TILD, KC_COMM, KC_DOT, KC_BSLS, _______,
-        _______, _______, _______, _______,     _______,          _______,     KC_BRID, KC_BRIU, _______, _______
+        _______, _______, _______, KC_SPC,     _______,          _______,     KC_BRID, KC_BRIU, _______, _______
     ),
 
 /* ----------------------------------------------------------------------------------------
@@ -156,14 +156,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |  F12 |  F7  |  F8  |  F9  |  F10 |  F11 |   >  |   ~  |   ,  |   .  |   /  | ____ |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ | ____ | ____ |     ____    |     ____    | BRI- | BRI+ | ____ | ____ | 2x2uC
+     * | ____ | ____ | ____ |  SPC |     ____    |     ____    | BRI- | BRI+ | ____ | ____ | 2x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_RAISE_DE] = LAYOUT_planck_2x2u(
         DE_TILD, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, DE_BSLS,
         KC_F6, LGUI_T(KC_F1), LALT_T(KC_F2), LSFT_T(KC_F3), LCTL_T(KC_F4), KC_F5, DE_LABK, DE_MINS, DE_EQL, DE_LBRC, DE_RBRC, DE_QUOT,
         KC_F12,    KC_F7,   KC_F8,   KC_F9, KC_F10, KC_F11, DE_RABK, DE_TILD,  KC_COMM, KC_DOT, DE_SLSH, _______, 
-        _______, _______, _______, _______,     _______,          _______,     KC_BRID, KC_BRIU, _______, _______
+        _______, _______, _______, KC_SPC,     _______,          _______,     KC_BRID, KC_BRIU, _______, _______
     ),
 
 /* ----------------------------------------------------------------------------------------
@@ -230,7 +230,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | LGUI | LALT | LSFT | LCTL |  GAC | LEFT | DOWN |  UP  | RIGHT| VIM_O| RALT |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ |NUMLCK|DESK<-| WHLUP| WHLDN|DESK->| HOME | PGDN | PGUP |  END | ____ | CAPS |
+     * | LSFT |NUMLCK|DESK<-| WHLUP| WHLDN|DESK->| HOME | PGDN | PGUP |  END | ____ | CAPS |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |EEPRST| FLASH| ____ | ____ |     ____    |     ____    | VOL- | VOL+ | GAME |  AFK | 2x2uC
      * `-----------------------------------------------------------------------------------'
@@ -238,7 +238,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_ADJUST] = LAYOUT_planck_2x2u(
         ALT_TAB, _______, C(KC_RIGHT), KC_INS, KC_PSCR, C(KC_LEFT), A(KC_GRV), REDO, UNDO, LANG_SWITCH, KB_LANG_SWITCH, KC_INS,
         _______, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, G(A(KC_LCTL)), KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, OSM(MOD_RALT),
-        _______, KC_NUM_LOCK, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_HOME, KC_PGDN, KC_PGUP, KC_END, _______, KC_CAPS,
+        KC_LSFT, KC_NUM_LOCK, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_HOME, KC_PGDN, KC_PGUP, KC_END, _______, KC_CAPS,
         QK_CLEAR_EEPROM, QK_BOOT, _______,         _______,     _______,                  _______, KC_VOLD, KC_VOLU, TG(_GAMING), KC_AFK
     ),
 };

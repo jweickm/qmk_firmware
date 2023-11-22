@@ -77,7 +77,8 @@ bool register_unregister_shifted_key(keyrecord_t *record, uint16_t keycode, uint
         }
         #endif
         if (shifted) {
-            clear_mods();
+            // clear_mods();
+            del_mods(MOD_MASK_SHIFT);
             #ifndef NO_ACTION_ONESHOT
             clear_oneshot_mods();
             #endif
@@ -667,14 +668,19 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
     #endif
             return 0; // bypass Achordion for these keys
 
-        case Z_KEY:
-        case Z_KEY_DE:
         case COMM_KEY:
         case DOT_KEY:
-        case SLSH_KEY:
-        case SCLN_KEY:
         // case UE_KEY:
         case QUOT_KEY:
+        case X_KEY:
+        case C_KEY:
+        case V_KEY:
+        case G_KEY: // to prevent bug on dot_key for num_layer
+            return TAPPING_TERM + 60; // return a shorter timeout for these keys (tap event when held) results in 220 ms with current tapping term of 160 ms
+
+        case Z_KEY:
+        case Z_KEY_DE:
+        case SLSH_KEY:
         case Q_KEY:
         case W_KEY:
         case F_KEY:
@@ -685,11 +691,9 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case U_KEY:
         case Y_KEY:
         case Y_KEY_DE:
-        case X_KEY:
-        case C_KEY:
-        case V_KEY:
-        case G_KEY: // to prevent bug on dot_key for num_layer
-            return TAPPING_TERM + 60; // return a shorter timeout for these keys (tap event when held) results in 220 ms with current tapping term of 160 ms
+        case SCLN_KEY:
+        case EQL_KEY:
+            return TAPPING_TERM + 140; // 300ms, still slightly faster than 400 ms default
     }
     return 400; // otherwise use a timeout of 400 ms.
 }
@@ -1251,6 +1255,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 afk = true;
             }
             return false;
+
+        case KC_BSPC:
+            if (shifted) {
+                del_mods(MOD_MASK_SHIFT);
+                register_unregister_key(record, KC_DEL);
+                set_mods(mod_state);
+                return false;
+            } 
+            return true;
 
     } // switch(keycode)
 

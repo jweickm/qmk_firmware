@@ -37,7 +37,7 @@
 /* #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD // works only on left shift */
 #define CAPS_WORD_IDLE_TIMEOUT 3000 // 5000 milliseconds = default
 // #define CAPS_WORD_INVERT_ON_SHIFT
-#define ONESHOT_TIMEOUT 3000 // Time in ms before the one shot key is released
+#define ONESHOT_TIMEOUT 1000 // Time in ms before the one shot key is released
 
 #define DYNAMIC_MACRO_SIZE 128
 
