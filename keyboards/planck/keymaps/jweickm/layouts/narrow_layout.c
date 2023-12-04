@@ -44,10 +44,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_COLEMAK] = LAYOUT_planck_2x2u(
         KC_ESC, Q_KEY, W_KEY, F_KEY, P_KEY, B_KEY, J_KEY, L_KEY, U_KEY, Y_KEY, SCLN_KEY, BSLS_KEY, 
-        KC_BSPC, A_KEY, R_KEY, S_KEY, T_KEY, G_KEY, M_KEY, N_KEY, E_KEY, I_KEY, O_KEY, KC_QUOT,
+        KC_BSPC, A_KEY, R_KEY, S_KEY, T_KEY, G_KEY, M_KEY, N_KEY, E_KEY, I_KEY, O_KEY, LCTL_T(KC_QUOT),
         OSM(MOD_LSFT), Z_KEY, X_KEY, C_KEY, D_KEY, V_KEY, K_KEY, H_KEY, COMM_KEY, DOT_KEY, SLSH_KEY, OSM(MOD_RSFT)/*ENT_KEY*/,
-        KC_LCTL, KC_LALT, KC_LGUI, TAB_KEY,    LOWER,         RAISE,    DEL_KEY, MENU_KEY, FN_KEY, ENT_KEY
+        OSM(MOD_LCTL), KC_LALT, KC_LGUI, TAB_KEY,    LOWER,         RAISE,    DEL_KEY, MENU_KEY, FN_KEY, ENT_KEY
     ),
+
+/* ----------------------------------------------------------------------------------------
+* _COLEMAK_NHRM
+     * ,-----------------------------------------------------------------------------------.
+     * | ESC  |   Q  |   W  |   F  |   P  |   B  |   J  |   L  |   U  |   Y  |  ;:  |  \|  |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | BSPC |   A  |   R  |   S  |   T  |   G  |   M  |   N  |   E  |   I  |   O  |  '"  |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | LSFT |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  | RSFT |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | LCTL | LALT | LGUI |  TAB |     LOWER   |     RAISE   |  DEL |  APP |  FN  |  ENT | 2x2uC
+     * `-----------------------------------------------------------------------------------'
+     */
+    [_COLEMAK_NHRM] = LAYOUT_planck_2x2u(
+        _______, KC_Q, KC_W, KC_F, KC_P, KC_B, KC_J, KC_L, KC_U, KC_Y, KC_SCLN, KC_BSLS, 
+        _______, KC_A, KC_R, KC_S, KC_T, G_KEY, M_KEY, KC_N, KC_E, KC_I, KC_O, LCTL_T(KC_QUOT),
+        _______, KC_Z, KC_X, KC_C, KC_D, KC_V, KC_K, KC_H, _______, _______, _______, _______/*ENT_KEY*/,
+        _______, _______, _______, _______,    LOWER,         RAISE,    _______, _______, _______, _______
+    ),
+
 
 /* ----------------------------------------------------------------------------------------
 * _COLEMAK_DE
@@ -64,10 +84,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_COLEMAK_DE] = LAYOUT_planck_2x2u(
         _______, Q_KEY, W_KEY, F_KEY, P_KEY, B_KEY, J_KEY, L_KEY, U_KEY, Y_KEY_DE, SCLN_KEY, DE_UDIA,
-        _______, A_KEY, R_KEY, S_KEY, T_KEY, G_KEY, M_KEY, N_KEY, E_KEY, I_KEY, O_KEY, DE_ADIA,
+        _______, A_KEY, R_KEY, S_KEY, T_KEY, G_KEY, M_KEY, N_KEY, E_KEY, I_KEY, O_KEY, LCTL_T(DE_ADIA),
         _______, Z_KEY_DE, X_KEY, C_KEY, D_KEY, V_KEY, K_KEY, H_KEY, COMM_KEY, DOT_KEY, SLSH_KEY, _______,
         _______, _______, _______, TAB_KEY, LOWER_DE,     RAISE_DE,  _______, _______, _______, _______
     ),
+
+/* ----------------------------------------------------------------------------------------
+* _COLEMAK_DE_NHRM
+     * ,-----------------------------------------------------------------------------------.
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | ____ |   Q  |   W  |   F  |   P  |   B  |   J  |   L  |   U  |   Y  |   Ö  |   Ü  |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | ____ |   A  |   R  |   S  |   T  |   G  |   M  |   N  |   E  |   I  |   O  |   Ä  |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | ____ |   Z  |   X  |   C  |   D  |   V  |   K  |   H  |   ,  |   .  |   /  | ____ |
+     * |------+------+------+------+------+------+------+------+------+------+------+------|
+     * | ____ | ____ | ____ |  TAB |    LWR_DE   |    RSE_DE   | ____ | ____ | ____ | ____ | 2x2uC
+     * `-----------------------------------------------------------------------------------'
+     */
+    [_COLEMAK_DE_NHRM] = LAYOUT_planck_2x2u(
+        _______, KC_Q, KC_W, KC_F, KC_P, KC_B, KC_J, KC_L, KC_U, DE_Y, DE_ODIA, DE_UDIA,
+        _______, KC_A, KC_R, KC_S, KC_T, G_KEY, M_KEY, KC_N, KC_E, KC_I, KC_O, LCTL_T(DE_ADIA),
+        _______, DE_Z, KC_X, KC_C, KC_D, KC_V, KC_K, KC_H, COMM_KEY, DOT_KEY, SLSH_KEY, _______,
+        _______, _______, _______, TAB_KEY, LOWER_DE,     RAISE_DE,  _______, _______, _______, _______
+    ),
+
 
     /* ----------------------------------------------------------------------------------------
      * _GAMING
@@ -226,7 +267,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* ----------------------------------------------------------------------------------------
 * _ADJUST
      * ,-----------------------------------------------------------------------------------.
-     * |A(TAB)| ____ | C(->)|  INS | PSCR | C(<-)| KANA | REDO | UNDO | LANG |KBLANG|  INS |
+     * |A(TAB)|TG_HRM| C(->)|  INS | PSCR | C(<-)| KANA | REDO | UNDO | LANG |KBLANG|  INS |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | LGUI | LALT | LSFT | LCTL |  GAC | LEFT | DOWN |  UP  | RIGHT| VIM_O| RALT |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -236,7 +277,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_ADJUST] = LAYOUT_planck_2x2u(
-        ALT_TAB, _______, C(KC_RIGHT), KC_INS, KC_PSCR, C(KC_LEFT), A(KC_GRV), REDO, UNDO, LANG_SWITCH, KB_LANG_SWITCH, KC_INS,
+        ALT_TAB, TG_HRM, C(KC_RIGHT), KC_INS, KC_PSCR, C(KC_LEFT), A(KC_GRV), REDO, UNDO, LANG_SWITCH, KB_LANG_SWITCH, KC_INS,
         _______, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, G(A(KC_LCTL)), KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, OSM(MOD_RALT),
         KC_LSFT, KC_NUM_LOCK, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_HOME, KC_PGDN, KC_PGUP, KC_END, _______, KC_CAPS,
         QK_CLEAR_EEPROM, QK_BOOT, _______,         _______,     _______,                  _______, KC_VOLD, KC_VOLU, TG(_GAMING), KC_AFK

@@ -8,7 +8,9 @@
 
 enum planck_layers {
     _COLEMAK = 0,
+    _COLEMAK_NHRM,
     _COLEMAK_DE,
+    _COLEMAK_DE_NHRM,
     _GAMING,
     _UMLAUTS,
     _NUM,
@@ -164,10 +166,8 @@ enum planck_keycodes {
     AE_KEY,
     UE_KEY,
     OE_KEY,
-#ifdef DUALFUNC
-    TOGGLE_DUALF,
-#endif
     KC_AFK,
+    TG_HRM, // toggle home row mods (dual func keys)
 };
 
 #define AFK_KEY KC_MS_D

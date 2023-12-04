@@ -817,6 +817,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KB_LANG_SWITCH: // TG(_COLEMAK_DE): switches only kb lang
             if (record->event.pressed) {
                 // invert the state of de_layout_active
+                if ((IS_LAYER_ON(_COLEMAK_DE_NHRM)) || (IS_LAYER_ON(_COLEMAK_NHRM))) {
+                    layer_invert(_COLEMAK_NHRM);
+                    layer_invert(_COLEMAK_DE_NHRM);
+                }
                 de_layout_active = !de_layout_active;
             }
             return true;
@@ -825,9 +829,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 // change keyboard language
                 layer_invert(_COLEMAK_DE);
+                if ((IS_LAYER_ON(_COLEMAK_DE_NHRM)) || (IS_LAYER_ON(_COLEMAK_NHRM))) {
+                    layer_invert(_COLEMAK_NHRM);
+                    layer_invert(_COLEMAK_DE_NHRM);
+                }
                 de_layout_active = !de_layout_active;
             }
             return true;
+
+        case TG_HRM: // toggles the homerow mods on and off
+            if (record->event.pressed) {
+                if (de_layout_active) {
+                    layer_invert(_COLEMAK_DE_NHRM);
+                } else {
+                    layer_invert(_COLEMAK_NHRM);
+                }
+            }
+            return false;
 
             // ------------------------------- ACTION COMBOS --------------------
             // requires LAYER_LOCK by Getreuer
@@ -1256,7 +1274,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
 
-        case KC_BSPC:
+        case KC_BSPC: // add delete functionality to shift+backspace
             if (shifted) {
                 del_mods(MOD_MASK_SHIFT);
                 register_unregister_key(record, KC_DEL);
