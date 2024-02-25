@@ -59,8 +59,8 @@ enum planck_layers {
 #define KC_MMIC KC_F20 // mute mic
 
 // ==== LAYOUT-DEPENDENT KEY MAPPINGS
-#define FN_KEY      OSL(_ADJUST)
-#define MENU_KEY    RALT_T(KC_APP) // RALT
+#define FN_KEY      LT(_ADJUST, KC_APP)
+#define MENU_KEY    OSM(MOD_RALT) // RALT
 
 #ifdef WIDE_LAYOUT
     #define QUOT_KEY    LT(0, KC_QUOT)
