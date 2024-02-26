@@ -1066,21 +1066,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
 
         case SLSH_KEY:
-// #ifndef WIDE_LAYOUT
-//             if (de_layout_active) {
-//                 if (!process_tap_long_press_key(record, DE_QUES)) { // long press ?
-//                     return false;
-//                 } else {
-//                     register_unregister_shifted_key(record, DE_SLSH, DE_QUES);
-// #ifdef CAPS_WORD_ENABLE
-//                     caps_word_off(); // break caps_word
-// #endif
-//                     return false;
-//                 }
-//             } else {
-//                 return (process_tap_long_press_key(record, KC_QUES)); // ?
-//             }
-// #else 
             if (de_layout_active && record->tap.count >= 1) {
                 register_unregister_shifted_key(record, DE_SLSH, DE_QUES);
 #    ifdef CAPS_WORD_ENABLE
@@ -1089,7 +1074,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             return true;
-// #endif
             break;
 
 #ifdef WIDE_LAYOUT
@@ -1122,6 +1106,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case Y_KEY_DE:
         case Y_KEY:
             return process_tap_long_press_key(record, KC_9);
+
 
         // keycodes to be used with the alternative repeat key
         case AE_KEY:

@@ -34,7 +34,11 @@ bool led_update_user(led_t led_state) {
 }
 
 #ifdef WIDE_LAYOUT
-#include "layouts/wide_layout.c"
-#else
-#include "layouts/narrow_layout.c"
+    #include "layouts/wide_layout.c"
+#else 
+    #ifdef LEFTY_LAYOUT
+        #include "layouts/lefty_layout.c"
+    #else
+        #include "layouts/narrow_layout.c"
+    #endif
 #endif

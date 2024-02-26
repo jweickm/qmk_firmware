@@ -85,7 +85,6 @@ enum planck_layers {
 #define SLSH_KEY    RSFT_T(KC_SLSH)
 #define DEL_KEY     LT(_ADJUST, KC_DEL)
 
-#define SZ_KEY      LSFT_T(DE_SS)
 
 // define the center column
 #define CENT11   KC_MS_WH_DOWN
@@ -98,9 +97,9 @@ enum planck_layers {
 #else
     #define SCLN_KEY LT(0, KC_SCLN)
     #define BSLS_KEY    KC_BSLS
-    #define ESC_KEY KC_ESC
-    #define ENT_KEY KC_ENT
-    #define QUOT_KEY KC_QUOT
+    #define ESC_KEY RALT_T(KC_ESC)
+    #define ENT_KEY LT(_ADJUST, KC_ENT)
+    #define QUOT_KEY LCTL_T(KC_QUOT)
     #define TAB_KEY    LT(_ADJUST, KC_TAB)
 
     #define LTHUMB      OSM(MOD_LSFT)
@@ -118,8 +117,10 @@ enum planck_layers {
     #define Z_KEY_DE LT(1, DE_Z)
     #define SLSH_KEY    LT(0, KC_SLSH)
     #define DEL_KEY     LT(_ADJUST, KC_DEL)
-    #define UE_KEY LALT_T(DE_UDIA)
 #endif
+
+#define SZ_KEY      LSFT_T(DE_SS)
+#define SS_KEY      RALT_T(DE_SS)
 
 #define NAVSPACE LT(_ADJUST, KC_SPC)
 #define NAVGUI   LT(_ADJUST, KC_LGUI)
@@ -154,7 +155,6 @@ enum planck_keycodes {
     KC_ACC_ACUT,
     LLOCK, // layer lock key
     //SZ_KEY,
-#ifdef WIDE_LAYOUT
 #ifdef GETREUER_REP_KEY_ENABLE
     QK_REPEAT_KEY,
     QK_ALT_REPEAT_KEY,
@@ -162,14 +162,6 @@ enum planck_keycodes {
     AE_KEY,
     UE_KEY,
     OE_KEY,
-#else
-    AE_QUOT,
-    OE_SCLN,
-    UE_BSLS,
-    AE_QUOT_CAPS,
-    OE_SCLN_CAPS,
-    UE_BSLS_CAPS,
-#endif
 #ifdef DUALFUNC
     TOGGLE_DUALF,
 #endif

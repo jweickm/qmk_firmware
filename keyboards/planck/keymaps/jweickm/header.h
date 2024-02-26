@@ -60,7 +60,7 @@ enum planck_layers {
 
 // ==== LAYOUT-DEPENDENT KEY MAPPINGS
 #define FN_KEY      LT(_ADJUST, KC_APP)
-#define MENU_KEY    OSM(MOD_RALT) // RALT
+#define RALT_KEY    OSM(MOD_RALT) // RALT
 
 #ifdef WIDE_LAYOUT
     #define QUOT_KEY    LT(0, KC_QUOT)
