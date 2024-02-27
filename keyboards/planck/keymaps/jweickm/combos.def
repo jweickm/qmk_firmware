@@ -25,8 +25,8 @@ COMB(KH_ESC,        KC_ESC,         K_KEY, H_KEY)
 // ---------------------- MEDIA COMBOS ---------------------------
 //   name           result          combo keys
 COMB(MNXT_COMB,     KC_MNXT,        FN_KEY, ENT_KEY)
-COMB(MPLY_COMB,     KC_MPLY,        MENU_KEY, FN_KEY)
-COMB(MPRV_COMB,     KC_MPRV,        DEL_KEY, MENU_KEY)
+COMB(MPLY_COMB,     KC_MPLY,        RALT_KEY, FN_KEY)
+COMB(MPRV_COMB,     KC_MPRV,        DEL_KEY, RALT_KEY)
 
 // --------------------- MOUSE COMBOS -------------------------------
 //   name           result          combo keys

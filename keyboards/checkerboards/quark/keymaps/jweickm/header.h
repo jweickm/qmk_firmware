@@ -102,9 +102,13 @@ enum planck_layers {
     #define QUOT_KEY LCTL_T(KC_QUOT)
     #define TAB_KEY    LT(_ADJUST, KC_TAB)
 
+    #define MINS_KEY  LT(_MOUSE, KC_MINS)
+    #define MINS_KEY_DE  LT(_MOUSE, DE_MINS)
+
     #define LTHUMB      OSM(MOD_LSFT)
     #define RTHUMB      OSM(MOD_RSFT)
     #define FN_KEY      LT(_ADJUST, KC_APP)
+    #define RALT_KEY    OSM(MOD_RALT) // RALT
 
     // define the secondary function of the lower and raise keys here
     #define LOWER LT(_LOWER, KC_BSPC)
@@ -117,6 +121,10 @@ enum planck_layers {
     #define Z_KEY_DE LT(1, DE_Z)
     #define SLSH_KEY    LT(0, KC_SLSH)
     #define DEL_KEY     LT(_ADJUST, KC_DEL)
+
+    #define UDIA_KEY    LT(0, DE_UDIA) // sends ü and bsls when held
+    #define ADIA_KEY    LT(0, DE_ADIA) // sends ä and quot
+
 #endif
 
 #define SZ_KEY      LSFT_T(DE_SS)
@@ -166,6 +174,7 @@ enum planck_keycodes {
     TOGGLE_DUALF,
 #endif
     KC_AFK,
+    TG_HRM, // toggle home row mods (dual func keys)
 };
 
 #define AFK_KEY KC_MS_D

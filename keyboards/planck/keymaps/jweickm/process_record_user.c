@@ -553,6 +553,16 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
             default:
                 return true;
         }
+#else
+    } else if (layer_state_is(_LOWER) || layer_state_is(_LOWER_DE) || layer_state_is(_RAISE) || layer_state_is(_RAISE_DE)) {
+        switch (combo_index) {
+            case BSPC_COMB:
+                // case PB_DEL:
+                // case JL_TAB:
+                return false;
+            default:
+                return true;
+        }
 #endif
 
     } else if (layer_state_is(_NUM)) {
@@ -664,7 +674,6 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
     #else
         case OSM(MOD_LSFT):
         case OSM(MOD_RSFT):
-        case MENU_KEY:
     #endif
             return 0; // bypass Achordion for these keys
 
@@ -672,6 +681,8 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case DOT_KEY:
         // case UE_KEY:
         case QUOT_KEY:
+        case MINS_KEY:
+        case MINS_KEY_DE:
         case X_KEY:
         case C_KEY:
         case V_KEY:
@@ -1259,15 +1270,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
 
-        case KC_BSPC: // add delete functionality to shift+backspace
-            if (shifted) {
-                del_mods(MOD_MASK_SHIFT);
-                register_unregister_key(record, KC_DEL);
-                set_mods(mod_state);
-                return false;
-            } 
-            return true;
+        // case KC_BSPC: // add delete functionality to shift+backspace
+        //     if (shifted) {
+        //         del_mods(MOD_MASK_SHIFT);
+        //         register_unregister_key(record, KC_DEL);
+        //         set_mods(mod_state);
+        //         return false;
+        //     } 
+        //     return true;
 
+        
     } // switch(keycode)
 
     return true;

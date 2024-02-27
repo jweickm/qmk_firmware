@@ -552,7 +552,6 @@ bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode
     } else if (layer_state_is(_LOWER) || layer_state_is(_LOWER_DE) || layer_state_is(_RAISE) || layer_state_is(_RAISE_DE)) {
         switch (combo_index) {
             case BSPC_COMB:
-            case QW_ESC:
                 // case PB_DEL:
                 // case JL_TAB:
                 return false;
@@ -593,7 +592,8 @@ uint16_t get_combo_term(uint16_t index, combo_t *combo) {
         case DH_ENT:
             return 50;
 #endif
-    case CAPS_COMB:
+    case CAPS_COMB1:
+    case CAPS_COMB2:
         return 60;
     }
     return COMBO_TERM; // default value
@@ -660,6 +660,9 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case C_KEY:
         case V_KEY:
         case G_KEY: // to prevent bug on dot_key for num_layer
+        case QUOT_KEY:
+        case MINS_KEY:
+        case MINS_KEY_DE:
             return TAPPING_TERM + 60; // return a shorter timeout for these keys (tap event when held) results in 220 ms with current tapping term of 160 ms
 
         case Z_KEY:
@@ -676,7 +679,6 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case Y_KEY:
         case Y_KEY_DE:
         case SCLN_KEY:
-        case QUOT_KEY:
             return TAPPING_TERM + 140; // 300ms, still slightly faster than 400 ms default
     }
     return 400; // otherwise use a timeout of 400 ms.
@@ -1190,14 +1192,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
 
-        case KC_BSPC:
-            if (shifted) {
-                del_mods(MOD_MASK_SHIFT);
-                register_unregister_key(record, KC_DEL);
-                set_mods(mod_state);
-                return false;
-            } 
-            return true;
+        // case KC_BSPC: // add delete functionality to shift+backspace
+        //     if (shifted) {
+        //         del_mods(MOD_MASK_SHIFT);
+        //         register_unregister_key(record, KC_DEL);
+        //         set_mods(mod_state);
+        //         return false;
+        //     } 
+        //     return true;
 
     } // switch(keycode)
 

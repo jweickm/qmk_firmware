@@ -105,7 +105,7 @@ enum planck_layers {
     #define SCLN_KEY    LT(0, KC_SCLN) // sends ö on German layer
     #define BSLS_KEY    KC_BSLS
     #define EQL_KEY     LT(0, KC_EQL)
-    #define QUOT_KEY    KC_QUOT // sends ä on German layer
+
     #define UDIA_KEY    LT(0, DE_UDIA) // sends ü and bsls when held
     #define ADIA_KEY    LT(0, DE_ADIA) // sends ä and quot
     // define the secondary function of the lower and raise keys here
@@ -122,6 +122,11 @@ enum planck_layers {
     #define SLSH_KEY    RSFT_T(KC_SLSH)
     #define DEL_KEY     LT(_ADJUST, KC_DEL)
     #define TAB_KEY    LT(_ADJUST, KC_TAB)
+
+    #define QUOT_KEY    LT(_NUM, KC_QUOT) // sends ä on German layer
+    #define MINS_KEY  LT(_MOUSE, KC_MINS)
+    #define MINS_KEY_DE  LT(_MOUSE, DE_MINS)
+
 #endif // narrow layout
 
 #define SZ_KEY      LSFT_T(DE_SS)
