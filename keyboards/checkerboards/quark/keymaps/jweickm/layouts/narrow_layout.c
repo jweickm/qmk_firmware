@@ -137,14 +137,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |  F12 |  F7  |  F8  |  F9  |  F10 |  F11 |   `  |   >  |   ,  |   .  |   /  | ____ |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ | ____ | ____ | ____ |    ____     | ____ | MAIL | BRID | BRIU | ____ | 1x2uC
+     * | ____ | ____ | ____ | ____ | ____ |    ____     | ____ | BRID | BRIU | ____ | ____ | 1x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_RAISE] = LAYOUT_planck_mit(
         KC_TILD, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_BSLS,
         KC_F6, LGUI_T(KC_F1), LALT_T(KC_F2), LSFT_T(KC_F3), LCTL_T(KC_F4), KC_F5, KC_LABK, KC_MINS, KC_EQL, KC_LBRC, KC_RBRC, KC_QUOT,
         KC_F12, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_RABK, KC_TILD, KC_COMM, KC_DOT, KC_SLSH, _______,
-        _______, _______, KC_APP, KC_BSPC, _______, _______, _______, KC_MMIC, KC_BRID, KC_BRIU, _______
+        _______, _______, KC_APP, KC_BSPC, _______, _______, _______, KC_BRID, KC_BRIU, _______, _______
     ),
 
 /* ----------------------------------------------------------------------------------------
@@ -156,14 +156,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * |  F12 |  F7  |  F8  |  F9  |  F10 |  F11 |   `  |   >  |   ,  |   .  |   /  | ____ |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ | ____ | ____ | ____ |    ____     | ____ | MAIL | BRID | BRIU | ____ | 1x2uC
+     * | ____ | ____ | ____ | ____ | ____ |    ____     | ____ | BRID | BRIU | ____ | ____ | 1x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_RAISE_DE] = LAYOUT_planck_mit(
         DE_TILD, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, DE_BSLS,
         KC_F6, LGUI_T(KC_F1), LALT_T(KC_F2), LSFT_T(KC_F3), LCTL_T(KC_F4), KC_F5, DE_LABK, DE_MINS, DE_EQL, DE_LBRC, DE_RBRC, DE_QUOT,
         KC_F12,    KC_F7,   KC_F8,   KC_F9, KC_F10, KC_F11, DE_RABK, DE_TILD,  KC_COMM, KC_DOT, DE_SLSH, _______, 
-        _______, _______, KC_APP, KC_BSPC, _______, _______, _______, KC_MMIC, KC_BRID, KC_BRIU, _______
+        _______, _______, KC_APP, KC_BSPC, _______, _______, _______, KC_BRID, KC_BRIU, _______, _______
     ),
 
 /* ----------------------------------------------------------------------------------------
@@ -213,14 +213,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |------+------+------+------+------+------+------+------+------+------+------+------|
      * | ____ | LSFT |DESK<-|WHL ↑ |WHL ↓ |DESK->| MMIC |  F22 | BTN4 | BTN5 | RSFT | ____ |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * | ____ | ____ | ____ | BTN 3| BTN 1|    BTN 2    | ____ | ____ | LLOCK| ____ | ____ | 1x2uC
+     * | ____ | ____ | BTN4 | BTN3 | BTN2 |    BTN1     | BTN2 | BTN5 | LLOCK| ____ | ____ | 1x2uC
      * `-----------------------------------------------------------------------------------'
      */
     [_MOUSE] = LAYOUT_planck_mit(
         _______, C(KC_HOME), KC_BTN4, KC_MS_U, KC_BTN5, C(KC_END), KC_F16, KC_F17, KC_F18, KC_F19, KC_F20, KC_F21,
         _______, KC_WH_L, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_R, KC_MUTE, KC_LCTL, OSM(MOD_RSFT), OSM(MOD_LALT), OSM(MOD_RGUI), KC_SCROLL_LOCK,
         _______, KC_LSFT, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_MMIC, KC_F22, KC_BTN4, KC_BTN5, KC_RSFT, _______,
-        _______, _______, _______, KC_BTN3, KC_BTN1, KC_BTN2, _______, _______, LLOCK, _______, _______
+        _______, _______, KC_BTN4, KC_BTN3, KC_BTN2, KC_BTN1, KC_BTN2, KC_BTN5, LLOCK, _______, _______
     ),
 
 /* ----------------------------------------------------------------------------------------
@@ -239,7 +239,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ALT_TAB, _______, C(KC_RIGHT), KC_INS, KC_PSCR, C(KC_LEFT), A(KC_GRV), REDO, UNDO, LANG_SWITCH, KB_LANG_SWITCH, KC_INS,
         C(KC_TAB), KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, G(A(KC_LCTL)), KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, VIM_O, KC_CAPS,
         KC_LSFT, KC_NUM_LOCK, C(G(KC_LEFT)), KC_WH_U, KC_WH_D, C(G(KC_RIGHT)), KC_HOME, KC_PGDN, KC_PGUP, KC_END, _______, _______,
-        QK_CLEAR_EEPROM, QK_BOOT, _______, _______, _______, _______, _______, KC_BRID, KC_BRIU, TG(_GAMING), KC_AFK
+        QK_CLEAR_EEPROM, QK_BOOT, _______, _______, _______, _______, _______, KC_VOLD, KC_VOLU, TG(_GAMING), KC_AFK
     ),
 
 };
