@@ -404,6 +404,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case Z_KEY:
         case Z_KEY_DE:
         case SCLN_KEY:
+        case EQL_KEY:
         case SLSH_KEY:
             return TAPPING_TERM * pinky_factor;
         case CAPS_KEY:
@@ -679,6 +680,7 @@ uint16_t achordion_timeout(uint16_t tap_hold_keycode) {
         case Y_KEY:
         case Y_KEY_DE:
         case SCLN_KEY:
+        case EQL_KEY:
             return TAPPING_TERM + 140; // 300ms, still slightly faster than 400 ms default
     }
     return 400; // otherwise use a timeout of 400 ms.
@@ -1111,6 +1113,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
 
 #else // #ifndef WIDE_LAYOUT
+        case EQL_KEY:
         case SCLN_KEY: // case for the base English Colemak Layer (continues in the next case)
             if (!process_tap_long_press_key(record, KC_0)) {
                 return false;

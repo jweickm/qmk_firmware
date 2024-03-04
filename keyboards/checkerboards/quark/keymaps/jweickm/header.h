@@ -65,6 +65,7 @@ enum planck_layers {
 #define FN_KEY      LT(_ADJUST, KC_APP)
 #define TAB_KEY     LT(_ADJUST, KC_TAB)
 #define SCLN_KEY    LT(0, KC_SCLN)
+#define EQL_KEY     LT(0, KC_EQL)
 
 #define LTHUMB      OSM(MOD_LSFT)
 #define RTHUMB      LT(_UMLAUTS, KC_ESC)
@@ -96,6 +97,7 @@ enum planck_layers {
 
 #else
     #define SCLN_KEY LT(0, KC_SCLN)
+    #define EQL_KEY     LT(0, KC_EQL)
     #define BSLS_KEY    KC_BSLS
     #define ESC_KEY RALT_T(KC_ESC)
     #define ENT_KEY LT(_ADJUST, KC_ENT)
