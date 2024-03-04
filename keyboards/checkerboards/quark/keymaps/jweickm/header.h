@@ -176,7 +176,6 @@ enum planck_keycodes {
     TOGGLE_DUALF,
 #endif
     KC_AFK,
-    TG_HRM, // toggle home row mods (dual func keys)
 };
 
 #define AFK_KEY KC_MS_D
