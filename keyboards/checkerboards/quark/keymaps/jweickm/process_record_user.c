@@ -112,8 +112,8 @@ static bool process_tap_long_press_key(keyrecord_t *record, uint16_t long_press_
 
 bool process_tap_long_press_shifted_key(keyrecord_t *record, uint16_t long_press_keycode, uint16_t long_press_shifted_keycode) {
     if (shifted) {
-        return process_tap_long_press_key(record, long_press_shifted_keycode);
-    } else {
+        return process_tap_long_press_key(record, long_press_shifted_keycode); 
+        } else {
         return process_tap_long_press_key(record, long_press_keycode);
     }
 }
@@ -517,10 +517,7 @@ bool caps_word_press_user(uint16_t keycode) {
             return true;
 
         default:
-            // continue CAPS_WORD with shift
-            /* if (shifted) { */
-            /*     return true; */
-            /* } */
+            shifted = false; // disable shifted for custom shifted keys
             return false; // Deactivate Caps Word.
     }
 }
@@ -973,14 +970,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 // ------------------------- GERMAN KEYMAP -----------------------------------------
 #ifndef WIDE_LAYOUT
         // uncomment for long-pressing z-key for ß
-        // case Z_KEY_DE:
-        //     return process_tap_long_press_key(record, DE_SS);
-        // case Z_KEY: // Z - ß
-        //     if (record->event.pressed && record->tap.count < 1) {
-        //         return process_german_keycode(record, SZ_KEY);
-        //     }
-        //     return true;
-        //     break;
+        case Z_KEY_DE:
+            return process_tap_long_press_key(record, DE_SS);
+        case Z_KEY: // Z - ß
+            if (record->event.pressed && record->tap.count < 1) {
+                return process_german_keycode(record, SZ_KEY);
+            }
+            return true;
+            break;
 #endif
         case S(KC_Z):
             if (IS_LAYER_ON(_NUM) && de_layout_active) {
@@ -1028,8 +1025,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 caps_word_off(); // break caps_word
 #    endif
                 return false;
+            } else if (record->tap.count <= 0 && record->event.pressed ) {
+                if (de_layout_active) {
+                    tap_code16(DE_QUES);
+                } else {
+                    tap_code16(KC_QUES);
+                }
+                return false;
+            } else {
+                return true;
             }
-            return true;
             break;
 
             // ------------------------- TOP ROW NUMBERS ---------------------------------

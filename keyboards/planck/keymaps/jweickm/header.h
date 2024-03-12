@@ -114,12 +114,11 @@ enum planck_layers {
     // GERMAN VERSIONS OF THE KEYS
     #define LOWER_DE    LT(_LOWER_DE, KC_BSPC)
     #define RAISE_DE    LT(_RAISE_DE, KC_SPC)
-    // #define Z_KEY       LT(0, KC_Z)
-    // #define Z_KEY_DE    LT(1, DE_Z)
-    #define Z_KEY       LSFT_T(KC_Z)
-    #define Z_KEY_DE    LSFT_T(DE_Z)
-    // #define SLSH_KEY    LT(0, KC_SLSH)
-    #define SLSH_KEY    RSFT_T(KC_SLSH)
+
+    #define Z_KEY       LT(0, KC_Z)
+    #define Z_KEY_DE    LT(1, DE_Z)
+    #define SLSH_KEY    LT(0, KC_SLSH)
+
     #define DEL_KEY     LT(_ADJUST, KC_DEL)
     #define TAB_KEY    LT(_ADJUST, KC_TAB)
 
