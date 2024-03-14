@@ -96,13 +96,13 @@ enum planck_layers {
     #define CENT32   KC_UP
 
 #else
-    #define SCLN_KEY LT(0, KC_SCLN)
+    #define SCLN_KEY    LT(0, KC_SCLN)
     #define EQL_KEY     LT(0, KC_EQL)
     #define BSLS_KEY    KC_BSLS
-    #define ESC_KEY RALT_T(KC_ESC)
-    #define ENT_KEY LT(_ADJUST, KC_ENT)
-    #define QUOT_KEY LCTL_T(KC_QUOT)
-    #define TAB_KEY    LT(_ADJUST, KC_TAB)
+    #define ESC_KEY     RALT_T(KC_ESC)
+    #define ENT_KEY     LCTL_T(KC_ENT)
+    #define QUOT_KEY    LCTL_T(KC_QUOT)
+    #define TAB_KEY     LT(_ADJUST, KC_TAB)
 
     #define MINS_KEY  LT(_MOUSE, KC_MINS)
     #define MINS_KEY_DE  LT(_MOUSE, DE_MINS)
