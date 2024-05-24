@@ -31,6 +31,8 @@ COMB(MPRV_COMB,     KC_MPRV,        DEL_KEY, RALT_KEY)
 
 // --------------------- MOUSE COMBOS -------------------------------
 //   name           result          combo keys
+COMB(SCROLL_UP_COMB,   KC_WH_U,       V_KEY, K_KEY)
+COMB(SCROLL_DOWN_COMB, KC_WH_D,       B_KEY, J_KEY)
 
 // ---------------------- LAYER COMBOS ---------------------------
 //   name           result          combo keys

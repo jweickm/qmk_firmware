@@ -101,7 +101,7 @@ enum planck_layers {
 #else // narrow layout
 
     #define ENT_KEY     LCTL_T(KC_ENT)
-    #define ESC_KEY     KC_ESC
+    #define ESC_KEY     LALT_T(KC_ESC)
     #define SCLN_KEY    LT(0, KC_SCLN) // sends ö on German layer
     #define BSLS_KEY    KC_BSLS
     #define EQL_KEY     LT(0, KC_EQL)
