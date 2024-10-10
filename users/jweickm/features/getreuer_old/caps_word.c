@@ -22,14 +22,10 @@
 
 #include "caps_word.h"
 
-#pragma message \
-    "Caps Word is now a core QMK feature! To use it, update your QMK set up and see https://docs.qmk.fm/features/caps_word"
+static bool caps_word_active = false;
 
-#if !defined(IS_QK_MOD_TAP)
-// Attempt to detect out-of-date QMK installation, which would fail with
-// implicit-function-declaration errors in the code below.
-#error "caps_word: QMK version is too old to build. Please update QMK."
-#else
+#pragma message \
+    "Caps Word is now a core QMK feature! To use it, update your QMK set up and see https://docs.qmk.fm/#/feature_caps_word"
 
 // Many keyboards enable the Command feature, which by default is also activated
 // by Left Shift + Right Shift. It can be configured to use a different key
@@ -39,8 +35,6 @@
 #pragma message \
     "Caps Word and Command should not be enabled at the same time, since both use the Left Shift + Right Shift key combination. Please disable Command, or ensure that `IS_COMMAND` is not set to (get_mods() == MOD_MASK_SHIFT)."
 #endif  // defined(COMMAND_ENABLE) && !defined(IS_COMMAND)
-
-static bool caps_word_active = false;
 
 #if CAPS_WORD_IDLE_TIMEOUT > 0
 #if CAPS_WORD_IDLE_TIMEOUT < 100 || CAPS_WORD_IDLE_TIMEOUT > 30000
@@ -281,4 +275,3 @@ __attribute__((weak)) bool caps_word_press_user(uint16_t keycode) {
       return false;  // Deactivate Caps Word.
   }
 }
-#endif  // version check
